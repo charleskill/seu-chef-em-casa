@@ -39,7 +39,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--cu);box-shadow:0 0 0 
 .mut{color:var(--mut)}.c{text-align:center}
 .empty{color:var(--mut);text-align:center;padding:22px 10px}
 .sec{font:700 12px/1 -apple-system,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--cu);margin:6px 0 10px}
-/* selector de perfil inicial */
+/* seletor de perfil inicial */
 .role-box{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 .role-card{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:20px 14px;text-align:center;cursor:pointer;transition:.2s}
 .role-card:hover{border-color:var(--cu);transform:translateY(-2px)}
@@ -835,9 +835,7 @@ const A={
     const c=chefById(ME);
     if(!CMP)return;
     if(CMP.type==='story'){c.storyUrl=CMP.data;c.storyTime=Date.now();c.storyMusic=($('#cm_m').value||'').trim();LIKED=LIKED.filter(k=>k!=='s:'+c.id);}
-    else c.gallery.pop(); // remove placeholder if needed or push
-    // push normal gallery item:
-    c.gallery.push({id:Date.now(),url:CMP.data,caption:($('#cm_c').value||'').trim()||'Prato especial',likes:0,comments:[]});
+    else c.gallery.push({id:Date.now(),url:CMP.data,caption:($('#cm_c').value||'').trim()||'Prato especial',likes:0,comments:[]});
     if(!saveData())return;
     closeSheet();toast('Publicado!');S.adm='pub';location.hash='#/painel';route();
   },
@@ -853,10 +851,11 @@ const A={
   pdel:el=>{if(!confirm('Excluir esta foto?'))return;const c=chefById(ME);c.gallery=c.gallery.filter(p=>p.id!==+el.dataset.id);saveData();route();},
   sdel:()=>{if(!confirm('Excluir o story atual?'))return;const c=chefById(ME);c.storyUrl='';c.storyTime=null;c.storyMusic='';saveData();route();},
   sedit:()=>{const c=chefById(ME);sheet('<h3 class="c" style="margin-bottom:10px">Música do story</h3><div class="f"><input id="sm" value="'+esc(c.storyMusic)+'" placeholder="Ex.: Jazz & vinho"></div><button class="b b1 full" data-a="ssave">Salvar</button>');},
-  ssave:()=>{chefById(ME).storyMusic=$('#sm').value.trim();saveData();closeSheet();route();}
+  ssave:()=>{chefById(ME).storyMusic=$('#sm'].value.trim();saveData();closeSheet();route();}
 };
 
 document.addEventListener('click',e=>{
+  e.stopPropagation && e.stopPropagation();
   if(e.target.id==='ovl'){closeSheet();return;}
   const el=e.target.closest('[data-a]');
   if(!el)return;
