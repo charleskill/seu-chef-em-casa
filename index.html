@@ -177,6 +177,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--cu);box-shadow:0 0 0 
 <div id="ovl" class="ov" hidden></div>
 <div id="story" hidden></div>
 <div id="toast" role="status" aria-live="polite" hidden></div>
+<script src="assets/order-validation.js"></script>
 <script>
 (function(){
 'use strict';
@@ -461,7 +462,7 @@ function order(id){
   S.last=c.id;
   if(S.order.chef!==id){S.order.chef=id;S.order.dishes=[];S.cat='Todos';}
   const o=S.order, f=o.f, cats=['Todos'].concat([...new Set(c.dishes.map(d=>d.category))]);
-  const isValid=Boolean(f.name&&f.name.trim()&&f.phone&&f.phone.trim()&&o.dishes.length>0);
+  const isValid=!ChefValidation.validateOrder(o);
   
   return head('Pedido · '+esc(c.name.replace(/^Chef\s+/i,'')),'#/chef/'+id)+
   '<div class="card"><p class="sec">Seu evento</p>'+
@@ -473,14 +474,17 @@ function order(id){
   '<div class="card"><p class="sec">Serviços</p><button class="sw'+(o.shop?' on':'')+'" data-a="sw" data-w="shop" aria-pressed="'+o.shop+'"><i></i><span>Compras dos ingredientes pelo chef</span></button><button class="sw'+(o.clean?' on':'')+'" data-a="sw" data-w="clean" aria-pressed="'+o.clean+'"><i></i><span>Limpeza da cozinha ao final</span></button></div>'+
   '<div class="card"><p class="sec">Alergias e restrições</p><div class="chips">'+ALG.map(a=>'<button class="chip'+(o.chips.indexOf(a)>-1?' on':'')+'" data-a="chip" data-v="'+a+'">'+a+'</button>').join('')+'</div><textarea data-f="allergies" placeholder="Algo mais que o chef precise saber?">'+esc(f.allergies)+'</textarea></div>'+
   '<div class="card"><p class="sec">Escolha os pratos *</p><div class="chips">'+cats.map(k=>'<button class="chip'+(S.cat===k?' on':'')+'" data-a="cat" data-v="'+esc(k)+'">'+esc(k)+'</button>').join('')+'</div><div id="dl">'+dishList(c)+'</div></div>'+
-  '<div class="obar"><span id="oc">'+(o.dishes.length?o.dishes.length+(o.dishes.length===1?' prato':' pratos'):'Nenhum prato escolhido')+'</span><button id="sendBtn" class="b b1'+(isValid?'':' disabled')+'" data-a="sendorder">Enviar pelo WhatsApp</button></div>';
+  '<p id="orderError" class="err" role="status">'+esc(ChefValidation.validateOrder(o))+'</p><p id="orderHelp" class="note">Confira seus dados e escolha os pratos. O WhatsApp será aberto com o pedido pronto; você precisa concluir o envio por lá.</p><div class="obar"><span id="oc">'+(o.dishes.length?o.dishes.length+(o.dishes.length===1?' prato':' pratos'):'Nenhum prato escolhido')+'</span><button id="sendBtn" class="b b1'+(isValid?'':' disabled')+'" data-a="sendorder" aria-describedby="orderHelp" '+(isValid?'':'disabled')+'>Continuar no WhatsApp</button></div>';
 }
 
 function updateOrderState(){
   const f=S.order.f, o=S.order;
-  const isValid=Boolean(f.name&&f.name.trim()&&f.phone&&f.phone.trim()&&o.dishes.length>0);
+  const isValid=!ChefValidation.validateOrder(o);
   const btn=$('#sendBtn');
+  const error=$('#orderError');
+  if(error)error.textContent=ChefValidation.validateOrder(o);
   if(btn){
+    btn.disabled=!isValid;
     if(isValid) btn.classList.remove('disabled');
     else btn.classList.add('disabled');
   }
@@ -488,8 +492,9 @@ function updateOrderState(){
 
 function sendOrder(){
   const c=chefById(S.order.chef), o=S.order, f=o.f;
-  if(!f.name||!f.phone){toast('Informe seu nome e telefone');return;}
-  if(!o.dishes.length){toast('Escolha ao menos um prato');return;}
+  const validationError=ChefValidation.validateOrder(o);
+  if(validationError){toast(validationError);return;}
+  if(!c){toast('Chef não encontrado');return;}
   const pr=c.dishes.filter(d=>o.dishes.indexOf(d.id)>-1).map(d=>'- '+d.name).join('\n');
   const al=o.chips.concat(f.allergies?[f.allergies]:[]).join(', ')||'Nenhuma informada';
   const sv=[o.shop?'Compras dos ingredientes':'',o.clean?'Limpeza da cozinha':''].filter(Boolean).join(', ')||'Nenhum';
@@ -758,12 +763,7 @@ const A={
     i>-1?c.splice(i,1):c.push(v);
     el.classList.toggle('on');
   },
-  sendorder:()=>{
-    const f=S.order.f, o=S.order;
-    if(!f.name||!f.name.trim()||!f.phone||!f.phone.trim()){toast('Preencha seu Nome e Telefone para continuar');return;}
-    if(!o.dishes.length){toast('Escolha ao menos um prato do cardápio');return;}
-    sendOrder();
-  },
+  sendorder:()=>sendOrder(),
   setname:()=>{
     const v=($('#nm').value||'').trim();
     if(!v){toast('Digite seu nome');return;}
