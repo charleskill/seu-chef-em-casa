@@ -22,3 +22,6 @@ Antes de começar, registrar responsável, tarefa e versão de origem.
 Uma IA implementa por tarefa; outra pode revisar.
 Ao concluir, registrar arquivos alterados, testes reais e limitações.
 Não marcar testes como realizados sem execução.
+
+## Etapa em revisão: feat/preparacao-piloto
+Busca/perfil/formulário testados em navegador desktop. Correção de validação e 4 testes Node concluídos na branch. Migração inicial escrita, NÃO aplicada/testada. Ver docs/PREPARACAO-PILOTO.md. Próximo bloqueio: conexão com Supabase.
