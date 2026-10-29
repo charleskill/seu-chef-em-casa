@@ -160,19 +160,1054 @@ input:focus,select:focus,textarea:focus{border-color:var(--cu);box-shadow:0 0 0 
 (function(){
 'use strict';
 const SEED=[
-    { 
-        id: 'larissa', name: 'Chef Larissa Chaves', email: 'larissa@chef.com',  whatsapp: '48991106355', phone: '4833334444',
-        instagram: 'https://instagram.com/larissachaves.chef',
+    {
+        id: 'c1',
+        name: 'Chef Alessandro Silva',
+        email: 'alessandro.silva@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48991112233',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
         cities: 'Florianópolis - SC',
         avatar: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80',
-        bio: 'Sou Larissa Chaves, Personal Chef especializada em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        bio: 'Sou Chef Alessandro Silva, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
         dishes: [
             { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
-            { id: 11, category: 'Pratos Principais', name: 'Filé Mignon ao Molho Madeira', desc: 'Medalhão grelhado com batatas rústicas.', price: 78 }
+            { id: 2, category: 'Pratos Principais', name: 'Risoto de Camarão ao Limone', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Medalhão com crosta de ervas', desc: 'Receita artesanal da casa.', price: 32 }
         ],
         gallery: [
-            { id: 101, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Jantar exclusivo em Jurerê' },
-            { id: 102, url: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80', caption: 'Cortes nobres na brasa' }
+            { id: 101, url: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c2',
+        name: 'Chef Beatriz Mendonça',
+        email: 'beatriz.mendonca@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48992223344',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'São José - SC',
+        avatar: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80',
+        bio: 'Sou Chef Beatriz Mendonça, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Salmão ao Molho de Maracujá', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Tiramisu Artesanal', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c3',
+        name: 'Chef Carlos Eduardo',
+        email: 'carlos.eduardo@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48993334455',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Palhoça - SC',
+        avatar: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&q=80',
+        bio: 'Sou Chef Carlos Eduardo, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Paella Valenciana', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Crepe Suzette', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c4',
+        name: 'Chef Daniela Souza',
+        email: 'daniela.souza@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48994445566',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Balneário Camboriú - SC',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        bio: 'Sou Chef Daniela Souza, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Nhoque Trufado com Cogumelos', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Panna Cotta de Frutas Vermelhas', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c5',
+        name: 'Chef Eduardo Martins',
+        email: 'eduardo.martins@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48995556677',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Itajaí - SC',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
+        bio: 'Sou Chef Eduardo Martins, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Camarão na Moranga', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Bolo Húmido de Chocolate Belga', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c6',
+        name: 'Chef Fernanda Lima',
+        email: 'fernanda.lima@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48996667788',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Blumenau - SC',
+        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80',
+        bio: 'Sou Chef Fernanda Lima, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Gnocchi de Batata Doce ao Pesto', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Tarte Tatin de Maçã', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c7',
+        name: 'Chef Gabriel Costa',
+        email: 'gabriel.costa@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48997778899',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Joinville - SC',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80',
+        bio: 'Sou Chef Gabriel Costa, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Magret de Pato com Molho de Laranja', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Petit Gâteau', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c8',
+        name: 'Chef Helena Ribeiro',
+        email: 'helena.ribeiro@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48998889900',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Criciúma - SC',
+        avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80',
+        bio: 'Sou Chef Helena Ribeiro, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Tartare de Salmão Fresco', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Cheesecake de Frutas Vermelhas', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c9',
+        name: 'Chef Igor Nogueira',
+        email: 'igor.nogueira@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48999990011',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Chapecó - SC',
+        avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80',
+        bio: 'Sou Chef Igor Nogueira, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Costelinha ao Molho Barbecue Artesanal', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Cartola Pernambucana Gourmet', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c10',
+        name: 'Chef Juliana Freitas',
+        email: 'juliana.freitas@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48988881122',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Itapema - SC',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        bio: 'Sou Chef Juliana Freitas, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Polvo à Lagareiro', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Banoffee Pie', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c11',
+        name: 'Chef Kleber Ramos',
+        email: 'kleber.ramos@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48987772233',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Porto Belo - SC',
+        avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80',
+        bio: 'Sou Chef Kleber Ramos, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Arroz de Pato Rústico', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pudim de Leite Condensado com Favas de Baunilha', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c12',
+        name: 'Chef Larissa Mendes',
+        email: 'larissa.mendes@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48986663344',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Tubarão - SC',
+        avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+        bio: 'Sou Chef Larissa Mendes, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Ravioli de Abóbora com Amêndoas', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Crème Brûlée', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c13',
+        name: 'Chef Marcelo Antunes',
+        email: 'marcelo.antunes@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48985554455',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Araranguá - SC',
+        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80',
+        bio: 'Sou Chef Marcelo Antunes, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Cordeiro Assado com Ervas Finas', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Mousse de Maracujá Trufado', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c14',
+        name: 'Chef Natália Azevedo',
+        email: 'natalia.azevedo@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48984445566',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Brusque - SC',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80',
+        bio: 'Sou Chef Natália Azevedo, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Salada Caesar com Frango Orgânico', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Brownie com Sorvete de Baunilha', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c15',
+        name: 'Chef Otávio Brandão',
+        email: 'otavio.brandao@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48983336677',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Jaraguá do Sul - SC',
+        avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80',
+        bio: 'Sou Chef Otávio Brandão, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Bife de Chorizo com Chimichurri', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Alfajor de Maizena Gourmet', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c16',
+        name: 'Chef Patrícia Goulart',
+        email: 'patricia.goulart@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48982227788',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Lages - SC',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        bio: 'Sou Chef Patrícia Goulart, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Fondue de Queijos Artesanais', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Sopa de Frutas Vermelhas com Chantilly', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c17',
+        name: 'Chef Quirino Siqueira',
+        email: 'quirino.siqueira@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48981118899',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Concórdia - SC',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
+        bio: 'Sou Chef Quirino Siqueira, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Frango à Parmegiana Rústico', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pavlova de Morango', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c18',
+        name: 'Chef Renata Vasconcelos',
+        email: 'renata.vasconcelos@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48980009900',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Rio do Sul - SC',
+        avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+        bio: 'Sou Chef Renata Vasconcelos, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Strogonoff de Filé Mignon Trufado', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Cartola Recheada', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c19',
+        name: 'Chef Samuel Teles',
+        email: 'samuel.teles@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48979990011',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'São Bento do Sul - SC',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80',
+        bio: 'Sou Chef Samuel Teles, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Lasanha Bolonhesa Tradicional', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Torta de Limão Desconstruída', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c20',
+        name: 'Chef Tatiana Dornelles',
+        email: 'tatiana.dornelles@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48978881122',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Biguaçu - SC',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80',
+        bio: 'Sou Chef Tatiana Dornelles, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Escondidinho de Carne Seca', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Manjar Branco com Calda de Ameixa', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c21',
+        name: 'Chef Ulisses Neves',
+        email: 'ulisses.neves@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48977772233',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Florianópolis - SC',
+        avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80',
+        bio: 'Sou Chef Ulisses Neves, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Bruschettas de Tomate Seco e Manjericão', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Sorvete de Doce de Leite Caseiro', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c22',
+        name: 'Chef Vanessa Pires',
+        email: 'vanessa.pires@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48976663344',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'São José - SC',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        bio: 'Sou Chef Vanessa Pires, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Carpaccio de Filé com Alcaparras', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Petit Four Variados', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c23',
+        name: 'Chef Wagner Queiroz',
+        email: 'wagner.queiroz@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48975554455',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Palhoça - SC',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
+        bio: 'Sou Chef Wagner Queiroz, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Risoto de Funghi Seco', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pudim de Leite Artesanal', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c24',
+        name: 'Chef Ximena Rezende',
+        email: 'ximena.rezende@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48974445566',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Balneário Camboriú - SC',
+        avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+        bio: 'Sou Chef Ximena Rezende, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Filé de Peixe ao Molho de Camarão', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Torta Holandesa', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c25',
+        name: 'Chef Yasmin Santos',
+        email: 'yasmin.santos@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48973336677',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Itajaí - SC',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80',
+        bio: 'Sou Chef Yasmin Santos, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Salada Tropical com Manga e Nozes', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Mousse de Maracujá', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c26',
+        name: 'Chef Zeca Tardin',
+        email: 'zeca.tardin@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48972227788',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Blumenau - SC',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80',
+        bio: 'Sou Chef Zeca Tardin, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Espaguete à Carbonara Autêntico', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Tiramisu Clássico', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c27',
+        name: 'Chef Alice Farias',
+        email: 'alice.farias@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48971118899',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Joinville - SC',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        bio: 'Sou Chef Alice Farias, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Ceviche Peruano Clássico', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Cheesecake de Frutas Vermelhas', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c28',
+        name: 'Chef Bruno Alencar',
+        email: 'bruno.alencar@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48970009900',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Criciúma - SC',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
+        bio: 'Sou Chef Bruno Alencar, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Medalhão de Frango ao Bacon', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pudim de Leite', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c29',
+        name: 'Chef Camila Borges',
+        email: 'camila.borges@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48969990011',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Chapecó - SC',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80',
+        bio: 'Sou Chef Camila Borges, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Quiche Lorraine Tradicional', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Torta de Morango', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c30',
+        name: 'Chef Diego Farias',
+        email: 'diego.farias@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48968881122',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Itapema - SC',
+        avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80',
+        bio: 'Sou Chef Diego Farias, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Risoto de Açafrão com Carne Seca', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Sorvete Artesanal', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c31',
+        name: 'Chef Eliane Prado',
+        email: 'eliane.prado@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48967772233',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Porto Belo - SC',
+        avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+        bio: 'Sou Chef Eliane Prado, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: "Picanha ao Alho com Farofa d'Água", desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Doce de Abóbora com Coco', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c32',
+        name: 'Chef Felipe Guimarães',
+        email: 'felipe.guimaraes@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48966663344',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Tubarão - SC',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80',
+        bio: 'Sou Chef Felipe Guimarães, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Frango Strogonoff com Batata Palha', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pudim Gourmet', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c33',
+        name: 'Chef Gisela Ramos',
+        email: 'gisela.ramos@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48965554455',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Araranguá - SC',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        bio: 'Sou Chef Gisela Ramos, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Salada Niçoise Completa', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Mousse de Chocolate', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c34',
+        name: 'Chef Hugo Leonardo',
+        email: 'hugo.leonardo@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48964445566',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Brusque - SC',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
+        bio: 'Sou Chef Hugo Leonardo, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Costelinha de Porco Assada', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Cuscuz Doce', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c35',
+        name: 'Chef Inês Matos',
+        email: 'ines.matos@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48963336677',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Jaraguá do Sul - SC',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80',
+        bio: 'Sou Chef Inês Matos, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Arroz de Carreteiro Gaúcho', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Sagu com Creme', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c36',
+        name: 'Chef João Pedro',
+        email: 'joao.pedro@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48962227788',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Lages - SC',
+        avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80',
+        bio: 'Sou Chef João Pedro, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Moqueca de Peixe com Dendê', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Cocada Mole', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c37',
+        name: 'Chef Karina Lacerda',
+        email: 'karina.lacerda@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48961118899',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Concórdia - SC',
+        avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+        bio: 'Sou Chef Karina Lacerda, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Caldo Verde Português', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Bolo de Cenoura com Chocolate', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c38',
+        name: 'Chef Lucas Machado',
+        email: 'lucas.machado@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48960009900',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Rio do Sul - SC',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80',
+        bio: 'Sou Chef Lucas Machado, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Frango Grelhado com Ervas Finas', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Salada de Frutas', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c39',
+        name: 'Chef Márcia Diniz',
+        email: 'marcia.diniz@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48959990011',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'São Bento do Sul - SC',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        bio: 'Sou Chef Márcia Diniz, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Bobó de Camarão Cremoso', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pavê de Chocolate', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c40',
+        name: 'Chef Nataniel Rocha',
+        email: 'nataniel.rocha@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48958881122',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Biguaçu - SC',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
+        bio: 'Sou Chef Nataniel Rocha, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Escondidinho de Mandioca com Carne', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pudim de Leite', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c41',
+        name: 'Chef Olívia Correia',
+        email: 'olivia.correia@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48957772233',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Florianópolis - SC',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80',
+        bio: 'Sou Chef Olívia Correia, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Risoto de Parmesão com Trufas', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Torta de Morango', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c42',
+        name: 'Chef Paulo Henrique',
+        email: 'paulo.henrique@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48956663344',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'São José - SC',
+        avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80',
+        bio: 'Sou Chef Paulo Henrique, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'File Mignon ao Molho Pesto', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Sorvete de Baunilha', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c43',
+        name: 'Chef Quézia Sampaio',
+        email: 'quezia.sampaio@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48955554455',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Palhoça - SC',
+        avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+        bio: 'Sou Chef Quézia Sampaio, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Salmão Grelhado com Alcaparras', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Cheesecake', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c44',
+        name: 'Chef Ricardo Brandão',
+        email: 'ricardo.brandao@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48954445566',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Balneário Camboriú - SC',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80',
+        bio: 'Sou Chef Ricardo Brandão, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Arroz com Pato e Linguiça', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Mousse de Maracujá', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c45',
+        name: 'Chef Sabrina Lopes',
+        email: 'sabrina.lopes@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48953336677',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Itajaí - SC',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80',
+        bio: 'Sou Chef Sabrina Lopes, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Nhoque de Batata com Molho Sugo', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Tiramisu', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c46',
+        name: 'Chef Tiago Ribeiro',
+        email: 'tiago.ribeiro@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48952227788',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Blumenau - SC',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
+        bio: 'Sou Chef Tiago Ribeiro, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Bife Ancho com Manteiga de Ervas', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pudim de Leite', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c47',
+        name: 'Chef Úrsula Medeiros',
+        email: 'ursula.medeiros@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48951118899',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Joinville - SC',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80',
+        bio: 'Sou Chef Úrsula Medeiros, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Salada de Folhas com Queijo Cabra', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Pavlova', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c48',
+        name: 'Chef Vicente Farias',
+        email: 'vicente.farias@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48950009900',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Criciúma - SC',
+        avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80',
+        bio: 'Sou Chef Vicente Farias, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Risoto Caprese com Tomate Cereja', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Brownie', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c49',
+        name: 'Chef Wanda Silveira',
+        email: 'wanda.silveira@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48949990011',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Chapecó - SC',
+        avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+        bio: 'Sou Chef Wanda Silveira, Personal Chef especializada(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Frango ao Curry com Arroz Basmati', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Torta Holandesa', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
+        ]
+    },
+    {
+        id: 'c50',
+        name: 'Chef Yuri Castilho',
+        email: 'yuri.castilho@chef.com',
+        pass: 'x18812233',
+        whatsapp: '48948881122',
+        phone: '4833334444',
+        instagram: 'https://instagram.com/chef.oficial',
+        cities: 'Itapema - SC',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80',
+        bio: 'Sou Chef Yuri Castilho, Personal Chef especializado(a) em alta gastronomia.\n\nAtendo em sua residência com preparo completo e requinte.',
+        dishes: [
+            { id: 1, category: 'Entradas', name: 'Bruschettas Trufadas', desc: 'Pão rústico, tomates e azeite trufado.', price: 35 },
+            { id: 2, category: 'Pratos Principais', name: 'Camarão na Moranga Gourmet', desc: 'Preparo exclusivo com ingredientes selecionados.', price: 85 },
+            { id: 3, category: 'Sobremesas', name: 'Crepe Suzette', desc: 'Receita artesanal da casa.', price: 32 }
+        ],
+        gallery: [
+            { id: 101, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80', caption: 'Evento exclusivo' },
+            { id: 102, url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', caption: 'Alta gastronomia em domicílio' }
         ]
     }
 ];
