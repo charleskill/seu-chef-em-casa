@@ -50,11 +50,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--cu);box-shadow:0 0 0 
 .hero h2{font-size:25px;line-height:1.2;margin-bottom:8px}
 .hero p{color:#e9d9c0;font-size:14px;margin-bottom:14px;max-width:34ch}
 .hero .hat{position:absolute;right:-14px;bottom:-18px;opacity:.12;color:#fff}
-/* catálogo compacto profissional */
+/* catálogo compacto quadrado/retangular */
 .catalog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
-.catalog-item{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 4px 12px rgba(80,50,30,.06)}
+.catalog-item{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(80,50,30,.06)}
 .catalog-img{position:relative;width:100%;padding-top:75%;background:var(--line)}
-.catalog-img img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+.catalog-img img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:0}
 .catalog-info{padding:10px}
 .catalog-info b{font-size:13.5px;display:block;margin-bottom:2px}
 .catalog-info small{color:var(--mut);font-size:12px}
@@ -68,12 +68,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--cu);box-shadow:0 0 0 
 .news-card h3{font-size:17px;margin-bottom:6px;color:var(--cu2)}
 .news-card p{font-size:14px;margin-bottom:8px}
 .news-card .ref{font-size:12.5px;color:var(--mut);display:inline-block;border-bottom:1px dotted var(--cu)}
-/* perfil e avatares redondos */
+/* perfil e avatares */
 .prof{display:flex;gap:18px;align-items:center}
-.av{width:64px;height:64px;border-radius:50%;object-fit:cover;background:var(--line)}
-.ring{display:inline-block;border-radius:50%;padding:2px;background:var(--cu);flex:none}
-.ring .av{border:2px solid var(--paper)}
-.ring.lg .av{width:88px;height:88px}
+.av{width:64px;height:64px;border-radius:12px;object-fit:cover;background:var(--line)}
+.ring{display:inline-block;border-radius:12px;padding:2px;background:var(--cu);flex:none}
+.ring .av{border:2px solid var(--paper);border-radius:10px}
+.ring.lg .av{width:88px;height:88px;border-radius:14px}
+.ring.lg{border-radius:14px}
 .stats{display:flex;flex:1;justify-content:space-around;text-align:center}
 .stats b{display:block;font:700 19px Georgia,serif}.stats small{font-size:12px;color:var(--mut)}
 .acts{display:flex;gap:8px;margin:14px 0}.acts .b{flex:1;padding:10px 12px;font-size:14px;min-height:42px}
@@ -363,7 +364,7 @@ function home(){
   if(all.length){
     h+='<div class="catalog-grid">';
     all.slice(0,4).forEach(x=>{
-      h+='<a class="catalog-item" href="#/chef/'+x.c.id+'"><div class="catalog-img">'+img(x.p.url,x.p.caption,x.c.name)+'</div><div class="catalog-info"><b>'+esc(x.c.name)+'</b><small>'+esc(x.p.caption||'Alta gastronomia')+'</small></div></a>';
+      h+='<a class="catalog-item" href="#/chef/'+x.c.id+'"><div class="catalog-img">'+img(x.p.url,x.p.caption,x.c.name,'')+'</div><div class="catalog-info"><b>'+esc(x.c.name)+'</b><small>'+esc(x.p.caption||'Alta gastronomia')+'</small></div></a>';
     });
     h+='</div>';
   } else {
@@ -478,7 +479,7 @@ function chat(id){
   if(!c)return '<p class="empty">Chef não encontrado.</p>';
   S.last=id;
   const L=MSG.filter(m=>m.chefId===id&&m.client===NAME), n=unsentN();
-  return '<div class="dm"><div class="dmh"><a class="bk" href="#/chef/'+id+'" aria-label="Voltar">'+ic('back')+'</a>'+img(c.avatar,'',c.name,'av').replace('class=""','class="av" style="width:42px;height:42px"')+'<div class="t"><b>'+esc(c.name)+'</b><small>Personal Chef · '+esc(c.cities||'')+'</small></div><button data-a="chatwa" aria-label="Abrir WhatsApp">'+ic('wa',24)+'</button></div>'+
+  return '<div class="dm"><div class="dmh"><a class="bk" href="#/chef/'+id+'" aria-label="Voltar">'+ic('back')+'</a>'+img(c.avatar,'',c.name,'av').replace('class="av"','class="av" style="width:42px;height:42px"')+'<div class="t"><b>'+esc(c.name)+'</b><small>Personal Chef · '+esc(c.cities||'')+'</small></div><button data-a="chatwa" aria-label="Abrir WhatsApp">'+ic('wa',24)+'</button></div>'+
   (NAME?'':'<div class="note"><b>Como devo te chamar?</b><div class="row" style="margin-top:8px"><input id="nm" placeholder="Seu nome" data-enter="setname"><button class="b b1" style="flex:none" data-a="setname">Salvar</button></div></div>')+
   '<div class="note">Esta conversa fica salva neste aparelho. Para o chef <b>receber</b> sua mensagem, toque em “Enviar no WhatsApp”.</div>'+
   '<div class="msgs" id="ms">'+msgsHtml(L,'client')+'</div>'+(n?'<button class="b b3 full" data-a="chatwa" style="min-height:40px">Enviar '+n+' mensagem'+(n>1?'s':'')+' no WhatsApp</button>':'')+
