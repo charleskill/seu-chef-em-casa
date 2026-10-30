@@ -13,6 +13,7 @@
       const current=now||new Date();
       const today=new Date(current.getFullYear(),current.getMonth(),current.getDate());
       if(!/^\d{4}-\d{2}-\d{2}$/.test(f.date) || Number.isNaN(date.getTime()) || date.getFullYear()!==Number(f.date.slice(0,4)) || date.getMonth()+1!==Number(f.date.slice(5,7)) || date.getDate()!==Number(f.date.slice(8,10)) || date<today) return 'Escolha uma data válida, a partir de hoje.';
+      if(chef && chef.agenda && Array.isArray(chef.agenda.off) && chef.agenda.off.includes(f.date)) return 'Este chef não atende na data escolhida. Escolha outra data.';
     }
     if(order.mode==='marmita'){
       const m=order.m||{},cfg=chef&&chef.marmita;

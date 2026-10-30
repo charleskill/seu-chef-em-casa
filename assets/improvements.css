@@ -38,3 +38,14 @@ html{scroll-padding-top:90px}
 .opcoes-info ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
 .opcoes-info li{font-size:.85rem;padding:4px 10px;border-radius:99px;background:#eef2ee;color:#304e3b}
 .opcoes-info li::before{content:"✓ ";font-weight:700}
+
+/* Busca por data/pessoas e agenda do chef */
+.home-search{flex-wrap:wrap}.home-search .hs{display:flex;flex-direction:column;gap:4px;flex:1 1 150px;min-width:130px}.home-search .hs input{min-height:44px}
+.search-tools .sfield{flex:none;width:150px;min-height:44px}.search-tools input[type=number].sfield{width:84px}
+.avail{margin:6px 0 0;font-size:.85rem;font-weight:600;color:#2e6b45}.avail.no{color:#a33b20}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin:14px 0 8px}.cal-head b::first-letter{text-transform:uppercase}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.cal-h{font-size:.72rem;text-align:center;color:#6b6b60;font-weight:600}
+.cal-d{min-height:44px;border:1px solid rgba(48,78,59,.2);border-radius:10px;background:#fff;font:inherit;cursor:pointer;color:#1d3226}
+.cal-d:disabled{opacity:.35;cursor:default}.cal-d.off{background:#b45335;border-color:#b45335;color:#fff;text-decoration:line-through}
+.cal-key{display:inline-block;width:12px;height:12px;border-radius:3px;background:#b45335;vertical-align:-1px}
+.linkbtn{background:none;border:0;padding:0;font:inherit;text-decoration:underline;color:#304e3b;cursor:pointer}

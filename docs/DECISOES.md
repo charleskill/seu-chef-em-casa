@@ -38,3 +38,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 ## 30/10 · Mapa e opções de atendimento do chef
 - Google Maps: links "Ver/Conferir no Google Maps" (sem chave de API) no perfil, no campo de local do pedido, no painel do chef e uma linha "Mapa:" no texto do WhatsApp. Autocomplete de endereço exige chave da Places API (faturamento + restrição por domínio) e fica para quando houver chave.
 - Painel > Atendimento: o chef liga/desliga 13 opções (crianças, compras, limpeza, utensílios, garçom, grupos grandes, fins de semana, outras cidades, glúten, lactose, vegetariano, vegano, frutos do mar). Sem escolha, valem os padrões (a maioria ligada). Efeito: aparece no perfil, esconde campos no pedido e filtra a busca.
+
+## 30/10 · Busca por data e agenda do chef
+- Home e busca: Onde? / Quando? / Quantas pessoas? filtram os chefs livres na data. Mais de 20 pessoas só mostra quem ativou "grupos grandes".
+- Painel do chef > Agenda: calendário em que o chef marca os dias ocupados (estilo Airbnb). Dia ocupado tira o chef da busca daquela data e o pedido nessa data é recusado.
+- Perfis de teste ganham datas ocupadas aleatórias (não salvas) para o filtro ser visível.
+- Referência: ChefMaison / Take a Chef (busca com data + convidados antes de ver chefs).

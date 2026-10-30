@@ -84,6 +84,8 @@ const OPCOES=[
 const RESTR={'Sem glúten':'r_gluten','Sem lactose':'r_lactose','Vegetariano':'r_vegetariano','Vegano':'r_vegano','Alergia a frutos do mar':'r_mar'};
 const opcoes=c=>{const o=c&&c.opcoes&&typeof c.opcoes==='object'?c.opcoes:{};const r={};OPCOES.forEach(([k,,,d])=>{r[k]=typeof o[k]==='boolean'?o[k]:d});return r};
 const cleanOpcoes=o=>{if(!o||typeof o!=='object')return null;const r={};OPCOES.forEach(([k])=>{if(typeof o[k]==='boolean')r[k]=o[k]});return Object.keys(r).length?r:null};
+const cleanAgenda=a=>{if(!a||!Array.isArray(a.off))return null;const off=[...new Set(a.off.filter(d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)))].sort().slice(-400);return off.length?{off}:null};
+const isFree=(c,date)=>!date||!(c&&c.agenda&&Array.isArray(c.agenda.off)&&c.agenda.off.includes(date));
 const mapsUrl=q=>{q=String(q||'').trim();return q?'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q):''};
 function normalizeData(data,seed){
   const source=Array.isArray(data?.chefs)?data.chefs:seed;
@@ -91,7 +93,7 @@ function normalizeData(data,seed){
     isDemo:c.isDemo??seed.some(s=>s.id===c.id),
     gallery:(Array.isArray(c.gallery)?c.gallery:[]).filter(p=>p&&p.id!=null&&typeof p.url==='string'),
     dishes:(Array.isArray(c.dishes)?c.dishes:[]).filter(d=>d&&d.id!=null&&typeof d.name==='string').map(d=>{const x={...d,price:Number.isFinite(Number(d.price))&&Number(d.price)>=0?Number(d.price):0};if(x.marmita!==true)delete x.marmita;return x})
-  })).map(c=>{const m=cleanMarmita(c.marmita);if(m)c.marmita=m;else delete c.marmita;const op=cleanOpcoes(c.opcoes);if(op)c.opcoes=op;else delete c.opcoes;return c});
+  })).map(c=>{const m=cleanMarmita(c.marmita);if(m)c.marmita=m;else delete c.marmita;const op=cleanOpcoes(c.opcoes);if(op)c.opcoes=op;else delete c.opcoes;const ag=cleanAgenda(c.agenda);if(ag)c.agenda=ag;else delete c.agenda;return c});
   return {version:4,chefs,messages:(Array.isArray(data?.messages)?data.messages:[]).filter(m=>m&&typeof m.chefId==='string'&&typeof m.text==='string'),orders:Array.isArray(data?.orders)?data.orders:[],name:String(data?.name||''),visitorId:typeof data?.visitorId==='string'?data.visitorId:'',draft:data?.draft&&typeof data.draft==='object'?data.draft:null};
 }
 function readData(storage,seed){
@@ -126,6 +128,6 @@ async function verifyPassword(password,account,cryptoApi){
   if(!/^[a-f\d]{64}$/i.test(account.pass)||!c?.subtle)return false;
   return account.pass===hex(await c.subtle.digest('SHA-256',new TextEncoder().encode(account.id+':'+password)));
 }
-const api={norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,RESTR,opcoes,cleanOpcoes,mapsUrl};
+const api={norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);
