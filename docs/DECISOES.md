@@ -44,3 +44,8 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Painel do chef > Agenda: calendário em que o chef marca os dias ocupados (estilo Airbnb). Dia ocupado tira o chef da busca daquela data e o pedido nessa data é recusado.
 - Perfis de teste ganham datas ocupadas aleatórias (não salvas) para o filtro ser visível.
 - Referência: ChefMaison / Take a Chef (busca com data + convidados antes de ver chefs).
+
+## 30/10 · Termos de uso e privacidade
+- Página #/termos (assets/termos.js): o app é vitrine; contratação, pagamento e serviço são diretos entre cliente e chef; sem verificação de chefs ou clientes; responsabilidade "nos limites da lei"; LGPD resumida.
+- Chef precisa aceitar os termos ao criar conta; o resumo do pedido lembra que é vitrine.
+- PENDENTE: revisão por advogado(a) antes do lançamento; preencher CONTATO em assets/termos.js (e-mail); trocar o nome quando virar Mesa Posta.
