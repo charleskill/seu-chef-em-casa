@@ -56,3 +56,16 @@ Origem: main (34f25cb). O `index.html` de main havia sido substituído por uma v
 - [x] `index.html`: metas `og:`, preconnect ao Unsplash e carregamento dos arquivos novos; `scripts/build.cjs` e `npm run check` incluem os arquivos novos.
 - Verificado de fato: `npm run check`, `npm test` (15 de 15) e `npm run build`; fluxo básico do HTML gerado em navegador simulado (jsdom): início, perfil, cardápio, pedido, validação, busca, entrar; sem erros de JavaScript.
 - Não verificado: navegador e dispositivo reais, WhatsApp, compartilhamento nativo do celular. Nenhuma publicação nem alteração de dados ou de SQL.
+
+
+## Entrega em revisão — 30/10/2026 (perfis de teste e marmitas)
+Origem: main (607ef19). Pedido de Carlos: 50 perfis de teste removíveis, pratos de SC, Brasil e internacional, e opção de marmitas no orçamento. Detalhes em PERFIS-DE-TESTE.md.
+- [x] 50 chefs fictícios (`demo-01` a `demo-50`) com 8 a 12 pratos, galeria de 5 imagens, especialidade e cidades de SC; 18 deles oferecem marmitas.
+- [x] Catálogo de 238 pratos (42 de SC, 49 do Brasil, 147 internacionais), 79 marcados como adequados a marmita.
+- [x] Perfis de teste vêm do código e não são gravados no navegador; chave `enabled` esconde todos. Corrige o caso de chefs já salvos no navegador ocultarem os de exemplo.
+- [x] Orçamento com "Plano de marmitas": frequência semanal, quinzenal ou mensal; marmitas por entrega; duração (1, 2, 3 ou 6 meses); entrega ou preparo na casa do cliente; dias preferidos; pratos de interesse. Estimativa por mês e do plano, com 4 semanas por mês e aviso de que não é preço final.
+- [x] Painel do chef: aba "Marmitas" (preço de referência, mínimo por entrega, frequências, formas de atendimento) e marcação "Disponível como marmita" por prato.
+- [x] Busca: filtro "Faz marmitas" e busca por especialidade; perfil e cartões mostram marmitas e especialidade.
+- Verificado de fato: `npm run check`, `npm test` (27 de 27), `npm run build`; fluxo completo do HTML gerado em navegador simulado (busca, perfil, plano de marmitas, validações, painel do chef, esconder perfis, navegador com chefs já salvos); telas conferidas no Chromium em 390 e 1280 px, sem erros de JavaScript do app.
+- Não verificado: dispositivos reais, WhatsApp, fotos do Unsplash (sem acesso à internet no ambiente de teste; a primeira imagem de cada galeria é ilustração local para a capa nunca falhar).
+- Pendente de Carlos: validar com chefs reais o modelo de marmitas (campos, 4 semanas por mês, ausência de desconto por prazo) e o texto do pedido; o modelo é proposta, não decisão.

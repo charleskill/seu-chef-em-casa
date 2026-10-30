@@ -1,0 +1,802 @@
+[
+ {
+  "id": "c1",
+  "name": "Chef Alessandro Silva",
+  "city": "Florianópolis",
+  "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c2",
+  "name": "Chef Beatriz Mendonça",
+  "city": "São José",
+  "avatar": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c3",
+  "name": "Chef Carlos Eduardo",
+  "city": "Palhoça",
+  "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c4",
+  "name": "Chef Daniela Souza",
+  "city": "Balneário Camboriú",
+  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c5",
+  "name": "Chef Eduardo Martins",
+  "city": "Itajaí",
+  "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c6",
+  "name": "Chef Fernanda Lima",
+  "city": "Blumenau",
+  "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c7",
+  "name": "Chef Gabriel Costa",
+  "city": "Joinville",
+  "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c8",
+  "name": "Chef Helena Ribeiro",
+  "city": "Criciúma",
+  "avatar": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c9",
+  "name": "Chef Igor Nogueira",
+  "city": "Chapecó",
+  "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c10",
+  "name": "Chef Juliana Freitas",
+  "city": "Itapema",
+  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c11",
+  "name": "Chef Kleber Ramos",
+  "city": "Porto Belo",
+  "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c12",
+  "name": "Chef Larissa Mendes",
+  "city": "Tubarão",
+  "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c13",
+  "name": "Chef Marcelo Antunes",
+  "city": "Araranguá",
+  "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c14",
+  "name": "Chef Natália Azevedo",
+  "city": "Brusque",
+  "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c15",
+  "name": "Chef Otávio Brandão",
+  "city": "Jaraguá do Sul",
+  "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c16",
+  "name": "Chef Patrícia Goulart",
+  "city": "Lages",
+  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c17",
+  "name": "Chef Quirino Siqueira",
+  "city": "Concórdia",
+  "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c18",
+  "name": "Chef Renata Vasconcelos",
+  "city": "Rio do Sul",
+  "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c19",
+  "name": "Chef Samuel Teles",
+  "city": "São Bento do Sul",
+  "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c20",
+  "name": "Chef Tatiana Dornelles",
+  "city": "Biguaçu",
+  "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c21",
+  "name": "Chef Ulisses Neves",
+  "city": "Florianópolis",
+  "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c22",
+  "name": "Chef Vanessa Pires",
+  "city": "São José",
+  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c23",
+  "name": "Chef Wagner Queiroz",
+  "city": "Palhoça",
+  "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c24",
+  "name": "Chef Ximena Rezende",
+  "city": "Balneário Camboriú",
+  "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c25",
+  "name": "Chef Yasmin Santos",
+  "city": "Itajaí",
+  "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c26",
+  "name": "Chef Zeca Tardin",
+  "city": "Blumenau",
+  "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c27",
+  "name": "Chef Alice Farias",
+  "city": "Joinville",
+  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c28",
+  "name": "Chef Bruno Alencar",
+  "city": "Criciúma",
+  "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c29",
+  "name": "Chef Camila Borges",
+  "city": "Chapecó",
+  "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c30",
+  "name": "Chef Diego Farias",
+  "city": "Itapema",
+  "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c31",
+  "name": "Chef Eliane Prado",
+  "city": "Porto Belo",
+  "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c32",
+  "name": "Chef Felipe Guimarães",
+  "city": "Tubarão",
+  "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c33",
+  "name": "Chef Gisela Ramos",
+  "city": "Araranguá",
+  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c34",
+  "name": "Chef Hugo Leonardo",
+  "city": "Brusque",
+  "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c35",
+  "name": "Chef Inês Matos",
+  "city": "Jaraguá do Sul",
+  "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c36",
+  "name": "Chef João Pedro",
+  "city": "Lages",
+  "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c37",
+  "name": "Chef Karina Lacerda",
+  "city": "Concórdia",
+  "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c38",
+  "name": "Chef Lucas Machado",
+  "city": "Rio do Sul",
+  "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c39",
+  "name": "Chef Márcia Diniz",
+  "city": "São Bento do Sul",
+  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c40",
+  "name": "Chef Nataniel Rocha",
+  "city": "Biguaçu",
+  "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c41",
+  "name": "Chef Olívia Correia",
+  "city": "Florianópolis",
+  "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c42",
+  "name": "Chef Paulo Henrique",
+  "city": "São José",
+  "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c43",
+  "name": "Chef Quézia Sampaio",
+  "city": "Palhoça",
+  "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c44",
+  "name": "Chef Ricardo Brandão",
+  "city": "Balneário Camboriú",
+  "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c45",
+  "name": "Chef Sabrina Lopes",
+  "city": "Itajaí",
+  "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c46",
+  "name": "Chef Tiago Ribeiro",
+  "city": "Blumenau",
+  "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c47",
+  "name": "Chef Úrsula Medeiros",
+  "city": "Joinville",
+  "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c48",
+  "name": "Chef Vicente Farias",
+  "city": "Criciúma",
+  "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c49",
+  "name": "Chef Wanda Silveira",
+  "city": "Chapecó",
+  "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ },
+ {
+  "id": "c50",
+  "name": "Chef Yuri Castilho",
+  "city": "Itapema",
+  "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+  "gallery": [
+   {
+    "url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+    "caption": "Evento exclusivo"
+   },
+   {
+    "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80",
+    "caption": "Alta gastronomia em domicílio"
+   }
+  ]
+ }
+]

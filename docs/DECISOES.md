@@ -22,3 +22,10 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Identificar os perfis fictícios e impedir contato com números fictícios. Remover notícias e depoimentos sem verificação.
 - Gravar dados locais de forma atômica, preservar chaves antigas e mostrar erros de quota/leitura. Não migrar dados automaticamente para serviços externos.
 - Não publicar nem aplicar a migração SQL nesta revisão.
+
+
+## 30/10/2026 — Perfis de teste e marmitas, a pedido de Carlos
+- Os 50 perfis de teste ficam no código, não no armazenamento do navegador, para aparecerem em qualquer navegador e serem removidos com uma chave ou apagando dois arquivos. Continuam sem contato real e identificados como exemplo.
+- Marmitas entram como um segundo tipo de pedido ("Plano de marmitas") dentro do mesmo orçamento, com o mesmo envio por WhatsApp. Cada chef informa um preço de referência por marmita, o mínimo por entrega, as frequências e as formas de atendimento; os pratos de marmita são marcados no cardápio.
+- Proposta, ainda sem validação com chefs: estimativa = preço por marmita × marmitas por entrega × entregas por mês (semanal 4, quinzenal 2, mensal 1) × meses. Sem desconto por prazo, sem taxa de entrega e sem cobrança recorrente; tudo é combinado com o chef. Não há pagamento nem contrato no app.
+- Imagens dos perfis de teste são ilustrações geradas, não fotos de pratos reais, para não depender de serviços externos nem usar fotos de terceiros sem controle.

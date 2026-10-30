@@ -29,13 +29,50 @@ function validateProfile(p,others=[]){
   if(p.instagram){try{const u=new URL(p.instagram);if(u.protocol!=='https:'||!['instagram.com','www.instagram.com'].includes(u.hostname))throw 0}catch{return 'Use um link https://instagram.com/seu.perfil.'}}
   return '';
 }
+const FREQ={semanal:{label:'Semanal',perMonth:4},quinzenal:{label:'Quinzenal',perMonth:2},mensal:{label:'Mensal',perMonth:1}};
+const MODOS={entrega:'Entrega das marmitas prontas',casa:'Preparo na minha casa'};
+const DIAS=[['seg','Seg'],['ter','Ter'],['qua','Qua'],['qui','Qui'],['sex','Sex'],['sab','Sáb'],['dom','Dom']];
+const money2=n=>Math.round(n*100)/100;
+const brl=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+function cleanMarmita(m){
+  if(!m||typeof m!=='object')return null;
+  const price=Number(m.price),min=Math.floor(Number(m.min));
+  const freq=(Array.isArray(m.freq)?m.freq:[]).filter(f=>FREQ[f]).filter((f,i,a)=>a.indexOf(f)===i);
+  const modes=(Array.isArray(m.modes)?m.modes:[]).filter(f=>MODOS[f]).filter((f,i,a)=>a.indexOf(f)===i);
+  if(!(price>0&&price<=1000)||!(min>=1&&min<=500)||!freq.length||!modes.length)return null;
+  return {price:money2(price),min,freq,modes};
+}
+function validateMarmita(m){
+  if(!Number.isFinite(m.price)||m.price<=0||m.price>1000)return 'Informe o preço por marmita, de R$ 0,01 a R$ 1.000,00.';
+  if(!Number.isInteger(m.min)||m.min<1||m.min>500)return 'Informe o mínimo de marmitas por entrega, de 1 a 500.';
+  if(!(m.freq||[]).length)return 'Escolha ao menos uma frequência de entrega.';
+  if(!(m.modes||[]).length)return 'Escolha ao menos uma forma de atendimento.';
+  return '';
+}
+// Estimativa de referência. Considera 4 semanas por mês; não é preço final.
+function marmitaEstimate(m,chef){
+  const cfg=chef&&chef.marmita,f=FREQ[m&&m.freq];
+  const unit=Number(cfg&&cfg.price),qty=Math.floor(Number(m&&m.qty)),months=Math.floor(Number(m&&m.months));
+  if(!f||!(unit>0)||!(qty>=1)||!(months>=1))return null;
+  const monthly=money2(unit*qty*f.perMonth);
+  return {unit,qty,deliveries:f.perMonth,monthly,months,total:money2(monthly*months),units:qty*f.perMonth*months};
+}
+// Perfis de exemplo vêm sempre do código e nunca são gravados no navegador.
+// Assim, desligar ou apagar a demonstração remove os perfis de qualquer navegador.
+const isTransientDemo=c=>c&&c.isDemo===true&&c.id!=='demo-workspace';
+function withDemo(data,demo){
+  const keep=(data.chefs||[]).filter(c=>!isTransientDemo(c));
+  const add=(Array.isArray(demo)?demo:[]).filter(c=>c&&typeof c.id==='string'&&typeof c.name==='string').map(c=>({...c,isDemo:true}));
+  return {...data,chefs:[...keep,...normalizeData({chefs:add},add).chefs]};
+}
+function stripDemo(data){return {...data,chefs:(data.chefs||[]).filter(c=>!isTransientDemo(c))}}
 function normalizeData(data,seed){
   const source=Array.isArray(data?.chefs)?data.chefs:seed;
   const chefs=source.filter(c=>c&&typeof c.id==='string'&&typeof c.name==='string').map(c=>({...c,
     isDemo:c.isDemo??seed.some(s=>s.id===c.id),
     gallery:(Array.isArray(c.gallery)?c.gallery:[]).filter(p=>p&&p.id!=null&&typeof p.url==='string'),
-    dishes:(Array.isArray(c.dishes)?c.dishes:[]).filter(d=>d&&d.id!=null&&typeof d.name==='string').map(d=>({...d,price:Number.isFinite(Number(d.price))&&Number(d.price)>=0?Number(d.price):0}))
-  }));
+    dishes:(Array.isArray(c.dishes)?c.dishes:[]).filter(d=>d&&d.id!=null&&typeof d.name==='string').map(d=>{const x={...d,price:Number.isFinite(Number(d.price))&&Number(d.price)>=0?Number(d.price):0};if(x.marmita!==true)delete x.marmita;return x})
+  })).map(c=>{const m=cleanMarmita(c.marmita);if(m)c.marmita=m;else delete c.marmita;return c});
   return {version:4,chefs,messages:(Array.isArray(data?.messages)?data.messages:[]).filter(m=>m&&typeof m.chefId==='string'&&typeof m.text==='string'),orders:Array.isArray(data?.orders)?data.orders:[],name:String(data?.name||''),visitorId:typeof data?.visitorId==='string'?data.visitorId:'',draft:data?.draft&&typeof data.draft==='object'?data.draft:null};
 }
 function readData(storage,seed){
@@ -44,7 +81,13 @@ function readData(storage,seed){
   return normalizeData({chefs:chefs?JSON.parse(chefs):seed,messages:messages?JSON.parse(messages):[],name:storage.getItem('scf3_name')||''},seed);
 }
 function persist(storage,data){storage.setItem('scf4_store',JSON.stringify(data))}
-function buildOrderText(c,o){const f=o.f,pr=c.dishes.filter(d=>o.dishes.includes(d.id)).map(d=>'- '+d.name).join('\n');return `*PEDIDO DE ORÇAMENTO — ${c.name}*\n\nCliente: ${f.name.trim()}\nTelefone: ${f.phone.trim()}${f.email?'\nE-mail: '+f.email.trim():''}\nData: ${f.date?f.date.split('-').reverse().join('/'):'A combinar'}\nEvento: ${f.type||'Jantar a dois'}\nLocal: ${f.local||'A combinar'}\nConvidados: ${o.adults} adultos e ${o.kids} crianças\nServiços solicitados: ${[o.shop?'Compras dos ingredientes':'',o.clean?'Limpeza ao final':''].filter(Boolean).join(', ')||'A combinar'}\nRestrições e preferências: ${o.chips.concat(f.allergies?[f.allergies]:[]).join(', ')||'Nenhuma informada'}\n\nPratos:\n${pr}\n\nValores, serviços e disponibilidade a confirmar com o chef.\nSeu Chef em Casa`}
+function buildMarmitaText(c,o){
+  const f=o.f,m=o.m||{},e=marmitaEstimate(m,c),pr=c.dishes.filter(d=>o.dishes.includes(d.id)).map(d=>'- '+d.name).join('\n');
+  const dias=DIAS.filter(([k])=>(m.days||[]).includes(k)).map(x=>x[1]).join(', ');
+  const meses=m.months===1?'1 mês':m.months+' meses';
+  return `*PEDIDO DE ORÇAMENTO — ${c.name}*\n*Plano de marmitas*\n\nCliente: ${f.name.trim()}\nTelefone: ${f.phone.trim()}${f.email?'\nE-mail: '+f.email.trim():''}\nInício desejado: ${f.date?f.date.split('-').reverse().join('/'):'A combinar'}\nLocal: ${f.local||'A combinar'}\nPessoas atendidas: ${o.adults} adultos e ${o.kids} crianças\nFrequência: ${(FREQ[m.freq]||{}).label||'A combinar'}\nMarmitas por entrega: ${m.qty}\nDuração do plano: ${meses}\nForma de atendimento: ${MODOS[m.way]||'A combinar'}\nDias preferidos: ${dias||'A combinar'}\nServiços solicitados: ${[o.shop?'Compras dos ingredientes':'',o.clean?'Limpeza ao final':''].filter(Boolean).join(', ')||'A combinar'}\nRestrições e preferências: ${o.chips.concat(f.allergies?[f.allergies]:[]).join(', ')||'Nenhuma informada'}\n\nPratos de interesse:\n${pr}\n\n${e?`Estimativa de referência: ${brl(e.monthly)} por mês (${e.qty*e.deliveries} marmitas × ${brl(e.unit)})${e.months>1?'; plano de '+meses+': '+brl(e.total):''}.\n`:''}Valores, serviços e disponibilidade a confirmar com o chef.\nSeu Chef em Casa`;
+}
+function buildOrderText(c,o){if(o.mode==='marmita'&&c.marmita)return buildMarmitaText(c,o);const f=o.f,pr=c.dishes.filter(d=>o.dishes.includes(d.id)).map(d=>'- '+d.name).join('\n');return `*PEDIDO DE ORÇAMENTO — ${c.name}*\n\nCliente: ${f.name.trim()}\nTelefone: ${f.phone.trim()}${f.email?'\nE-mail: '+f.email.trim():''}\nData: ${f.date?f.date.split('-').reverse().join('/'):'A combinar'}\nEvento: ${f.type||'Jantar a dois'}\nLocal: ${f.local||'A combinar'}\nConvidados: ${o.adults} adultos e ${o.kids} crianças\nServiços solicitados: ${[o.shop?'Compras dos ingredientes':'',o.clean?'Limpeza ao final':''].filter(Boolean).join(', ')||'A combinar'}\nRestrições e preferências: ${o.chips.concat(f.allergies?[f.allergies]:[]).join(', ')||'Nenhuma informada'}\n\nPratos:\n${pr}\n\nValores, serviços e disponibilidade a confirmar com o chef.\nSeu Chef em Casa`}
 const hex=bytes=>Array.from(new Uint8Array(bytes),x=>x.toString(16).padStart(2,'0')).join('');
 async function passwordRecord(password,cryptoApi){
   const c=cryptoApi||root.crypto;if(!c?.subtle)throw new Error('Abra a versão HTTPS para criar sua conta local.');
@@ -64,6 +107,6 @@ async function verifyPassword(password,account,cryptoApi){
   if(!/^[a-f\d]{64}$/i.test(account.pass)||!c?.subtle)return false;
   return account.pass===hex(await c.subtle.digest('SHA-256',new TextEncoder().encode(account.id+':'+password)));
 }
-const api={norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword};
+const api={norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);
