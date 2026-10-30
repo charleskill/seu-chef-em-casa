@@ -4,306 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#304e3b">
+<meta name="color-scheme" content="light">
 <meta name="description" content="Conheça personal chefs, explore cardápios e prepare seu pedido de orçamento. Demonstração do Seu Chef em Casa.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Seu Chef em Casa · Boa comida, boas histórias">
+<meta property="og:description" content="Conheça personal chefs, explore cardápios e prepare seu pedido de orçamento.">
 <title>Seu Chef em Casa · Boa comida, boas histórias</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23304e3b'/%3E%3Ctext x='20' y='28' text-anchor='middle' font-size='26' fill='white' font-family='Georgia'%3EC%3C/text%3E%3C/svg%3E">
-<style>
-:root{--g:#304e3b;--pri:#304e3b;--onpri:#fff;--bg:#faf6ef;--card:#fff;--tx:#1f2a24;--mu:#66736b;--bd:#e6dfd2;--ac:#c8742c;--er:#b3261e;--r:16px;--sh:0 1px 3px rgba(0,0,0,.08)}
-@media(prefers-color-scheme:dark){:root{--g:#1f3a2b;--pri:#6fbf8c;--onpri:#0d1a12;--bg:#121814;--card:#1b241e;--tx:#eef3ee;--mu:#9fb0a5;--bd:#2b372f;--ac:#e0914a;--er:#ff8a80;--sh:none}}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2;margin:0 0 .4em}
-h1{font-size:1.7rem}h2{font-size:1.25rem}h3{font-size:1.05rem}
-a{color:inherit}
-.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:#fff;color:#000;padding:8px;z-index:99}
-:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
-.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;background:var(--g);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;text-decoration:none}
-.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:#fff}
-.brand b{display:block;font-family:Georgia,serif;font-size:1.05rem}.brand small{opacity:.8;font-size:.75rem}
-.logo{width:38px;height:38px;border-radius:10px;background:#fff2;display:grid;place-items:center;font:700 1.4rem Georgia,serif}
-main{max-width:720px;margin:0 auto;padding:16px 16px calc(96px + env(safe-area-inset-bottom));outline:none}
-.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom)}
-.nav a{flex:1;text-align:center;padding:10px 4px;text-decoration:none;color:var(--mu);font-size:.78rem;position:relative}
-.nav a span{display:block;font-size:1.3rem;line-height:1.2}
-.nav a[aria-current=page]{color:var(--pri);font-weight:700}
-.badge{position:absolute;top:4px;left:calc(50% + 6px);background:var(--ac);color:#fff;border-radius:99px;font-size:.68rem;min-width:18px;padding:0 5px;line-height:18px}
-.hero{background:linear-gradient(135deg,var(--g),#4a7a5c);color:#fff;border-radius:var(--r);padding:22px 18px;margin-bottom:16px}
-.hero p{margin:0;opacity:.9}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:14px;margin-bottom:12px;box-shadow:var(--sh)}
-.chef{display:flex;gap:14px;text-decoration:none;align-items:center}
-.av{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:2rem;color:#fff}
-.mu{color:var(--mu);font-size:.88rem}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;scrollbar-width:none}
-.chip{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:8px 14px;font:inherit;font-size:.9rem;cursor:pointer}
-.chip[aria-pressed=true]{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
-input,textarea{width:100%;font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;min-height:48px}
-textarea{min-height:84px;resize:vertical}
-input[aria-invalid=true]{border-color:var(--er)}
-label{display:block;font-weight:600;font-size:.92rem;margin:12px 0 4px}
-.err{color:var(--er);font-size:.85rem;margin-top:4px;min-height:0}
-.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;border:1px solid var(--pri);background:var(--pri);color:var(--onpri);font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
-.btn.alt{background:transparent;color:var(--pri)}.btn.full{width:100%}.btn.sm{min-height:40px;padding:0 14px;font-size:.9rem}
-.btn.dng{background:transparent;color:var(--er);border-color:var(--er)}
-.dish{display:flex;gap:12px;align-items:center;justify-content:space-between}
-.dish p{margin:2px 0 0}
-.price{font-weight:700;white-space:nowrap}
-.dish.on{border-color:var(--pri);box-shadow:0 0 0 2px var(--pri) inset}
-.cat{font:700 .8rem system-ui;text-transform:uppercase;letter-spacing:.08em;color:var(--ac);margin:18px 0 8px}
-.bar{position:sticky;bottom:calc(64px + env(safe-area-inset-bottom));background:var(--card);border:1px solid var(--pri);border-radius:var(--r);padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
-.row{display:flex;justify-content:space-between;gap:12px;padding:5px 0}
-.row.t{border-top:1px solid var(--bd);margin-top:6px;padding-top:10px;font-weight:700;font-size:1.1rem}
-.step{display:flex;gap:8px;align-items:center}.step input{text-align:center}.step .btn{min-width:48px;padding:0}
-.note{background:#fff3d6;color:#5a4300;border-radius:12px;padding:10px 12px;font-size:.85rem;margin:12px 0}
-.empty{text-align:center;padding:36px 12px;color:var(--mu)}.empty .big{font-size:3rem}
-.ov{position:fixed;inset:0;background:var(--bg);z-index:50;display:grid;place-items:center;padding:24px;text-align:center}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));background:#222;color:#fff;padding:10px 16px;border-radius:99px;z-index:60;font-size:.9rem;max-width:90vw}
-[hidden]{display:none!important}
-@media(prefers-reduced-motion:no-preference){.card,.btn,.chip{transition:transform .12s,box-shadow .12s}.btn:active{transform:scale(.97)}}
-</style>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/improvements.css">
+<script defer src="assets/demo-data.js"></script>
+<script defer src="assets/demo-fixes.js"></script>
+<script defer src="assets/app-core.js"></script>
+<script defer src="assets/order-validation.js"></script>
+<script defer src="assets/app.js"></script>
+<script defer src="assets/improvements.js"></script>
 </head>
 <body>
 <a class="skip" href="#view">Pular para o conteúdo</a>
-<header class="top"><a href="#/" class="brand" aria-label="Seu Chef em Casa · Início"><span class="logo" aria-hidden="true">C</span><span><b>Seu Chef em Casa</b><small>Encontros em torno da boa comida</small></span></a></header>
+<header class="top"><a href="#/" class="brand" aria-label="Seu Chef em Casa · Início"><span class="logo" id="logo"></span><span><b>Seu Chef em Casa</b><small>Encontros em torno da boa comida</small></span></a><div class="who" id="who"></div></header>
 <main id="view" tabindex="-1"></main>
 <nav class="nav" id="nav" aria-label="Navegação principal"></nav>
 <div id="ovl" class="ov" hidden></div>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" hidden>
 <noscript><p class="note">Ative o JavaScript para explorar os chefs e montar seu orçamento.</p></noscript>
-<script>
-(()=>{
-'use strict';
-const $=s=>document.querySelector(s);
-const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const brl=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const pad=n=>String(n).padStart(2,'0');
-
-/* ---------- Dados de demonstração (telefones fictícios) ---------- */
-const CHEFS=[
-{id:'larissa',name:'Larissa Chaves',emoji:'🍲',color:'#304e3b',city:'Florianópolis, SC',spec:'Brasileira contemporânea',rating:4.9,reviews:48,phone:'5548999990001',travel:60,min:2,max:20,
- bio:'Cozinha afetiva com ingredientes de pequenos produtores catarinenses. Jantares íntimos, aniversários e encontros de família.',
- menu:[
- {id:'l1',cat:'Entrada',name:'Bolinho de aipim com camarão',desc:'Crocante por fora, cremoso por dentro, com molho de ervas.',price:38},
- {id:'l2',cat:'Entrada',name:'Salada de palmito pupunha e laranja',desc:'Folhas frescas, castanhas e vinagrete cítrico.',price:29},
- {id:'l3',cat:'Principal',name:'Moqueca capixaba',desc:'Peixe do dia, pirão e arroz de coco.',price:92},
- {id:'l4',cat:'Principal',name:'Risoto de limão siciliano',desc:'Cremoso e leve, finalizado com parmesão.',price:78},
- {id:'l5',cat:'Sobremesa',name:'Pudim de leite defumado',desc:'Calda de caramelo e flor de sal.',price:28}]},
-{id:'mateus',name:'Mateus Ferraz',emoji:'🍝',color:'#8a3b2b',city:'Palhoça, SC',spec:'Italiana artesanal',rating:4.8,reviews:31,phone:'5548999990002',travel:50,min:2,max:16,
- bio:'Massas frescas feitas na sua cozinha, molhos de longo cozimento e muita conversa à mesa.',
- menu:[
- {id:'m1',cat:'Entrada',name:'Bruschetta de tomate confit',desc:'Pão de fermentação natural e manjericão.',price:30},
- {id:'m2',cat:'Principal',name:'Tagliatelle ao ragù',desc:'Massa fresca com ragù de carne cozido por 6 horas.',price:72},
- {id:'m3',cat:'Principal',name:'Ravioli de ricota e limão',desc:'Manteiga de sálvia e nozes.',price:68},
- {id:'m4',cat:'Sobremesa',name:'Tiramisù clássico',desc:'Café, mascarpone e cacau.',price:32}]},
-{id:'aya',name:'Aya Tanaka',emoji:'🍣',color:'#2b4d7a',city:'Florianópolis, SC',spec:'Japonesa caseira',rating:4.9,reviews:57,phone:'5548999990003',travel:70,min:4,max:24,
- bio:'Comida japonesa de casa, de gyoza a temaki bar interativo para animar a festa.',
- menu:[
- {id:'a1',cat:'Entrada',name:'Gyoza de legumes e porco',desc:'Dourados na hora, molho ponzu.',price:34},
- {id:'a2',cat:'Principal',name:'Temaki bar',desc:'Salmão, atum, kani e vegetais para montar.',price:85},
- {id:'a3',cat:'Principal',name:'Yakisoba da casa',desc:'Legumes, frango e shoyu levemente adocicado.',price:58},
- {id:'a4',cat:'Sobremesa',name:'Mochi sortido',desc:'Matcha, morango e feijão doce.',price:26}]},
-{id:'bia',name:'Bia Monteiro',emoji:'🥗',color:'#6b7d2a',city:'São José, SC',spec:'Vegetariana e vegana',rating:4.7,reviews:22,phone:'5548999990004',travel:45,min:2,max:14,
- bio:'Pratos coloridos e cheios de sabor, 100% à base de plantas, sem abrir mão do aconchego.',
- menu:[
- {id:'b1',cat:'Entrada',name:'Carpaccio de beterraba',desc:'Cítricos, rúcula e pistache.',price:31},
- {id:'b2',cat:'Principal',name:'Curry de grão-de-bico',desc:'Leite de coco, especiarias e arroz basmati.',price:62},
- {id:'b3',cat:'Principal',name:'Lasanha de berinjela',desc:'Molho de tomate assado e creme de castanhas.',price:66},
- {id:'b4',cat:'Sobremesa',name:'Brigadeiro vegano trufado',desc:'Cacau 70% e coco.',price:24}]}
-];
-const SERVICE=0.10;
-const chefOf=id=>CHEFS.find(c=>c.id===id);
-
-/* ---------- Estado e persistência (à prova de falhas) ---------- */
-const KEY='sce.v2';let mem=null;
-const def=()=>({cart:{chef:null,dishes:[]},form:{name:'',phone:'',date:'',guests:4,hood:'',notes:''},reqs:[]});
-function load(){
-  let s=def();
-  try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);
-    if(p&&typeof p==='object'){
-      if(p.cart&&Array.isArray(p.cart.dishes)&&(p.cart.chef===null||chefOf(p.cart.chef)))s.cart={chef:p.cart.chef,dishes:p.cart.dishes.filter(x=>typeof x==='string')};
-      if(p.form&&typeof p.form==='object')Object.assign(s.form,p.form);
-      if(Array.isArray(p.reqs))s.reqs=p.reqs.filter(r=>r&&r.id);
-    }}}catch(e){}
-  return s;
-}
-let S=load();
-function save(){mem=S;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-let UI={q:'',spec:''},E={};
-
-/* ---------- Utilidades ---------- */
-function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2800)}
-const tomorrow=()=>{const d=new Date();d.setDate(d.getDate()+1);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
-const fdate=iso=>{const p=String(iso||'').split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:'—'};
-const stars=n=>'★ '+n.toFixed(1).replace('.',',');
-function calc(){
-  const c=chefOf(S.cart.chef);if(!c)return null;
-  const dishes=S.cart.dishes.map(id=>c.menu.find(m=>m.id===id)).filter(Boolean);
-  const g=Math.floor(+S.form.guests)||0;
-  const pp=dishes.reduce((a,d)=>a+d.price,0);
-  const sub=pp*g,serv=Math.round(sub*SERVICE*100)/100,total=sub+serv+c.travel;
-  return{c,dishes,g,pp,sub,serv,total};
-}
-function message(q){
-  const f=S.form,L=[`Olá, ${q.c.name.split(' ')[0]}! Vim pelo Seu Chef em Casa e gostaria de um orçamento.`,'',
-  `*Cliente:* ${f.name.trim()}`,`*Contato:* ${f.phone.trim()}`,`*Data:* ${fdate(f.date)}`,`*Convidados:* ${q.g}`,`*Bairro/Cidade:* ${f.hood.trim()}`,'','*Cardápio escolhido (por pessoa):*'];
-  q.dishes.forEach(d=>L.push(`• ${d.name} — ${brl(d.price)}`));
-  L.push('',`Estimativa: ${brl(q.total)} (pratos ${brl(q.sub)} + serviço ${brl(q.serv)} + deslocamento ${brl(q.c.travel)})`);
-  if(f.notes.trim())L.push('',`*Observações:* ${f.notes.trim()}`);
-  return L.join('\n');
-}
-
-/* ---------- Telas ---------- */
-const avatar=c=>`<div class="av" style="background:${c.color}" aria-hidden="true">${c.emoji}</div>`;
-function chefCards(){
-  const q=UI.q.trim().toLowerCase();
-  const list=CHEFS.filter(c=>(!UI.spec||c.spec===UI.spec)&&(!q||(c.name+' '+c.spec+' '+c.city+' '+c.menu.map(m=>m.name).join(' ')).toLowerCase().includes(q)));
-  if(!list.length)return '<div class="empty"><div class="big">🔎</div><p>Nenhum chef encontrado. Tente outra busca.</p></div>';
-  return list.map(c=>`<a class="card chef" href="#/chef/${c.id}" aria-label="Ver ${esc(c.name)}">${avatar(c)}<div><h3>${esc(c.name)}</h3><div class="mu">${esc(c.spec)} · ${esc(c.city)}</div><div class="mu"><span style="color:var(--ac)">${stars(c.rating)}</span> (${c.reviews}) · a partir de ${brl(Math.min(...c.menu.map(m=>m.price)))}/pessoa</div></div></a>`).join('');
-}
-function vHome(){
-  const specs=[...new Set(CHEFS.map(c=>c.spec))];
-  return `<section class="hero"><h1>Boa comida, boas histórias</h1><p>Escolha um personal chef, monte o cardápio e peça seu orçamento pelo WhatsApp.</p></section>
-  <label for="q" class="mu" style="margin-top:0">Buscar chef, cozinha ou prato</label>
-  <input id="q" type="search" placeholder="Ex.: massa, vegana, Florianópolis" value="${esc(UI.q)}" autocomplete="off">
-  <div class="chips" role="group" aria-label="Filtrar por cozinha"><button class="chip" data-act="spec" data-v="" aria-pressed="${!UI.spec}">Todos</button>${specs.map(s=>`<button class="chip" data-act="spec" data-v="${esc(s)}" aria-pressed="${UI.spec===s}">${esc(s)}</button>`).join('')}</div>
-  <div id="list" aria-live="polite">${chefCards()}</div>
-  <p class="note">Demonstração: chefs, avaliações e telefones são fictícios.</p>`;
-}
-function vChef(id){
-  const c=chefOf(id);if(!c)return notFound();
-  const mine=S.cart.chef===c.id?S.cart.dishes:[];
-  const cats=[...new Set(c.menu.map(m=>m.cat))];
-  return `<a href="#/" class="mu">← Todos os chefs</a>
-  <div class="card chef" style="margin-top:10px">${avatar(c)}<div><h1 style="font-size:1.4rem">${esc(c.name)}</h1><div class="mu">${esc(c.spec)} · ${esc(c.city)}</div><div class="mu" style="color:var(--ac)">${stars(c.rating)} <span class="mu">(${c.reviews} avaliações)</span></div></div></div>
-  <p>${esc(c.bio)}</p><p class="mu">Atende ${c.min} a ${c.max} pessoas · deslocamento ${brl(c.travel)} · preços por pessoa</p>
-  ${cats.map(cat=>`<div class="cat">${cat}</div>`+c.menu.filter(m=>m.cat===cat).map(m=>{const on=mine.includes(m.id);return `<div class="card dish${on?' on':''}"><div><h3>${esc(m.name)}</h3><p class="mu">${esc(m.desc)}</p><div class="price">${brl(m.price)} <span class="mu">/ pessoa</span></div></div><button class="btn sm${on?'':' alt'}" data-act="tog" data-chef="${c.id}" data-id="${m.id}" aria-pressed="${on}" aria-label="${on?'Remover':'Adicionar'} ${esc(m.name)}">${on?'✓ No menu':'+ Adicionar'}</button></div>`}).join('')).join('')}
-  ${mine.length?`<div class="bar"><span><b>${mine.length}</b> ${mine.length>1?'pratos':'prato'}</span><a class="btn sm" href="#/orcamento">Montar orçamento</a></div>`:''}`;
-}
-function sumHTML(){
-  const q=calc();if(!q)return '';
-  const ok=q.g>0;
-  return `<h2>Resumo</h2>${q.dishes.map(d=>`<div class="row"><span>${esc(d.name)}</span><span>${brl(d.price)}</span></div>`).join('')}
-  <div class="row mu"><span>Por pessoa</span><span>${brl(q.pp)}</span></div>
-  <div class="row"><span>Pratos × ${ok?q.g:'—'}</span><span>${ok?brl(q.sub):'—'}</span></div>
-  <div class="row"><span>Taxa de serviço (${SERVICE*100}%)</span><span>${ok?brl(q.serv):'—'}</span></div>
-  <div class="row"><span>Deslocamento</span><span>${brl(q.c.travel)}</span></div>
-  <div class="row t"><span>Total estimado</span><span>${ok?brl(q.total):'—'}</span></div>
-  <p class="mu">Valor final confirmado pelo chef. Ingredientes especiais podem ter custo extra.</p>`;
-}
-function field(id,label,type,extra=''){
-  const v=S.form[id];
-  return `<label for="f-${id}">${label}</label><input id="f-${id}" data-f="${id}" type="${type}" value="${esc(v)}" ${extra} aria-invalid="${!!E[id]}" aria-describedby="e-${id}"><div class="err" id="e-${id}">${esc(E[id]||'')}</div>`;
-}
-function vQuote(){
-  const q=calc();
-  if(!q||!q.dishes.length)return `<div class="empty"><div class="big">🧾</div><h2>Seu orçamento está vazio</h2><p>Escolha um chef e adicione pratos ao cardápio.</p><a class="btn" href="#/">Ver chefs</a></div>`;
-  return `<a href="#/chef/${q.c.id}" class="mu">← Voltar ao cardápio de ${esc(q.c.name)}</a>
-  <h1 style="margin-top:10px">Pedir orçamento</h1>
-  <div class="card" id="sum">${sumHTML()}</div>
-  <div class="card"><h2>Seus dados</h2>
-  ${field('name','Seu nome','text','autocomplete="name"')}
-  ${field('phone','WhatsApp (com DDD)','tel','autocomplete="tel" inputmode="tel" placeholder="(48) 99999-0000"')}
-  ${field('date','Data do evento','date','min="'+tomorrow()+'"')}
-  <label for="f-guests">Convidados (${q.c.min} a ${q.c.max})</label>
-  <div class="step"><button class="btn alt" data-act="g" data-d="-1" aria-label="Menos um convidado">−</button><input id="f-guests" data-f="guests" type="number" inputmode="numeric" min="${q.c.min}" max="${q.c.max}" value="${esc(S.form.guests)}" aria-invalid="${!!E.guests}" aria-describedby="e-guests"><button class="btn alt" data-act="g" data-d="1" aria-label="Mais um convidado">+</button></div><div class="err" id="e-guests">${esc(E.guests||'')}</div>
-  ${field('hood','Bairro e cidade','text','autocomplete="address-level2"')}
-  <label for="f-notes">Observações (alergias, restrições, ocasião)</label><textarea id="f-notes" data-f="notes">${esc(S.form.notes)}</textarea></div>
-  <button class="btn full" data-act="send">Enviar pelo WhatsApp</button>
-  <button class="btn alt full" style="margin-top:10px" data-act="copy">Copiar texto do pedido</button>
-  <button class="btn dng full" style="margin-top:10px" data-act="clear">Limpar orçamento</button>`;
-}
-function vReqs(){
-  if(!S.reqs.length)return `<div class="empty"><div class="big">📋</div><h2>Nenhum pedido ainda</h2><p>Seus pedidos de orçamento enviados aparecem aqui.</p><a class="btn" href="#/">Explorar chefs</a></div>`;
-  return `<h1>Meus pedidos</h1>`+S.reqs.map(r=>`<div class="card"><h3>${esc(r.chef)}</h3><div class="mu">${fdate(r.date)} · ${r.guests} convidados · enviado em ${esc(r.sent)}</div><p>${esc(r.dishes.join(' · '))}</p><div class="price">${brl(r.total)}</div><div style="display:flex;gap:8px;margin-top:10px"><a class="btn sm" target="_blank" rel="noopener" href="https://wa.me/${r.phone}?text=${encodeURIComponent(r.text)}">Reenviar</a><button class="btn dng sm" data-act="del" data-id="${r.id}">Excluir</button></div></div>`).join('');
-}
-function notFound(){return `<div class="empty"><div class="big">🍽️</div><h2>Página não encontrada</h2><a class="btn" href="#/">Voltar ao início</a></div>`}
-
-/* ---------- Navegação ---------- */
-function nav(path){
-  const n=S.cart.chef?S.cart.dishes.length:0;
-  const items=[['#/','🍴','Chefs',path==='/'||path.startsWith('/chef')],['#/orcamento','🧾','Orçamento',path==='/orcamento'],['#/pedidos','📋','Pedidos',path==='/pedidos']];
-  $('#nav').innerHTML=items.map(i=>`<a href="${i[0]}" ${i[3]?'aria-current="page"':''}><span aria-hidden="true">${i[1]}</span>${i[2]}${i[0]==='#/orcamento'&&n?`<i class="badge" aria-label="${n} itens">${n}</i>`:''}</a>`).join('');
-}
-function render(keepScroll){
-  const y=window.scrollY,path=(location.hash||'#/').slice(1)||'/';
-  let h;
-  try{
-    if(path==='/')h=vHome();else if(path.startsWith('/chef/'))h=vChef(path.slice(6));
-    else if(path==='/orcamento')h=vQuote();else if(path==='/pedidos')h=vReqs();else h=notFound();
-    $('#view').innerHTML=h;nav(path);$('#ovl').hidden=true;
-    const t=chefOf(path.slice(6));document.title=(t&&path.startsWith('/chef/')?t.name+' · ':'')+'Seu Chef em Casa';
-    if(keepScroll)window.scrollTo(0,y);else{window.scrollTo(0,0);$('#view').focus({preventScroll:true})}
-  }catch(e){fail(e)}
-}
-function fail(e){
-  console.error(e);const o=$('#ovl');
-  o.innerHTML=`<div><div style="font-size:3rem">😕</div><h2>Algo deu errado por aqui</h2><p class="mu">Seus dados locais podem estar corrompidos. Tente recarregar; se persistir, limpe os dados salvos.</p><button class="btn" id="r1">Tentar de novo</button> <button class="btn alt" id="r2">Limpar dados e recomeçar</button></div>`;
-  o.hidden=false;
-  $('#r1').onclick=()=>location.reload();
-  $('#r2').onclick=()=>{try{localStorage.removeItem(KEY)}catch(x){}S=def();location.hash='#/';location.reload()};
-}
-window.addEventListener('hashchange',()=>{E={};render()});
-window.addEventListener('error',e=>fail(e.error||e.message));
-
-/* ---------- Eventos ---------- */
-function validate(q){
-  const f=S.form,e={},d=f.phone.replace(/\D/g,'');
-  if(f.name.trim().length<2)e.name='Informe seu nome.';
-  if(d.length<10||d.length>13)e.phone='Informe um WhatsApp válido com DDD.';
-  if(!f.date||f.date<tomorrow())e.date='Escolha uma data a partir de amanhã.';
-  const g=+f.guests;
-  if(!Number.isInteger(g)||g<q.c.min||g>q.c.max)e.guests=`Este chef atende de ${q.c.min} a ${q.c.max} pessoas.`;
-  if(f.hood.trim().length<3)e.hood='Informe o bairro e a cidade.';
-  return e;
-}
-function clearCart(){S.cart={chef:null,dishes:[]};save()}
-document.addEventListener('input',e=>{
-  const t=e.target;
-  if(t.id==='q'){UI.q=t.value;$('#list').innerHTML=chefCards();return}
-  const k=t.dataset&&t.dataset.f;if(!k)return;
-  S.form[k]=t.value;delete E[k];save();
-  const er=$('#e-'+k);if(er)er.textContent='';t.removeAttribute('aria-invalid');
-  if(k==='guests'){const s=$('#sum');if(s)s.innerHTML=sumHTML()}
-});
-document.addEventListener('click',async e=>{
-  const b=e.target.closest('[data-act]');if(!b)return;
-  const a=b.dataset.act;
-  if(a==='spec'){UI.spec=b.dataset.v;render(true);return}
-  if(a==='tog'){
-    const id=b.dataset.id,cid=b.dataset.chef;
-    if(S.cart.chef!==cid){
-      if(S.cart.dishes.length&&!confirm('Seu orçamento atual é de outro chef. Deseja substituí-lo?'))return;
-      S.cart={chef:cid,dishes:[]};
-    }
-    const i=S.cart.dishes.indexOf(id);i<0?S.cart.dishes.push(id):S.cart.dishes.splice(i,1);
-    if(!S.cart.dishes.length)S.cart.chef=null;
-    save();render(true);return;
-  }
-  if(a==='g'){
-    const c=chefOf(S.cart.chef);if(!c)return;
-    const n=Math.min(c.max,Math.max(c.min,(Math.floor(+S.form.guests)||c.min)+(+b.dataset.d)));
-    S.form.guests=n;delete E.guests;save();$('#f-guests').value=n;$('#e-guests').textContent='';$('#sum').innerHTML=sumHTML();return;
-  }
-  if(a==='clear'){if(confirm('Limpar o orçamento atual?')){clearCart();toast('Orçamento limpo');render()}return}
-  if(a==='del'){if(confirm('Excluir este pedido?')){S.reqs=S.reqs.filter(r=>String(r.id)!==b.dataset.id);save();render(true)}return}
-  if(a==='send'||a==='copy'){
-    const q=calc();if(!q||!q.dishes.length)return;
-    E=validate(q);
-    if(Object.keys(E).length){render(true);const k=Object.keys(E)[0],el=$('#f-'+k);if(el){el.scrollIntoView({block:'center'});el.focus()}toast('Revise os campos destacados');return}
-    const text=message(q);
-    if(a==='copy'){
-      try{await navigator.clipboard.writeText(text);toast('Texto copiado!')}catch(x){toast('Não foi possível copiar neste navegador')}
-      return;
-    }
-    S.reqs.unshift({id:Date.now(),chef:q.c.name,phone:q.c.phone,date:S.form.date,guests:q.g,total:q.total,dishes:q.dishes.map(d=>d.name),sent:new Date().toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}),text});
-    const url='https://wa.me/'+q.c.phone+'?text='+encodeURIComponent(text);
-    clearCart();S.form.notes='';save();
-    if(!window.open(url,'_blank','noopener'))location.href=url;
-    location.hash='#/pedidos';toast('Pedido salvo em "Pedidos"');
-  }
-});
-render();
-})();
-</script>
 </body>
 </html>

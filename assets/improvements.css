@@ -1,0 +1,23 @@
+/* Camada de melhorias: carregar depois de styles.css. Não altera nem remove nada do original. */
+:root{--mut:#5d675c;color-scheme:light}
+html{scroll-padding-top:90px}
+::selection{background:#cfaa6666}
+.b{transition:background .15s,transform .1s,box-shadow .15s}
+.b:active:not(:disabled){transform:scale(.98)}
+.b2:hover:not(:disabled){background:#f1efe6;border-color:#d5d6c8}
+.b3:hover:not(:disabled){background:#243d2d}
+.chip{min-height:40px;transition:background .15s,border-color .15s}
+.chip:hover:not(.on){border-color:var(--ol)}
+.step button{width:44px;height:44px}
+.step button:hover{background:#e9eadf}
+.dish:hover,.sw:hover{border-color:#cdb9a8}
+.chef-card:focus-visible{outline-offset:4px;border-radius:14px}
+.chef-card .specialty{min-height:1.6em}
+.tile:focus-visible{outline-offset:-3px}
+.tabs2 button:hover,.nav a:focus-visible{color:var(--cu)}
+.toast{box-shadow:0 8px 24px #0004;line-height:1.4}
+.err:empty{display:none}
+.summary-line[data-est]{border-bottom:2px solid var(--cu)}
+.share-btn{gap:8px}
+@media(max-width:650px){.toast{bottom:calc(var(--nav) + 14px + env(safe-area-inset-bottom))}.dish strong{font-size:12px}}
+@media print{.top,.nav,.toast,.acts,.tabs2,.home-search,.ov{display:none!important}body{padding:0;background:white}.card,.chef-card{break-inside:avoid;box-shadow:none}}
