@@ -46,3 +46,13 @@ Entrega em branch de revisão; sem migração de infraestrutura ou lançamento p
 - [ ] Validar dispositivos reais e fluxo final de envio no WhatsApp.
 
 Detalhes de escopo, testes efetivos e limitações: REVISAO-2026-10-29.md. A migração SQL da revisão anterior foi preservada sem aplicação; nenhum lançamento foi feito.
+
+
+## Entrega em revisão — 30/10/2026
+Origem: main (34f25cb). O `index.html` de main havia sido substituído por uma versão de arquivo único que ignora `assets/`; esta branch restaura o `index.html` de a0002ed e aplica melhorias por camada, sem alterar `app.js`, `app-core.js`, `order-validation.js`, `demo-data.js` nem `styles.css`.
+- [x] `assets/improvements.js`: aviso do erro de validação do pedido, estimativa por número de adultos no resumo (com o mesmo aviso de não ser preço final), máscara de telefone, botão de compartilhar perfil.
+- [x] `assets/improvements.css`: contraste do texto secundário, alvos de toque maiores, estados de foco/hover, estilo de impressão.
+- [x] `assets/demo-fixes.js`: correções de texto nos perfis de exemplo (“especializado(a)”, “Húmido”, “File Mignon”) e prato principal repetido do perfil c21.
+- [x] `index.html`: metas `og:`, preconnect ao Unsplash e carregamento dos arquivos novos; `scripts/build.cjs` e `npm run check` incluem os arquivos novos.
+- Verificado de fato: `npm run check`, `npm test` (15 de 15) e `npm run build`; fluxo básico do HTML gerado em navegador simulado (jsdom): início, perfil, cardápio, pedido, validação, busca, entrar; sem erros de JavaScript.
+- Não verificado: navegador e dispositivo reais, WhatsApp, compartilhamento nativo do celular. Nenhuma publicação nem alteração de dados ou de SQL.
