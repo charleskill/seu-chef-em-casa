@@ -34,3 +34,7 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Carlos autorizou publicar o site e pediu que as atualizações sejam enviadas direto ao `main`, sem pull request.
 - Hospedagem: GitHub Pages por workflow (`.github/workflows/publicar.yml`), publicando só `dist/` (index.html e assets/) depois de `check` e `test`. Docs, testes, scripts e SQL não são publicados. Ativação: Settings → Pages → Source: GitHub Actions.
 - Isso publica o protótipo local (dados no navegador de cada pessoa, sem banco compartilhado nem login real) com perfis de exemplo identificados. Não substitui o piloto com dados compartilhados. A migração SQL continua sem aplicação.
+
+## 30/10 · Mapa e opções de atendimento do chef
+- Google Maps: links "Ver/Conferir no Google Maps" (sem chave de API) no perfil, no campo de local do pedido, no painel do chef e uma linha "Mapa:" no texto do WhatsApp. Autocomplete de endereço exige chave da Places API (faturamento + restrição por domínio) e fica para quando houver chave.
+- Painel > Atendimento: o chef liga/desliga 13 opções (crianças, compras, limpeza, utensílios, garçom, grupos grandes, fins de semana, outras cidades, glúten, lactose, vegetariano, vegano, frutos do mar). Sem escolha, valem os padrões (a maioria ligada). Efeito: aparece no perfil, esconde campos no pedido e filtra a busca.
