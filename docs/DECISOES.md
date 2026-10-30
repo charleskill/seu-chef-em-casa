@@ -49,3 +49,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Página #/termos (assets/termos.js): o app é vitrine; contratação, pagamento e serviço são diretos entre cliente e chef; sem verificação de chefs ou clientes; responsabilidade "nos limites da lei"; LGPD resumida.
 - Chef precisa aceitar os termos ao criar conta; o resumo do pedido lembra que é vitrine.
 - PENDENTE: revisão por advogado(a) antes do lançamento; preencher CONTATO em assets/termos.js (e-mail); trocar o nome quando virar Mesa Posta.
+
+## 30/10 · Aba Marmitas, sugestões do chef e montagem
+- Nova aba "Marmitas" (#/marmitas): lista chefs que fazem marmita (filtro por cidade) e leva ao plano do chef.
+- No plano: "Sugestões do chef" (kits criados por ele no painel > Marmitas) com um toque, ou "monte a sua" com quantidade por prato, agrupado por categoria. O total vira a quantidade por entrega e precisa atingir o mínimo do chef.
+- A mensagem do WhatsApp lista "5x Frango..." por entrega. Máximo de 6 sugestões por chef; cada uma deve ter ao menos o mínimo do chef.
+- Hipótese a validar com os chefs: preço por marmita e mínimos (pesquisa mostra R$ 21–30 em SP; ver docs/pesquisa).

@@ -22,6 +22,12 @@
       if(!Number.isInteger(m.qty)||m.qty<1) return 'Informe quantas marmitas por entrega.';
       if(cfg&&m.qty<cfg.min) return 'Este chef atende a partir de '+cfg.min+' marmitas por entrega.';
       if(m.qty>500) return 'Informe até 500 marmitas por entrega.';
+      if(m.mix&&typeof m.mix==='object'&&Object.keys(m.mix).length){
+        const ids=(chef&&chef.dishes||[]).filter(d=>d.marmita).map(d=>String(d.id));
+        if(chef&&Object.keys(m.mix).some(k=>!ids.includes(k))) return 'Há marmitas escolhidas que o chef não oferece mais. Refaça a escolha.';
+        const sum=Object.values(m.mix).reduce((a,b)=>a+(Number(b)||0),0);
+        if(sum!==m.qty) return 'A soma das marmitas escolhidas ('+sum+') precisa ser igual à quantidade por entrega ('+m.qty+').';
+      }
       if(!Number.isInteger(m.months)||m.months<1||m.months>24) return 'Escolha a duração do plano.';
       if(!['entrega','casa'].includes(m.way)||(cfg&&!cfg.modes.includes(m.way))) return 'Escolha uma forma de atendimento oferecida pelo chef.';
       if(!Array.isArray(m.days)||!m.days.length) return 'Escolha ao menos um dia da semana para a entrega ou o preparo.';

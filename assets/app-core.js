@@ -34,13 +34,23 @@ const MODOS={entrega:'Entrega das marmitas prontas',casa:'Preparo na minha casa'
 const DIAS=[['seg','Seg'],['ter','Ter'],['qua','Qua'],['qui','Qui'],['sex','Sex'],['sab','Sáb'],['dom','Dom']];
 const money2=n=>Math.round(n*100)/100;
 const brl=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+function cleanKits(k){
+  if(!Array.isArray(k))return [];
+  return k.map(x=>{
+    if(!x||typeof x!=='object')return null;
+    const name=String(x.name||'').trim().slice(0,60),items={};
+    Object.entries(x.items&&typeof x.items==='object'?x.items:{}).forEach(([id,q])=>{const n=Math.floor(Number(q));if(id&&n>=1&&n<=500)items[String(id)]=n});
+    return name&&Object.keys(items).length?{id:String(x.id||name).slice(0,40),name,items}:null;
+  }).filter(Boolean).slice(0,6);
+}
 function cleanMarmita(m){
   if(!m||typeof m!=='object')return null;
   const price=Number(m.price),min=Math.floor(Number(m.min));
   const freq=(Array.isArray(m.freq)?m.freq:[]).filter(f=>FREQ[f]).filter((f,i,a)=>a.indexOf(f)===i);
   const modes=(Array.isArray(m.modes)?m.modes:[]).filter(f=>MODOS[f]).filter((f,i,a)=>a.indexOf(f)===i);
   if(!(price>0&&price<=1000)||!(min>=1&&min<=500)||!freq.length||!modes.length)return null;
-  return {price:money2(price),min,freq,modes};
+  const kits=cleanKits(m.kits);
+  return kits.length?{price:money2(price),min,freq,modes,kits}:{price:money2(price),min,freq,modes};
 }
 function validateMarmita(m){
   if(!Number.isFinite(m.price)||m.price<=0||m.price>1000)return 'Informe o preço por marmita, de R$ 0,01 a R$ 1.000,00.';
@@ -103,10 +113,10 @@ function readData(storage,seed){
 }
 function persist(storage,data){storage.setItem('scf4_store',JSON.stringify(data))}
 function buildMarmitaText(c,o){
-  const f=o.f,m=o.m||{},e=marmitaEstimate(m,c),pr=c.dishes.filter(d=>o.dishes.includes(d.id)).map(d=>'- '+d.name).join('\n');
+  const f=o.f,m=o.m||{},e=marmitaEstimate(m,c),mix=m.mix&&typeof m.mix==='object'?m.mix:{},pr=c.dishes.filter(d=>o.dishes.includes(d.id)).map(d=>'- '+(mix[String(d.id)]?mix[String(d.id)]+'x ':'')+d.name).join('\n');
   const dias=DIAS.filter(([k])=>(m.days||[]).includes(k)).map(x=>x[1]).join(', ');
   const meses=m.months===1?'1 mês':m.months+' meses';
-  return `*PEDIDO DE ORÇAMENTO — ${c.name}*\n*Plano de marmitas*\n\nCliente: ${f.name.trim()}\nTelefone: ${f.phone.trim()}${f.email?'\nE-mail: '+f.email.trim():''}\nInício desejado: ${f.date?f.date.split('-').reverse().join('/'):'A combinar'}\nLocal: ${f.local||'A combinar'}${f.local&&f.local.trim()?'\nMapa: '+mapsUrl(f.local):''}\nPessoas atendidas: ${o.adults} adultos e ${o.kids} crianças\nFrequência: ${(FREQ[m.freq]||{}).label||'A combinar'}\nMarmitas por entrega: ${m.qty}\nDuração do plano: ${meses}\nForma de atendimento: ${MODOS[m.way]||'A combinar'}\nDias preferidos: ${dias||'A combinar'}\nServiços solicitados: ${[o.shop?'Compras dos ingredientes':'',o.clean?'Limpeza ao final':''].filter(Boolean).join(', ')||'A combinar'}\nRestrições e preferências: ${o.chips.concat(f.allergies?[f.allergies]:[]).join(', ')||'Nenhuma informada'}\n\nPratos de interesse:\n${pr}\n\n${e?`Estimativa de referência: ${brl(e.monthly)} por mês (${e.qty*e.deliveries} marmitas × ${brl(e.unit)})${e.months>1?'; plano de '+meses+': '+brl(e.total):''}.\n`:''}Valores, serviços e disponibilidade a confirmar com o chef.\nSeu Chef em Casa`;
+  return `*PEDIDO DE ORÇAMENTO — ${c.name}*\n*Plano de marmitas*\n\nCliente: ${f.name.trim()}\nTelefone: ${f.phone.trim()}${f.email?'\nE-mail: '+f.email.trim():''}\nInício desejado: ${f.date?f.date.split('-').reverse().join('/'):'A combinar'}\nLocal: ${f.local||'A combinar'}${f.local&&f.local.trim()?'\nMapa: '+mapsUrl(f.local):''}\nPessoas atendidas: ${o.adults} adultos e ${o.kids} crianças\nFrequência: ${(FREQ[m.freq]||{}).label||'A combinar'}\nMarmitas por entrega: ${m.qty}\nDuração do plano: ${meses}\nForma de atendimento: ${MODOS[m.way]||'A combinar'}\nDias preferidos: ${dias||'A combinar'}\nServiços solicitados: ${[o.shop?'Compras dos ingredientes':'',o.clean?'Limpeza ao final':''].filter(Boolean).join(', ')||'A combinar'}\nRestrições e preferências: ${o.chips.concat(f.allergies?[f.allergies]:[]).join(', ')||'Nenhuma informada'}\n\n${Object.keys(mix).length?'Marmitas escolhidas por entrega':'Pratos de interesse'}:\n${pr}\n\n${e?`Estimativa de referência: ${brl(e.monthly)} por mês (${e.qty*e.deliveries} marmitas × ${brl(e.unit)})${e.months>1?'; plano de '+meses+': '+brl(e.total):''}.\n`:''}Valores, serviços e disponibilidade a confirmar com o chef.\nSeu Chef em Casa`;
 }
 function buildOrderText(c,o){if(o.mode==='marmita'&&c.marmita)return buildMarmitaText(c,o);const f=o.f,pr=c.dishes.filter(d=>o.dishes.includes(d.id)).map(d=>'- '+d.name).join('\n');return `*PEDIDO DE ORÇAMENTO — ${c.name}*\n\nCliente: ${f.name.trim()}\nTelefone: ${f.phone.trim()}${f.email?'\nE-mail: '+f.email.trim():''}\nData: ${f.date?f.date.split('-').reverse().join('/'):'A combinar'}\nEvento: ${f.type||'Jantar a dois'}\nLocal: ${f.local||'A combinar'}${f.local&&f.local.trim()?'\nMapa: '+mapsUrl(f.local):''}\nConvidados: ${o.adults} adultos e ${o.kids} crianças\nServiços solicitados: ${[o.shop?'Compras dos ingredientes':'',o.clean?'Limpeza ao final':''].filter(Boolean).join(', ')||'A combinar'}\nRestrições e preferências: ${o.chips.concat(f.allergies?[f.allergies]:[]).join(', ')||'Nenhuma informada'}\n\nPratos:\n${pr}\n\nValores, serviços e disponibilidade a confirmar com o chef.\nSeu Chef em Casa`}
 const hex=bytes=>Array.from(new Uint8Array(bytes),x=>x.toString(16).padStart(2,'0')).join('');
@@ -128,6 +138,6 @@ async function verifyPassword(password,account,cryptoApi){
   if(!/^[a-f\d]{64}$/i.test(account.pass)||!c?.subtle)return false;
   return account.pass===hex(await c.subtle.digest('SHA-256',new TextEncoder().encode(account.id+':'+password)));
 }
-const api={norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree};
+const api={norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);
