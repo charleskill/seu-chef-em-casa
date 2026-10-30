@@ -21,3 +21,13 @@ html{scroll-padding-top:90px}
 .share-btn{gap:8px}
 @media(max-width:650px){.toast{bottom:calc(var(--nav) + 14px + env(safe-area-inset-bottom))}.dish strong{font-size:12px}}
 @media print{.top,.nav,.toast,.acts,.tabs2,.home-search,.ov{display:none!important}body{padding:0;background:white}.card,.chef-card{break-inside:avoid;box-shadow:none}}
+
+/* Marmitas, perfis de exemplo e formulários do painel */
+.chk{display:flex;gap:10px;align-items:center;margin:10px 0;font-size:14px;font-weight:500;cursor:pointer}
+.chk input{flex:none;width:20px;height:20px;min-height:0;padding:0;accent-color:var(--ol)}
+.marmita-info{display:flex;flex-direction:column;gap:4px;margin:18px 0 0;padding:14px 16px;border:1px solid #e4ddc9;background:#f1eee4;border-radius:12px;font-size:13px;line-height:1.6}
+.marmita-info b{color:var(--cu);font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.tag-marmita{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:20px;background:#e9eddf;color:var(--ol);font-size:10px;font-weight:650;vertical-align:middle}
+.search-tools .chip{flex:none;min-height:44px;padding:8px 16px;font-size:13px}
+.seg[role=group]{margin:0 0 20px}
+@media(max-width:650px){.search-tools .chip{flex:1 1 100%}}
