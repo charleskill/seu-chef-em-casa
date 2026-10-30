@@ -1,0 +1,12 @@
+{
+  "name": "seu-chef-em-casa",
+  "version": "0.4.0",
+  "private": true,
+  "description": "Protótipo local de busca e portfólio de personal chefs",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "check": "node --check assets/app.js && node --check assets/app-core.js && node --check assets/demo-data.js && node --check assets/order-validation.js",
+    "build": "node scripts/build.cjs"
+  },
+  "engines": { "node": ">=18" }
+}
