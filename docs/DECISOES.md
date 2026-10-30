@@ -29,3 +29,8 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Marmitas entram como um segundo tipo de pedido ("Plano de marmitas") dentro do mesmo orçamento, com o mesmo envio por WhatsApp. Cada chef informa um preço de referência por marmita, o mínimo por entrega, as frequências e as formas de atendimento; os pratos de marmita são marcados no cardápio.
 - Proposta, ainda sem validação com chefs: estimativa = preço por marmita × marmitas por entrega × entregas por mês (semanal 4, quinzenal 2, mensal 1) × meses. Sem desconto por prazo, sem taxa de entrega e sem cobrança recorrente; tudo é combinado com o chef. Não há pagamento nem contrato no app.
 - Imagens dos perfis de teste são ilustrações geradas, não fotos de pratos reais, para não depender de serviços externos nem usar fotos de terceiros sem controle.
+
+## 30/10/2026 — Publicação autorizada
+- Carlos autorizou publicar o site e pediu que as atualizações sejam enviadas direto ao `main`, sem pull request.
+- Hospedagem: GitHub Pages por workflow (`.github/workflows/publicar.yml`), publicando só `dist/` (index.html e assets/) depois de `check` e `test`. Docs, testes, scripts e SQL não são publicados. Ativação: Settings → Pages → Source: GitHub Actions.
+- Isso publica o protótipo local (dados no navegador de cada pessoa, sem banco compartilhado nem login real) com perfis de exemplo identificados. Não substitui o piloto com dados compartilhados. A migração SQL continua sem aplicação.
