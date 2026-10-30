@@ -23,5 +23,26 @@ Uma IA implementa por tarefa; outra pode revisar.
 Ao concluir, registrar arquivos alterados, testes reais e limitações.
 Não marcar testes como realizados sem execução.
 
-## Etapa em revisão: feat/preparacao-piloto
-Busca/perfil/formulário testados em navegador desktop. Correção de validação e 4 testes Node concluídos na branch. Migração inicial escrita, NÃO aplicada/testada. Ver docs/PREPARACAO-PILOTO.md. Próximo bloqueio: conexão com Supabase.
+
+## Trabalho em andamento — 29/10/2026
+Responsável técnico: ChatGPT, a pedido de Carlos.
+Origem: main, commit 8922addac6322d2ec916dbec577ab681f505bd1a.
+Escopo: revisão do piloto, navegação, fotos, orçamento, persistência local e validações.
+Entrega em branch de revisão; sem migração de infraestrutura ou lançamento público.
+
+## Entrega em revisão — 29/10/2026
+- [x] Reorganizar navegação e busca; corrigir destinos arbitrários de orçamento/mensagens.
+- [x] Abrir fotos em modal com legenda, navegação e fechamento por teclado.
+- [x] Exibir conversas locais à esquerda no desktop e separar lista/conversa no celular.
+- [x] Redesenhar telas, cardápio, formulário e resumo de orçamento.
+- [x] Corrigir salvamento conjunto do perfil, validação de preço e edição de pratos.
+- [x] Retirar recuperação insegura por dados públicos; preservar compatibilidade das senhas locais.
+- [x] Preservar dados legados e tratar erros de armazenamento sem sobrescrever o registro anterior.
+- [x] Executar 15 testes Node, checagem sintática e build estático.
+- [x] Conferir fluxos no navegador desktop e em iframe com larguras de 320 e 390 px.
+- [ ] Conectar autenticação real, banco, armazenamento de imagens e recuperação de senha verificada.
+- [ ] Aplicar e testar a migração SQL e as políticas de acesso com usuários independentes.
+- [ ] Validar identidade, fotos, contatos e condições dos chefs reais antes do piloto.
+- [ ] Validar dispositivos reais e fluxo final de envio no WhatsApp.
+
+Detalhes de escopo, testes efetivos e limitações: REVISAO-2026-10-29.md. A migração SQL da revisão anterior foi preservada sem aplicação; nenhum lançamento foi feito.

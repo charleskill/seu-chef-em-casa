@@ -24,3 +24,4 @@ Não importar senhas locais. Profissionais precisarão criar contas verificadas.
 Carlos precisa adicionar/conectar Supabase. A conexão permite verificar projetos existentes antes de criar qualquer recurso.
 Não foi criado projeto, contratado plano ou configurado cobrança.
 Fontes técnicas: https://supabase.com/docs/guides/database/secure-data e https://supabase.com/docs/guides/getting-started/api-keys
+

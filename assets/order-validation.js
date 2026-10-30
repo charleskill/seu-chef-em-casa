@@ -20,3 +20,4 @@
   if(typeof module!=='undefined' && module.exports) module.exports={validateOrder};
   else root.ChefValidation={validateOrder};
 })(typeof window!=='undefined'?window:globalThis);
+

@@ -61,3 +61,4 @@ using (chef_id = (select auth.uid()));
 -- de abuso, após validar chef publicado, pratos e campos. Nenhuma chave secret
 -- ou service_role pode ir para o HTML. Implementar endpoint antes de ativar fluxo.
 commit;
+
