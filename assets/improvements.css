@@ -60,3 +60,22 @@ html{scroll-padding-top:90px}
 .mix-total{margin:14px 0 6px;padding:10px 12px;border-radius:10px;background:#f2efe6;font-weight:600}
 .kit-list{list-style:none;margin:0 0 14px;padding:0}.kit-list li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(48,78,59,.1)}
 .kit-list small{display:block;color:#6b6b60}
+
+/* Celular: busca legível, cartões em coluna única, filtros compactos */
+@media(max-width:650px){
+.home-search{flex-direction:column;align-items:stretch;gap:10px;padding:16px;margin:14px 0 0}
+.home-search .hs{flex:none;width:100%}
+.home-search .b{width:100%;justify-content:center;min-height:48px}
+.chef-grid{grid-template-columns:1fr!important}
+.search-tools{flex-wrap:wrap;gap:8px}
+.search-tools .search-field,.search-tools select{flex:1 1 100%}
+.search-tools .sfield{flex:1 1 40%;width:auto}
+.search-tools input[type=number].sfield{flex:0 0 84px;width:84px}
+.search-tools .chip{flex:0 0 auto!important;min-height:40px;padding:6px 14px;font-size:13px}
+.who .b{white-space:nowrap}
+.kits{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+.home-search .hs label{display:block!important;font-size:12px;font-weight:700;color:#304e3b;margin:0}
+.search-tools .sfield:not([type=number]){min-width:160px}
+}
