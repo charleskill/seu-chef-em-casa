@@ -15,12 +15,15 @@
   }
   const Cloud = {
     on: false,
+    temGoogle: false,
     // Descobre se há banco e traz chefs reais e a sessão do chef (se houver).
     async start() {
       try {
         const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 4000);
         const r = await fetch(BASE + '/saude', { signal: ctl.signal, credentials: 'same-origin' }); clearTimeout(t);
-        if (!r.ok || !(await r.json()).ok) return null;
+        const saude = r.ok ? await r.json() : null;
+        if (!saude || !saude.ok) return null;
+        Cloud.temGoogle = !!saude.google;
       } catch (e) { return null; }
       const [lista, eu] = await Promise.all([req('GET', '/chefs'), req('GET', '/eu')]);
       Cloud.on = true;
@@ -32,6 +35,8 @@
     salvar: perfil => req('PUT', '/eu', { perfil }).then(j => j.chef),
     // Registra o pedido antes de abrir o WhatsApp. keepalive mantém o envio mesmo se a aba mudar.
     pedido: (chefId, texto, dados) => req('POST', '/pedidos', { chefId, texto, dados }, { keepalive: true }),
+    // Login com Google: o servidor devolve o endereço do Google para onde o navegador deve ir.
+    google: (modo, dados) => req('POST', '/google/iniciar', { modo, ...dados }).then(j => j.url),
     meusPedidos: () => req('GET', '/meus-pedidos').then(j => j.pedidos || [])
   };
   root.ChefCloud = Cloud;

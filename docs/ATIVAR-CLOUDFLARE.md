@@ -30,6 +30,33 @@ No projeto do Pages, abra **Settings**:
 2. Crie a conta com o código, mude a bio e publique uma foto.
 3. Abra o app em outro celular: a chef aparece na busca com a foto.
 
+## 6. Login com Google (opcional, gratuito, sem cartão)
+Faça depois dos passos acima, quando o endereço do app (ex.: `seu-chef-em-casa.pages.dev`) já existir.
+
+**No Google** (console.cloud.google.com, com a conta Google da empresa):
+1. No topo, **Selecionar projeto → Novo projeto**. Nome: `Seu Chef em Casa`. Crie e selecione o projeto.
+2. Menu ☰ → **Google Auth Platform** (ou **APIs e serviços → Tela de permissão OAuth**) → **Começar**.
+   - Nome do app: `Seu Chef em Casa`; e-mail de suporte: o da empresa.
+   - Público: **Externo**. Contato: o mesmo e-mail. Aceite e crie.
+3. Em **Clientes** (ou **Credenciais**) → **Criar cliente** (ID do cliente OAuth):
+   - Tipo: **Aplicativo da Web**. Nome: `Seu Chef em Casa`.
+   - **Origens JavaScript autorizadas**: `https://seu-chef-em-casa.pages.dev`
+   - **URIs de redirecionamento autorizados**: `https://seu-chef-em-casa.pages.dev/api/google/retorno`
+   - (Quando tiver domínio próprio, adicione também `https://SEUDOMINIO` e `https://SEUDOMINIO/api/google/retorno`.)
+   - Crie e copie o **ID do cliente** e a **Chave secreta do cliente**.
+4. Em **Público**, toque em **Publicar app** (status "Em produção"). O app só pede nome e e-mail, então o Google não exige verificação.
+
+**No banco (D1)**: abra o banco `chefemcasa` → **Console**, cole todo o conteúdo de `migrations/0002_google.sql` e execute.
+
+**Na Cloudflare** (projeto do Pages → **Settings → Variables and Secrets**):
+1. `GOOGLE_CLIENT_ID` (tipo Text): o ID do cliente.
+2. `GOOGLE_CLIENT_SECRET` (tipo **Secret**): a chave secreta.
+3. **Deployments → Retry deployment**.
+
+**Conferir**: em **Sou chef**, deve aparecer **Entrar com Google**. Em **Criar conta**, o chef preenche nome, WhatsApp, cidades, código de convite, aceita os termos e toca em **Criar conta com Google**.
+- Se o chef já tem conta com o mesmo e-mail, o Google entra nessa conta.
+- Sem as duas variáveis, os botões do Google simplesmente não aparecem.
+
 ## Como funciona
 - Só cria conta de chef quem tem o código de convite. Cliente não precisa de conta.
 - Cada chef só altera o próprio perfil. A sessão fica num cookie seguro por 30 dias.
@@ -42,5 +69,5 @@ No projeto do Pages, abra **Settings**:
 5 GB de armazenamento, 5 milhões de leituras e 100 mil gravações por dia. Sobra para o piloto.
 
 ## Ainda não tem
-- Troca de senha por e-mail (por enquanto, a equipe ajuda pelo WhatsApp).
+- Troca de senha por e-mail (por enquanto, a equipe ajuda pelo WhatsApp; quem entra com Google não precisa de senha).
 - Domínio próprio (pode ser ligado depois em Custom domains).

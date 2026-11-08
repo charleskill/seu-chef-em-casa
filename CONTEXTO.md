@@ -14,6 +14,7 @@ Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `doc
 
 ## Pendências
 - Carlos: criar conta Cloudflare, banco `chefemcasa`, ligar o repositório, definir o `CONVITE` e mandar aos 2 chefs reais.
+- Login com Google pronto no código; Carlos cria a credencial (docs/ATIVAR-CLOUDFLARE.md, seção 6).
 - Troca de senha por e-mail (precisa de serviço de e-mail e domínio).
 - E-mail de contato e revisão por advogado(a) dos termos.
 - Desligar os 50 perfis de exemplo quando houver chefs reais suficientes.

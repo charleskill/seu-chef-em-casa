@@ -75,3 +75,10 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Campos: endereço do pedido (endereço completo; mantém o número digitado), "Onde?" da página inicial (cidades) e "Cidades onde atende" no cadastro e no perfil do chef (troca só a última cidade da lista).
 - Google Places (o padrão do Google): precisa de projeto no Google Cloud com faturamento (cartão) e chave restrita ao domínio. Há cota gratuita mensal, mas a conta fica sujeita a cobrança acima dela. Se Carlos quiser, troca-se só a função `buscar()` de `endereco.js`.
 - Limite: o Photon público é um serviço comunitário sem garantia de disponibilidade; se falhar, o campo continua funcionando como texto normal.
+
+## 08/11 · Login com Google
+- Carlos escolheu o login com Google (Microsoft fica para depois).
+- Só para chefs; clientes continuam sem login. Criar conta com Google ainda exige o código de convite, WhatsApp e aceite dos termos (dados pedidos antes de ir ao Google).
+- Fluxo OpenID Connect com código + PKCE no servidor (Pages Functions): estado de uso único guardado no D1 (10 min) e preso ao navegador por cookie; id_token obtido direto do Google com o segredo; conferidos aud, iss, validade, nonce e e-mail verificado.
+- Mesmo e-mail de conta existente: o Google é ligado a essa conta (não duplica). Conta criada pelo Google não tem senha; login por senha nela orienta a usar o Google.
+- Liga só com GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET; sem elas, nada muda. Banco: `migrations/0002_google.sql`.

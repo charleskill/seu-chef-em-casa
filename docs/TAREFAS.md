@@ -141,3 +141,11 @@ Pedido de Carlos: botão de buscar e não precisar preencher tudo para só olhar
 - [x] Tela Buscar: campo único com botão "Buscar" (fecha o teclado e leva aos resultados), cidade, e "Mais filtros (opcional)" fechado por padrão com data ("vazio = qualquer data"), pessoas e os filtros rápidos; abre sozinho e mostra "ativos" quando algum filtro está ligado; "Limpar filtros" fecha.
 - [x] A busca também procura na bio e na descrição dos pratos (ex.: "sushi" encontra a chef de cozinha japonesa).
 - Verificado de fato: `npm test` (41 de 41), `npm run build`; fluxo no Chrome em 412 e 1280 px (buscar, abrir filtros, marmitas, limpar).
+
+## Entrega — 08/11/2026 (login com Google)
+- [x] API: `/api/google/iniciar` e `/api/google/retorno`; `/api/saude` informa se o Google está ativo; `migrations/0002_google.sql`.
+- [x] App: "Entrar com Google" e "Criar conta com Google" (tela de criar conta reorganizada: nome, WhatsApp, cidades, convite e termos primeiro; e-mail e senha como alternativa); avisos ao voltar do Google (cancelado, expirado, sem conta…).
+- [x] Passo a passo em `docs/ATIVAR-CLOUDFLARE.md` (seção 6).
+- Verificado de fato: `npm run check`, `npm test` (41 de 41), `npm run build`; ponta a ponta com `wrangler pages dev`, D1 local e um servidor falso do Google: convite errado barrado antes do Google, cadastro com Google (nome do Google, WhatsApp e cidade gravados), sair e entrar de novo, senha numa conta Google orienta a usar o Google, Google sem conta volta com aviso, Google com e-mail de conta existente entra nela sem duplicar, retorno com estado falso e com cancelamento recusados; testes anteriores de chef e cliente repetidos sem falhas.
+- Não verificado: Google de verdade (precisa das credenciais e do endereço na Cloudflare).
+- [ ] Carlos: criar a credencial no Google e colar as duas variáveis na Cloudflare (seção 6).

@@ -1,6 +1,7 @@
 // API do piloto: Cloudflare Pages Functions + D1.
 // Rotas em /api/*. Cada chef só altera o próprio perfil (a sessão decide quem é).
-// Variáveis: DB (binding D1), CONVITE (código para criar conta de chef).
+// Variáveis: DB (binding D1), CONVITE (código para criar conta de chef),
+// GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET (login com Google; sem elas o botão não aparece).
 import Core from '../../assets/app-core.js';
 
 const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
@@ -119,6 +120,24 @@ async function limparPerfil(env, chefId, p, atual) {
   return out;
 }
 
+// ---------- Login com Google (OpenID Connect, fluxo de código com PKCE) ----------
+// O navegador vai ao Google; o Google volta em /api/google/retorno com um código; o servidor troca o código
+// por um id_token direto com o Google (com o segredo) e confere aud, iss, validade, nonce e e-mail verificado.
+// GOOGLE_BASE_TESTE só existe para teste local (servidor falso do Google); em produção fica vazio.
+const b64url = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const googleOn = env => !!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET);
+function googleUrls(env) {
+  const t = env.GOOGLE_BASE_TESTE;
+  return t ? { auth: t + '/auth', token: t + '/token', iss: [t] }
+    : { auth: 'https://accounts.google.com/o/oauth2/v2/auth', token: 'https://oauth2.googleapis.com/token', iss: ['https://accounts.google.com', 'accounts.google.com'] };
+}
+const cookieOauth = (estado, seg) => `scc_oauth=${estado}; Path=/api/google; HttpOnly; Secure; SameSite=Lax; Max-Age=${seg}`;
+const voltar = (origem, destino, extra = {}) => new Response(null, { status: 302, headers: { location: origem + destino, 'cache-control': 'no-store', ...extra } });
+function lerIdToken(t) {
+  const parte = String(t || '').split('.')[1]; if (!parte) return null;
+  try { return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(parte.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0)))); } catch { return null; }
+}
+
 const publico = row => ({ ...JSON.parse(row.perfil), id: row.id, cloud: true });
 const doDono = row => ({ ...publico(row), email: row.email });
 
@@ -132,7 +151,69 @@ export async function onRequest({ request: req, env, params }) {
   if (!env.DB) return erro('Banco não configurado.', 503);
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
-    if (rota === '/saude') return json({ ok: true });
+    if (rota === '/saude') return json({ ok: true, google: googleOn(env) });
+
+    if (rota === '/google/iniciar' && metodo === 'POST') {
+      if (!googleOn(env)) return erro('Login com Google ainda não está ativado.', 503);
+      if (!await limitar(env, req, 'google', 20, 900)) return erro('Muitas tentativas. Espere 15 minutos.', 429);
+      const b = await corpo(req), modo = b.modo === 'cadastro' ? 'cadastro' : 'entrar';
+      let dados = {};
+      if (modo === 'cadastro') {
+        if (!env.CONVITE || txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
+        const whatsapp = txt(b.whatsapp, 30); if (!C.phone(whatsapp)) return erro('Informe um WhatsApp válido com DDD.');
+        dados = { nome: txt(b.nome, 120), whatsapp, cidades: txt(b.cidades, 160) };
+      }
+      const estado = aleatorio(24), verificador = b64url(crypto.getRandomValues(new Uint8Array(32))), nonce = aleatorio(16);
+      const desafio = b64url(await crypto.subtle.digest('SHA-256', enc.encode(verificador)));
+      const t = Math.floor(Date.now() / 1000);
+      await env.DB.prepare('DELETE FROM oauth_pendente WHERE expira_em <= ?').bind(t).run();
+      await env.DB.prepare('INSERT INTO oauth_pendente (estado, verificador, nonce, modo, dados, expira_em) VALUES (?, ?, ?, ?, ?, ?)')
+        .bind(estado, verificador, nonce, modo, JSON.stringify(dados), t + 600).run();
+      const u = new URL(googleUrls(env).auth);
+      Object.entries({ client_id: env.GOOGLE_CLIENT_ID, redirect_uri: new URL(req.url).origin + '/api/google/retorno', response_type: 'code',
+        scope: 'openid email profile', state: estado, nonce, code_challenge: desafio, code_challenge_method: 'S256', prompt: 'select_account' })
+        .forEach(([k, v]) => u.searchParams.set(k, v));
+      return json({ url: u.toString() }, 200, { 'set-cookie': cookieOauth(estado, 600) });
+    }
+
+    if (rota === '/google/retorno' && metodo === 'GET') {
+      const origem = new URL(req.url).origin, q = new URL(req.url).searchParams, apagar = { 'set-cookie': cookieOauth('', 0) };
+      const falha = cod => voltar(origem, '/?google=' + cod + '#/entrar', apagar);
+      if (!googleOn(env)) return falha('desligado');
+      if (q.get('error')) return falha('cancelado');
+      const estado = String(q.get('state') || ''), m = (req.headers.get('cookie') || '').match(/(?:^|;\s*)scc_oauth=([a-f\d]{48})/);
+      if (!/^[a-f\d]{48}$/.test(estado) || !m || m[1] !== estado) return falha('expirado');
+      const p = await env.DB.prepare('SELECT * FROM oauth_pendente WHERE estado = ?').bind(estado).first();
+      await env.DB.prepare('DELETE FROM oauth_pendente WHERE estado = ?').bind(estado).run();
+      if (!p || p.expira_em <= Math.floor(Date.now() / 1000)) return falha('expirado');
+      const urls = googleUrls(env);
+      const r = await fetch(urls.token, { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({
+        code: String(q.get('code') || ''), client_id: env.GOOGLE_CLIENT_ID, client_secret: env.GOOGLE_CLIENT_SECRET,
+        redirect_uri: origem + '/api/google/retorno', grant_type: 'authorization_code', code_verifier: p.verificador }) });
+      const tk = r.ok ? await r.json().catch(() => null) : null, id = lerIdToken(tk && tk.id_token);
+      const ok = id && id.aud === env.GOOGLE_CLIENT_ID && urls.iss.includes(id.iss) && Number(id.exp) * 1000 > Date.now()
+        && id.nonce === p.nonce && id.sub && id.email && (id.email_verified === true || id.email_verified === 'true');
+      if (!ok) return falha('invalido');
+      const sub = txt(id.sub, 100), email = C.email(id.email);
+      let row = await env.DB.prepare('SELECT * FROM chefs WHERE google_sub = ?').bind(sub).first();
+      if (!row) {
+        row = await env.DB.prepare('SELECT * FROM chefs WHERE email = ?').bind(email).first();
+        if (row && row.google_sub && row.google_sub !== sub) return falha('outra-conta');
+        if (row) await env.DB.prepare('UPDATE chefs SET google_sub = ?, atualizado_em = ? WHERE id = ?').bind(sub, agora(), row.id).run();
+      }
+      if (!row) {
+        if (p.modo !== 'cadastro') return falha('sem-conta');
+        const d = JSON.parse(p.dados || '{}'), chefId = 'chef-' + aleatorio(8);
+        const perfil = await limparPerfil(env, chefId, { name: d.nome || txt(id.name, 120) || email.split('@')[0], whatsapp: d.whatsapp, cities: d.cidades }, null);
+        await env.DB.prepare('INSERT INTO chefs (id, email, credencial, perfil, publicado, criado_em, atualizado_em, google_sub) VALUES (?, ?, ?, ?, 1, ?, ?, ?)')
+          .bind(chefId, email, JSON.stringify({ algoritmo: 'google' }), JSON.stringify(perfil), agora(), agora(), sub).run();
+        row = { id: chefId };
+      }
+      const token = await abrirSessao(env, row.id);
+      const h = new Headers({ location: origem + '/#/painel', 'cache-control': 'no-store' });
+      h.append('set-cookie', cookieSessao(token, SESSAO_DIAS)); h.append('set-cookie', cookieOauth('', 0));
+      return new Response(null, { status: 302, headers: h });
+    }
 
     if (rota === '/chefs' && metodo === 'GET') {
       const { results } = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE publicado = 1 ORDER BY criado_em').all();
@@ -170,6 +251,7 @@ export async function onRequest({ request: req, env, params }) {
       if (!await limitar(env, req, 'entrar', 10, 900)) return erro('Muitas tentativas. Espere 15 minutos.', 429);
       const b = await corpo(req), email = C.email(b.email);
       const row = await env.DB.prepare('SELECT * FROM chefs WHERE email = ?').bind(email).first();
+      if (row && JSON.parse(row.credencial).algoritmo === 'google') return erro('Esta conta entra com o Google. Toque em Entrar com Google.', 401);
       if (!row || !await conferirSenha(String(b.senha || ''), JSON.parse(row.credencial))) return erro('E-mail ou senha incorretos.', 401);
       const token = await abrirSessao(env, row.id);
       return json({ chef: doDono(row) }, 200, { 'set-cookie': cookieSessao(token, SESSAO_DIAS) });
