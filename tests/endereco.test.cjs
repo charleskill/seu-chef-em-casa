@@ -15,3 +15,7 @@ test('endereço: lugar com rua e número próprios',()=>{
   const it=E.item(F({type:'house',name:'Padaria Teste',street:'Rua Bocaiúva',housenumber:'2468',district:'Centro',city:'Florianópolis',state:'Santa Catarina'}),'endereco','padaria');
   assert.equal(it.valor,'Padaria Teste, Rua Bocaiúva, 2468, Centro, Florianópolis - SC');
 });
+test('endereço: loja no endereço digitado vira só o endereço',()=>{
+  const it=E.item(F({type:'house',name:'Banco do Brasil',street:'Rua Bocaiúva',housenumber:'2468',district:'Centro',city:'Florianópolis',state:'Santa Catarina'}),'endereco','rua bocaiuva 2468');
+  assert.equal(it.valor,'Rua Bocaiúva, 2468, Centro, Florianópolis - SC');
+});

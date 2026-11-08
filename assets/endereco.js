@@ -25,6 +25,9 @@
     }
     let rua = p.street || '', nome = p.name || '';
     if (p.type === 'street' || (!p.street && p.osm_key === 'highway')) { rua = nome; nome = ''; }
+    // Nome de loja/lugar só aparece se a pessoa digitou esse nome (senão "Rua X, 123" virava "Banco do Brasil · Rua X, 123").
+    const sem = t => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    if (nome && rua && !sem(nome).split(/\s+/).some(w => w.length > 2 && sem(consulta).includes(w))) nome = '';
     let numero = p.housenumber || '';
     // Mantém o número que a pessoa digitou quando a sugestão é só a rua.
     if (rua && !numero) { const m = String(consulta).match(/\b(\d{1,6})\b/); if (m) numero = m[1]; }
