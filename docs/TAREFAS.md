@@ -135,3 +135,9 @@ Pedido de Carlos: melhorar as imagens dos cartões (ilustrações de emoji).
 - Verificado de fato: `npm test` (41 de 41), `npm run build`; telas conferidas no Chrome em 412 px.
 - [x] `assets/tela.js`: quando um celular abre o site em "site para computador" (página desenhada com ~980 px e encolhida, menu e textos minúsculos), o site detecta (toque + tela estreita + página larga), liga as regras de CSS de celular e amplia a página para a largura real. Testado no Chrome simulando esse modo (980 px de página, tela de 412 px): resultado igual ao celular normal; computador sem mudança.
 - [x] Textos maiores no celular: cartões dos chefs (nome 15 px, cidade e rodapé 13 px), aviso de demonstração, menu inferior, textos de ajuda.
+
+## Entrega — 08/11/2026 (busca mais simples)
+Pedido de Carlos: botão de buscar e não precisar preencher tudo para só olhar.
+- [x] Tela Buscar: campo único com botão "Buscar" (fecha o teclado e leva aos resultados), cidade, e "Mais filtros (opcional)" fechado por padrão com data ("vazio = qualquer data"), pessoas e os filtros rápidos; abre sozinho e mostra "ativos" quando algum filtro está ligado; "Limpar filtros" fecha.
+- [x] A busca também procura na bio e na descrição dos pratos (ex.: "sushi" encontra a chef de cozinha japonesa).
+- Verificado de fato: `npm test` (41 de 41), `npm run build`; fluxo no Chrome em 412 e 1280 px (buscar, abrir filtros, marmitas, limpar).
