@@ -89,3 +89,18 @@ Origem: main (a41b42c). Pedido de Carlos: usar (48) 99110-6355 em todo dado fict
 - [x] `assets/app.js`: perfis de exemplo com número válido mostram "Abrir WhatsApp"; avisos ajustados.
 - [x] Testes automáticos usam o número de teste.
 - Verificado de fato: `npm run check`, `npm test` (37 de 37), `npm run build`.
+
+## Testes completos — 08/11/2026 (chef e cliente)
+Pedido de Carlos: criar um perfil de chef e um de cliente e testar tudo, sempre com o número (48) 99110-6355.
+Ambiente: modo real com `wrangler pages dev` + D1 local (convite `teste-local`) e modo demonstração com `dist/` estático; Chrome em 390 px. Contas de teste só locais, apagadas ao final.
+- Chef (Chef Teste Carlos, WhatsApp e telefone de teste): cadastro com convite, perfil e bio, 5 pratos (2 para marmita), marmitas (R$ 30, mínimo 5, semanal/quinzenal, entrega/casa), sugestão de kit, atendimento (garçom e grupos grandes desligados), agenda (20 e 21/11 ocupados), foto do prato e foto de perfil. Tudo gravado no banco e conferido pela API.
+- Cliente: busca por cidade/data/pessoas (some na data ocupada e com 25 pessoas), busca por nome, perfil (cardápio, bio, sem e-mail), "Conversar no WhatsApp", pedido de evento com validações (vazio, telefone inválido, data ocupada), resumo e WhatsApp no número de teste, plano de marmitas com kit (estimativa R$ 360/mês, R$ 720 em 2 meses), pedido a perfil de exemplo, rascunho de conversa.
+- Chef depois: 5 pedidos registrados em `/api/meus-pedidos`; senha errada recusada; login em outro aparelho com os mesmos dados; sessão mantida ao recarregar; sair; convite errado recusado; lista pública sem e-mail.
+- Demonstração: conta local, perfis de exemplo, pedido a perfil de exemplo abre o WhatsApp de teste, aba Marmitas, termos.
+- Resultado: tudo passou, sem erros de JavaScript do app.
+- Problemas encontrados (não corrigidos):
+  - [ ] Modo real: o botão de cadastro ainda diz "Criar conta local" e o rodapé diz "Esta versão ainda não é um serviço de acesso seguro" (textos da demonstração).
+  - [ ] O painel não tem campo de especialidade; chef real aparece como "Personal chef" e não é achado na busca por especialidade.
+  - [ ] Painel sem tela de pedidos recebidos (já pendente; a API funciona).
+  - [ ] Demonstração: a conta local do chef aparece em último na busca (51º), escondida atrás de "ver mais".
+- Não verificado: Cloudflare real, celular real, WhatsApp de verdade (o ambiente de teste não acessa wa.me; foi conferido o endereço aberto, wa.me/5548991106355).
