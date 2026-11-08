@@ -132,6 +132,8 @@ function bio(r,a,ano,cid,mm){
   return par1+'\n\n'+par2;
 }
 
+const FOTOS=JSON.parse(require('node:fs').readFileSync(require('node:path').join(__dirname,'demo/fotos.json'),'utf8'));
+const usoEsp=new Map();
 const chefs=[],artes=new Map(),avatares=new Map();
 const avatarUsado=new Set();
 base.forEach((b,i)=>{
@@ -146,11 +148,14 @@ base.forEach((b,i)=>{
   if(!marmita&&a.foco)marmita=marmitaDe(r,a,pratos);
   pratos.sort((x,y)=>ORDEM_CAT.indexOf(x.category)-ORDEM_CAT.indexOf(y.category));
   const dishes=pratos.map((d,k)=>{const o={id:k+1,category:d.category,name:d.name,desc:d.desc,price:Math.round(d.price*fator)};if(marmita&&d.marmita)o.marmita=true;return o});
-  // galeria: ilustração do prato primeiro (a capa nunca falha) e depois as fotos reais já existentes, intercaladas
-  const arts=shuffle(r,pratos).slice(0,3).map(d=>{const k='a-'+hex(d.emoji);artes.set(k,d.emoji);return{url:'demo:'+k,caption:d.name}});
+  // galeria: 3 fotos reais de comida da especialidade (a capa é a primeira, alternando entre chefs da mesma especialidade),
+  // cada uma com uma ilustração local de reserva (alt) caso a foto não carregue; depois as fotos já existentes do perfil.
+  const arts=shuffle(r,pratos).slice(0,3).map(d=>{const k='a-'+hex(d.emoji);artes.set(k,d.emoji);return 'demo:'+k});
+  const lista=FOTOS[a.label];if(!lista)throw new Error('Sem fotos para '+a.label);
+  const vez=(usoEsp.get(a.label)||0);usoEsp.set(a.label,vez+1);
+  const fotos=lista.map((_,j)=>lista[(j+vez)%lista.length]).map((id,j)=>({url:'https://images.unsplash.com/photo-'+id+'?w=900&q=75&auto=format&fit=crop',caption:a.label,alt:arts[j%arts.length]}));
   const reais=b.gallery.map(g=>({url:g.url,caption:g.caption}));
-  const ordem=[];for(let j=0;j<Math.max(arts.length,reais.length);j++){if(arts[j])ordem.push(arts[j]);if(reais[j])ordem.push(reais[j])}
-  const gal=ordem.map((g,j)=>({id:101+j,url:g.url,caption:g.caption}));
+  const gal=fotos.concat(reais).map((g,j)=>({id:101+j,url:g.url,caption:g.caption,...(g.alt?{alt:g.alt}:{})}));
   const real=!avatarUsado.has(b.avatar);avatarUsado.add(b.avatar);
   let avatar=b.avatar;
   if(!real){avatar='demo:av-'+num;avatares.set('av-'+num,{nome:b.name.replace(/^Chef\s+/,''),i})}

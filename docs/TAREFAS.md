@@ -121,3 +121,9 @@ Ambiente: modo real com `wrangler pages dev` + D1 local (convite `teste-local`) 
 - [x] Build marca os arquivos com a versão do conteúdo (`?v=hash`) no `dist/index.html`, para o navegador não misturar arquivos antigos e novos depois de uma atualização (aconteceu no teste).
 - [x] O GitHub Pages está publicando direto da branch `main` (raiz do repositório), não da pasta `dist/` do workflow: por isso `docs/` e `migrations/` aparecem no site. O build agora marca a versão também no `index.html` da raiz (rode `npm run build` antes de cada commit).
 - [ ] Carlos: em Settings → Pages → Source, escolher **GitHub Actions** para publicar só `dist/`.
+
+## Entrega — 08/11/2026 (fotos reais nas capas dos perfis de exemplo)
+Pedido de Carlos: melhorar as imagens dos cartões (ilustrações de emoji).
+- [x] `scripts/demo/fotos.json`: 75 fotos reais de comida do Unsplash, 3 por especialidade, escolhidas e conferidas no navegador (todas carregam).
+- [x] Galeria dos 50 perfis de exemplo: as 3 fotos da especialidade primeiro (a capa alterna entre chefs da mesma especialidade), depois as fotos que já existiam. As ilustrações viraram reserva: se a foto não carregar, o app mostra a ilustração do prato.
+- Verificado de fato: `npm run check`, `npm test` (41 de 41), `npm run build`; reserva testada no Chrome sem internet (cartões mostram as ilustrações, sem erros); fotos conferidas no site publicado.
