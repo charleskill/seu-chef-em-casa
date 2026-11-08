@@ -79,3 +79,8 @@ html{scroll-padding-top:90px}
 .home-search .hs label{display:block!important;font-size:12px;font-weight:700;color:#304e3b;margin:0}
 .search-tools .sfield:not([type=number]){min-width:160px}
 }
+
+/* Pedidos recebidos no painel do chef */
+.pedido{margin-top:12px}.pedido h3{font-size:19px;margin:2px 0 0}.pedido details summary{cursor:pointer;font-size:13px;font-weight:600;margin:8px 0}.pedido .order-preview{margin-top:8px}
+.seg button{white-space:nowrap}
+.seg[aria-label="Painel do chef"]{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible}

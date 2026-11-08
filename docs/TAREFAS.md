@@ -98,9 +98,18 @@ Ambiente: modo real com `wrangler pages dev` + D1 local (convite `teste-local`) 
 - Chef depois: 5 pedidos registrados em `/api/meus-pedidos`; senha errada recusada; login em outro aparelho com os mesmos dados; sessão mantida ao recarregar; sair; convite errado recusado; lista pública sem e-mail.
 - Demonstração: conta local, perfis de exemplo, pedido a perfil de exemplo abre o WhatsApp de teste, aba Marmitas, termos.
 - Resultado: tudo passou, sem erros de JavaScript do app.
-- Problemas encontrados (não corrigidos):
-  - [ ] Modo real: o botão de cadastro ainda diz "Criar conta local" e o rodapé diz "Esta versão ainda não é um serviço de acesso seguro" (textos da demonstração).
-  - [ ] O painel não tem campo de especialidade; chef real aparece como "Personal chef" e não é achado na busca por especialidade.
-  - [ ] Painel sem tela de pedidos recebidos (já pendente; a API funciona).
-  - [ ] Demonstração: a conta local do chef aparece em último na busca (51º), escondida atrás de "ver mais".
+- Problemas encontrados (corrigidos na entrega seguinte):
+  - [x] Modo real: o botão de cadastro ainda diz "Criar conta local" e o rodapé diz "Esta versão ainda não é um serviço de acesso seguro" (textos da demonstração).
+  - [x] O painel não tem campo de especialidade; chef real aparece como "Personal chef" e não é achado na busca por especialidade.
+  - [x] Painel sem tela de pedidos recebidos (já pendente; a API funciona).
+  - [x] Demonstração: a conta local do chef aparece em último na busca (51º), escondida atrás de "ver mais".
 - Não verificado: Cloudflare real, celular real, WhatsApp de verdade (o ambiente de teste não acessa wa.me; foi conferido o endereço aberto, wa.me/5548991106355).
+
+## Entrega — 08/11/2026 (correções dos testes)
+- [x] Modo real: botão "Criar conta" e aviso de acesso protegido; o atalho e o aviso da demonstração só aparecem na demonstração.
+- [x] Painel > Perfil: campo "Especialidade" (já aceito pela API). Aparece no cartão e entra na busca.
+- [x] Busca: chefs reais e contas locais vêm antes dos perfis de exemplo.
+- [x] Painel > Pedidos: lista os pedidos (no modo real, de `/api/meus-pedidos`; na demonstração, os feitos neste navegador), com nome, telefone, data, texto completo, "Responder no WhatsApp" (abre o número do cliente) e "Copiar pedido". Aviso de que o registro não garante envio pelo WhatsApp.
+- [x] Abas do painel em duas linhas (a aba Pedidos ficava escondida no celular).
+- Verificado de fato: `npm run check`, `npm test` (37 de 37), `npm run build`; repetição completa dos testes de chef e cliente (modo real com D1 local e demonstração), 40 verificações aprovadas; telas do painel conferidas em 390 e 1280 px.
+- Não feito: troca de senha por e-mail (precisa de um serviço de envio de e-mail e de um domínio; decisão de Carlos) e e-mail de contato nos termos.

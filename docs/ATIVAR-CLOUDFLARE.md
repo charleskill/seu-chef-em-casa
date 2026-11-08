@@ -43,5 +43,4 @@ No projeto do Pages, abra **Settings**:
 
 ## Ainda não tem
 - Troca de senha por e-mail (por enquanto, a equipe ajuda pelo WhatsApp).
-- Tela para o chef ver os pedidos registrados (a API `/api/meus-pedidos` já existe).
 - Domínio próprio (pode ser ligado depois em Custom domains).
