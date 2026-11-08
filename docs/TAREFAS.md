@@ -133,3 +133,5 @@ Pedido de Carlos: melhorar as imagens dos cartões (ilustrações de emoji).
 - [x] Busca da página inicial no celular: "Onde?" na largura toda, data e pessoas lado a lado, botão largo (antes os campos ficavam estreitos).
 - Observação: a captura de Carlos no celular mostrava o layout de computador (3 colunas), sinal de que o navegador estava em "versão para computador"; o site já tem a marcação de celular (viewport).
 - Verificado de fato: `npm test` (41 de 41), `npm run build`; telas conferidas no Chrome em 412 px.
+- [x] `assets/tela.js`: quando um celular abre o site em "site para computador" (página desenhada com ~980 px e encolhida, menu e textos minúsculos), o site detecta (toque + tela estreita + página larga), liga as regras de CSS de celular e amplia a página para a largura real. Testado no Chrome simulando esse modo (980 px de página, tela de 412 px): resultado igual ao celular normal; computador sem mudança.
+- [x] Textos maiores no celular: cartões dos chefs (nome 15 px, cidade e rodapé 13 px), aviso de demonstração, menu inferior, textos de ajuda.
