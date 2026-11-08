@@ -3,7 +3,10 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'dist');
 fs.mkdirSync(out,{recursive:true});
-fs.copyFileSync(path.join(root,'index.html'),path.join(out,'index.html'));
+// Marca cada arquivo de assets/ com a versão do conteúdo (?v=hash), para o navegador não misturar arquivos novos e antigos após uma atualização.
+const crypto=require('node:crypto');
+const versao=f=>crypto.createHash('sha1').update(fs.readFileSync(path.join(root,f))).digest('hex').slice(0,10);
+fs.writeFileSync(path.join(out,'index.html'),fs.readFileSync(path.join(root,'index.html'),'utf8').replace(/(src|href)="(assets\/[^"?]+\.(?:js|css))"/g,(m,attr,f)=>attr+'="'+f+'?v='+versao(f)+'"'));
 fs.cpSync(path.join(root,'assets'),path.join(out,'assets'),{recursive:true});
 // Portable review copy, with the same sources, for opening without a server.
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');

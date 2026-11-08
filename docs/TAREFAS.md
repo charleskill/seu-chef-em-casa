@@ -118,3 +118,4 @@ Ambiente: modo real com `wrangler pages dev` + D1 local (convite `teste-local`) 
 - [x] `assets/endereco.js`: sugestões ao digitar (Photon/OpenStreetMap) no endereço do pedido, no "Onde?" da página inicial e nas cidades do chef; teclado (setas, Enter, Esc), toque e crédito do OpenStreetMap.
 - [x] `tests/endereco.test.cjs`: formato das sugestões (rua com número digitado, cidade, filtro do Brasil).
 - Verificado de fato: `npm run check`, `npm test` (40 de 40), `npm run build`; fluxo no Chrome em 390 px com respostas simuladas (escolha por teclado e por toque, link do Maps atualizado, rascunho mantido ao recarregar); respostas reais do Photon conferidas no navegador do app.
+- [x] Build marca os arquivos com a versão do conteúdo (`?v=hash`) no `dist/index.html`, para o navegador não misturar arquivos antigos e novos depois de uma atualização (aconteceu no teste).
