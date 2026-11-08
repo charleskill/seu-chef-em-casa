@@ -55,3 +55,10 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - No plano: "Sugestões do chef" (kits criados por ele no painel > Marmitas) com um toque, ou "monte a sua" com quantidade por prato, agrupado por categoria. O total vira a quantidade por entrega e precisa atingir o mínimo do chef.
 - A mensagem do WhatsApp lista "5x Frango..." por entrega. Máximo de 6 sugestões por chef; cada uma deve ter ao menos o mínimo do chef.
 - Hipótese a validar com os chefs: preço por marmita e mínimos (pesquisa mostra R$ 21–30 em SP; ver docs/pesquisa).
+
+
+## 07/11 · Banco e login na Cloudflare (D1)
+- Carlos escolheu "deixar real para os 2 chefs" na mesma base da plataforma Seu Restaurante Online: Cloudflare Pages + Pages Functions + D1, plano gratuito. Substitui a proposta do Supabase (o gratuito pausa após 7 dias sem uso); a migração SQL do Supabase fica só como histórico.
+- Conta de chef só com código de convite (variável secreta `CONVITE`), para o piloto ficar fechado aos chefs convidados.
+- Fotos no próprio D1 (JPEG até 1,5 MB), sem R2, para não exigir cartão.
+- GitHub Pages continua publicando a demonstração local; o app detecta a API e só liga o modo real na Cloudflare.

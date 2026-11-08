@@ -69,3 +69,15 @@ Origem: main (607ef19). Pedido de Carlos: 50 perfis de teste removíveis, pratos
 - Verificado de fato: `npm run check`, `npm test` (27 de 27), `npm run build`; fluxo completo do HTML gerado em navegador simulado (busca, perfil, plano de marmitas, validações, painel do chef, esconder perfis, navegador com chefs já salvos); telas conferidas no Chromium em 390 e 1280 px, sem erros de JavaScript do app.
 - Não verificado: dispositivos reais, WhatsApp, fotos do Unsplash (sem acesso à internet no ambiente de teste; a primeira imagem de cada galeria é ilustração local para a capa nunca falhar).
 - Pendente de Carlos: validar com chefs reais o modelo de marmitas (campos, 4 semanas por mês, ausência de desconto por prazo) e o texto do pedido; o modelo é proposta, não decisão.
+
+
+## Entrega — 07/11/2026 (banco compartilhado e login real)
+Origem: main (7d2b3c2). Pedido de Carlos: deixar o app real para os dois chefs, na mesma base Cloudflare da plataforma de restaurantes.
+- [x] `migrations/0001_piloto.sql`: banco D1 com chefs, sessões, fotos, pedidos e limites de tentativa.
+- [x] `functions/api/[[rota]].js`: API em Cloudflare Pages Functions. Cadastro só com código de convite, login com sessão em cookie seguro (30 dias), senha PBKDF2, perfil limpo no servidor (só campos conhecidos), fotos JPEG guardadas no banco, pedidos registrados, limite de tentativas.
+- [x] `assets/cloud.js` e ganchos em `app.js`: se `/api` responder, o app usa o banco; se não (GitHub Pages), continua na demonstração local. Pedido é registrado antes de abrir o WhatsApp.
+- [x] Chefs reais aparecem antes dos perfis de exemplo; textos de "neste navegador" mudam quando há conta.
+- Verificado de fato: `npm run check`, `npm test` (37 de 37), `npm run build`; 21 testes da API rodando localmente com `wrangler pages dev` e D1 local (convite, e-mail repetido, isolamento entre dois chefs, foto de outro chef bloqueada, lista pública sem e-mail, senha errada, sessão em dois aparelhos, sair, limite de tentativas, pedido visível só para o chef dono); teste de ponta a ponta no Chromium em 390 px com três aparelhos (cadastro, bio, foto, busca e perfil em outro aparelho, login em outro aparelho, sessão após recarregar), sem erros de JavaScript.
+- Não verificado: Cloudflare real (conta ainda não criada), dispositivos reais, WhatsApp.
+- [ ] Carlos: seguir `docs/ATIVAR-CLOUDFLARE.md` e enviar o código de convite aos dois chefs.
+- [ ] Tela de pedidos recebidos no painel do chef e troca de senha por e-mail.

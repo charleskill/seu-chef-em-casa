@@ -7,6 +7,7 @@ const validEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||'').trim());
 function safeUrl(value,image=false){
   const v=String(value||'').trim();
   if(image&&/^data:image\/(jpeg|png|webp|gif);base64,[a-z\d+/=\s]+$/i.test(v))return v;
+  if(image&&/^\/api\/foto\/[a-f\d]{32}$/.test(v))return v; // foto guardada no banco do piloto
   try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:''}catch{return ''}
 }
 function phone(value){

@@ -1,6 +1,6 @@
 # Seu Chef em Casa
 
-Protótipo de busca de personal chefs, portfólio e orçamento. A versão atual é uma demonstração local: não possui backend conectado, autenticação de produção nem chat entre aparelhos.
+Busca de personal chefs, portfólio e orçamento. Na Cloudflare, usa banco compartilhado (D1) e login real de chef com código de convite; no GitHub Pages, roda como demonstração local. Para ativar, siga `docs/ATIVAR-CLOUDFLARE.md`.
 
 ## Executar e conferir
 
@@ -22,6 +22,9 @@ Sirva a pasta `dist/` com um servidor estático. O build também gera `dist/seu-
 - `assets/demo-data.js`: perfis ilustrativos, sem contatos de contratação.
 - `assets/app-core.js`: migração local, validações e credenciais locais.
 - `assets/order-validation.js`: validação do orçamento, preservada da revisão anterior.
+- `assets/cloud.js`: conexão com a API; liga o modo real quando `/api` responde.
+- `functions/api/[[rota]].js`: API (Cloudflare Pages Functions).
+- `migrations/0001_piloto.sql`: banco D1.
 - `tests/`: testes Node.
 - `supabase/migrations/`: proposta de banco da revisão anterior; não aplicada.
 
