@@ -62,3 +62,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Conta de chef só com código de convite (variável secreta `CONVITE`), para o piloto ficar fechado aos chefs convidados.
 - Fotos no próprio D1 (JPEG até 1,5 MB), sem R2, para não exigir cartão.
 - GitHub Pages continua publicando a demonstração local; o app detecta a API e só liga o modo real na Cloudflare.
+
+
+## 08/11 · Número de teste em todo dado fictício
+- Pedido de Carlos: todo dado fictício do app usa o telefone (48) 99110-6355 — os 50 perfis de exemplo (WhatsApp e telefone, via `scripts/gerar-demo.cjs`) e os números dos testes automáticos.
+- Consequência: perfis de exemplo passam a mostrar "Abrir WhatsApp" no resumo do pedido, que abre o WhatsApp nesse número. O aviso do resumo diz que é perfil de exemplo e que abrir o aplicativo não confirma o envio. Como a demonstração é pública, qualquer visitante que conclua um pedido de teste manda mensagem para esse número.
+- Os textos de exemplo dos campos (placeholders, ex.: "(48) 99999-0000") continuam genéricos, para não parecer que o campo já vem preenchido.

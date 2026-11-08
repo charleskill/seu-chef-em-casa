@@ -17,13 +17,13 @@ test('catálogo grande, sem nomes repetidos e com SC, Brasil e internacional',()
   for(const [o,min] of [['sc',40],['br',45],['int',100]])assert.ok(DISHES.filter(d=>d.origin===o).length>=min,o);
   assert.ok(DISHES.every(d=>d.price>0&&d.desc&&d.emoji&&CATS.includes(d.category)));
 });
-test('50 chefs de teste completos, identificados e sem contato real',()=>{
+test('50 chefs de teste completos, identificados e com o número de teste',()=>{
   assert.equal(seed.length,50);assert.equal(sandbox.ChefDemo.enabled,true);
   assert.equal(new Set(seed.map(c=>c.id)).size,50);
   for(const c of seed){
     assert.match(c.id,/^demo-\d\d$/);assert.equal(c.isDemo,true);
     assert.ok(c.name&&c.bio&&c.specialty&&c.cities);
-    assert.equal(c.whatsapp+c.phone+c.email+c.instagram,'');
+    assert.equal(c.whatsapp,'(48) 99110-6355');assert.equal(c.phone,'(48) 99110-6355');assert.equal(c.email+c.instagram,'');
     assert.ok(c.dishes.length>=8&&c.dishes.length<=12,c.id+' pratos');
     assert.equal(new Set(c.dishes.map(d=>d.name)).size,c.dishes.length);
     assert.ok(c.dishes.every(d=>d.price>0&&CATS.includes(d.category)&&d.desc));

@@ -81,3 +81,11 @@ Origem: main (7d2b3c2). Pedido de Carlos: deixar o app real para os dois chefs, 
 - Não verificado: Cloudflare real (conta ainda não criada), dispositivos reais, WhatsApp.
 - [ ] Carlos: seguir `docs/ATIVAR-CLOUDFLARE.md` e enviar o código de convite aos dois chefs.
 - [ ] Tela de pedidos recebidos no painel do chef e troca de senha por e-mail.
+
+
+## Entrega — 08/11/2026 (número de teste nos perfis fictícios)
+Origem: main (a41b42c). Pedido de Carlos: usar (48) 99110-6355 em todo dado fictício.
+- [x] `scripts/gerar-demo.cjs` com `TELEFONE_TESTE`; `assets/demo-data.js` regenerado (só WhatsApp e telefone mudaram nos 50 perfis).
+- [x] `assets/app.js`: perfis de exemplo com número válido mostram "Abrir WhatsApp"; avisos ajustados.
+- [x] Testes automáticos usam o número de teste.
+- Verificado de fato: `npm run check`, `npm test` (37 de 37), `npm run build`.

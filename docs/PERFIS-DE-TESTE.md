@@ -1,10 +1,10 @@
 # Perfis de teste (50 chefs fictícios)
 
-Existem para testar o app com o catálogo cheio antes do lançamento. Tudo é fictício: nomes, bios, preços, avaliações e imagens. Nenhum tem WhatsApp, e-mail ou Instagram, então nenhum recebe contato de verdade. O app os identifica com a etiqueta "Perfil de exemplo".
+Existem para testar o app com o catálogo cheio antes do lançamento. Tudo é fictício: nomes, bios, preços, avaliações e imagens. Nenhum tem e-mail ou Instagram. O WhatsApp e o telefone de todos são o número de teste do projeto, (48) 99110-6355 (pedido de Carlos), então os pedidos de teste chegam só a esse número. O app os identifica com a etiqueta "Perfil de exemplo".
 
 ## Como funcionam
 - Vêm do código (`assets/demo-data.js` e `assets/demo-images.js`) e **nunca são gravados no navegador**. Eles aparecem em qualquer navegador, mesmo com chefs já salvos, e entram depois dos chefs reais.
-- Os pedidos de teste feitos neles só geram a simulação (copiar texto). O botão de abrir o WhatsApp não aparece para perfis de exemplo.
+- Os pedidos de teste feitos neles podem ser copiados ou abertos no WhatsApp do número de teste. O aviso do resumo deixa claro que não é um chef real.
 - Pratos: catálogo de 238 receitas (Santa Catarina, Brasil e internacional) em `scripts/demo/catalogo.cjs`.
 - Imagens: ilustrações geradas (prato com emoji) e algumas fotos do Unsplash que já estavam no projeto. Não são fotos de pratos reais.
 

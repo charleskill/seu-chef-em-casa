@@ -19,7 +19,7 @@ Sirva a pasta `dist/` com um servidor estático. O build também gera `dist/seu-
 - `index.html`: estrutura da página.
 - `assets/app.js`: telas, navegação e eventos.
 - `assets/styles.css`: identidade visual e layouts responsivos.
-- `assets/demo-data.js`: perfis ilustrativos, sem contatos de contratação.
+- `assets/demo-data.js`: perfis ilustrativos; WhatsApp e telefone são o número de teste do projeto, (48) 99110-6355.
 - `assets/app-core.js`: migração local, validações e credenciais locais.
 - `assets/order-validation.js`: validação do orçamento, preservada da revisão anterior.
 - `assets/cloud.js`: conexão com a API; liga o modo real quando `/api` responde.

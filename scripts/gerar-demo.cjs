@@ -1,4 +1,6 @@
 // Gera assets/demo-data.js (50 chefs de teste) e assets/demo-images.js (imagens ilustrativas).
+// Número de teste do projeto (pedido de Carlos): todo dado fictício usa este telefone.
+const TELEFONE_TESTE='(48) 99110-6355';
 // Uso: node scripts/gerar-demo.cjs        (as imagens exigem Playwright com Chromium; só para regenerar)
 // Tudo é fictício: nomes, bios, preços, avaliações. Nenhum contato real.
 const fs=require('node:fs');
@@ -152,7 +154,7 @@ base.forEach((b,i)=>{
   const real=!avatarUsado.has(b.avatar);avatarUsado.add(b.avatar);
   let avatar=b.avatar;
   if(!real){avatar='demo:av-'+num;avatares.set('av-'+num,{nome:b.name.replace(/^Chef\s+/,''),i})}
-  const chef={id,name:b.name,email:'',whatsapp:'',phone:'',instagram:'',cities:cid,specialty:a.label,avatar,
+  const chef={id,name:b.name,email:'',whatsapp:TELEFONE_TESTE,phone:TELEFONE_TESTE,instagram:'',cities:cid,specialty:a.label,avatar,
     bio:bio(r,a,3+Math.floor(r()*20),cid,marmita),dishes,gallery:gal};
   if(marmita)chef.marmita=marmita;
   chefs.push(chef);

@@ -5,7 +5,7 @@ const {validateOrder}=require('../assets/order-validation.js');
 const now=new Date(2026,9,30,10);
 const cfg={price:30,min:10,freq:['semanal','quinzenal','mensal'],modes:['entrega','casa']};
 const chef={id:'c1',name:'Chef Teste',marmita:cfg,dishes:[{id:1,name:'Feijoada light',price:34,marmita:true},{id:2,name:'Risoto',price:80}]};
-const base=(m={},f={})=>({mode:'marmita',f:{name:'Ana',phone:'(48) 99999-9999',...f},dishes:[1],adults:2,kids:1,shop:false,clean:true,chips:['Sem lactose'],m:{freq:'semanal',qty:10,months:2,way:'entrega',days:['seg','qua'],...m}});
+const base=(m={},f={})=>({mode:'marmita',f:{name:'Ana',phone:'(48) 99110-6355',...f},dishes:[1],adults:2,kids:1,shop:false,clean:true,chips:['Sem lactose'],m:{freq:'semanal',qty:10,months:2,way:'entrega',days:['seg','qua'],...m}});
 
 test('configuração de marmita válida é normalizada; inválida é descartada',()=>{
   assert.deepEqual(C.cleanMarmita({price:'32.5',min:'8.9',freq:['semanal','x','semanal'],modes:['casa','nada']}),{price:32.5,min:8,freq:['semanal'],modes:['casa']});

@@ -11,7 +11,7 @@ test('agenda: limpeza e disponibilidade',()=>{
 });
 test('pedido em data ocupada é recusado',()=>{
   const chef={dishes:[{id:'1'}],agenda:{off:['2099-12-18']}};
-  const o={adults:2,kids:0,dishes:['1'],chips:[],mode:'evento',f:{name:'Ana Souza',phone:'48999998888',date:'2099-12-18'}};
+  const o={adults:2,kids:0,dishes:['1'],chips:[],mode:'evento',f:{name:'Ana Souza',phone:'48991106355',date:'2099-12-18'}};
   assert.match(V.validateOrder(o,new Date(2026,0,1),chef)||'', /não atende na data/);
   o.f.date='2099-12-19';assert.ok(!/não atende/.test(V.validateOrder(o,new Date(2026,0,1),chef)||''));
 });
