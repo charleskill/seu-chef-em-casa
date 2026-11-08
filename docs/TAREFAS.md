@@ -127,3 +127,9 @@ Pedido de Carlos: melhorar as imagens dos cartões (ilustrações de emoji).
 - [x] `scripts/demo/fotos.json`: 75 fotos reais de comida do Unsplash, 3 por especialidade, escolhidas e conferidas no navegador (todas carregam).
 - [x] Galeria dos 50 perfis de exemplo: as 3 fotos da especialidade primeiro (a capa alterna entre chefs da mesma especialidade), depois as fotos que já existiam. As ilustrações viraram reserva: se a foto não carregar, o app mostra a ilustração do prato.
 - Verificado de fato: `npm run check`, `npm test` (41 de 41), `npm run build`; reserva testada no Chrome sem internet (cartões mostram as ilustrações, sem erros); fotos conferidas no site publicado.
+
+## Entrega — 08/11/2026 (página inicial e celular)
+- [x] Página inicial: "Como funciona" vem antes de "Conheça os chefs" (pedido de Carlos).
+- [x] Busca da página inicial no celular: "Onde?" na largura toda, data e pessoas lado a lado, botão largo (antes os campos ficavam estreitos).
+- Observação: a captura de Carlos no celular mostrava o layout de computador (3 colunas), sinal de que o navegador estava em "versão para computador"; o site já tem a marcação de celular (viewport).
+- Verificado de fato: `npm test` (41 de 41), `npm run build`; telas conferidas no Chrome em 412 px.
