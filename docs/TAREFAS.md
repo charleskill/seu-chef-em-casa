@@ -113,3 +113,8 @@ Ambiente: modo real com `wrangler pages dev` + D1 local (convite `teste-local`) 
 - [x] Abas do painel em duas linhas (a aba Pedidos ficava escondida no celular).
 - Verificado de fato: `npm run check`, `npm test` (37 de 37), `npm run build`; repetição completa dos testes de chef e cliente (modo real com D1 local e demonstração), 40 verificações aprovadas; telas do painel conferidas em 390 e 1280 px.
 - Não feito: troca de senha por e-mail (precisa de um serviço de envio de e-mail e de um domínio; decisão de Carlos) e e-mail de contato nos termos.
+
+## Entrega — 08/11/2026 (sugestões de endereço)
+- [x] `assets/endereco.js`: sugestões ao digitar (Photon/OpenStreetMap) no endereço do pedido, no "Onde?" da página inicial e nas cidades do chef; teclado (setas, Enter, Esc), toque e crédito do OpenStreetMap.
+- [x] `tests/endereco.test.cjs`: formato das sugestões (rua com número digitado, cidade, filtro do Brasil).
+- Verificado de fato: `npm run check`, `npm test` (40 de 40), `npm run build`; fluxo no Chrome em 390 px com respostas simuladas (escolha por teclado e por toque, link do Maps atualizado, rascunho mantido ao recarregar); respostas reais do Photon conferidas no navegador do app.

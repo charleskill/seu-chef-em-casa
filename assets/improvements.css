@@ -84,3 +84,7 @@ html{scroll-padding-top:90px}
 .pedido{margin-top:12px}.pedido h3{font-size:19px;margin:2px 0 0}.pedido details summary{cursor:pointer;font-size:13px;font-weight:600;margin:8px 0}.pedido .order-preview{margin-top:8px}
 .seg button{white-space:nowrap}
 .seg[aria-label="Painel do chef"]{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible}
+.end-sug{position:absolute;z-index:1000;background:#fff;border:1px solid var(--line,#e4e1d6);border-radius:12px;box-shadow:0 10px 30px #0002;overflow:hidden;max-width:calc(100vw - 16px)}
+.end-sug button{display:block;width:100%;text-align:left;padding:11px 14px;border:0;border-bottom:1px solid #f0ede4;background:#fff;cursor:pointer}
+.end-sug button b{display:block;font-size:14px;font-weight:600}.end-sug button small{display:block;font-size:12px;color:var(--mut,#6b6b60);margin-top:2px}
+.end-sug button.on,.end-sug button:hover{background:#fdf4ee}.end-cred{font-size:10px;color:var(--mut,#6b6b60);padding:6px 14px;margin:0;text-align:right}

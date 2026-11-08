@@ -68,3 +68,10 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Pedido de Carlos: todo dado fictício do app usa o telefone (48) 99110-6355 — os 50 perfis de exemplo (WhatsApp e telefone, via `scripts/gerar-demo.cjs`) e os números dos testes automáticos.
 - Consequência: perfis de exemplo passam a mostrar "Abrir WhatsApp" no resumo do pedido, que abre o WhatsApp nesse número. O aviso do resumo diz que é perfil de exemplo e que abrir o aplicativo não confirma o envio. Como a demonstração é pública, qualquer visitante que conclua um pedido de teste manda mensagem para esse número.
 - Os textos de exemplo dos campos (placeholders, ex.: "(48) 99999-0000") continuam genéricos, para não parecer que o campo já vem preenchido.
+
+## 08/11 · Sugestões de endereço enquanto digita
+- Pedido de Carlos: ao digitar "flori", sugerir "Florianópolis, Santa Catarina", como no Google.
+- Feito com o Photon (photon.komoot.io, dados do OpenStreetMap): gratuito, sem chave nem cartão, e funciona no GitHub Pages. Fica em `assets/endereco.js`.
+- Campos: endereço do pedido (endereço completo; mantém o número digitado), "Onde?" da página inicial (cidades) e "Cidades onde atende" no cadastro e no perfil do chef (troca só a última cidade da lista).
+- Google Places (o padrão do Google): precisa de projeto no Google Cloud com faturamento (cartão) e chave restrita ao domínio. Há cota gratuita mensal, mas a conta fica sujeita a cobrança acima dela. Se Carlos quiser, troca-se só a função `buscar()` de `endereco.js`.
+- Limite: o Photon público é um serviço comunitário sem garantia de disponibilidade; se falhar, o campo continua funcionando como texto normal.
