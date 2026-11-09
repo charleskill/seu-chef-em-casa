@@ -286,7 +286,8 @@ export async function onRequest({ request: req, env, params }) {
       const alvo = await env.DB.prepare('SELECT perfil FROM chefs WHERE id = ? AND publicado = 1').bind(chefId).first();
       if (!alvo || C.faltaPerfil(JSON.parse(alvo.perfil)).length) return erro('Chef não encontrado.', 404);
       const texto = txt(b.texto, 6000); if (texto.length < 20) return erro('Pedido incompleto.');
-      const dados = JSON.stringify(b.dados && typeof b.dados === 'object' ? b.dados : {}).slice(0, 20000);
+      const extra = b.dados && typeof b.dados === 'object' ? { ...b.dados } : {}; delete extra.status;
+      const dadosJson = JSON.stringify(extra), dados = dadosJson.length > 20000 ? '{}' : dadosJson;
       const id = aleatorio(12);
       await env.DB.prepare('INSERT INTO pedidos (id, chef_id, texto, dados, criado_em) VALUES (?, ?, ?, ?, ?)').bind(id, chefId, texto, dados, agora()).run();
       return json({ id }, 201);
@@ -294,8 +295,17 @@ export async function onRequest({ request: req, env, params }) {
 
     if (rota === '/meus-pedidos' && metodo === 'GET') {
       const c = await chefDaSessao(env, req); if (!c) return erro('Entre para ver seus pedidos.', 401);
-      const { results } = await env.DB.prepare('SELECT id, texto, criado_em FROM pedidos WHERE chef_id = ? ORDER BY criado_em DESC LIMIT 100').bind(c.id).all();
+      const { results } = await env.DB.prepare("SELECT id, texto, criado_em, COALESCE(json_extract(dados, '$.status'), 'novo') AS status FROM pedidos WHERE chef_id = ? ORDER BY criado_em DESC LIMIT 100").bind(c.id).all();
       return json({ pedidos: results });
+    }
+
+    if (rota.startsWith('/meus-pedidos/') && metodo === 'PATCH') {
+      const c = await chefDaSessao(env, req); if (!c) return erro('Entre de novo para atualizar o pedido.', 401);
+      const id = rota.slice(14), status = String((await corpo(req)).status || '');
+      if (!['novo', 'respondido', 'fechado'].includes(status)) return erro('Informe uma situação válida.');
+      const r = await env.DB.prepare("UPDATE pedidos SET dados = json_set(dados, '$.status', ?) WHERE id = ? AND chef_id = ?").bind(status, id, c.id).run();
+      if (!r.meta.changes) return erro('Pedido não encontrado.', 404);
+      return json({ ok: true, status });
     }
 
     return erro('Rota não encontrada.', 404);

@@ -186,5 +186,9 @@ Origem: main (f3f4d5e).
 
 ## Entrega — 09/11/2026 (perfil pronto)
 - [x] Chef sem foto, prato ou cidade não aparece aos clientes nem recebe pedidos; o painel mostra o que falta, com atalhos.
-- Verificado de fato: 
-pm test (42 de 42); API com D1 local (6 verificações); aviso do painel no navegador.
+- Verificado de fato: npm test (42 de 42); API com D1 local (6 verificações); aviso do painel no navegador.
+
+
+## Entrega — 09/11/2026 (situação dos pedidos)
+- [x] Painel > Pedidos: cada pedido pode ser marcado como Novo, Respondido ou Fechado. Fica no JSON `dados` do pedido, sem migração do banco (`PATCH /api/meus-pedidos/:id`).
+- Verificado de fato: npm test (42 de 42); API com D1 local (7 verificações, inclusive outro chef sem acesso); troca e persistência no navegador.
