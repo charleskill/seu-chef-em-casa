@@ -139,7 +139,7 @@ function lerIdToken(t) {
 }
 
 const publico = row => ({ ...JSON.parse(row.perfil), id: row.id, cloud: true });
-const doDono = row => ({ ...publico(row), email: row.email });
+const doDono = row => ({ ...publico(row), email: row.email, pausado: !row.publicado });
 
 async function corpo(req) {
   if (!(req.headers.get('content-type') || '').startsWith('application/json')) throw new Error('Envie JSON.');
@@ -269,8 +269,15 @@ export async function onRequest({ request: req, env, params }) {
       if (!C.validEmail(email)) return erro('Confira o e-mail informado.');
       if (email !== c.email && await env.DB.prepare('SELECT 1 FROM chefs WHERE email = ? AND id <> ?').bind(email, c.id).first()) return erro('Este e-mail já está cadastrado.', 409);
       const perfil = await limparPerfil(env, c.id, p, JSON.parse(c.perfil));
-      await env.DB.prepare('UPDATE chefs SET email = ?, perfil = ?, atualizado_em = ? WHERE id = ?').bind(email, JSON.stringify(perfil), agora(), c.id).run();
+      const publicado = typeof p.pausado === 'boolean' ? (p.pausado ? 0 : 1) : c.publicado;
+      await env.DB.prepare('UPDATE chefs SET email = ?, perfil = ?, publicado = ?, atualizado_em = ? WHERE id = ?').bind(email, JSON.stringify(perfil), publicado, agora(), c.id).run();
       return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(c.id).first()) });
+    }
+
+    if (rota === '/eu' && metodo === 'DELETE') {
+      const c = await chefDaSessao(env, req); if (!c) return erro('Entre de novo para excluir a conta.', 401);
+      await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(c.id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(c.id)));
+      return json({ ok: true }, 200, { 'set-cookie': cookieSessao('', 0) });
     }
 
     if (rota === '/pedidos' && metodo === 'POST') {

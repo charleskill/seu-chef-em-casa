@@ -157,3 +157,13 @@ Pedido de Carlos: botão de buscar e não precisar preencher tudo para só olhar
 - [x] Binding `DB` → `chefemcasa`; variável secreta `CONVITE` (valor digitado por Carlos, guardado com ele).
 - [x] No ar às 13:31 (a Cloudflare levou ~40 min para propagar as publicações da conta nova): `/api/saude` → `{"ok":true,"google":false}`.
 - [ ] Login com Google: criar a credencial (seção 6) e adicionar `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET`.
+
+
+## Entrega — 09/11/2026 (versão real: Mensagens, perfis de exemplo, pausar e excluir conta)
+Origem: main (f3f4d5e).
+- [x] `assets/app.js`: aba Mensagens escondida (chave `MENSAGENS`); perfis de exemplo e aviso de demonstração fora da versão real, com mensagem quando ainda não há chefs; Painel > Perfil com Pausar/Reativar e Excluir conta (digitar EXCLUIR).
+- [x] API: `PUT /api/eu` aceita `pausado` (usa a coluna `publicado`, sem migração); `DELETE /api/eu` apaga pedidos, fotos, sessões e o chef.
+- [x] `assets/termos.js`: seções 8 e 9 dizem que perfis e pedidos ficam no servidor.
+- Verificado de fato: `npm test` (41 de 41), `npm run build`; 15 verificações da API com `wrangler pages dev` e D1 local (pausar, some da lista, não recebe pedido, reativar, excluir, sem sessão recusado, só o chef excluído some, sem sobras no banco); telas no navegador com API simulada.
+- Não verificado: Cloudflare real, celular real.
+- [ ] E-mail de contato nos termos e revisão por advogado(a).

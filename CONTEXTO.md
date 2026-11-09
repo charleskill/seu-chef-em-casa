@@ -25,10 +25,7 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 
 ## Pendências (em ordem)
 1. Primeiro chef de teste na versão real (Carlos cria com o convite) e conferir em outro aparelho.
-2. Código, antes de chamar os 3 chefs (propostas aguardando o OK do Carlos):
-   - esconder a aba **Mensagens** na versão real (as conversas ficam só no aparelho do cliente; o chef nunca recebe);
-   - botões **Excluir conta** e **Pausar perfil** (os termos prometem a exclusão; não existe rota na API);
-   - esconder os **50 perfis de exemplo** na versão real (hoje aparecem depois dos reais, com o WhatsApp de teste).
+2. Feito em 09/11: Mensagens e perfis de exemplo escondidos na versão real; Pausar perfil e Excluir conta.
 3. Login com Google: Carlos cria a credencial (docs/ATIVAR-CLOUDFLARE.md, seção 6) e adiciona `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` na Cloudflare.
 4. GitHub → Settings → Pages → Source: **GitHub Actions** (hoje publica da branch e expõe `docs/` e `migrations/` na demonstração).
 5. Domínio seuchefemcasa.com.br: comprar, pôr na Cloudflare, ligar ao Pages e acrescentar no Google.

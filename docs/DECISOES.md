@@ -82,3 +82,8 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Fluxo OpenID Connect com código + PKCE no servidor (Pages Functions): estado de uso único guardado no D1 (10 min) e preso ao navegador por cookie; id_token obtido direto do Google com o segredo; conferidos aud, iss, validade, nonce e e-mail verificado.
 - Mesmo e-mail de conta existente: o Google é ligado a essa conta (não duplica). Conta criada pelo Google não tem senha; login por senha nela orienta a usar o Google.
 - Liga só com GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET; sem elas, nada muda. Banco: `migrations/0002_google.sql`.
+
+
+## 09/11 · Pausar e excluir conta
+- Pausar usa a coluna `publicado` já existente: o chef pausado sai da lista e não recebe pedidos, sem perder dados. Excluir apaga de vez perfil, fotos, pedidos e sessões.
+- Versão real reconhecida pelo domínio e pela resposta da API; a demonstração do GitHub Pages continua com os 50 perfis de exemplo.
