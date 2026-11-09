@@ -105,3 +105,11 @@ html{scroll-padding-top:90px}
 .b-google{display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;border:1px solid #dadce0;color:#1f1f1f;font-weight:600;min-height:48px;margin:6px 0}.b-google:hover{background:#f8f9fa}
 .divisor{display:flex;align-items:center;gap:10px;color:var(--mut,#6b6b60);font-size:12px;margin:14px 0}.divisor:before,.divisor:after{content:'';flex:1;height:1px;background:var(--line,#e4e1d6)}
 .ou{display:block;margin-top:8px;font-weight:600}
+
+/* Cidades onde atende: etiquetas */
+.cid-box{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:7px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.cid-box:focus-within{outline:2px solid var(--cu);outline-offset:1px}
+.cid-lista{display:contents}
+.cid-chip{display:inline-flex;align-items:center;gap:2px;padding:4px 4px 4px 12px;border-radius:99px;background:#f4ece3;color:var(--ink);font-size:14px}
+.cid-chip button{width:28px;height:28px;border:0;background:none;color:var(--cu2);font-size:18px;line-height:1;cursor:pointer}
+.cid-box input{flex:1 1 150px;width:auto;min-width:0;margin:0;padding:7px;border:0;background:none;box-shadow:none;outline:none}

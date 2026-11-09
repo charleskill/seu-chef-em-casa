@@ -174,3 +174,8 @@ Origem: main (f3f4d5e).
 - [x] Imagem de compartilhamento (`og:image`).
 - [x] Pedido a chef pausado é barrado na revisão, antes de abrir o WhatsApp.
 - Verificado de fato: `npm run check`, `npm test` (41 de 41), `npm run build`; `wrangler pages dev` com D1 local: rotas principais sem violação de CSP nem erros no console, chef pausado barrado.
+
+## Entrega — 09/11/2026 (cidades com etiquetas e jornada completa)
+- [x] "Cidades onde atende": várias cidades como etiquetas removíveis (`assets/endereco.js`); segue salvo como "A, B, C".
+- Simulação completa pelas telas (`wrangler pages dev`, D1 local, número de teste): chef (convite errado, termos, cadastro, perfil, 3 pratos, marmitas, atendimento, agenda, foto, sair) e cliente em aparelho limpo (busca por prato, cidade e data ocupada, perfil, validações, pedido de evento, plano de marmitas, WhatsApp); chef de volta (senha errada, entrar, pedidos, responder, pausar, reativar, excluir). Sem erros de JavaScript.
+- Não verificado: Cloudflare real com conta de chef, celular físico, WhatsApp de verdade (a abertura foi conferida pelo endereço wa.me).
