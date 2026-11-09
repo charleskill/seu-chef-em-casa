@@ -155,4 +155,5 @@ Pedido de Carlos: botão de buscar e não precisar preencher tudo para só olhar
 - [x] Banco D1 `chefemcasa` com as tabelas de `0001_piloto.sql` e `0002_google.sql` (conferidas no console: chefs, sessoes, fotos, pedidos, limites, oauth_pendente).
 - [x] Projeto Pages `seu-chef-em-casa` ligado ao GitHub (branch main, `npm run build`, saída `dist`): https://seu-chef-em-casa.pages.dev
 - [x] Binding `DB` → `chefemcasa`; variável secreta `CONVITE` (valor digitado por Carlos, guardado com ele).
+- [x] No ar às 13:31 (a Cloudflare levou ~40 min para propagar as publicações da conta nova): `/api/saude` → `{"ok":true,"google":false}`.
 - [ ] Login com Google: criar a credencial (seção 6) e adicionar `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET`.
