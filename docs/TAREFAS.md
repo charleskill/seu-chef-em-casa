@@ -182,3 +182,9 @@ Origem: main (f3f4d5e).
 
 ## Entrega — 09/11/2026 (depois do pedido)
 - [x] Ao abrir o WhatsApp, o cliente vê os próximos passos, com opções de reabrir o WhatsApp (sem registrar outro pedido) e copiar o pedido. O texto deixa claro que o pedido só chega depois de enviado.
+
+
+## Entrega — 09/11/2026 (perfil pronto)
+- [x] Chef sem foto, prato ou cidade não aparece aos clientes nem recebe pedidos; o painel mostra o que falta, com atalhos.
+- Verificado de fato: 
+pm test (42 de 42); API com D1 local (6 verificações); aviso do painel no navegador.

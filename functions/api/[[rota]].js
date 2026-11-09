@@ -217,7 +217,7 @@ export async function onRequest({ request: req, env, params }) {
 
     if (rota === '/chefs' && metodo === 'GET') {
       const { results } = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE publicado = 1 ORDER BY criado_em').all();
-      return json({ chefs: results.map(publico) }, 200, { 'cache-control': 'public, max-age=30' });
+      return json({ chefs: results.map(publico).filter(c => !C.faltaPerfil(c).length) }, 200, { 'cache-control': 'public, max-age=30' });
     }
 
     if (rota.startsWith('/foto/') && metodo === 'GET') {
@@ -283,7 +283,8 @@ export async function onRequest({ request: req, env, params }) {
     if (rota === '/pedidos' && metodo === 'POST') {
       if (!await limitar(env, req, 'pedido', 20, 3600)) return erro('Muitos pedidos seguidos. Tente mais tarde.', 429);
       const b = await corpo(req), chefId = txt(b.chefId, 40);
-      if (!await env.DB.prepare('SELECT 1 FROM chefs WHERE id = ? AND publicado = 1').bind(chefId).first()) return erro('Chef não encontrado.', 404);
+      const alvo = await env.DB.prepare('SELECT perfil FROM chefs WHERE id = ? AND publicado = 1').bind(chefId).first();
+      if (!alvo || C.faltaPerfil(JSON.parse(alvo.perfil)).length) return erro('Chef não encontrado.', 404);
       const texto = txt(b.texto, 6000); if (texto.length < 20) return erro('Pedido incompleto.');
       const dados = JSON.stringify(b.dados && typeof b.dados === 'object' ? b.dados : {}).slice(0, 20000);
       const id = aleatorio(12);

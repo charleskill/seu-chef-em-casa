@@ -90,3 +90,7 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 09/11 · Identidade visual
 - Novo símbolo escolhido: cloche dentro da casa (une chef e casa), no cabeçalho e no ícone da aba. Frase sob o nome: "Personal chefs e marmitas na sua casa". Cores mantidas.
+
+
+## 09/11 · Perfil só aparece quando pronto
+- O chef só aparece aos clientes e só recebe pedidos com foto, ao menos um prato e cidade (regra em C.faltaPerfil, aplicada no servidor). O painel mostra o que falta.

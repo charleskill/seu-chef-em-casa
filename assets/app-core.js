@@ -77,6 +77,8 @@ function withDemo(data,demo){
   return {...data,chefs:[...keep,...normalizeData({chefs:add},add).chefs]};
 }
 function stripDemo(data){return {...data,chefs:(data.chefs||[]).filter(c=>!isTransientDemo(c))}}
+// O que falta para o perfil aparecer aos clientes: foto, ao menos um prato e cidade.
+const faltaPerfil=c=>{const f=[];if(!(c&&(c.avatar||(c.gallery||[]).length)))f.push('foto');if(!(c&&(c.dishes||[]).length))f.push('prato');if(!String(c&&c.cities||'').trim())f.push('cidade');return f};
 const OPCOES=[
   ['criancas','Atendo eventos com crianças','Quem não marcar não verá o campo de crianças no pedido.',true],
   ['compras','Faço as compras dos ingredientes','O cliente poderá pedir esse serviço no orçamento.',true],
@@ -139,6 +141,6 @@ async function verifyPassword(password,account,cryptoApi){
   if(!/^[a-f\d]{64}$/i.test(account.pass)||!c?.subtle)return false;
   return account.pass===hex(await c.subtle.digest('SHA-256',new TextEncoder().encode(account.id+':'+password)));
 }
-const api={norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
+const api={faltaPerfil,norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);
