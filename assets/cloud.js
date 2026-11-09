@@ -16,6 +16,7 @@
   const Cloud = {
     on: false,
     temGoogle: false,
+    temConvite: false,
     // Descobre se há banco e traz chefs reais e a sessão do chef (se houver).
     async start() {
       try {
@@ -24,6 +25,7 @@
         const saude = r.ok ? await r.json() : null;
         if (!saude || !saude.ok) return null;
         Cloud.temGoogle = !!saude.google;
+        Cloud.temConvite = !!saude.convite;
       } catch (e) { return null; }
       const [lista, eu] = await Promise.all([req('GET', '/chefs'), req('GET', '/eu')]);
       Cloud.on = true;

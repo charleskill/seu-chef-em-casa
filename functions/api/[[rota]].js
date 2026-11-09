@@ -1,6 +1,6 @@
 // API do piloto: Cloudflare Pages Functions + D1.
 // Rotas em /api/*. Cada chef só altera o próprio perfil (a sessão decide quem é).
-// Variáveis: DB (binding D1), CONVITE (código para criar conta de chef),
+// Variáveis: DB (binding D1), CONVITE (opcional: se existir, exige esse código para criar conta de chef; sem ela, cadastro aberto),
 // GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET (login com Google; sem elas o botão não aparece).
 import Core from '../../assets/app-core.js';
 
@@ -151,7 +151,7 @@ export async function onRequest({ request: req, env, params }) {
   if (!env.DB) return erro('Banco não configurado.', 503);
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
-    if (rota === '/saude') return json({ ok: true, google: googleOn(env) });
+    if (rota === '/saude') return json({ ok: true, google: googleOn(env), convite: !!env.CONVITE });
 
     if (rota === '/google/iniciar' && metodo === 'POST') {
       if (!googleOn(env)) return erro('Login com Google ainda não está ativado.', 503);
@@ -159,7 +159,7 @@ export async function onRequest({ request: req, env, params }) {
       const b = await corpo(req), modo = b.modo === 'cadastro' ? 'cadastro' : 'entrar';
       let dados = {};
       if (modo === 'cadastro') {
-        if (!env.CONVITE || txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
+        if (env.CONVITE && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
         const whatsapp = txt(b.whatsapp, 30); if (!C.phone(whatsapp)) return erro('Informe um WhatsApp válido com DDD.');
         dados = { nome: txt(b.nome, 120), whatsapp, cidades: txt(b.cidades, 160) };
       }
@@ -234,7 +234,7 @@ export async function onRequest({ request: req, env, params }) {
     if (rota === '/cadastro' && metodo === 'POST') {
       if (!await limitar(env, req, 'cadastro', 10, 3600)) return erro('Muitas tentativas. Tente de novo em uma hora.', 429);
       const b = await corpo(req);
-      if (!env.CONVITE || txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
+      if (env.CONVITE && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
       const email = C.email(b.email); if (!C.validEmail(email)) return erro('Confira o e-mail informado.');
       const senha = String(b.senha || ''); if (senha.length < 8 || senha.length > 200) return erro('Crie uma senha com pelo menos 8 caracteres.');
       if (await env.DB.prepare('SELECT 1 FROM chefs WHERE email = ?').bind(email).first()) return erro('Este e-mail já está cadastrado. Use Entrar.', 409);

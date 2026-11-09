@@ -192,3 +192,8 @@ Origem: main (f3f4d5e).
 ## Entrega — 09/11/2026 (situação dos pedidos)
 - [x] Painel > Pedidos: cada pedido pode ser marcado como Novo, Respondido ou Fechado. Fica no JSON `dados` do pedido, sem migração do banco (`PATCH /api/meus-pedidos/:id`).
 - Verificado de fato: npm test (42 de 42); API com D1 local (7 verificações, inclusive outro chef sem acesso); troca e persistência no navegador.
+## Entrega — 09/11/2026 (cadastro sem convite)
+- [x] API: convite só exigido se `CONVITE` existir; `/api/saude` informa `convite`.
+- [x] App: sem campo e sem textos de convite quando não exigido; mensagens do Google ajustadas.
+- Verificado de fato: `npm run check`, `npm test`, `npm run build`; local com `wrangler pages dev` sem `CONVITE` e Google falso: tela de criar conta sem convite, cadastro com Google e com e-mail sem convite, "Entrar com Google" sem conta orienta a criar.
+- [ ] Apagar a variável `CONVITE` na Cloudflare; criar a credencial do Google e adicionar `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET`.
