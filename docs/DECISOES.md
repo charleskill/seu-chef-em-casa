@@ -87,3 +87,6 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 ## 09/11 · Pausar e excluir conta
 - Pausar usa a coluna `publicado` já existente: o chef pausado sai da lista e não recebe pedidos, sem perder dados. Excluir apaga de vez perfil, fotos, pedidos e sessões.
 - Versão real reconhecida pelo domínio e pela resposta da API; a demonstração do GitHub Pages continua com os 50 perfis de exemplo.
+
+## 09/11 · Identidade visual
+- Novo símbolo escolhido: cloche dentro da casa (une chef e casa), no cabeçalho e no ícone da aba. Frase sob o nome: "Personal chefs e marmitas na sua casa". Cores mantidas.
