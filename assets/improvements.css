@@ -113,3 +113,6 @@ html{scroll-padding-top:90px}
 .cid-chip{display:inline-flex;align-items:center;gap:2px;padding:4px 4px 4px 12px;border-radius:99px;background:#f4ece3;color:var(--ink);font-size:14px}
 .cid-chip button{width:28px;height:28px;border:0;background:none;color:var(--cu2);font-size:18px;line-height:1;cursor:pointer}
 .cid-box input{flex:1 1 150px;width:auto;min-width:0;margin:0;padding:7px;border:0;background:none;box-shadow:none;outline:none}
+
+.passos{margin:14px 0;padding-left:22px;line-height:1.5}
+.passos li{margin-bottom:10px}
