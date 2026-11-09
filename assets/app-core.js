@@ -92,7 +92,11 @@ const OPCOES=[
   ['r_lactose','Cozinho sem lactose','Mostra a opção no pedido do cliente.',true],
   ['r_vegetariano','Cozinho pratos vegetarianos','Mostra a opção no pedido do cliente.',true],
   ['r_vegano','Cozinho pratos veganos','Mostra a opção no pedido do cliente.',true],
-  ['r_mar','Cuido de alergia a frutos do mar','Mostra a opção no pedido do cliente.',true]
+  ['r_mar','Cuido de alergia a frutos do mar','Mostra a opção no pedido do cliente.',true],
+  ['x_lanche','Faço Noite do Lanche','Você aparece nesta experiência, na aba Serviços.',false],
+  ['x_pizza','Faço Noite da Pizza','Você aparece nesta experiência, na aba Serviços.',false],
+  ['x_lounge','Faço Lounge (petiscos e drinks)','Você aparece nesta experiência, na aba Serviços.',false],
+  ['x_tematico','Faço cardápio temático','Você aparece nesta experiência, na aba Serviços.',false]
 ];
 const RESTR={'Sem glúten':'r_gluten','Sem lactose':'r_lactose','Vegetariano':'r_vegetariano','Vegano':'r_vegano','Alergia a frutos do mar':'r_mar'};
 const opcoes=c=>{const o=c&&c.opcoes&&typeof c.opcoes==='object'?c.opcoes:{};const r={};OPCOES.forEach(([k,,,d])=>{r[k]=typeof o[k]==='boolean'?o[k]:d});return r};

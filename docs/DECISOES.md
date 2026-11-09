@@ -98,3 +98,6 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 09/11 · Mediação e comissão
 - Ideia de o app intermediar pagamentos e ficar com um percentual cancelada por enquanto. O app continua vitrine, com contato direto pelo WhatsApp e sem comissão.
+
+## 09/11 · Aba Serviços
+- A aba Marmitas virou Serviços (Noite do Lanche, Noite da Pizza, Lounge, cardápio temático, jantar a dois, almoço em família, encontro com amigos, celebração e marmitas; o chef marca as experiências que oferece em Painel > Atendimento), para marmita ser complemento, não o foco. Frase sob o nome: "Personal chefs na sua casa".
