@@ -100,6 +100,7 @@ const OPCOES=[
   ['x_boteco','Faço Noite do Boteco','Você aparece nesta experiência, na aba Serviços.',false],
   ['x_churrasco','Faço churrasco em casa','Você aparece nesta experiência, na aba Serviços.',false],
   ['x_mar','Faço sequência de frutos do mar','Você aparece nesta experiência, na aba Serviços.',false],
+  ['x_tainha','Faço Noite da Tainha','Você aparece nesta experiência, na aba Serviços.',false],
   ['x_fondue','Faço Noite do Fondue','Você aparece nesta experiência, na aba Serviços.',false],
   ['x_aula','Dou aula de cozinha em casa','Você aparece nesta experiência, na aba Serviços.',false]
 ];
