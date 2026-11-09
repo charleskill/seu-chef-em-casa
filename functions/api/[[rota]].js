@@ -148,7 +148,7 @@ async function corpo(req) {
 }
 
 export async function onRequest({ request: req, env, params }) {
-  if (!env.DB) return erro('Banco não configurado.', 503);
+  if (!env.DB) return json({ erro: 'Banco não configurado.', recebidas: Object.keys(env || {}).sort() }, 503); // nomes apenas, sem valores
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
     if (rota === '/saude') return json({ ok: true, google: googleOn(env) });
