@@ -33,6 +33,8 @@
     entrar: (email, senha) => req('POST', '/entrar', { email, senha }).then(j => j.chef),
     sair: () => req('POST', '/sair', {}).catch(() => null),
     salvar: perfil => req('PUT', '/eu', { perfil }).then(j => j.chef),
+    // Ids dos chefs que estão recebendo pedidos agora (os pausados não aparecem).
+    ativos: () => req('GET', '/chefs').then(j => (j.chefs || []).map(c => c.id)),
     // Apaga a conta do chef logado. Precisa da rota DELETE /api/eu no servidor.
     excluir: () => req('DELETE', '/eu'),
     // Registra o pedido antes de abrir o WhatsApp. keepalive mantém o envio mesmo se a aba mudar.

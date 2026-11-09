@@ -11,6 +11,7 @@ const marcado=fs.readFileSync(path.join(root,'index.html'),'utf8').replace(/(src
 fs.writeFileSync(path.join(root,'index.html'),marcado);
 fs.writeFileSync(path.join(out,'index.html'),marcado);
 fs.cpSync(path.join(root,'assets'),path.join(out,'assets'),{recursive:true});
+fs.copyFileSync(path.join(root,'_headers'),path.join(out,'_headers'));
 // Portable review copy, with the same sources, for opening without a server.
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 html=html.replace(/\?v=[a-f0-9]+"/g,'"');
@@ -18,6 +19,7 @@ html=html.replace('<link rel="stylesheet" href="assets/styles.css">',()=>'<style
 html=html.replace('<link rel="stylesheet" href="assets/improvements.css">',()=>'<style>'+fs.readFileSync(path.join(root,'assets/improvements.css'),'utf8')+'</style>');
 html=html.replaceAll(/<script defer src="(assets\/[^\"]+)"><\/script>/g,()=> '');
 const scripts=['tela.js','demo-data.js','demo-images.js','app-core.js','cloud.js','order-validation.js','termos.js','app.js','improvements.js','endereco.js'].map(f=>'<script>\n'+fs.readFileSync(path.join(root,'assets',f),'utf8').replaceAll('</script','<\\/script')+'\n</script>').join('\n');
+html=html.replace(/<script src="assets\/real\.js"><\/script>\r?\n?/,'');
 html=html.replace('</body>',()=>scripts+'\n</body>');
 fs.writeFileSync(path.join(out,'seu-chef-revisado.html'),html);
 console.log('Built dist/index.html and dist/seu-chef-revisado.html');

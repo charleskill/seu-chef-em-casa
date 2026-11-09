@@ -167,3 +167,10 @@ Origem: main (f3f4d5e).
 - Verificado de fato: `npm test` (41 de 41), `npm run build`; 15 verificações da API com `wrangler pages dev` e D1 local (pausar, some da lista, não recebe pedido, reativar, excluir, sem sessão recusado, só o chef excluído some, sem sobras no banco); telas no navegador com API simulada.
 - Não verificado: Cloudflare real, celular real.
 - [ ] E-mail de contato nos termos e revisão por advogado(a).
+
+## Entrega — 09/11/2026 (leveza e proteções)
+- [x] `assets/real.js`: a versão real não baixa os perfis de exemplo (cerca de 520 KB); a demonstração continua igual.
+- [x] `_headers`: CSP e demais cabeçalhos de segurança, copiados para `dist/` no build.
+- [x] Imagem de compartilhamento (`og:image`).
+- [x] Pedido a chef pausado é barrado na revisão, antes de abrir o WhatsApp.
+- Verificado de fato: `npm run check`, `npm test` (41 de 41), `npm run build`; `wrangler pages dev` com D1 local: rotas principais sem violação de CSP nem erros no console, chef pausado barrado.
