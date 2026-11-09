@@ -1,24 +1,36 @@
 # Contexto do projeto — Seu Chef em Casa
 
-Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `docs/`.
+Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `docs/` (PROJETO, TAREFAS, DECISOES, ATIVAR-CLOUDFLARE).
+Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 
 ## O que é
-- Marketplace para achar personal chefs (foco em Santa Catarina), montar o cardápio e pedir orçamento pelo WhatsApp. Nome futuro em estudo: Mesa Posta.
+- Marketplace para achar personal chefs (foco em Santa Catarina), montar o cardápio e pedir orçamento pelo WhatsApp.
+- Nome: **Seu Chef em Casa** (Carlos descartou "Mesa Posta" em 09/11). Domínio pretendido: seuchefemcasa.com.br (ainda não comprado; compra no registro.br, feita por Carlos).
 - Marca separada do Seu Restaurante Online (outro repositório), mas na mesma base técnica (Cloudflare).
 - Termos: o app é só uma vitrine; não responde pelo que acontece entre cliente e chef.
+- Meta imediata: piloto com 3 chefs profissionais reais.
 
 ## Onde está
-- Demonstração pública (GitHub Pages, dados só no aparelho): https://charleskill.github.io/seu-chef-em-casa/
-- Versão real (banco D1 + login de chef com código de convite) pronta no código, liga quando publicada na Cloudflare. Passo a passo: `docs/ATIVAR-CLOUDFLARE.md`.
-- Testes: `npm run check`, `npm test`, `npm run build`.
+- **Versão real (no ar desde 09/11):** https://seu-chef-em-casa.pages.dev — Cloudflare Pages ligado ao GitHub (cada push na `main` publica sozinho), Functions em `functions/api/[[rota]].js`, banco D1 `chefemcasa` (binding `DB`), código de convite em segredo `CONVITE` (Carlos sabe o valor). Conta Cloudflare: carlosmendes.ricci@gmail.com.
+- **Demonstração (GitHub Pages, dados só no aparelho):** https://charleskill.github.io/seu-chef-em-casa/ — 50 perfis de exemplo.
+- Banco: `migrations/0001_piloto.sql` e `0002_google.sql` já aplicadas no D1 de produção.
+- Testes: `npm run check`, `npm test` (41), `npm run build` (rodar o build antes de cada commit: ele carimba a versão dos arquivos no `index.html`).
+- Teste local da versão real: `wrangler pages dev dist` com `wrangler.toml` temporário (não versionar), D1 local e as migrações; há um servidor falso do Google descrito em `docs/TAREFAS.md` (entrega do login com Google).
 
-## Pendências
-- Carlos: criar conta Cloudflare, banco `chefemcasa`, ligar o repositório, definir o `CONVITE` e mandar aos 2 chefs reais.
-- Login com Google pronto no código; Carlos cria a credencial (docs/ATIVAR-CLOUDFLARE.md, seção 6).
-- Troca de senha por e-mail (precisa de serviço de e-mail e domínio).
-- E-mail de contato e revisão por advogado(a) dos termos.
-- Desligar os 50 perfis de exemplo quando houver chefs reais suficientes.
+## Regras fixas do Carlos
+- Commit e push direto na `main`, sem pull request.
+- Telefone de teste em **todo** dado fictício (perfis de exemplo, testes, contas de teste): **(48) 99110-6355**.
+- Registrar entregas em `docs/TAREFAS.md` (com o que foi realmente verificado) e decisões em `docs/DECISOES.md`.
+- Não afirmar que abrir o WhatsApp confirma envio.
 
-## Como trabalhar neste repositório
-- Commit e push direto na `main`, sem pull request (pedido do Carlos).
-- Registrar entregas em `docs/TAREFAS.md` e decisões em `docs/DECISOES.md`.
+## Pendências (em ordem)
+1. Primeiro chef de teste na versão real (Carlos cria com o convite) e conferir em outro aparelho.
+2. Código, antes de chamar os 3 chefs (propostas aguardando o OK do Carlos):
+   - esconder a aba **Mensagens** na versão real (as conversas ficam só no aparelho do cliente; o chef nunca recebe);
+   - botões **Excluir conta** e **Pausar perfil** (os termos prometem a exclusão; não existe rota na API);
+   - esconder os **50 perfis de exemplo** na versão real (hoje aparecem depois dos reais, com o WhatsApp de teste).
+3. Login com Google: Carlos cria a credencial (docs/ATIVAR-CLOUDFLARE.md, seção 6) e adiciona `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` na Cloudflare.
+4. GitHub → Settings → Pages → Source: **GitHub Actions** (hoje publica da branch e expõe `docs/` e `migrations/` na demonstração).
+5. Domínio seuchefemcasa.com.br: comprar, pôr na Cloudflare, ligar ao Pages e acrescentar no Google.
+6. Termos: e-mail de contato e revisão por advogado.
+7. Depois do piloto: login Microsoft, troca de senha por e-mail.
