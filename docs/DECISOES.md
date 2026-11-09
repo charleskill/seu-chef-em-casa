@@ -94,3 +94,7 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 09/11 · Perfil só aparece quando pronto
 - O chef só aparece aos clientes e só recebe pedidos com foto, ao menos um prato e cidade (regra em C.faltaPerfil, aplicada no servidor). O painel mostra o que falta.
+
+
+## 09/11 · Mediação e comissão
+- Ideia de o app intermediar pagamentos e ficar com um percentual cancelada por enquanto. O app continua vitrine, com contato direto pelo WhatsApp e sem comissão.
