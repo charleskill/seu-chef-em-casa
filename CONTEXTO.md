@@ -23,6 +23,9 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 - Registrar entregas em `docs/TAREFAS.md` (com o que foi realmente verificado) e decisões em `docs/DECISOES.md`.
 - Não afirmar que abrir o WhatsApp confirma envio.
 
+## Novidades de 09/11 (noite)
+- Cadastro de chef aberto (sem convite; `CONVITE` opcional), área da equipe `/#/admin` (`ADMIN_EMAILS`), link de compartilhamento `/c/<id>` com prévia, aviso de pedido por e-mail (precisa de domínio). Detalhes em docs/TAREFAS.md e ATIVAR-CLOUDFLARE.md (seções 7 e 8).
+
 ## Pendências (em ordem)
 1. Primeiro chef de teste na versão real (Carlos cria com o convite) e conferir em outro aparelho.
 2. Feito em 09/11: Mensagens e perfis de exemplo escondidos na versão real; Pausar perfil e Excluir conta.

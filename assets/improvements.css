@@ -126,4 +126,8 @@ html{scroll-padding-top:90px}
 .servico{flex-direction:row;align-items:center;gap:14px;padding:12px}
 .servico img,.servico-sem{flex:none;width:84px;height:84px;border-radius:12px;object-fit:cover}
 .servico-sem{display:flex;align-items:center;justify-content:center;background:#304e3b;color:#f7f5f0}
-.servico-txt{display:flex;flex-direction:column;gap:4px;min-width:0}
+.servico-txt{display:flex;flex-direction:column;gap:4px;min-width:0}/* Área da equipe */
+.eq-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 16px}.eq-nums div{background:#fff;border:1px solid var(--line,#e4e1d6);border-radius:12px;padding:12px}.eq-nums b{display:block;font-size:24px;color:#304e3b}.eq-nums span{font-size:12px;color:var(--mut,#6b6b60)}
+.eq-chef{display:flex;gap:14px;align-items:flex-start;margin-top:12px}.eq-av{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:none}.eq-info{flex:1;min-width:0}.eq-info h3{margin:2px 0;font-size:18px}.eq-info .form-help{margin:2px 0;word-break:break-word}
+.eq-estado{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;margin:0}.eq-estado.ok{background:#e6f2ea;color:#2d6a43}.eq-estado.warn{background:#fdf1e3;color:#9a5a12}.eq-estado.off{background:#eee;color:#555}
+@media(max-width:650px){.eq-nums{grid-template-columns:repeat(2,1fr)}.eq-chef{flex-direction:column}}

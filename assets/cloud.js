@@ -44,6 +44,9 @@
     pedido: (chefId, texto, dados) => req('POST', '/pedidos', { chefId, texto, dados }, { keepalive: true }),
     // Login com Google: o servidor devolve o endereço do Google para onde o navegador deve ir.
     google: (modo, dados) => req('POST', '/google/iniciar', { modo, ...dados }).then(j => j.url),
+    // Painel da equipe (só e-mails em ADMIN_EMAILS no servidor).
+    adminChefs: () => req('GET', '/admin/chefs').then(j => j.chefs || []),
+    adminOcultar: (id, oculto) => req('POST', '/admin/chefs/' + encodeURIComponent(id), { oculto }),
     meusPedidos: () => req('GET', '/meus-pedidos').then(j => j.pedidos || [])
   };
   root.ChefCloud = Cloud;

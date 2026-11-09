@@ -57,6 +57,20 @@ Faça depois dos passos acima, quando o endereço do app (ex.: `seu-chef-em-casa
 - Se o chef já tem conta com o mesmo e-mail, o Google entra nessa conta.
 - Sem as duas variáveis, os botões do Google simplesmente não aparecem.
 
+## 7. Área da equipe (painel do administrador)
+1. Crie uma conta de chef com o e-mail da equipe (pode ser com o Google). Ela não aparece para os clientes enquanto não tiver foto e prato.
+2. Na Cloudflare → projeto → **Settings → Variables and Secrets** → **Add**: tipo **Text**, nome `ADMIN_EMAILS`, valor `carlosmendes.ricci@gmail.com` (mais de um: separe por vírgula). Salve e publique de novo.
+3. Entre no app com esse e-mail: no painel aparece o botão **Equipe** (endereço `/#/admin`), com todos os chefs, situação, pedidos e o botão **Esconder** / **Mostrar de novo**.
+- O banco cria sozinho a coluna nova (`oculto`) no primeiro acesso; `migrations/0003_admin.sql` fica como registro.
+
+## 8. Aviso de pedido por e-mail ao chef (precisa de domínio próprio)
+O servidor manda um e-mail ao chef a cada pedido registrado, pelo Cloudflare Email Service. Precisa:
+1. Domínio próprio na Cloudflare (ex.: seuchefemcasa.com.br) com o envio de e-mail ativado: **Email Service / Email Sending** → adicionar o domínio e seguir os registros de DNS que a Cloudflare pedir.
+2. Um token de API com permissão de envio de e-mail: **Manage account → Account API tokens → Create token**.
+3. Variáveis no projeto do Pages: `EMAIL_REMETENTE` (Text, ex.: `pedidos@seuchefemcasa.com.br`), `CF_ACCOUNT_ID` (Text, o ID da conta, que aparece no endereço do painel) e `CF_EMAIL_TOKEN` (**Secret**, o token). Publique de novo.
+- Sem essas variáveis, nada é enviado e os pedidos funcionam normalmente. Uma falha de e-mail nunca impede o pedido.
+- Confira na documentação da Cloudflare (Email Service) se o plano gratuito permite enviar a qualquer destinatário; se exigir o plano pago dos Workers, decida antes de ativar.
+
 ## Como funciona
 - Só cria conta de chef quem tem o código de convite. Cliente não precisa de conta.
 - Cada chef só altera o próprio perfil. A sessão fica num cookie seguro por 30 dias.

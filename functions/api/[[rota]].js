@@ -1,7 +1,9 @@
 // API do piloto: Cloudflare Pages Functions + D1.
 // Rotas em /api/*. Cada chef só altera o próprio perfil (a sessão decide quem é).
 // Variáveis: DB (binding D1), CONVITE (opcional: se existir, exige esse código para criar conta de chef; sem ela, cadastro aberto),
-// GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET (login com Google; sem elas o botão não aparece).
+// GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET (login com Google; sem elas o botão não aparece),
+// ADMIN_EMAILS (e-mails da equipe, separados por vírgula: veem o painel /#/admin),
+// EMAIL_REMETENTE + CF_ACCOUNT_ID + CF_EMAIL_TOKEN (aviso de pedido por e-mail ao chef, via Cloudflare Email Service; sem elas, não envia).
 import Core from '../../assets/app-core.js';
 
 const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
@@ -139,7 +141,34 @@ function lerIdToken(t) {
 }
 
 const publico = row => ({ ...JSON.parse(row.perfil), id: row.id, cloud: true });
-const doDono = row => ({ ...publico(row), email: row.email, pausado: !row.publicado });
+const ehAdmin = (env, row) => !!row && String(env.ADMIN_EMAILS || '').split(/[\s,;]+/).map(e => C.email(e)).filter(Boolean).includes(C.email(row.email));
+const doDono = (row, env = {}) => ({ ...publico(row), email: row.email, pausado: !row.publicado, oculto: !!row.oculto, admin: ehAdmin(env, row) });
+
+// ---------- Aviso de pedido por e-mail (Cloudflare Email Service, API REST) ----------
+// Nunca atrapalha o pedido: qualquer falha é ignorada. EMAIL_API_TESTE só existe para teste local.
+function emailPedido(perfil, texto, origem) {
+  const cliente = (String(texto).match(/^Cliente: (.+)$/m) || [])[1] || 'um cliente';
+  const data = (String(texto).match(/^(?:Data|Início desejado): (.+)$/m) || [])[1] || '';
+  const assunto = 'Novo pedido de orçamento de ' + cliente + (data ? ' para ' + data : '');
+  const painel = origem + '/#/painel';
+  const corpoTxt = 'Olá, ' + (perfil.name || 'chef') + '!\n\nVocê recebeu um pedido de orçamento pelo Seu Chef em Casa.\n'
+    + 'O cliente deve enviar a mesma mensagem pelo WhatsApp. Se não chegar, você pode responder pelo painel.\n\n'
+    + texto + '\n\nVer no painel: ' + painel + '\n';
+  const e = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const html = '<p>Olá, ' + e(perfil.name || 'chef') + '!</p><p>Você recebeu um pedido de orçamento pelo <b>Seu Chef em Casa</b>. O cliente deve enviar a mesma mensagem pelo WhatsApp; se não chegar, você pode responder pelo painel.</p>'
+    + '<pre style="white-space:pre-wrap;font-family:inherit;background:#f6f3ec;padding:14px;border-radius:10px">' + e(texto) + '</pre>'
+    + '<p><a href="' + e(painel) + '">Ver no painel</a></p>';
+  return { assunto, texto: corpoTxt, html };
+}
+async function avisarChef(env, para, perfil, texto, origem) {
+  if (!env.EMAIL_REMETENTE || !C.validEmail(C.email(para))) return false;
+  const url = env.EMAIL_API_TESTE || (env.CF_ACCOUNT_ID && env.CF_EMAIL_TOKEN ? 'https://api.cloudflare.com/client/v4/accounts/' + env.CF_ACCOUNT_ID + '/email/sending/send' : '');
+  if (!url) return false;
+  const m = emailPedido(perfil, texto, origem);
+  const r = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + (env.CF_EMAIL_TOKEN || 'teste') },
+    body: JSON.stringify({ to: C.email(para), from: env.EMAIL_REMETENTE, subject: m.assunto, text: m.texto, html: m.html }) });
+  return r.ok;
+}
 
 async function corpo(req) {
   if (!(req.headers.get('content-type') || '').startsWith('application/json')) throw new Error('Envie JSON.');
@@ -147,8 +176,21 @@ async function corpo(req) {
   return JSON.parse(t || '{}');
 }
 
-export async function onRequest({ request: req, env, params }) {
+// Atualiza o banco sozinho quando falta uma coluna nova (equivale a migrations/0003_admin.sql). Roda uma vez por instância.
+let esquemaOk = false;
+async function garantirEsquema(env) {
+  if (esquemaOk) return;
+  const { results } = await env.DB.prepare('PRAGMA table_info(chefs)').all();
+  if (!results.some(c => c.name === 'oculto')) {
+    try { await env.DB.prepare('ALTER TABLE chefs ADD COLUMN oculto INTEGER NOT NULL DEFAULT 0').run(); }
+    catch (e) { if (!/duplicate column/i.test(String(e && e.message))) throw e; }
+  }
+  esquemaOk = true;
+}
+
+export async function onRequest({ request: req, env, params, waitUntil }) {
   if (!env.DB) return erro('Banco não configurado.', 503);
+  await garantirEsquema(env);
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
     if (rota === '/saude') return json({ ok: true, google: googleOn(env), convite: !!env.CONVITE });
@@ -216,7 +258,7 @@ export async function onRequest({ request: req, env, params }) {
     }
 
     if (rota === '/chefs' && metodo === 'GET') {
-      const { results } = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE publicado = 1 ORDER BY criado_em').all();
+      const { results } = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE publicado = 1 AND oculto = 0 ORDER BY criado_em').all();
       return json({ chefs: results.map(publico).filter(c => !C.faltaPerfil(c).length) }, 200, { 'cache-control': 'public, max-age=30' });
     }
 
@@ -228,7 +270,7 @@ export async function onRequest({ request: req, env, params }) {
     }
 
     if (rota === '/eu' && metodo === 'GET') {
-      const c = await chefDaSessao(env, req); return json({ chef: c ? doDono(c) : null });
+      const c = await chefDaSessao(env, req); return json({ chef: c ? doDono(c, env) : null });
     }
 
     if (rota === '/cadastro' && metodo === 'POST') {
@@ -244,7 +286,7 @@ export async function onRequest({ request: req, env, params }) {
         .bind(id, email, JSON.stringify(await criarCredencial(senha)), JSON.stringify(perfil), agora(), agora()).run();
       const token = await abrirSessao(env, id);
       const row = await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first();
-      return json({ chef: doDono(row) }, 201, { 'set-cookie': cookieSessao(token, SESSAO_DIAS) });
+      return json({ chef: doDono(row, env) }, 201, { 'set-cookie': cookieSessao(token, SESSAO_DIAS) });
     }
 
     if (rota === '/entrar' && metodo === 'POST') {
@@ -254,7 +296,7 @@ export async function onRequest({ request: req, env, params }) {
       if (row && JSON.parse(row.credencial).algoritmo === 'google') return erro('Esta conta entra com o Google. Toque em Entrar com Google.', 401);
       if (!row || !await conferirSenha(String(b.senha || ''), JSON.parse(row.credencial))) return erro('E-mail ou senha incorretos.', 401);
       const token = await abrirSessao(env, row.id);
-      return json({ chef: doDono(row) }, 200, { 'set-cookie': cookieSessao(token, SESSAO_DIAS) });
+      return json({ chef: doDono(row, env) }, 200, { 'set-cookie': cookieSessao(token, SESSAO_DIAS) });
     }
 
     if (rota === '/sair' && metodo === 'POST') {
@@ -271,7 +313,7 @@ export async function onRequest({ request: req, env, params }) {
       const perfil = await limparPerfil(env, c.id, p, JSON.parse(c.perfil));
       const publicado = typeof p.pausado === 'boolean' ? (p.pausado ? 0 : 1) : c.publicado;
       await env.DB.prepare('UPDATE chefs SET email = ?, perfil = ?, publicado = ?, atualizado_em = ? WHERE id = ?').bind(email, JSON.stringify(perfil), publicado, agora(), c.id).run();
-      return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(c.id).first()) });
+      return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(c.id).first(), env) });
     }
 
     if (rota === '/eu' && metodo === 'DELETE') {
@@ -283,13 +325,15 @@ export async function onRequest({ request: req, env, params }) {
     if (rota === '/pedidos' && metodo === 'POST') {
       if (!await limitar(env, req, 'pedido', 20, 3600)) return erro('Muitos pedidos seguidos. Tente mais tarde.', 429);
       const b = await corpo(req), chefId = txt(b.chefId, 40);
-      const alvo = await env.DB.prepare('SELECT perfil FROM chefs WHERE id = ? AND publicado = 1').bind(chefId).first();
+      const alvo = await env.DB.prepare('SELECT email, perfil FROM chefs WHERE id = ? AND publicado = 1 AND oculto = 0').bind(chefId).first();
       if (!alvo || C.faltaPerfil(JSON.parse(alvo.perfil)).length) return erro('Chef não encontrado.', 404);
       const texto = txt(b.texto, 6000); if (texto.length < 20) return erro('Pedido incompleto.');
       const extra = b.dados && typeof b.dados === 'object' ? { ...b.dados } : {}; delete extra.status;
       const dadosJson = JSON.stringify(extra), dados = dadosJson.length > 20000 ? '{}' : dadosJson;
       const id = aleatorio(12);
       await env.DB.prepare('INSERT INTO pedidos (id, chef_id, texto, dados, criado_em) VALUES (?, ?, ?, ?, ?)').bind(id, chefId, texto, dados, agora()).run();
+      const aviso = avisarChef(env, alvo.email, JSON.parse(alvo.perfil), texto, new URL(req.url).origin).catch(() => false);
+      if (typeof waitUntil === 'function') waitUntil(aviso); else await aviso;
       return json({ id }, 201);
     }
 
@@ -306,6 +350,32 @@ export async function onRequest({ request: req, env, params }) {
       const r = await env.DB.prepare("UPDATE pedidos SET dados = json_set(dados, '$.status', ?) WHERE id = ? AND chef_id = ?").bind(status, id, c.id).run();
       if (!r.meta.changes) return erro('Pedido não encontrado.', 404);
       return json({ ok: true, status });
+    }
+
+    // ---------- Painel do administrador (só e-mails em ADMIN_EMAILS) ----------
+    if (rota === '/admin/chefs' || rota.startsWith('/admin/chefs/')) {
+      const c = await chefDaSessao(env, req);
+      if (!c) return erro('Entre com a conta da equipe.', 401);
+      if (!ehAdmin(env, c)) return erro('Acesso só para a equipe.', 403);
+      if (rota === '/admin/chefs' && metodo === 'GET') {
+        const { results } = await env.DB.prepare(`SELECT c.id, c.email, c.perfil, c.publicado, c.oculto, c.criado_em, c.atualizado_em, c.google_sub,
+          (SELECT COUNT(*) FROM pedidos p WHERE p.chef_id = c.id) AS pedidos,
+          (SELECT COUNT(*) FROM pedidos p WHERE p.chef_id = c.id AND p.criado_em > ?) AS pedidos7,
+          (SELECT MAX(p.criado_em) FROM pedidos p WHERE p.chef_id = c.id) AS ultimo
+          FROM chefs c ORDER BY c.criado_em DESC`).bind(new Date(Date.now() - 7 * 864e5).toISOString()).all();
+        return json({ chefs: results.map(r => { const p = JSON.parse(r.perfil || '{}'); return {
+          id: r.id, email: r.email, nome: p.name || '', cidades: p.cities || '', especialidade: p.specialty || '', whatsapp: p.whatsapp || '',
+          foto: p.avatar || (p.gallery && p.gallery[0] && p.gallery[0].url) || '', pratos: (p.dishes || []).length, fotos: (p.gallery || []).length,
+          falta: C.faltaPerfil({ ...p, id: r.id }), pausado: !r.publicado, oculto: !!r.oculto, google: !!r.google_sub,
+          criado_em: r.criado_em, atualizado_em: r.atualizado_em, pedidos: r.pedidos, pedidos7: r.pedidos7, ultimo: r.ultimo }; }) });
+      }
+      const id = rota.slice(13);
+      if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'POST') {
+        const b = await corpo(req); if (typeof b.oculto !== 'boolean') return erro('Informe se o perfil fica escondido.');
+        const r = await env.DB.prepare('UPDATE chefs SET oculto = ?, atualizado_em = ? WHERE id = ?').bind(b.oculto ? 1 : 0, agora(), id).run();
+        if (!r.meta.changes) return erro('Chef não encontrado.', 404);
+        return json({ ok: true, oculto: b.oculto });
+      }
     }
 
     return erro('Rota não encontrada.', 404);
