@@ -149,3 +149,10 @@ Pedido de Carlos: botão de buscar e não precisar preencher tudo para só olhar
 - Verificado de fato: `npm run check`, `npm test` (41 de 41), `npm run build`; ponta a ponta com `wrangler pages dev`, D1 local e um servidor falso do Google: convite errado barrado antes do Google, cadastro com Google (nome do Google, WhatsApp e cidade gravados), sair e entrar de novo, senha numa conta Google orienta a usar o Google, Google sem conta volta com aviso, Google com e-mail de conta existente entra nela sem duplicar, retorno com estado falso e com cancelamento recusados; testes anteriores de chef e cliente repetidos sem falhas.
 - Não verificado: Google de verdade (precisa das credenciais e do endereço na Cloudflare).
 - [ ] Carlos: criar a credencial no Google e colar as duas variáveis na Cloudflare (seção 6).
+
+## Ativação na Cloudflare — 09/11/2026
+- [x] Conta Cloudflare de Carlos (carlosmendes.ricci@gmail.com), criada e acessada por ele.
+- [x] Banco D1 `chefemcasa` com as tabelas de `0001_piloto.sql` e `0002_google.sql` (conferidas no console: chefs, sessoes, fotos, pedidos, limites, oauth_pendente).
+- [x] Projeto Pages `seu-chef-em-casa` ligado ao GitHub (branch main, `npm run build`, saída `dist`): https://seu-chef-em-casa.pages.dev
+- [x] Binding `DB` → `chefemcasa`; variável secreta `CONVITE` (valor digitado por Carlos, guardado com ele).
+- [ ] Login com Google: criar a credencial (seção 6) e adicionar `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET`.
