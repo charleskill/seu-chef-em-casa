@@ -23,7 +23,10 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 - Registrar entregas em `docs/TAREFAS.md` (com o que foi realmente verificado) e decisões em `docs/DECISOES.md`.
 - Não afirmar que abrir o WhatsApp confirma envio.
 
-## Site fechado para testes (desde 10/11)
+## Site aberto de novo (10/11)
+- A senha de acesso foi desligada no código em 10/11 (`LIGADA = false` em `functions/_middleware.js`). A variável `SENHA_SITE` continua na Cloudflare, sem efeito.
+
+## Histórico: site fechado para testes (10/11)
 - O site na Cloudflare pede uma senha de acesso antes de abrir (`functions/_middleware.js`, variável secreta `SENHA_SITE`). Para abrir ao público, apagar a variável e publicar de novo. Detalhes em docs/ATIVAR-CLOUDFLARE.md, seção 9. A demonstração do GitHub Pages continua aberta.
 
 ## Novidades de 09/11 (noite)

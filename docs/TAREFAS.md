@@ -263,3 +263,7 @@ Branch `verde-escuro`, prévia em https://verde-escuro.seu-chef-em-casa.pages.de
 - [x] Verde da marca trocado em `assets/styles.css`, `assets/improvements.css`, `assets/app.js`, `index.html` (cor do tema e ícone da aba) e `functions/c/[id].js` (vitrine). Nenhuma ocorrência do verde antigo sobrou nesses arquivos.
 - Verificado de fato, na prévia, em largura de celular: página inicial, Serviços e Buscar com o verde novo (logo, capa, botão Buscar, textos).
 - Não verificado: painel do chef, pedido, termos, largura de computador, contraste medido, celular físico; `npm test` (máquina sem Node). Brandbook não atualizado.
+
+
+## Entrega — 10/11/2026 (senha do site desligada)
+- [x] A pedido, a senha de acesso do site foi desligada: `LIGADA = false` em `functions/_middleware.js`. A variável `SENHA_SITE` ficou na Cloudflare, sem efeito (pode ser apagada). Para fechar de novo: `LIGADA = true`.

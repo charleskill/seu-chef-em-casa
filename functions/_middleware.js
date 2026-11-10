@@ -3,6 +3,7 @@
 // A senha não fica no código nem nos documentos: só na Cloudflare (Settings → Variables and secrets, tipo Secret).
 // É uma porta simples para o período de testes, não substitui o login dos chefs.
 // /acesso?previa mostra a tela de senha mesmo para quem já entrou (para rever a tela); ela não libera nada.
+const LIGADA = false;
 const COOKIE = 'scc_acesso', DIAS = 30;
 const enc = new TextEncoder();
 const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
@@ -62,7 +63,9 @@ export async function onRequest({ request: req, env, next }) {
   // Prévia da tela (só mostra; o formulário continua exigindo a senha certa).
   if (req.method === 'GET' && url.pathname === '/acesso' && url.searchParams.has('previa')) return pagina('/', '', 200);
 
-  const senha = String(env.SENHA_SITE || '').trim();
+  // LIGADA = false: porta desligada em 10/11/2026, a pedido (site aberto). Para fechar de novo, troque para true
+  // e mantenha a variável SENHA_SITE na Cloudflare.
+  const senha = LIGADA ? String(env.SENHA_SITE || '').trim() : '';
   if (!senha) return next();
 
   const esperado = await marca(senha);

@@ -132,3 +132,6 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Pedido feito na sessão do Claude Code: usar em todo o projeto o verde escuro da tela de senha, no lugar do verde anterior. Confirmar com Carlos.
 - Verde da marca `--ol`: de `#304e3b` para `#1c2520`; cor do texto `--ink`: de `#283b30` para `#202b25`; tom de realce escuro: de `#1d3226` para `#141a17`. Terracota, dourado e fundos claros não mudaram.
 - O brandbook (Design System no Claude) ainda mostra o verde antigo e precisa ser atualizado por quem o mantém.
+
+## 10/11 · Site aberto de novo
+- Pedido feito na sessão do Claude Code: remover a senha do site principal. Com isso o site fica público, com cadastro de chef aberto (sem convite). Confirmar com Carlos.
