@@ -19,20 +19,24 @@ const CABECALHOS = {
 
 function pagina(para, erro, status) {
   const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-    + '<meta name="robots" content="noindex,nofollow"><title>Seu Chef em Casa · em testes</title><style>'
-    + 'body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f5f3ee;color:#26342c;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:20px;box-sizing:border-box}'
-    + 'main{width:100%;max-width:360px;background:#fff;border:1px solid rgba(48,78,59,.18);border-radius:16px;padding:28px 24px;box-sizing:border-box}'
-    + 'h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:1.5rem;margin:0 0 6px}p{margin:0 0 18px;color:#5f6b62;font-size:.95rem;line-height:1.45}'
-    + 'label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}'
-    + 'input{width:100%;box-sizing:border-box;font:inherit;font-size:1rem;padding:12px 14px;border:1px solid #b9c0b8;border-radius:10px;background:#fff;color:inherit}'
-    + 'input:focus{outline:2px solid #304e3b;outline-offset:1px}'
-    + 'button{width:100%;margin-top:14px;font:inherit;font-weight:600;font-size:1rem;padding:13px;border:0;border-radius:10px;background:#a5583c;color:#fff;cursor:pointer}'
-    + 'button:focus-visible{outline:2px solid #304e3b;outline-offset:2px}.erro{color:#a12b1c;font-size:.9rem;margin:10px 0 0}'
-    + '</style></head><body><main><h1>Seu Chef em Casa</h1><p>O site está em fase de testes. Digite a senha de acesso para entrar.</p>'
+    + '<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#161d19"><title>Seu Chef em Casa · em breve</title><style>'
+    + 'body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#161d19;background-image:radial-gradient(ellipse at 50% 0%,#2b3a31 0%,#161d19 62%);color:#f3eee4;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:24px;box-sizing:border-box}'
+    + 'main{width:100%;max-width:400px;text-align:center}'
+    + '.marca{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:#d9a184;margin:0 0 28px}'
+    + 'h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:2rem;line-height:1.2;margin:0 0 14px}'
+    + '.aguarde{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:1.1rem;color:#c9c3b6;margin:0 0 40px}'
+    + 'form{border-top:1px solid rgba(243,238,228,.16);padding-top:28px}'
+    + 'label{display:block;font-size:.95rem;line-height:1.45;color:#c9c3b6;margin-bottom:14px}'
+    + 'input{width:100%;box-sizing:border-box;font:inherit;font-size:1.05rem;letter-spacing:.12em;text-align:center;padding:13px 14px;border:1px solid rgba(243,238,228,.3);border-radius:10px;background:rgba(255,255,255,.06);color:#f3eee4}'
+    + 'input:focus{outline:2px solid #d9a184;outline-offset:2px}'
+    + 'button{width:100%;margin-top:14px;font:inherit;font-weight:600;font-size:1rem;padding:13px;border:0;border-radius:10px;background:#b9623f;color:#fff;cursor:pointer}'
+    + 'button:focus-visible{outline:2px solid #f3eee4;outline-offset:2px}.erro{color:#ffb4a2;font-size:.92rem;margin:14px 0 0}'
+    + '</style></head><body><main><p class="marca">Seu Chef em Casa</p><h1>Grandes coisas estão para acontecer.</h1>'
+    + '<p class="aguarde">O fogo já está aceso. Aguarde…</p>'
     + '<form method="post" action="/acesso"><input type="hidden" name="para" value="' + esc(para) + '">'
-    + '<label for="senha">Senha de acesso</label><input id="senha" name="senha" type="password" autocomplete="current-password" required autofocus>'
+    + '<label for="senha">Se você sabe de algum segredo desta cozinha, digite a senha:</label><input id="senha" name="senha" type="password" autocomplete="current-password" required autofocus>'
     + (erro ? '<p class="erro" role="alert">' + esc(erro) + '</p>' : '')
-    + '<button type="submit">Entrar</button></form></main></body></html>';
+    + '<button type="submit">Abrir a porta da cozinha</button></form></main></body></html>';
   return new Response(html, { status, headers: CABECALHOS });
 }
 
@@ -57,7 +61,7 @@ export async function onRequest({ request: req, env, next }) {
     }
     // Pequena espera para atrapalhar tentativas em série.
     await new Promise(r => setTimeout(r, 700));
-    return pagina(para, 'Senha incorreta. Tente de novo.', 401);
+    return pagina(para, 'Esse não é o ingrediente secreto. Tente de novo.', 401);
   }
 
   if (liberado) return url.pathname === '/acesso' ? Response.redirect(url.origin + '/', 303) : next();

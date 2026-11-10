@@ -242,3 +242,4 @@ Branch `catalogo-pratos`, prévia em https://catalogo-pratos.seu-chef-em-casa.pa
 - [x] Variável `SENHA_SITE` criada na Cloudflare (tipo Secret, valor digitado pela usuária) em 10/11; site publicado de novo para a senha valer.
 - Verificado de fato em 10/11, no site publicado: `seuchefemcasa.com.br`, `www` e `pages.dev` respondem 401 com a tela de senha; `/api`, arquivos e `/c/<id>` fechados; senha errada e cookie falso recusados; destino externo no campo `para` trocado por `/`. Entrada com a senha certa confirmada pela usuária no próprio aparelho.
 - Não coberto: a demonstração do GitHub Pages continua aberta.
+- [x] 10/11: tela de senha reescrita em tom de suspense de cozinha, a pedido ("Grandes coisas estão para acontecer.", fundo escuro, botão "Abrir a porta da cozinha"). Só texto e estilo; a lógica não mudou.
