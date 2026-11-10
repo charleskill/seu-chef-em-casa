@@ -109,3 +109,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - O código virou opcional: só é exigido se a variável `CONVITE` existir na Cloudflare. Sem ela, qualquer pessoa cria conta de chef (Google ou e-mail e senha). `/api/saude` informa `convite: true/false` e o app esconde o campo quando não é exigido.
 - Para fechar o cadastro de novo no futuro, basta recriar a variável `CONVITE`.
 - Risco aceito: perfis falsos ou de teste podem aparecer; continua valendo o limite de tentativas e a regra de só mostrar perfis prontos.
+
+## 10/11 · Catálogo de pratos clássicos
+- Pedido feito na sessão do Claude Code: oferecer aos chefs uma lista grande de pratos conhecidos para escolher ao cadastrar. Confirmar com Carlos.
+- O catálogo traz só nome, categoria e cozinha, escritos para o projeto. Nenhum texto foi copiado de livros (o pedido citava "Chef Profissional") nem de sites: nomes de pratos são de uso comum, mas receitas, descrições e a organização de um livro têm direito autoral.
+- É sugestão, não lista fechada: o chef continua podendo escrever qualquer nome. Descrição e preço são sempre do chef.
+- O arquivo (cerca de 36 KB) carrega junto com o app, também para clientes; se pesar, passar a carregar só no painel.

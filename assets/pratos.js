@@ -92,7 +92,7 @@
     return achados.slice(0, limite || 8).map(a => a.p);
   }
 
-  const API = { lista: LISTA, buscar, categorias: Object.keys(DADOS) };
+  const API = { lista: LISTA, buscar, categorias: [E, P, S, M, F, B] };
   root.ChefPratos = API;
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   if (typeof document === 'undefined') return;

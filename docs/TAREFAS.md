@@ -224,3 +224,13 @@ Origem: main (f3f4d5e).
 ## Entrega — 09/11/2026 (bloco "Como este chef atende" compacto)
 - [x] Perfil do chef: o bloco virou uma linha que abre ao toque ("Como este chef atende · N opções"), fechado por padrão; etiquetas menores quando aberto. O aviso de que o chef não atende crianças continua sempre visível. Arquivos: `assets/app.js` (`opcoesInfo`) e `assets/improvements.css`.
 - Não verificado antes de publicar: `npm run check`, `npm test` e `npm run build` (máquina sem Node); versões do `index.html` da raiz carimbadas à mão com o mesmo cálculo do build.
+
+
+## Entrega — 10/11/2026 (catálogo de pratos clássicos, lado do chef)
+Branch `catalogo-pratos`, prévia em https://catalogo-pratos.seu-chef-em-casa.pages.dev (sem banco; roda como demonstração).
+- [x] `assets/pratos.js`: catálogo de 1.556 nomes de pratos clássicos (Entradas 339, Pratos Principais 483, Massas 154, Frutos do mar 217, Sobremesas 258, Bebidas & drinks 105), com categoria e cozinha, e busca que ignora acentos.
+- [x] Painel > Cardápio: ao digitar no "Nome do prato" aparecem até 8 sugestões; escolher (toque, ou setas e Enter) preenche o nome e a categoria e leva à descrição. O chef pode ignorar e escrever o próprio nome. Descrição e preço continuam por conta do chef.
+- [x] `tests/pratos.test.cjs`, `npm run check`, `scripts/build.cjs` e `index.html` incluem o arquivo novo.
+- Verificado de fato, no navegador, na prévia: as mesmas verificações de `tests/pratos.test.cjs` rodadas no console (a ordem das categorias falhou na primeira vez e foi corrigida); sugestão ao digitar "tirami" e "moqueca", escolha por teclado e por toque, categoria trocada sozinha, formulário não enviado pelo Enter, sem erros de JavaScript do app.
+- Não verificado: `npm run check`, `npm test` e `npm run build` na máquina (sem Node; o build da Cloudflare passou na prévia); celular físico; versão real com banco; salvar um prato escolhido da lista.
+- Fora desta entrega: descrições prontas dos pratos e o campo para o cliente pedir um prato fora do cardápio.
