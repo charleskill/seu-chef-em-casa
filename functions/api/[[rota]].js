@@ -304,6 +304,25 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       return json({ ok: true }, 200, { 'set-cookie': cookieSessao('', 0) });
     }
 
+    // Nova senha por link gerado pela equipe (/#/nova-senha/<id>/<token>). O link vale 48 horas e uma vez só.
+    if (rota === '/nova-senha' && metodo === 'POST') {
+      if (!await limitar(env, req, 'novasenha', 10, 900)) return erro('Muitas tentativas. Espere 15 minutos.', 429);
+      const b = await corpo(req), id = txt(b.id, 40), token = txt(b.token, 80), senha = String(b.senha || '');
+      const invalido = () => erro('Este link não vale mais. Peça um novo à equipe.', 400);
+      if (!/^chef-[a-f\d]{16}$/.test(id) || !/^[a-f\d]{48}$/.test(token)) return invalido();
+      if (senha.length < 8 || senha.length > 200) return erro('Crie uma senha com pelo menos 8 caracteres.');
+      const row = await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first();
+      const r = row && (JSON.parse(row.credencial || '{}').redefinir || null);
+      if (!r || !(Number(r.expira) > Date.now()) || r.hash !== await sha256(token)) return invalido();
+      // Troca a credencial (o pedido de redefinição some junto) e encerra as sessões abertas em outros aparelhos.
+      await env.DB.batch([
+        env.DB.prepare('UPDATE chefs SET credencial = ?, atualizado_em = ? WHERE id = ?').bind(JSON.stringify(await criarCredencial(senha)), agora(), id),
+        env.DB.prepare('DELETE FROM sessoes WHERE chef_id = ?').bind(id)
+      ]);
+      const sessao = await abrirSessao(env, id);
+      return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first(), env) }, 200, { 'set-cookie': cookieSessao(sessao, SESSAO_DIAS) });
+    }
+
     if (rota === '/eu' && metodo === 'PUT') {
       const c = await chefDaSessao(env, req); if (!c) return erro('Entre de novo para salvar.', 401);
       const b = await corpo(req), p = b.perfil || {};
@@ -371,10 +390,27 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       }
       const id = rota.slice(13);
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'POST') {
-        const b = await corpo(req); if (typeof b.oculto !== 'boolean') return erro('Informe se o perfil fica escondido.');
+        const b = await corpo(req);
+        // Gera um link para o chef criar uma senha nova. A equipe nunca vê nem escolhe a senha.
+        if (b.acao === 'nova-senha') {
+          const alvo = await env.DB.prepare('SELECT credencial FROM chefs WHERE id = ?').bind(id).first();
+          if (!alvo) return erro('Chef não encontrado.', 404);
+          const token = aleatorio(24), cred = JSON.parse(alvo.credencial || '{}');
+          cred.redefinir = { hash: await sha256(token), expira: Date.now() + 48 * 3600e3 };
+          await env.DB.prepare('UPDATE chefs SET credencial = ? WHERE id = ?').bind(JSON.stringify(cred), id).run();
+          return json({ ok: true, horas: 48, link: new URL(req.url).origin + '/#/nova-senha/' + id + '/' + token });
+        }
+        if (typeof b.oculto !== 'boolean') return erro('Informe se o perfil fica escondido.');
         const r = await env.DB.prepare('UPDATE chefs SET oculto = ?, atualizado_em = ? WHERE id = ?').bind(b.oculto ? 1 : 0, agora(), id).run();
         if (!r.meta.changes) return erro('Chef não encontrado.', 404);
         return json({ ok: true, oculto: b.oculto });
+      }
+      // Exclui a conta de um chef: perfil, fotos, pedidos e sessões. Não tem volta.
+      if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'DELETE') {
+        if (id === c.id) return erro('Para excluir a sua própria conta, use Painel > Perfil.');
+        if (!await env.DB.prepare('SELECT 1 FROM chefs WHERE id = ?').bind(id).first()) return erro('Chef não encontrado.', 404);
+        await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
+        return json({ ok: true });
       }
     }
 

@@ -47,6 +47,11 @@
     // Painel da equipe (só e-mails em ADMIN_EMAILS no servidor).
     adminChefs: () => req('GET', '/admin/chefs').then(j => j.chefs || []),
     adminOcultar: (id, oculto) => req('POST', '/admin/chefs/' + encodeURIComponent(id), { oculto }),
+    // Link para o chef criar uma senha nova (vale 48 horas) e exclusão de conta pela equipe.
+    adminNovaSenha: id => req('POST', '/admin/chefs/' + encodeURIComponent(id), { acao: 'nova-senha' }),
+    adminExcluir: id => req('DELETE', '/admin/chefs/' + encodeURIComponent(id)),
+    // O chef abre o link da equipe e cria a senha nova; já sai logado.
+    novaSenha: (id, token, senha) => req('POST', '/nova-senha', { id, token, senha }).then(j => j.chef),
     meusPedidos: () => req('GET', '/meus-pedidos').then(j => j.pedidos || [])
   };
   root.ChefCloud = Cloud;
