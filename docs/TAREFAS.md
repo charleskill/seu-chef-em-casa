@@ -205,3 +205,5 @@ Origem: main (f3f4d5e).
 - Verificado de fato: `npm run check`, `npm test` (43), `npm run build`; local com `wrangler pages dev`, D1 sem a coluna nova (criada no primeiro acesso), Google falso e servidor de e-mail falso — 25 verificações aprovadas (permissões da área da equipe, prévia do link, e-mail com remetente/destinatário/assunto, esconder e mostrar, chef escondido sem pedidos e sem conseguir se mostrar); cadastro sem convite repetido; demonstração estática sem erros.
 - Não verificado: envio real de e-mail (precisa de domínio) e a prévia no WhatsApp de verdade (só depois de publicado).
 - [ ] Carlos: `ADMIN_EMAILS` na Cloudflare (seção 7). E-mail: depois do domínio (seção 8).
+
+- [x] 09/11: Instagram oficial criado por Carlos, @seuchefemcasaoficial; link no rodapé da página inicial. TikTok: pendente.

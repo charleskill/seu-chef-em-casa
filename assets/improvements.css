@@ -131,3 +131,4 @@ html{scroll-padding-top:90px}
 .eq-chef{display:flex;gap:14px;align-items:flex-start;margin-top:12px}.eq-av{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:none}.eq-info{flex:1;min-width:0}.eq-info h3{margin:2px 0;font-size:18px}.eq-info .form-help{margin:2px 0;word-break:break-word}
 .eq-estado{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;margin:0}.eq-estado.ok{background:#e6f2ea;color:#2d6a43}.eq-estado.warn{background:#fdf1e3;color:#9a5a12}.eq-estado.off{background:#eee;color:#555}
 @media(max-width:650px){.eq-nums{grid-template-columns:repeat(2,1fr)}.eq-chef{flex-direction:column}}
+.social-link{display:inline-flex;align-items:center;gap:6px;margin:6px 0;font-weight:600}
