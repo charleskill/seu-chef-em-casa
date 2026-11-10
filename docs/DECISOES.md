@@ -121,3 +121,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Feito com `functions/_middleware.js`: se a variável secreta `SENHA_SITE` existir na Cloudflare, tudo pede a senha; sem ela, o site fica aberto como antes. A senha fica só na Cloudflare, fora do código e dos documentos (que hoje são públicos pelo GitHub Pages).
 - É uma porta simples, com uma senha só para todos; não é controle de acesso por pessoa. Alternativa mais forte, se precisar: Cloudflare Access.
 - Não cobre a demonstração do GitHub Pages nem as prévias de branch.
+
+## 10/11 · Vitrine do chef
+- Pedido feito na sessão do Claude Code: o chef compartilhar o perfil como uma página bonita, "como se fosse um site próprio do chef". Confirmar com Carlos.
+- A vitrine fica no link que o app já compartilhava (`/c/<id>`). A marca em destaque é o nome do chef; a plataforma aparece só no rodapé, com o aviso de que é uma vitrine.
+- Texto em primeira pessoa (o chef falando), usando só o que o chef já preencheu no perfil; nada é inventado sobre ele.
+- Preços aparecem como "referência por pessoa", com aviso de que o valor final é combinado.

@@ -13,7 +13,7 @@ const PADRAO = {
 };
 const e = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const dinheiro = n => Number(n).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-const ORDEM = ['Entradas', 'Pratos Principais', 'Massas', 'Frutos do mar', 'Sobremesas', 'Bebidas & drinks'];
+const ORDEM = ['Entradas', 'Massas', 'Frutos do mar', 'Pratos Principais', 'Sobremesas', 'Bebidas & drinks'];
 // Só fotos do próprio site ou do Unsplash (as mesmas origens que a política de segurança permite).
 const fotoOk = (u, origem) => { u = String(u || ''); return /^\/api\/foto\/[a-f\d]{32}$/.test(u) ? origem + u : /^https:\/\/images\.unsplash\.com\//.test(u) ? u : ''; };
 const paragrafos = t => String(t || '').split(/\n\s*\n|\r?\n/).map(s => s.trim()).filter(Boolean).slice(0, 8).map(s => '<p>' + e(s) + '</p>').join('');
@@ -95,7 +95,7 @@ const U = id => 'https://images.unsplash.com/photo-' + id + '?w=1400&q=80&auto=f
 const EXEMPLO = {
   name: 'Helena Duarte', specialty: 'Cozinha italiana', cities: 'Florianópolis, São José, Palhoça', whatsapp: '(48) 99110-6355',
   bio: 'Cozinho há quinze anos e acredito que um bom jantar começa muito antes do primeiro prato: na escolha dos ingredientes, na conversa sobre a ocasião, no cuidado com cada detalhe.\n\nLevo a cozinha até a sua casa, preparo tudo na hora e deixo o ambiente pronto para você só receber quem gosta. (Este é um perfil de exemplo, com dados fictícios.)',
-  avatar: U('1577219491135-ce391730fb2c'),
+  avatar: '',
   gallery: [
     { url: U('1414235077428-338989a2e8c0'), caption: '' },
     { url: U('1476124369491-e7addf5db371'), caption: '' },
