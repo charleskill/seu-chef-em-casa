@@ -219,3 +219,8 @@ Origem: main (f3f4d5e).
 - [x] `docs/VISAO-GERAL.md`: documento geral do projeto; `CONTEXTO.md` atualizado com o domínio.
 - Não verificado: abertura em celular físico. Só documentação mudou; `npm run check`, `npm test` e `npm run build` não foram executados (máquina sem Node).
 - [x] Variável `CONVITE` apagada na Cloudflare (Settings → Variables and secrets), a pedido; conferido no painel que a lista de variáveis ficou vazia.
+
+
+## Entrega — 09/11/2026 (bloco "Como este chef atende" compacto)
+- [x] Perfil do chef: o bloco virou uma linha que abre ao toque ("Como este chef atende · N opções"), fechado por padrão; etiquetas menores quando aberto. O aviso de que o chef não atende crianças continua sempre visível. Arquivos: `assets/app.js` (`opcoesInfo`) e `assets/improvements.css`.
+- Não verificado antes de publicar: `npm run check`, `npm test` e `npm run build` (máquina sem Node); versões do `index.html` da raiz carimbadas à mão com o mesmo cálculo do build.
