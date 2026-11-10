@@ -18,7 +18,7 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 - Teste local da versão real: `wrangler pages dev dist` com `wrangler.toml` temporário (não versionar), D1 local e as migrações; há um servidor falso do Google descrito em `docs/TAREFAS.md` (entrega do login com Google).
 
 ## Regras fixas do Carlos
-- Commit e push direto na `main`, sem pull request.
+- Commit e push direto na `main`, sem pull request (vale para o assistente principal, que o Carlos acompanha na hora). Outros assistentes, como o Jules, abrem pull request e não fazem merge: ver `docs/GUIA-OUTRO-ASSISTENTE.md`.
 - Telefone de teste em **todo** dado fictício (perfis de exemplo, testes, contas de teste): **(48) 99110-6355**.
 - Registrar entregas em `docs/TAREFAS.md` (com o que foi realmente verificado) e decisões em `docs/DECISOES.md`.
 - Não afirmar que abrir o WhatsApp confirma envio.

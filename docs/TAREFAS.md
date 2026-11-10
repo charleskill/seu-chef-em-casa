@@ -283,3 +283,8 @@ Branch `equipe-senha-excluir`, prévia em https://equipe-senha-excluir.seu-chef-
 - [x] Variável `ADMIN_EMAILS` (tipo Text) criada na Cloudflare por Carlos, com dois e-mails: o dele e o da Fer. Conferido no painel que a variável aparece na lista.
 - [x] Site publicado de novo para a variável valer.
 - Não verificado: entrar com uma conta de administrador e ver o botão Equipe; gerar link de nova senha; excluir conta. Fazer primeiro numa conta de chef de teste.
+
+
+## Entrega — 10/11/2026 (guia para outro assistente)
+- [x] `docs/GUIA-OUTRO-ASSISTENTE.md`: como outro assistente (Jules, Gemini) entrega uma mudança simples por pull request, onde fica cada coisa, o que não tocar, como voltar uma versão e um texto pronto para iniciar a conversa. `AGENTS.md` e `CONTEXTO.md` apontam para ele.
+- Carlos ligou o Jules à conta dele do GitHub em 10/11. Não verificado: o Jules ainda não fez nenhuma tarefa neste repositório.
