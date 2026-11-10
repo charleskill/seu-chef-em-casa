@@ -127,3 +127,8 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - A vitrine fica no link que o app já compartilhava (`/c/<id>`). A marca em destaque é o nome do chef; a plataforma aparece só no rodapé, com o aviso de que é uma vitrine.
 - Texto em primeira pessoa (o chef falando), usando só o que o chef já preencheu no perfil; nada é inventado sobre ele.
 - Preços aparecem como "referência por pessoa", com aviso de que o valor final é combinado.
+
+## 10/11 · Verde mais escuro na identidade
+- Pedido feito na sessão do Claude Code: usar em todo o projeto o verde escuro da tela de senha, no lugar do verde anterior. Confirmar com Carlos.
+- Verde da marca `--ol`: de `#304e3b` para `#1c2520`; cor do texto `--ink`: de `#283b30` para `#202b25`; tom de realce escuro: de `#1d3226` para `#141a17`. Terracota, dourado e fundos claros não mudaram.
+- O brandbook (Design System no Claude) ainda mostra o verde antigo e precisa ser atualizado por quem o mantém.

@@ -256,3 +256,10 @@ Branch `vitrine-chef`, prévia em https://vitrine-chef.seu-chef-em-casa.pages.de
 - Verificado de fato, na prévia, com `/c/exemplo`: página inteira em largura de celular (capa, sobre, cardápio, fotos, como trabalho, chamada final, barra fixa), 7 fotos carregadas, sem rolagem lateral nem erros no console; endereço de chef inexistente responde 404.
 - Não verificado: perfil real vindo do banco (a prévia não tem banco); layout de computador (só o topo foi visto); prévia do link no WhatsApp; celular físico; `npm test` (máquina sem Node).
 - Atenção: com o site fechado por senha, quem recebe o link também precisa da senha.
+
+
+## Entrega — 10/11/2026 (verde mais escuro)
+Branch `verde-escuro`, prévia em https://verde-escuro.seu-chef-em-casa.pages.dev
+- [x] Verde da marca trocado em `assets/styles.css`, `assets/improvements.css`, `assets/app.js`, `index.html` (cor do tema e ícone da aba) e `functions/c/[id].js` (vitrine). Nenhuma ocorrência do verde antigo sobrou nesses arquivos.
+- Verificado de fato, na prévia, em largura de celular: página inicial, Serviços e Buscar com o verde novo (logo, capa, botão Buscar, textos).
+- Não verificado: painel do chef, pedido, termos, largura de computador, contraste medido, celular físico; `npm test` (máquina sem Node). Brandbook não atualizado.
