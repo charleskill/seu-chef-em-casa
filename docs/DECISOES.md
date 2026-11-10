@@ -135,3 +135,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 10/11 · Site aberto de novo
 - Pedido feito na sessão do Claude Code: remover a senha do site principal. Com isso o site fica público, com cadastro de chef aberto (sem convite). Confirmar com Carlos.
+
+## 10/11 · Nova senha e exclusão pela equipe
+- Pedido feito na sessão do Claude Code. Confirmar com Carlos.
+- Senha esquecida: em vez de a equipe definir uma senha, ela gera um link de uso único (48 horas) e o chef cria a própria senha. Resolve a troca de senha sem depender de envio de e-mail.
+- Risco aceito: quem tiver o link entra na conta; por isso a tela pede para enviar só ao próprio chef. Gerar um link novo invalida o anterior.
+- Exclusão pela equipe apaga tudo de vez, como a exclusão feita pelo próprio chef.

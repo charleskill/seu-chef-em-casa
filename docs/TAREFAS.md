@@ -267,3 +267,12 @@ Branch `verde-escuro`, prévia em https://verde-escuro.seu-chef-em-casa.pages.de
 
 ## Entrega — 10/11/2026 (senha do site desligada)
 - [x] A pedido, a senha de acesso do site foi desligada: `LIGADA = false` em `functions/_middleware.js`. A variável `SENHA_SITE` ficou na Cloudflare, sem efeito (pode ser apagada). Para fechar de novo: `LIGADA = true`.
+
+
+## Entrega — 10/11/2026 (área da equipe: nova senha e excluir conta)
+Branch `equipe-senha-excluir`, prévia em https://equipe-senha-excluir.seu-chef-em-casa.pages.dev
+- [x] **Link de nova senha**: na área da equipe, o botão gera um link (`/#/nova-senha/<id>/<token>`) que vale 48 horas e uma vez só; a equipe copia ou envia pelo WhatsApp do chef. O chef abre, cria a senha e já entra; as sessões em outros aparelhos são encerradas. A equipe nunca vê nem escolhe a senha. API: `POST /api/admin/chefs/:id` com `acao: "nova-senha"` e `POST /api/nova-senha`. O pedido fica no JSON `credencial` do chef (só o hash do token), sem migração.
+- [x] **Excluir conta**: botão na área da equipe, com segundo toque para confirmar; apaga perfil, fotos, pedidos e sessões. Não deixa excluir a própria conta por ali. API: `DELETE /api/admin/chefs/:id`.
+- Verificado de fato, na prévia (sem banco): o app carrega sem erro de JavaScript do app, a rota `/#/nova-senha/...` e a área da equipe abrem, e as rotas novas da API respondem.
+- NÃO verificado: nada que dependa do banco. Gerar o link, criar a senha, link vencido ou reusado, exclusão e permissões não foram executados (a prévia não tem banco, a máquina não tem Node nem wrangler). Precisa de teste com `wrangler pages dev` e D1 local, ou em produção com uma conta de teste.
+- Depende de `ADMIN_EMAILS` na Cloudflare; sem ela, a área da equipe continua desligada.
