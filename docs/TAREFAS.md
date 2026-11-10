@@ -277,3 +277,9 @@ Branch `equipe-senha-excluir`, prévia em https://equipe-senha-excluir.seu-chef-
 - NÃO verificado: nada que dependa do banco. Gerar o link, criar a senha, link vencido ou reusado, exclusão e permissões não foram executados (a prévia não tem banco, a máquina não tem Node nem wrangler). Precisa de teste com `wrangler pages dev` e D1 local, ou em produção com uma conta de teste.
 - Depende de `ADMIN_EMAILS` na Cloudflare; sem ela, a área da equipe continua desligada.
 - Publicado na `main` em 10/11. Verificado de fato no site principal: link com formato inválido e link com token errado para um chef existente são recusados ("Este link não vale mais"); as rotas da equipe sem sessão respondem "Entre com a conta da equipe"; o site e a lista de chefs seguem normais. Continua sem teste o caminho que dá certo (gerar link, criar senha, excluir), que depende de `ADMIN_EMAILS`.
+
+
+## Ativação — 10/11/2026 (área da equipe ligada)
+- [x] Variável `ADMIN_EMAILS` (tipo Text) criada na Cloudflare por Carlos, com dois e-mails: o dele e o da Fer. Conferido no painel que a variável aparece na lista.
+- [x] Site publicado de novo para a variável valer.
+- Não verificado: entrar com uma conta de administrador e ver o botão Equipe; gerar link de nova senha; excluir conta. Fazer primeiro numa conta de chef de teste.

@@ -23,6 +23,9 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 - Registrar entregas em `docs/TAREFAS.md` (com o que foi realmente verificado) e decisões em `docs/DECISOES.md`.
 - Não afirmar que abrir o WhatsApp confirma envio.
 
+## Área da equipe ligada (10/11)
+- `ADMIN_EMAILS` criada na Cloudflare (Carlos e Fer). Quem entra com um desses e-mails vê o botão Equipe (`/#/admin`), com esconder perfil, link de nova senha e excluir conta.
+
 ## Site aberto de novo (10/11)
 - A senha de acesso foi desligada no código em 10/11 (`LIGADA = false` em `functions/_middleware.js`). A variável `SENHA_SITE` continua na Cloudflare, sem efeito.
 
