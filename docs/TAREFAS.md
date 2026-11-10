@@ -234,3 +234,8 @@ Branch `catalogo-pratos`, prévia em https://catalogo-pratos.seu-chef-em-casa.pa
 - Verificado de fato, no navegador, na prévia: as mesmas verificações de `tests/pratos.test.cjs` rodadas no console (a ordem das categorias falhou na primeira vez e foi corrigida); sugestão ao digitar "tirami" e "moqueca", escolha por teclado e por toque, categoria trocada sozinha, formulário não enviado pelo Enter, sem erros de JavaScript do app.
 - Não verificado: `npm run check`, `npm test` e `npm run build` na máquina (sem Node; o build da Cloudflare passou na prévia); celular físico; versão real com banco; salvar um prato escolhido da lista.
 - Fora desta entrega: descrições prontas dos pratos e o campo para o cliente pedir um prato fora do cardápio.
+
+
+## Entrega — 10/11/2026 (site fechado com senha)
+- [x] `functions/_middleware.js`: com `SENHA_SITE` definida, páginas, arquivos e `/api` respondem 401 com uma tela de senha; a senha certa grava um cookie seguro de 30 dias e volta para a página pedida. Sem a variável, nada muda.
+- [x] Passo a passo em `docs/ATIVAR-CLOUDFLARE.md`, seção 9.

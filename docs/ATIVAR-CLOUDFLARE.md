@@ -71,6 +71,16 @@ O servidor manda um e-mail ao chef a cada pedido registrado, pelo Cloudflare Ema
 - Sem essas variáveis, nada é enviado e os pedidos funcionam normalmente. Uma falha de e-mail nunca impede o pedido.
 - Confira na documentação da Cloudflare (Email Service) se o plano gratuito permite enviar a qualquer destinatário; se exigir o plano pago dos Workers, decida antes de ativar.
 
+## 9. Fechar o site com senha (período de testes)
+Enquanto a variável `SENHA_SITE` existir, o site inteiro (páginas, arquivos e `/api`) pede uma senha antes de abrir. Quem digita a senha fica liberado naquele aparelho por 30 dias.
+1. Projeto do Pages → **Settings → Variables and secrets → Add**: tipo **Secret**, nome `SENHA_SITE`, valor: a senha combinada. Salve.
+2. **Deployments → Retry deployment** (ou qualquer push na `main`) para valer.
+- Para trocar a senha: edite a variável e publique de novo; todos precisam digitar a nova.
+- Para abrir o site ao público: apague a variável e publique de novo.
+- A senha não deve ser escrita no código nem nestes documentos.
+- Não fecha a demonstração do GitHub Pages nem as prévias de branch (elas não têm a variável).
+- Com o site fechado, o link de compartilhamento do chef (`/c/<id>`) não mostra prévia no WhatsApp.
+
 ## Como funciona
 - Só cria conta de chef quem tem o código de convite. Cliente não precisa de conta.
 - Cada chef só altera o próprio perfil. A sessão fica num cookie seguro por 30 dias.

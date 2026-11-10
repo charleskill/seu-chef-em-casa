@@ -115,3 +115,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - O catálogo traz só nome, categoria e cozinha, escritos para o projeto. Nenhum texto foi copiado de livros (o pedido citava "Chef Profissional") nem de sites: nomes de pratos são de uso comum, mas receitas, descrições e a organização de um livro têm direito autoral.
 - É sugestão, não lista fechada: o chef continua podendo escrever qualquer nome. Descrição e preço são sempre do chef.
 - O arquivo (cerca de 36 KB) carrega junto com o app, também para clientes; se pesar, passar a carregar só no painel.
+
+## 10/11 · Site fechado com senha no período de testes
+- Pedido feito na sessão do Claude Code: deixar o site fechado para teste, abrindo só com uma senha. Confirmar com Carlos.
+- Feito com `functions/_middleware.js`: se a variável secreta `SENHA_SITE` existir na Cloudflare, tudo pede a senha; sem ela, o site fica aberto como antes. A senha fica só na Cloudflare, fora do código e dos documentos (que hoje são públicos pelo GitHub Pages).
+- É uma porta simples, com uma senha só para todos; não é controle de acesso por pessoa. Alternativa mais forte, se precisar: Cloudflare Access.
+- Não cobre a demonstração do GitHub Pages nem as prévias de branch.
