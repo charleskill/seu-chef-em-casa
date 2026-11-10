@@ -239,3 +239,4 @@ Branch `catalogo-pratos`, prévia em https://catalogo-pratos.seu-chef-em-casa.pa
 ## Entrega — 10/11/2026 (site fechado com senha)
 - [x] `functions/_middleware.js`: com `SENHA_SITE` definida, páginas, arquivos e `/api` respondem 401 com uma tela de senha; a senha certa grava um cookie seguro de 30 dias e volta para a página pedida. Sem a variável, nada muda.
 - [x] Passo a passo em `docs/ATIVAR-CLOUDFLARE.md`, seção 9.
+- [x] Variável `SENHA_SITE` criada na Cloudflare (tipo Secret, valor digitado pela usuária) em 10/11; site publicado de novo para a senha valer.

@@ -23,6 +23,9 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 - Registrar entregas em `docs/TAREFAS.md` (com o que foi realmente verificado) e decisões em `docs/DECISOES.md`.
 - Não afirmar que abrir o WhatsApp confirma envio.
 
+## Site fechado para testes (desde 10/11)
+- O site na Cloudflare pede uma senha de acesso antes de abrir (`functions/_middleware.js`, variável secreta `SENHA_SITE`). Para abrir ao público, apagar a variável e publicar de novo. Detalhes em docs/ATIVAR-CLOUDFLARE.md, seção 9. A demonstração do GitHub Pages continua aberta.
+
 ## Novidades de 09/11 (noite)
 - Cadastro de chef aberto (sem convite; `CONVITE` opcional), área da equipe `/#/admin` (`ADMIN_EMAILS`), link de compartilhamento `/c/<id>` com prévia, aviso de pedido por e-mail (precisa de domínio). Detalhes em docs/TAREFAS.md e ATIVAR-CLOUDFLARE.md (seções 7 e 8).
 
