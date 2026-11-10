@@ -288,3 +288,10 @@ Branch `equipe-senha-excluir`, prévia em https://equipe-senha-excluir.seu-chef-
 ## Entrega — 10/11/2026 (guia para outro assistente)
 - [x] `docs/GUIA-OUTRO-ASSISTENTE.md`: como outro assistente (Jules, Gemini) entrega uma mudança simples por pull request, onde fica cada coisa, o que não tocar, como voltar uma versão e um texto pronto para iniciar a conversa. `AGENTS.md` e `CONTEXTO.md` apontam para ele.
 - Carlos ligou o Jules à conta dele do GitHub em 10/11. Não verificado: o Jules ainda não fez nenhuma tarefa neste repositório.
+
+
+## Ambiente — 10/11/2026 (Node e Git na máquina do Carlos)
+- [x] Node 26.13.0 LTS instalado pelo winget (instalador oficial de nodejs.org). Git do projeto configurado com nome e e-mail do Carlos (só neste repositório).
+- [x] Primeira execução local completa: `npm run check` sem erros, `npm test` com 45 de 45, `npm run build` concluído. Isso cobre, com atraso, as entregas de 09 e 10/11 que tinham sido publicadas sem esses testes (catálogo de pratos, bloco de atendimento, cores, área da equipe). Os testes automáticos não exercitam o servidor (`functions/`), que segue sem teste de ponta a ponta.
+- [x] `index.html` recarimbado pelo build de verdade (os carimbos anteriores tinham sido calculados à mão).
+- [x] Guia: seção 8, para quem trabalha na pasta local (Antigravity).

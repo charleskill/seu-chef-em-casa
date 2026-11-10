@@ -69,3 +69,13 @@ Na Cloudflare: **Workers & Pages → seu-chef-em-casa → Deployments**, escolha
 ## 7. Texto pronto para colar no início da conversa
 
 > Você vai me ajudar com uma mudança pequena no repositório `charleskill/seu-chef-em-casa`. Antes de qualquer coisa, leia `AGENTS.md`, `CONTEXTO.md` e `docs/GUIA-OUTRO-ASSISTENTE.md` e siga o que está lá. Faça só o que eu pedir, no menor número de arquivos possível. Trabalhe num branch, rode `npm run check`, `npm test` e `npm run build`, registre a entrega em `docs/TAREFAS.md` dizendo o que você realmente verificou, e abra um pull request sem fazer merge. Não mexa em `functions/api`, em `migrations`, em `_headers` nem em segredos. Se o pedido exigir mexer nisso, pare e me avise. Meu pedido é: …
+
+## 8. Se você trabalha na pasta do computador do Carlos (Antigravity ou outro IDE)
+
+A pasta local é a mesma que o assistente principal usa. Por isso:
+
+- **Um assistente por vez.** Não trabalhe ao mesmo tempo que outro assistente nesta pasta.
+- **Comece sempre com `git pull`** na `main` e confira com `git status` que não há alterações pendentes de outra pessoa. Se houver, pare e avise o Carlos; não descarte nada.
+- **Trabalhe num branch** e envie o branch (`git push -u origin <branch>`). A prévia aparece em `https://<branch>.seu-chef-em-casa.pages.dev`. Só junte na `main` depois de o Carlos ver a prévia e dizer sim: o envio para a `main` publica no site de verdade.
+- A máquina tem Node 26 (instalado em 10/11/2026) e o Git do projeto está configurado com o nome e o e-mail do Carlos. Se `node` ou `npm` não forem reconhecidos, feche e abra o terminal.
+- A pasta fica dentro do OneDrive. Se aparecer arquivo duplicado com o nome do computador no final, é conflito de sincronização: avise o Carlos, não apague por conta própria.
