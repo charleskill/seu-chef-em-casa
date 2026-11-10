@@ -207,3 +207,9 @@ Origem: main (f3f4d5e).
 - [ ] Carlos: `ADMIN_EMAILS` na Cloudflare (seção 7). E-mail: depois do domínio (seção 8).
 
 - [x] 09/11: Instagram oficial criado por Carlos, @seuchefemcasaoficial; link no rodapé da página inicial. TikTok: pendente.
+
+## Brandbook (2026-11-09)
+- Feito: brandbook completo como Design System no Claude: https://claude.ai/artifact/ShKjAJDJEbNxmTVA9djrCt (privado; o Carlos decide se compartilha).
+- Conteúdo: essência, públicos, voz e tom, logo (3 SVGs), cores (16 tokens), tipografia, fotografia, iconografia, redes sociais, aplicações, componentes (botão, etiqueta, cartão de chef, aviso, post do Instagram) e capa.
+- Verificado: as prévias dos componentes e dos logos foram renderizadas e conferidas visualmente antes de publicar.
+- Pendente do Carlos: aprovar propósito, missão e valores (marcados como [proposta]); decidir sobre o cinza #737c72, que tem contraste 3,97:1 no creme (abaixo de 4,5:1) para texto pequeno.
