@@ -11,7 +11,7 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 - Meta imediata: piloto com 3 chefs profissionais reais.
 
 ## Onde está
-- **Versão real (no ar desde 09/11):** https://seu-chef-em-casa.pages.dev — Cloudflare Pages ligado ao GitHub (cada push na `main` publica sozinho), Functions em `functions/api/[[rota]].js`, banco D1 `chefemcasa` (binding `DB`), código de convite opcional pelo segredo `CONVITE` (em 09/11 à noite ele ainda existia na Cloudflare: `/api/saude` respondia `convite: true`; apagar para abrir o cadastro). Conta Cloudflare: carlosmendes.ricci@gmail.com.
+- **Versão real (no ar desde 09/11):** https://seu-chef-em-casa.pages.dev — Cloudflare Pages ligado ao GitHub (cada push na `main` publica sozinho), Functions em `functions/api/[[rota]].js`, banco D1 `chefemcasa` (binding `DB`), código de convite opcional pelo segredo `CONVITE`, apagado da Cloudflare em 09/11 à noite: o cadastro de chef está aberto (recriar a variável fecha de novo). Conta Cloudflare: carlosmendes.ricci@gmail.com.
 - **Demonstração (GitHub Pages, dados só no aparelho):** https://charleskill.github.io/seu-chef-em-casa/ — 50 perfis de exemplo.
 - Banco: `migrations/0001_piloto.sql` e `0002_google.sql` já aplicadas no D1 de produção.
 - Testes: `npm run check`, `npm test` (41), `npm run build` (rodar o build antes de cada commit: ele carimba a versão dos arquivos no `index.html`).

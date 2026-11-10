@@ -218,4 +218,4 @@ Origem: main (f3f4d5e).
 - [x] Domínio `seuchefemcasa.com.br` e `www` ligados ao projeto Pages (Custom domains). Verificado de fato: os dois endereços respondem 200 por HTTPS; `/api/saude` no domínio → `{"ok":true,"google":false,"convite":true}`.
 - [x] `docs/VISAO-GERAL.md`: documento geral do projeto; `CONTEXTO.md` atualizado com o domínio.
 - Não verificado: abertura em celular físico. Só documentação mudou; `npm run check`, `npm test` e `npm run build` não foram executados (máquina sem Node).
-- [ ] A variável `CONVITE` ainda existe na Cloudflare, então o site continua pedindo o código.
+- [x] Variável `CONVITE` apagada na Cloudflare (Settings → Variables and secrets), a pedido; conferido no painel que a lista de variáveis ficou vazia.

@@ -29,7 +29,7 @@ Retrato do projeto em 09/11/2026, montado a partir do repositório (código, `do
 - Sugestões de endereço ao digitar (Photon/OpenStreetMap, gratuito e sem chave).
 
 ### Para o chef
-- Cadastro por e-mail e senha ou pelo Google (o Google ainda não está ativado), com aceite dos termos. O código de convite virou opcional em 09/11: só é pedido enquanto a variável `CONVITE` existir na Cloudflare (na noite de 09/11 ela ainda existia).
+- Cadastro por e-mail e senha ou pelo Google (o Google ainda não está ativado), com aceite dos termos. O código de convite virou opcional em 09/11: só é pedido se a variável `CONVITE` existir na Cloudflare, e ela foi apagada na noite de 09/11.
 - Link próprio para compartilhar, `/c/<id>`, com prévia de foto, nome, especialidade e cidades.
 - Aviso por e-mail a cada pedido (no código; depende de configurar o envio de e-mail no domínio).
 - Painel com as abas Perfil, cardápio, Marmitas, Atendimento (13 opções liga/desliga mais as experiências), Agenda (dias ocupados) e Pedidos.
@@ -204,7 +204,7 @@ O último ponto confirma a pendência 4: o GitHub Pages continua publicando a ra
 | 4 | Domínio: comprar e pôr na Cloudflare | Carlos | **Feito em 09/11** |
 | 5 | Domínio: ligar ao Pages | Carlos | **Feito em 09/11** |
 | 5b | Domínio: acrescentar no Google | Carlos | Aberta (depende da pendência 2) |
-| 5c | Apagar a variável `CONVITE` na Cloudflare para o cadastro ficar aberto | Carlos | Aberta (`/api/saude` ainda responde `convite: true`) |
+| 5c | Apagar a variável `CONVITE` na Cloudflare para o cadastro ficar aberto | Carlos | **Feito em 09/11** |
 | 5d | `ADMIN_EMAILS` na Cloudflare, para ligar a área da equipe | Carlos | Aberta |
 | 5e | Envio de e-mail no domínio (`EMAIL_REMETENTE`, `CF_ACCOUNT_ID`, `CF_EMAIL_TOKEN`) | Carlos | Aberta |
 | 6 | Termos: e-mail de contato e revisão por advogado(a) | Carlos | Aberta |
