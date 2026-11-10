@@ -36,7 +36,7 @@ const ESTILO = [
   '.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:13px 26px;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1px solid transparent;transition:background .2s,color .2s,border-color .2s}',
   '.b1{background:#a5583c;color:#fff}.b1:hover{background:#8f4a31}',
   '.b2{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}.b2:hover{background:#fff;color:#26342c}',
-  '.b3{background:transparent;color:#304e3b;border-color:#304e3b}.b3:hover{background:#304e3b;color:#fff}',
+  '.b3{background:transparent;color:#1c2520;border-color:#1c2520}.b3:hover{background:#1c2520;color:#fff}',
   '.b:focus-visible{outline:3px solid #e2c48f;outline-offset:3px}',
   '.acoes{display:flex;flex-wrap:wrap;gap:12px}',
   // Capa
@@ -51,14 +51,14 @@ const ESTILO = [
   '.heroi h1{font-size:clamp(2.6rem,9vw,4.6rem);line-height:1.04;letter-spacing:-.01em;margin-bottom:14px}',
   '.heroi .linha{font-size:1.08rem;color:rgba(255,255,255,.88);margin:0 0 30px;max-width:34em}',
   // Seções
-  'section{padding:72px 0}section+section{border-top:1px solid rgba(48,78,59,.14)}',
+  'section{padding:72px 0}section+section{border-top:1px solid rgba(28,37,32,.14)}',
   'h2{font-size:clamp(1.8rem,5vw,2.5rem);line-height:1.15;margin-bottom:26px}',
   '.sobre{display:grid;gap:34px;align-items:start}',
   '.sobre .retrato{width:132px;height:132px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 10px 30px rgba(38,52,44,.18)}',
   '.sobre p{margin:0 0 1em;max-width:38em}.sobre p:first-of-type{font-family:' + SERIFA + ';font-size:1.3rem;line-height:1.5}',
   // Cardápio
   '.pratos{display:grid;gap:0 56px}',
-  '.prato{padding:20px 0;border-bottom:1px solid rgba(48,78,59,.16)}',
+  '.prato{padding:20px 0;border-bottom:1px solid rgba(28,37,32,.16)}',
   '.prato small{display:block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#7b857c;margin-bottom:4px}',
   '.prato h3{font-size:1.28rem;line-height:1.3}',
   '.prato p{margin:6px 0 0;color:#56635a;font-size:.96rem}',
@@ -72,7 +72,7 @@ const ESTILO = [
   // Como trabalho
   '.lista{list-style:none;margin:0;padding:0;display:grid;gap:12px 40px}',
   '.lista li{position:relative;padding-left:28px}.lista li::before{content:"";position:absolute;left:2px;top:.52em;width:12px;height:7px;border-left:2px solid #a5583c;border-bottom:2px solid #a5583c;transform:rotate(-45deg)}',
-  '.exp{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.exp span{border:1px solid rgba(48,78,59,.4);border-radius:999px;padding:8px 18px;font-size:.92rem}',
+  '.exp{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.exp span{border:1px solid rgba(28,37,32,.4);border-radius:999px;padding:8px 18px;font-size:.92rem}',
   // Passos
   '.passos{counter-reset:p;list-style:none;margin:0;padding:0;display:grid;gap:30px}',
   '.passos li{counter-increment:p}.passos li::before{content:"0" counter(p);display:block;font-family:' + SERIFA + ';font-size:1.5rem;color:#a5583c;margin-bottom:6px}',
@@ -82,7 +82,7 @@ const ESTILO = [
   '.final h2{margin-bottom:12px}.final p{margin:0 auto 30px;color:#c9c3b6;max-width:30em}.final .acoes{justify-content:center}.final .olho{color:#e2c48f}',
   'footer{background:#141a17;color:#9aa39b;font-size:.84rem;padding:28px 0 96px;text-align:center}footer p{margin:0 0 6px}footer a{color:#c9c3b6}',
   // Barra fixa no celular
-  '.barra{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(246,243,236,.96);border-top:1px solid rgba(48,78,59,.18)}',
+  '.barra{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(246,243,236,.96);border-top:1px solid rgba(28,37,32,.18)}',
   '.barra .b{flex:1;min-height:48px;padding:10px 12px;font-size:.92rem}',
   '@media (min-width:760px){body{font-size:18px}.sobre{grid-template-columns:132px 1fr;gap:48px}.pratos{grid-template-columns:1fr 1fr}.fotos{grid-template-columns:repeat(3,1fr);gap:14px}.lista{grid-template-columns:1fr 1fr}.passos{grid-template-columns:repeat(3,1fr);gap:44px}section{padding:96px 0}.barra{display:none}footer{padding-bottom:34px}.heroi{padding-bottom:76px}}',
   '@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.b{transition:none}}',

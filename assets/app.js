@@ -23,13 +23,13 @@ const P={
 };
 
 const ic=function(n,s,f){return '<svg class="ic" width="'+(s||22)+'" height="'+(s||22)+'" viewBox="0 0 24 24" fill="'+(f||'none')+'" stroke="'+(f?'none':'currentColor')+'" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(P[n]||'')+'</svg>';};
-const hat=function(s){return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 12L90 47H79V88H21V47H10Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><circle cx="50" cy="44" r="4" fill="#304e3b"/><path d="M31 71A19 19 0 0 1 69 71Z" fill="#304e3b"/><rect x="26" y="75" width="48" height="6" rx="3" fill="#e9a98f"/></svg>';};
+const hat=function(s){return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 12L90 47H79V88H21V47H10Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><circle cx="50" cy="44" r="4" fill="#1c2520"/><path d="M31 71A19 19 0 0 1 69 71Z" fill="#1c2520"/><rect x="26" y="75" width="48" height="6" rx="3" fill="#e9a98f"/></svg>';};
 const C=window.ChefCore, $=(s,r=document)=>r.querySelector(s), esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const clone=v=>JSON.parse(JSON.stringify(v)), uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
 const brDate=d=>String(d).split('-').reverse().join('/');
 const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 const money=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const fb=n=>'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#304e3b"/><text x="50" y="66" text-anchor="middle" font-size="48" fill="#fff" font-family="Georgia">'+esc(String(n||'C').replace(/^Chef\s+/i,'').charAt(0).toUpperCase())+'</text></svg>');
+const fb=n=>'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#1c2520"/><text x="50" y="66" text-anchor="middle" font-size="48" fill="#fff" font-family="Georgia">'+esc(String(n||'C').replace(/^Chef\s+/i,'').charAt(0).toUpperCase())+'</text></svg>');
 const demoSrc=v=>{const m=/^demo:([\w-]+)$/.exec(String(v||''));return m?((window.ChefDemoImages||{})[m[1]]||''):v};
 const img=(src,alt,name,cls='av')=>'<img class="'+cls+'" src="'+esc(C.safeUrl(demoSrc(src),true)||fb(name))+'" alt="'+esc(alt)+'" data-fallback="'+esc(name)+'" loading="lazy" decoding="async">';
 const head=(title,back='#/')=>'<div class="ghead"><a class="bk" href="'+back+'" aria-label="Voltar">'+ic('back')+'</a><h1>'+title+'</h1></div>';
