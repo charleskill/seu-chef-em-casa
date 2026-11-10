@@ -213,3 +213,9 @@ Origem: main (f3f4d5e).
 - Conteúdo: essência, públicos, voz e tom, logo (3 SVGs), cores (16 tokens), tipografia, fotografia, iconografia, redes sociais, aplicações, componentes (botão, etiqueta, cartão de chef, aviso, post do Instagram) e capa.
 - Verificado: as prévias dos componentes e dos logos foram renderizadas e conferidas visualmente antes de publicar.
 - Pendente do Carlos: aprovar propósito, missão e valores (marcados como [proposta]); decidir sobre o cinza #737c72, que tem contraste 3,97:1 no creme (abaixo de 4,5:1) para texto pequeno.
+
+## Entrega — 09/11/2026 (domínio ligado e documento geral)
+- [x] Domínio `seuchefemcasa.com.br` e `www` ligados ao projeto Pages (Custom domains). Verificado de fato: os dois endereços respondem 200 por HTTPS; `/api/saude` no domínio → `{"ok":true,"google":false,"convite":true}`.
+- [x] `docs/VISAO-GERAL.md`: documento geral do projeto; `CONTEXTO.md` atualizado com o domínio.
+- Não verificado: abertura em celular físico. Só documentação mudou; `npm run check`, `npm test` e `npm run build` não foram executados (máquina sem Node).
+- [ ] A variável `CONVITE` ainda existe na Cloudflare, então o site continua pedindo o código.

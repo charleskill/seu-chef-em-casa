@@ -5,13 +5,13 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 
 ## O que é
 - Marketplace para achar personal chefs (foco em Santa Catarina), montar o cardápio e pedir orçamento pelo WhatsApp.
-- Nome: **Seu Chef em Casa** (Carlos descartou "Mesa Posta" em 09/11). Domínio pretendido: seuchefemcasa.com.br (ainda não comprado; compra no registro.br, feita por Carlos).
+- Nome: **Seu Chef em Casa** (Carlos descartou "Mesa Posta" em 09/11). Domínio: seuchefemcasa.com.br, registrado por Carlos no registro.br em 09/11/2026 (válido até 09/11/2027) e ligado ao Pages no mesmo dia: https://seuchefemcasa.com.br abre a versão real.
 - Marca separada do Seu Restaurante Online (outro repositório), mas na mesma base técnica (Cloudflare).
 - Termos: o app é só uma vitrine; não responde pelo que acontece entre cliente e chef.
 - Meta imediata: piloto com 3 chefs profissionais reais.
 
 ## Onde está
-- **Versão real (no ar desde 09/11):** https://seu-chef-em-casa.pages.dev — Cloudflare Pages ligado ao GitHub (cada push na `main` publica sozinho), Functions em `functions/api/[[rota]].js`, banco D1 `chefemcasa` (binding `DB`), código de convite em segredo `CONVITE` (Carlos sabe o valor). Conta Cloudflare: carlosmendes.ricci@gmail.com.
+- **Versão real (no ar desde 09/11):** https://seu-chef-em-casa.pages.dev — Cloudflare Pages ligado ao GitHub (cada push na `main` publica sozinho), Functions em `functions/api/[[rota]].js`, banco D1 `chefemcasa` (binding `DB`), código de convite opcional pelo segredo `CONVITE` (em 09/11 à noite ele ainda existia na Cloudflare: `/api/saude` respondia `convite: true`; apagar para abrir o cadastro). Conta Cloudflare: carlosmendes.ricci@gmail.com.
 - **Demonstração (GitHub Pages, dados só no aparelho):** https://charleskill.github.io/seu-chef-em-casa/ — 50 perfis de exemplo.
 - Banco: `migrations/0001_piloto.sql` e `0002_google.sql` já aplicadas no D1 de produção.
 - Testes: `npm run check`, `npm test` (41), `npm run build` (rodar o build antes de cada commit: ele carimba a versão dos arquivos no `index.html`).
@@ -31,6 +31,6 @@ Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
 2. Feito em 09/11: Mensagens e perfis de exemplo escondidos na versão real; Pausar perfil e Excluir conta.
 3. Login com Google: Carlos cria a credencial (docs/ATIVAR-CLOUDFLARE.md, seção 6) e adiciona `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` na Cloudflare.
 4. GitHub → Settings → Pages → Source: **GitHub Actions** (hoje publica da branch e expõe `docs/` e `migrations/` na demonstração).
-5. Domínio seuchefemcasa.com.br: comprar, pôr na Cloudflare, ligar ao Pages e acrescentar no Google.
+5. Domínio seuchefemcasa.com.br: comprado, posto na Cloudflare e ligado ao Pages em 09/11 (raiz e `www`, em Custom domains); `https://seuchefemcasa.com.br` e `/api/saude` respondem. Falta acrescentar o domínio no Google quando a credencial for criada. Os registros atuais (SPF `-all`, MX nulo) bloqueiam e-mail no domínio e terão de mudar para o aviso de pedido por e-mail. Detalhes em `docs/VISAO-GERAL.md`, seção 7.
 6. Termos: e-mail de contato e revisão por advogado.
 7. Depois do piloto: login Microsoft, troca de senha por e-mail.
