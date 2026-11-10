@@ -295,3 +295,12 @@ Branch `equipe-senha-excluir`, prévia em https://equipe-senha-excluir.seu-chef-
 - [x] Primeira execução local completa: `npm run check` sem erros, `npm test` com 45 de 45, `npm run build` concluído. Isso cobre, com atraso, as entregas de 09 e 10/11 que tinham sido publicadas sem esses testes (catálogo de pratos, bloco de atendimento, cores, área da equipe). Os testes automáticos não exercitam o servidor (`functions/`), que segue sem teste de ponta a ponta.
 - [x] `index.html` recarimbado pelo build de verdade (os carimbos anteriores tinham sido calculados à mão).
 - [x] Guia: seção 8, para quem trabalha na pasta local (Antigravity).
+
+## Entrega — 10/11/2026 (redes sociais no perfil do chef)
+Branch `icones-redes-sociais`, prévia em https://icones-redes-sociais.seu-chef-em-casa.pages.dev
+- [x] `assets/app.js`: adicionados ícones SVG para TikTok (`tiktok`) e Facebook (`fb`) ao dicionário de ícones `P`; criada função `socials(c)` para renderizar botões sociais; exibição dos ícones no cabeçalho de `profile()`; inclusão de campos de TikTok e Facebook no formulário de edição de perfil no painel do chef.
+- [x] `assets/app-core.js`: validação de URLs de TikTok e Facebook em `validateProfile()` com verificação de protocolo seguro `https:` e domínios oficiais.
+- [x] `assets/improvements.css`: estilos para `.profile-socials` e `.social-icon-btn` (botões circulares, borda suave, efeito hover na cor da marca).
+- [x] `tests/app-core.test.cjs`: testes unitários para validação de links válidos e inválidos de TikTok e Facebook.
+- [x] `index.html`: carimbos de versão atualizados pelo build.
+- Verificado de fato: `npm run check` sem erros de sintaxe; `npm test` com 45 de 45 testes passando; `npm run build` gerou arquivos de distribuição e atualizou carimbos no `index.html`; conferido no servidor local (`http://localhost:3000`).

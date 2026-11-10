@@ -28,6 +28,8 @@ function validateProfile(p,others=[]){
   if(others.some(c=>c.id!==p.id&&email(c.email)===email(p.email)))return 'Este e-mail já está cadastrado.';
   if(p.whatsapp&&!phone(p.whatsapp))return 'Informe um WhatsApp válido com DDD.';
   if(p.instagram){try{const u=new URL(p.instagram);if(u.protocol!=='https:'||!['instagram.com','www.instagram.com'].includes(u.hostname))throw 0}catch{return 'Use um link https://instagram.com/seu.perfil.'}}
+  if(p.tiktok){try{const u=new URL(p.tiktok);if(u.protocol!=='https:'||!['tiktok.com','www.tiktok.com'].includes(u.hostname))throw 0}catch{return 'Use um link https://tiktok.com/@seu.perfil.';}}
+  if(p.facebook){try{const u=new URL(p.facebook);if(u.protocol!=='https:'||!['facebook.com','www.facebook.com'].includes(u.hostname))throw 0}catch{return 'Use um link https://facebook.com/seu.perfil.';}}
   return '';
 }
 const FREQ={semanal:{label:'Semanal',perMonth:4},quinzenal:{label:'Quinzenal',perMonth:2},mensal:{label:'Mensal',perMonth:1}};

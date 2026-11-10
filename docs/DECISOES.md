@@ -141,3 +141,10 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Senha esquecida: em vez de a equipe definir uma senha, ela gera um link de uso único (48 horas) e o chef cria a própria senha. Resolve a troca de senha sem depender de envio de e-mail.
 - Risco aceito: quem tiver o link entra na conta; por isso a tela pede para enviar só ao próprio chef. Gerar um link novo invalida o anterior.
 - Exclusão pela equipe apaga tudo de vez, como a exclusão feita pelo próprio chef.
+
+## 10/11 · Redes sociais do chef (Instagram, TikTok e Facebook)
+- Pedido de Carlos: permitir incluir ícones de redes sociais nos perfis dos chefs (Instagram, TikTok e Facebook).
+- No perfil do chef: exibição de botões com ícones oficiais em SVG logo abaixo dos números e dados do chef no cabeçalho do perfil.
+- No painel do chef: inclusão de campos para TikTok e Facebook na aba Perfil, além do Instagram já existente.
+- Validação: links seguros com `https://` restritos aos domínios oficiais de cada rede social (`instagram.com`, `tiktok.com`, `facebook.com`).
+- Demonstração: para perfis de exemplo na demo, exibe os canais ilustrativos do Seu Chef em Casa para visualização do recurso.

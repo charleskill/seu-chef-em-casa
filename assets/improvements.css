@@ -149,3 +149,9 @@ html{scroll-padding-top:90px}
 /* Área da equipe: excluir conta e link de nova senha */
 .eq-perigo{color:#8f1d10;border-color:#d9b3ac}.eq-perigo:hover{background:#8f1d10;color:#fff;border-color:#8f1d10}
 .eq-link{margin-top:12px}.eq-link input{width:100%;margin:8px 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:.85rem;background:#fff}
+
+/* Ícones de redes sociais no perfil do chef */
+.profile-socials{display:flex;align-items:center;gap:10px;margin-top:14px}
+.social-icon-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid rgba(28,37,32,.2);background:#fff;color:#1c2520;text-decoration:none;transition:background .15s,border-color .15s,color .15s,transform .1s}
+.social-icon-btn:hover{background:#1c2520;border-color:#1c2520;color:#fff;transform:translateY(-1px)}
+.social-icon-btn:focus-visible{outline:2px solid #1c2520;outline-offset:2px}
