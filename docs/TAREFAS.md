@@ -295,3 +295,4 @@ Branch `equipe-senha-excluir`, prévia em https://equipe-senha-excluir.seu-chef-
 - [x] Primeira execução local completa: `npm run check` sem erros, `npm test` com 45 de 45, `npm run build` concluído. Isso cobre, com atraso, as entregas de 09 e 10/11 que tinham sido publicadas sem esses testes (catálogo de pratos, bloco de atendimento, cores, área da equipe). Os testes automáticos não exercitam o servidor (`functions/`), que segue sem teste de ponta a ponta.
 - [x] `index.html` recarimbado pelo build de verdade (os carimbos anteriores tinham sido calculados à mão).
 - [x] Guia: seção 8, para quem trabalha na pasta local (Antigravity).
+- Feito (2026-11-11): apresentação do brandbook em slides (26 slides): https://claude.ai/artifact/4nKGsM5nKvxq2Bk1oyxhgW (privada). Usa as cores e fontes do brandbook, o símbolo em vetor, um print do app no celular, o post-modelo e a foto de perfil. Não foi aberta para conferência visual depois de publicada.
