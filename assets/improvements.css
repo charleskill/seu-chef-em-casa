@@ -184,3 +184,6 @@ body.admin-access .card:last-child{margin-bottom:0}
 .admin-access-button span{font-size:20px;line-height:1;font-weight:400}
 .admin-access-card>.form-help{margin:20px 0 0;line-height:1.6}
 @media(max-width:480px){.admin-access-card{padding:36px 24px 28px;border-radius:20px}.admin-access-card h1{font-size:33px}.admin-access-icon{margin-bottom:20px}}
+
+/* Área de toque dos controles para mostrar e ocultar senha. */
+.pw input{padding-right:56px}.pw button{width:44px;height:44px;top:2px;right:2px;display:grid;place-items:center}

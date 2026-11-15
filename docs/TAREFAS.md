@@ -326,3 +326,10 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Cartão de acesso com conteúdo centralizado, ícone discreto de cadeado, espaçamento entre título e apresentação, texto de apoio mais curto e botão verde de largura total. Ajuste responsivo para telas pequenas, preservando o acesso sem menu ou cabeçalho.
 - Arquivos: assets/management.js, assets/improvements.css e index.html recarimbado. Sem alteração de autenticação.
 - Validação: npm run check, npm test (52/52) e npm run build.
+
+
+## Entrega — 15/11/2026 (mostrar ou ocultar senha)
+- Campos de nova senha e confirmação, no cadastro e na redefinição, passam a ter botão de olho independente. O login mantém o mesmo recurso, usando o componente compartilhado.
+- Todos começam ocultos; o botão alterna ícone, descrição acessível e aria-pressed, sem enviar o formulário. Área de toque de 44 px. Nenhuma alteração de senha ou autenticação no servidor.
+- Arquivos: assets/app.js, assets/improvements.css e index.html recarimbado.
+- Verificado: npm run check, npm test (52/52), npm run build; no navegador local, alternância independente dos dois campos e estado aria-pressed. Campos vazios, sem envio nem alteração de senha real.
