@@ -165,3 +165,10 @@ html{scroll-padding-top:90px}
 .eq-info{min-width:0;overflow-wrap:anywhere}.eq-info .acts{gap:8px}
 .eq-link input{max-width:100%}.management-head .b{flex-shrink:0}
 @media(max-width:600px){.management-head{flex-direction:column;gap:12px}.management-nav{gap:8px}.management-nav .b{padding:10px 12px;font-size:.88rem}.manage-dish{padding:14px}.site-preview img{height:200px}.admin-guide{padding-left:22px}#manage-site .savebar,#manage-chef .savebar{flex-wrap:wrap}input[type="file"]{max-width:100%;font-size:.9rem}}
+
+/* Acesso administrativo sem navegação pública. */
+body.admin-access{padding:0}
+body.admin-access>.top,body.admin-access>.nav{display:none}
+body.admin-access>#view{min-height:100svh;display:flex;align-items:center;justify-content:center}
+body.admin-access>#view>.wrap{width:100%;max-width:560px;margin:0;padding:32px 20px}
+body.admin-access .card:last-child{margin-bottom:0}
