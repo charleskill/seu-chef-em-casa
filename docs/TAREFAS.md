@@ -313,3 +313,10 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Verificado automaticamente: npm run check, npm test (52/52) e npm run build. A suíte integra SQL real em Node 26; em Node 18/20, somente os novos testes SQLite são explicitamente pulados (requerem Node 22.13+).
 - Não verificado: banco D1 da Cloudflare, Google real, dispositivo físico, envio de WhatsApp, exclusão pelo navegador e animações. A exclusão foi exercitada pela API exclusivamente em banco de teste. Nenhuma conta ou conteúdo real foi alterado.
 - Ainda depende de revisão e merge do PR por Carlos. A prévia da branch não tem banco, portanto não testa administração real.
+
+
+## Entrega — 15/11/2026 (acesso administrativo sem cabeçalho e menu)
+- A pedido de Carlos, a tela de acesso restrito em /admin e o login #/entrar/admin mostram somente a área de acesso, centralizada. Cabeçalho e navegação pública ficam escondidos nessas telas, incluindo o menu inferior no celular.
+- Ao entrar na administração ou navegar para outra página, o layout normal é restaurado. Nenhuma regra de autenticação foi alterada.
+- Arquivos: assets/app.js, assets/improvements.css e index.html recarimbado pelo build.
+- Verificações: npm run check, npm test (52/52), npm run build.

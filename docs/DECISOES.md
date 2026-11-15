@@ -148,3 +148,7 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 - Senha esquecida: em vez de a equipe definir uma senha, ela gera um link de uso único (48 horas) e o chef cria a própria senha. Resolve a troca de senha sem depender de envio de e-mail.
 - Risco aceito: quem tiver o link entra na conta; por isso a tela pede para enviar só ao próprio chef. Gerar um link novo invalida o anterior.
 - Exclusão pela equipe apaga tudo de vez, como a exclusão feita pelo próprio chef.
+
+
+## 15/11/2026 — Tela de acesso administrativo
+- Carlos pediu que o acesso ao administrador tenha somente a área de acesso, sem o cabeçalho e a navegação pública. Aplicado à tela restrita e ao formulário de login administrativo; a administração autenticada preserva sua navegação.
