@@ -1,4 +1,8 @@
 # Tarefas
+## Ajuste — 15/11/2026: harmonia das etapas
+- A pedido de Carlos, removidos números soltos. Ícones em medalhões circulares com acabamento marfim e borda discreta, cor única e espaçamento alinhado aos títulos. Preservados os textos.
+- Verificação: check, 57 testes e build; revisão visual desktop e celular.
+
 ## Entrega — 15/11/2026: ícones nas etapas de Como funciona
 - Ícones vetoriais de busca, cloche e conversa, reutilizando o conjunto existente. Bases suaves em areia, verde e terracota; números e textos preservados. Ícones decorativos ocultos dos leitores de tela.
 - Mudança focada em assets/app.js e assets/improvements.css; sem imagens externas ou dependências. Verificação: check, testes e build, além de revisão visual responsiva.
