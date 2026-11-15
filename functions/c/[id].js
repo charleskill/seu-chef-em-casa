@@ -27,14 +27,14 @@ const CABECALHOS = {
 const SERIFA = 'Georgia,"Times New Roman",serif';
 const ESTILO = [
   '*{box-sizing:border-box}html{scroll-behavior:smooth}',
-  'body{margin:0;background:#f6f3ec;color:#26342c;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}',
+  'body{margin:0;background:#f6f4ee;color:#202b25;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}',
   'img{display:block;max-width:100%}a{color:inherit}',
   '.l{width:100%;max-width:1040px;margin:0 auto;padding:0 22px}',
   'h1,h2,h3{font-family:' + SERIFA + ';font-weight:400;margin:0;text-wrap:balance}',
   '.olho{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:#a5583c;margin:0 0 12px}',
   // Botões
-  '.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:13px 26px;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1px solid transparent;transition:background .2s,color .2s,border-color .2s}',
-  '.b1{background:#a5583c;color:#fff}.b1:hover{background:#8f4a31}',
+  '.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:13px 26px;border-radius:12px;font-weight:600;font-size:.92rem;text-decoration:none;border:1px solid transparent;transition:background .2s,color .2s,border-color .2s}',
+  '.b1{background:#f5efe2;color:#202b25}.b1:hover{background:#e6dac2}',
   '.b2{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}.b2:hover{background:#fff;color:#26342c}',
   '.b3{background:transparent;color:#1c2520;border-color:#1c2520}.b3:hover{background:#1c2520;color:#fff}',
   '.b:focus-visible{outline:3px solid #e2c48f;outline-offset:3px}',
@@ -59,14 +59,14 @@ const ESTILO = [
   // Cardápio
   '.pratos{display:grid;gap:0 56px}',
   '.prato{padding:20px 0;border-bottom:1px solid rgba(28,37,32,.16)}',
-  '.prato small{display:block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#7b857c;margin-bottom:4px}',
+  '.prato small{display:block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#62695f;margin-bottom:8px}',
   '.prato h3{font-size:1.28rem;line-height:1.3}',
   '.prato p{margin:6px 0 0;color:#56635a;font-size:.96rem}',
   '.prato span{display:block;margin-top:8px;font-size:.88rem;color:#a5583c;font-weight:600}',
   '.nota{margin:22px 0 0;font-size:.88rem;color:#6a756c;max-width:44em}',
   // Fotos
   '.fotos{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}',
-  '.fotos figure{margin:0;position:relative;aspect-ratio:1;overflow:hidden;border-radius:6px;background:#e4dfd2}',
+  '.fotos figure{margin:0;position:relative;aspect-ratio:1;overflow:hidden;border-radius:12px;background:#e4dfd2}',
   '.fotos img{width:100%;height:100%;object-fit:cover}',
   '.fotos figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;font-size:.82rem;line-height:1.35;color:#fff;background:linear-gradient(180deg,rgba(15,20,17,0),rgba(15,20,17,.78))}',
   // Como trabalho
@@ -83,6 +83,7 @@ const ESTILO = [
   'footer{background:#141a17;color:#9aa39b;font-size:.84rem;padding:28px 0 96px;text-align:center}footer p{margin:0 0 6px}footer a{color:#c9c3b6}',
   // Barra fixa no celular
   '.barra{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(246,243,236,.96);border-top:1px solid rgba(28,37,32,.18)}',
+  '.barra .b1{background:#1c2520;color:#fffefa}',
   '.barra .b{flex:1;min-height:48px;padding:10px 12px;font-size:.92rem}',
   '@media (min-width:760px){body{font-size:18px}.sobre{grid-template-columns:132px 1fr;gap:48px}.pratos{grid-template-columns:1fr 1fr}.fotos{grid-template-columns:repeat(3,1fr);gap:14px}.lista{grid-template-columns:1fr 1fr}.passos{grid-template-columns:repeat(3,1fr);gap:44px}section{padding:96px 0}.barra{display:none}footer{padding-bottom:34px}.heroi{padding-bottom:76px}}',
   '@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.b{transition:none}}',
