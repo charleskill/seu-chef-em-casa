@@ -1,4 +1,9 @@
 # Decisões
+## 15/11/2026 — Três personagens para apresentação pública
+- Carlos pediu três chefs fictícios, sem identificar isso na interface, para apresentar aos sócios; informou que explicará que são fictícios. Confirmou que devem aparecer na vitrine pública.
+- Preparados Helena Duarte, Rafael Monteiro e André Valença: nove fotos e 25 pratos cada, mais retratos gerados para personagens inventados. Sem prêmios, diplomas ou vínculos com restaurantes reais; sem pedidos ou avaliações inventadas.
+- Contato no número de teste do projeto; nenhum acesso de login ou administrativo concedido. Registros normais no D1 para edição/ocultação/exclusão pela administração. Procedimento em PERFIS-APRESENTACAO.md.
+
 ## 15/11/2026 — Fotografias em todo o catálogo
 - Carlos pediu mais vinte tipos e fotos boas em todos os serviços, incluindo os que ainda tinham ícones. Catálogo ampliado para 55 opções.
 - Fotos ilustrativas selecionadas e hospedadas junto ao site, otimizadas em WebP. Mantidas as preferências dos chefs existentes; nenhum serviço é ativado automaticamente. As fotos não representam o portfólio de um profissional específico.

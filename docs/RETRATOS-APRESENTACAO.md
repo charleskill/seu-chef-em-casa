@@ -1,0 +1,11 @@
+# Retratos dos personagens para apresentação
+
+Gerados com a ferramenta integrada image_gen em 15/11/2026. Pessoas inteiramente inventadas; não retratam chefs reais. Versões otimizadas no projeto: assets/apresentacao/helena-retrato.webp, rafael-retrato.webp e andre-retrato.webp. Originais preservados em CODEX_HOME/generated_images.
+
+## Prompts utilizados
+
+1. Photorealistic editorial portrait for a fictional Brazilian personal-chef website. A completely invented woman chef around 38, light brown skin, short wavy dark brown hair, warm confident natural smile, ivory chef jacket and muted olive apron, waist-up in elegant softly blurred home kitchen with handmade pasta and herbs, looking at camera. Luxurious understated natural window light, authentic candid food magazine photography, medium focal length, face clearly visible centrally in upper third for avatar cropping. No text, no logos, no badges, no celebrity resemblance. One single portrait, vertical 4:5 composition. This person is fictional.
+
+2. Photorealistic editorial portrait for a fictional Brazilian personal-chef website. Completely invented Brazilian man chef around 42, medium tan skin, short curly black hair with a few grey strands, neatly trimmed beard, relaxed friendly face, white chef jacket with dark blue apron, waist-up in a softly blurred bright coastal kitchen with subtle fresh herbs and ceramic plates, looking at camera. Understated luxurious natural window light, authentic food magazine photography, face clearly visible centrally in upper third for avatar cropping. No text, logos, badges or celebrity resemblance. One single portrait, vertical 4:5 composition. This person is fictional.
+
+3. Photorealistic editorial portrait for a fictional Brazilian personal-chef website. Completely invented Brazilian male chef around 35, brown skin, short dark hair, clean-shaven, calm friendly smile, charcoal chef jacket and warm brown canvas apron, waist-up in a refined softly blurred outdoor kitchen with a charcoal grill and greenery, looking at camera. Understated luxury, warm natural afternoon light, authentic professional food magazine portrait, face clearly visible centrally in upper third for avatar cropping. No text, logos, badges or celebrity resemblance. One single portrait, vertical 4:5 composition. This person is fictional.

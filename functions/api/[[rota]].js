@@ -86,6 +86,8 @@ async function limparPerfil(env, chefId, p, atual) {
   const novas = [];
   async function foto(url) {
     url = String(url || '');
+    // Preserva somente os arquivos de apresentação já pertencentes ao perfil editado.
+    if (/^\/assets\/apresentacao\/[a-z0-9-]+\.webp$/.test(url) && atual && [atual.avatar,...(atual.gallery||[]).map(g=>g.url)].includes(url)) return url;
     if (FOTO_LOCAL.test(url)) return minhas.has(url.slice(10)) ? url : '';
     const m = url.match(DATA_URL); if (!m) return '';
     const bin = Uint8Array.from(atob(m[1]), c => c.charCodeAt(0));

@@ -30,6 +30,16 @@ test('editor de chef preserva acesso e não aceita fotos de outra conta',async()
  const r=await req('admin/chefs/'+id,'PUT',{versao:'v1',perfil:{...before.chef,name:'Chef revisado',email:'admin@example.com',admin:true,pausado:true,avatar:'/api/foto/'+'f'.repeat(32),dishes:[{id:'d1',name:'Moqueca',price:80}]}},'admin');assert.equal(r.status,200);
  const saved=await r.json();assert.equal(saved.chef.name,'Chef revisado');assert.equal(saved.chef.email,'other@example.com');assert.equal(saved.chef.admin,false);assert.equal(saved.chef.pausado,false);assert.equal(saved.chef.avatar,'');assert.equal(saved.chef.dishes[0].name,'Moqueca');assert.equal((await req('admin/chefs/'+id,'PUT',{versao:'v1',perfil:before.chef},'admin')).status,409);
 });
+test('editar perfil preserva fotos locais existentes sem aceitar arquivos de outro perfil',async()=>{
+ const id=ids.other,row=db.prepare('SELECT perfil FROM chefs WHERE id=?').get(id),original=JSON.parse(row.perfil);
+ const avatar='/assets/apresentacao/helena-retrato.webp',own='/assets/apresentacao/helena-1.webp';
+ db.prepare('UPDATE chefs SET perfil=? WHERE id=?').run(JSON.stringify({...original,avatar,gallery:[{id:'g1',url:own,caption:'Mesa'}]}),id);
+ const before=await (await req('admin/chefs/'+id,'GET',undefined,'admin')).json();
+ const r=await req('admin/chefs/'+id,'PUT',{versao:before.versao,perfil:{...before.chef,gallery:[...before.chef.gallery,{id:'g2',url:'/assets/apresentacao/rafael-1.webp',caption:'Outra'}]}},'admin');
+ assert.equal(r.status,200);const saved=(await r.json()).chef;assert.equal(saved.avatar,avatar);assert.deepEqual(saved.gallery.map(g=>g.url),[own]);
+ db.prepare('UPDATE chefs SET perfil=? WHERE id=?').run(row.perfil,id);
+});
+
 test('dashboard agrega dados reais por período, respeita meia-noite e não retorna dados pessoais',async()=>{
  const rows=[['dash-a',ids.chef,'2026-11-10T03:00:00.000Z',{}],['dash-b',ids.other,'2026-11-12T02:59:59.000Z',{mode:'marmita',status:'respondido'}],['dash-prev',ids.chef,'2026-11-10T02:59:59.000Z',{status:'fechado'}],['dash-next',ids.chef,'2026-11-12T03:00:00.000Z',{}]];
  for(const [id,chef,date,data] of rows)db.prepare('INSERT INTO pedidos VALUES (?,?,?,?,?)').run(id,chef,'Cliente: Nome privado; telefone privado',JSON.stringify(data),date);
