@@ -1,4 +1,8 @@
 # Decisões
+## 15/11/2026 — Fotografias em todo o catálogo
+- Carlos pediu mais vinte tipos e fotos boas em todos os serviços, incluindo os que ainda tinham ícones. Catálogo ampliado para 55 opções.
+- Fotos ilustrativas selecionadas e hospedadas junto ao site, otimizadas em WebP. Mantidas as preferências dos chefs existentes; nenhum serviço é ativado automaticamente. As fotos não representam o portfólio de um profissional específico.
+
 ## 15/11/2026 — Ampliação de Serviços
 - Carlos pediu mais vinte tipos. As novas experiências integram o catálogo público, os tipos de pedido e as opções de atendimento do chef. Cada profissional opta pelas experiências que oferece; os novos campos começam desligados.
 

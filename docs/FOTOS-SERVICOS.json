@@ -1,0 +1,387 @@
+{
+  "Almoço em família": {
+    "file": "assets/servicos/almoco-em-familia.webp",
+    "source": "https://images.unsplash.com/photo-1576089073624-b5751a8f4de9",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Aula com o chef": {
+    "file": "assets/servicos/aula-com-o-chef.webp",
+    "source": "https://images.unsplash.com/photo-1556910103-1c02745aae4d",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Brunch em casa": {
+    "file": "assets/servicos/brunch-em-casa.webp",
+    "source": "https://images.unsplash.com/photo-1741606552241-fbd67e574f7f",
+    "page": "https://unsplash.com",
+    "photographer": "phoebe lynch",
+    "license": "https://unsplash.com/license"
+  },
+  "Café colonial": {
+    "file": "assets/servicos/cafe-colonial.webp",
+    "source": "https://images.pexels.com/photos/11803079/pexels-photo-11803079.jpeg",
+    "page": "https://www.pexels.com/photo/11803079/",
+    "photographer": "CLAUDIO ROCHA",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Café da manhã especial": {
+    "file": "assets/servicos/cafe-da-manha-especial.webp",
+    "source": "https://images.unsplash.com/photo-1482049016688-2d3e1b311543",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Cardápio temático": {
+    "file": "assets/servicos/cardapio-tematico.webp",
+    "source": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Carnes nobres": {
+    "file": "assets/servicos/carnes-nobres.webp",
+    "source": "https://images.pexels.com/photos/7807394/pexels-photo-7807394.jpeg",
+    "page": "https://www.pexels.com/photo/7807394/",
+    "photographer": "Aaron Johnson",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Celebração": {
+    "file": "assets/servicos/celebracao.webp",
+    "source": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Ceviches e sabores peruanos": {
+    "file": "assets/servicos/ceviches-e-sabores-peruanos.webp",
+    "source": "https://images.pexels.com/photos/31495674/pexels-photo-31495674.jpeg",
+    "page": "https://www.pexels.com/photo/31495674/",
+    "photographer": "Nano Erdozain",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Chá da tarde": {
+    "file": "assets/servicos/cha-da-tarde.webp",
+    "source": "https://images.pexels.com/photos/7475740/pexels-photo-7475740.jpeg",
+    "page": "https://www.pexels.com/photo/7475740/",
+    "photographer": "Büşra Akkaya",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Churrasco em casa": {
+    "file": "assets/servicos/churrasco-em-casa.webp",
+    "source": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Confeitaria em casa": {
+    "file": "assets/servicos/confeitaria-em-casa.webp",
+    "source": "https://images.unsplash.com/photo-1488477181946-6428a0291777",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Costela de preparo lento": {
+    "file": "assets/servicos/costela-de-preparo-lento.webp",
+    "source": "https://images.unsplash.com/photo-1544025162-d76694265947",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Cozinha Coreana": {
+    "file": "assets/servicos/cozinha-coreana.webp",
+    "source": "https://images.pexels.com/photos/15681166/pexels-photo-15681166.jpeg",
+    "page": "https://www.pexels.com/photo/15681166/",
+    "photographer": "세훈 예",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Cozinha Francesa": {
+    "file": "assets/servicos/cozinha-francesa.webp",
+    "source": "https://images.pexels.com/photos/34989159/pexels-photo-34989159.jpeg",
+    "page": "https://www.pexels.com/photo/34989159/",
+    "photographer": "Szymon Shields",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Cozinha Grega": {
+    "file": "assets/servicos/cozinha-grega.webp",
+    "source": "https://images.pexels.com/photos/15580731/pexels-photo-15580731.jpeg",
+    "page": "https://www.pexels.com/photo/15580731/",
+    "photographer": "Veer Sajid",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Cozinha Indiana": {
+    "file": "assets/servicos/cozinha-indiana.webp",
+    "source": "https://images.unsplash.com/photo-1565557623262-b51c2513a641",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Cozinha Italiana": {
+    "file": "assets/servicos/cozinha-italiana.webp",
+    "source": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Cozinha Mediterrânea": {
+    "file": "assets/servicos/cozinha-mediterranea.webp",
+    "source": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg",
+    "page": "https://www.pexels.com/photo/1213710/",
+    "photographer": "Daniela Elena Tentis",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Cozinha Nordestina": {
+    "file": "assets/servicos/cozinha-nordestina.webp",
+    "source": "https://images.pexels.com/photos/34314486/pexels-photo-34314486.jpeg",
+    "page": "https://www.pexels.com/photo/34314486/",
+    "photographer": "ERIVELTO Martins",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Cozinha Tailandesa": {
+    "file": "assets/servicos/cozinha-tailandesa.webp",
+    "source": "https://images.pexels.com/photos/15797986/pexels-photo-15797986.jpeg",
+    "page": "https://www.pexels.com/photo/15797986/",
+    "photographer": "Eaksit Sangdee",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Encontro com amigos": {
+    "file": "assets/servicos/encontro-com-amigos.webp",
+    "source": "https://images.unsplash.com/photo-1578496780896-7081cc23c111",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Feijoada em casa": {
+    "file": "assets/servicos/feijoada-em-casa.webp",
+    "source": "https://images.pexels.com/photos/34195320/pexels-photo-34195320.jpeg",
+    "page": "https://www.pexels.com/photo/34195320/",
+    "photographer": "José Roberto Oliveira",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Festival de Crepes": {
+    "file": "assets/servicos/festival-de-crepes.webp",
+    "source": "https://images.pexels.com/photos/13427907/pexels-photo-13427907.jpeg",
+    "page": "https://www.pexels.com/photo/13427907/",
+    "photographer": "Mateusz Feliksik",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Festival de Risotos": {
+    "file": "assets/servicos/festival-de-risotos.webp",
+    "source": "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9",
+    "page": "https://unsplash.com",
+    "photographer": "Rob Wicks",
+    "license": "https://unsplash.com/license"
+  },
+  "Finger food para receber": {
+    "file": "assets/servicos/finger-food-para-receber.webp",
+    "source": "https://images.pexels.com/photos/4959842/pexels-photo-4959842.jpeg",
+    "page": "https://www.pexels.com/photo/4959842/",
+    "photographer": "Kseniia Lopyreva",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Jantar a dois": {
+    "file": "assets/servicos/jantar-a-dois.webp",
+    "source": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Jantar harmonizado": {
+    "file": "assets/servicos/jantar-harmonizado.webp",
+    "source": "https://images.pexels.com/photos/32083423/pexels-photo-32083423.jpeg",
+    "page": "https://www.pexels.com/photo/32083423/",
+    "photographer": "Valeria Boltneva",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Lounge": {
+    "file": "assets/servicos/lounge.webp",
+    "source": "https://images.unsplash.com/photo-1714659506452-54c5ac90c525",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Marmitas da semana": {
+    "file": "assets/servicos/marmitas-da-semana.webp",
+    "source": "https://images.unsplash.com/photo-1543352632-5a4b24e4d2a6",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Menu Degustação": {
+    "file": "assets/servicos/menu-degustacao.webp",
+    "source": "https://images.pexels.com/photos/28435314/pexels-photo-28435314.jpeg",
+    "page": "https://www.pexels.com/photo/28435314/",
+    "photographer": "Nadin Sh",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Menu Vegano": {
+    "file": "assets/servicos/menu-vegano.webp",
+    "source": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Menu Vegetariano": {
+    "file": "assets/servicos/menu-vegetariano.webp",
+    "source": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Moqueca à mesa": {
+    "file": "assets/servicos/moqueca-a-mesa.webp",
+    "source": "https://images.pexels.com/photos/34130782/pexels-photo-34130782.jpeg",
+    "page": "https://www.pexels.com/photo/34130782/",
+    "photographer": "Letícia Alvares",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Noite Árabe": {
+    "file": "assets/servicos/noite-arabe.webp",
+    "source": "https://images.pexels.com/photos/6419391/pexels-photo-6419391.jpeg",
+    "page": "https://www.pexels.com/photo/6419391/",
+    "photographer": "Polina Tankilevitch",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Noite da Pizza": {
+    "file": "assets/servicos/noite-da-pizza.webp",
+    "source": "https://images.unsplash.com/photo-1513104890138-7c749659a591",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Noite da Tainha": {
+    "file": "assets/servicos/noite-da-tainha.webp",
+    "source": "https://images.unsplash.com/photo-1718942899999-b3da4177ee2a",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Noite de Massas": {
+    "file": "assets/servicos/noite-de-massas.webp",
+    "source": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Noite do Boteco": {
+    "file": "assets/servicos/noite-do-boteco.webp",
+    "source": "https://images.unsplash.com/photo-1766589152292-3c052f0d87aa",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Noite do Fondue": {
+    "file": "assets/servicos/noite-do-fondue.webp",
+    "source": "https://images.unsplash.com/photo-1512594282804-b5f400408c9d",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Noite do Lámen": {
+    "file": "assets/servicos/noite-do-lamen.webp",
+    "source": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Noite do Lanche": {
+    "file": "assets/servicos/noite-do-lanche.webp",
+    "source": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Noite do Nhoque": {
+    "file": "assets/servicos/noite-do-nhoque.webp",
+    "source": "https://images.pexels.com/photos/36430173/pexels-photo-36430173.jpeg",
+    "page": "https://www.pexels.com/photo/36430173/",
+    "photographer": "Willians Huerta",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Noite Japonesa": {
+    "file": "assets/servicos/noite-japonesa.webp",
+    "source": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Noite Mexicana": {
+    "file": "assets/servicos/noite-mexicana.webp",
+    "source": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Paella em casa": {
+    "file": "assets/servicos/paella-em-casa.webp",
+    "source": "https://images.pexels.com/photos/29843071/pexels-photo-29843071.jpeg",
+    "page": "https://www.pexels.com/photo/29843071/",
+    "photographer": "Valeria Boltneva",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Pães artesanais": {
+    "file": "assets/servicos/paes-artesanais.webp",
+    "source": "https://images.unsplash.com/photo-1509440159596-0249088772ff",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Peixes grelhados": {
+    "file": "assets/servicos/peixes-grelhados.webp",
+    "source": "https://images.unsplash.com/photo-1467003909585-2f8a72700288",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Piquenique especial": {
+    "file": "assets/servicos/piquenique-especial.webp",
+    "source": "https://images.pexels.com/photos/27893013/pexels-photo-27893013.jpeg",
+    "page": "https://www.pexels.com/photo/27893013/",
+    "photographer": "Alexander Mass",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Pokes e bowls": {
+    "file": "assets/servicos/pokes-e-bowls.webp",
+    "source": "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Queijos e tábuas artesanais": {
+    "file": "assets/servicos/queijos-e-tabuas-artesanais.webp",
+    "source": "https://images.pexels.com/photos/34278817/pexels-photo-34278817.jpeg",
+    "page": "https://www.pexels.com/photo/34278817/",
+    "photographer": "Justin Agyarko",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Saladas gourmet": {
+    "file": "assets/servicos/saladas-gourmet.webp",
+    "source": "https://images.unsplash.com/photo-1540420773420-3366772f4999",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Sequência de frutos do mar": {
+    "file": "assets/servicos/sequencia-de-frutos-do-mar.webp",
+    "source": "https://images.unsplash.com/photo-1633321094192-388268512e0f",
+    "page": "https://unsplash.com",
+    "photographer": "",
+    "license": "https://unsplash.com/license"
+  },
+  "Sopas e caldos": {
+    "file": "assets/servicos/sopas-e-caldos.webp",
+    "source": "https://images.pexels.com/photos/14695161/pexels-photo-14695161.jpeg",
+    "page": "https://www.pexels.com/photo/14695161/",
+    "photographer": "Nguyen Huy",
+    "license": "https://www.pexels.com/license/"
+  },
+  "Tapas e petiscos": {
+    "file": "assets/servicos/tapas-e-petiscos.webp",
+    "source": "https://images.pexels.com/photos/31544800/pexels-photo-31544800.jpeg",
+    "page": "https://www.pexels.com/photo/31544800/",
+    "photographer": "José Antonio Otegui Auzmendi",
+    "license": "https://www.pexels.com/license/"
+  }
+}
