@@ -31,6 +31,11 @@
       Cloud.on = true;
       return { chefs: lista.chefs || [], me: eu.chef || null };
     },
+    site: () => req('GET', '/site'),
+    adminSite: () => req('GET', '/admin/site'),
+    salvarSite: (config, versao) => req('PUT', '/admin/site', {config, versao}),
+    adminPerfil: id => req('GET', '/admin/chefs/' + encodeURIComponent(id)),
+    salvarAdminPerfil: (id, perfil, versao) => req('PUT', '/admin/chefs/' + encodeURIComponent(id), {perfil, versao}),
     cadastro: d => req('POST', '/cadastro', d).then(j => j.chef),
     entrar: (email, senha) => req('POST', '/entrar', { email, senha }).then(j => j.chef),
     sair: () => req('POST', '/sair', {}).catch(() => null),

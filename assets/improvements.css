@@ -149,3 +149,19 @@ html{scroll-padding-top:90px}
 /* Área da equipe: excluir conta e link de nova senha */
 .eq-perigo{color:#8f1d10;border-color:#d9b3ac}.eq-perigo:hover{background:#8f1d10;color:#fff;border-color:#8f1d10}
 .eq-link{margin-top:12px}.eq-link input{width:100%;margin:8px 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:.85rem;background:#fff}
+/* Painéis de conta e administração */
+.management-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:24px}
+.management-head h1{margin:4px 0 8px}.management-head p{max-width:600px}
+.management-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.management-nav .b[aria-current]{box-shadow:0 3px 10px #1c252022}
+#manage-site,#manage-chef{max-width:900px;margin-inline:auto}
+#manage-site details,#manage-chef details{padding:20px 0;border-bottom:1px solid #d9ddd6}
+#manage-site summary,#manage-chef summary{font-weight:700;cursor:pointer;font-size:1.08rem;margin-bottom:20px}
+.site-preview{margin:16px 0}.site-preview img{width:100%;max-height:280px;object-fit:cover;border-radius:16px}.site-preview figcaption{font-size:.9rem;margin-top:8px}
+.manage-dish{border:1px solid #d9ddd6;border-radius:14px;padding:20px;margin:20px 0;min-width:0}.manage-dish legend{padding:0 8px;font-weight:700}
+.manage-photo{border:1px solid #d9ddd6;border-radius:14px;padding:18px;margin:16px 0}.manage-photo img,.manage-avatar img{width:160px;height:120px;object-fit:cover;border-radius:12px;margin-bottom:12px}.manage-avatar img{height:160px}
+.manage-avatar{padding-bottom:20px}.admin-guide li{margin:18px 0;line-height:1.65}
+.danger-button,[data-a="excluirconta"]{color:#8a2924;border-color:#bd7e77}
+.eq-info{min-width:0;overflow-wrap:anywhere}.eq-info .acts{gap:8px}
+.eq-link input{max-width:100%}.management-head .b{flex-shrink:0}
+@media(max-width:600px){.management-head{flex-direction:column;gap:12px}.management-nav{gap:8px}.management-nav .b{padding:10px 12px;font-size:.88rem}.manage-dish{padding:14px}.site-preview img{height:200px}.admin-guide{padding-left:22px}#manage-site .savebar,#manage-chef .savebar{flex-wrap:wrap}input[type="file"]{max-width:100%;font-size:.9rem}}

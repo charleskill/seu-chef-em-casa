@@ -1,4 +1,11 @@
 # Decisões
+## 15/11/2026 — Administração para alterações sem IA
+- Carlos pediu um painel para editar conteúdo em situações em que a IA ou seus créditos não estejam disponíveis. A IA continua sendo usada para desenvolvimento.
+- Acesso por `/admin`, usando as contas já autorizadas em `ADMIN_EMAILS`, com verificação de permissão no servidor em todas as novas rotas administrativas.
+- Primeira entrega: apresentação e capa da página inicial, convite aos chefs, contatos e redes sociais; edição de perfis, pratos e fotos dos chefs. Conteúdo salvo no D1, sem precisar publicar código a cada edição.
+- Configurações concentra acesso, pausa, exclusão da própria conta e ajuda. Clientes continuam sem conta; limpeza local não promete exclusão de dados no servidor ou WhatsApp.
+- Alterações de código seguem em branch própria e pull request, sem merge automático. O ramo `icones-redes-sociais` foi preservado.
+
 ## 28/10/2026 — Carlos e ChatGPT
 - Repositório privado charleskill/seu-chef-em-casa é a fonte oficial do projeto.
 - Aproveitar o protótipo existente.

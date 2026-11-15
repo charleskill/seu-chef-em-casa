@@ -3,6 +3,12 @@
 Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `docs/` (PROJETO, TAREFAS, DECISOES, ATIVAR-CLOUDFLARE).
 Atualizado em 15/11/2026, na passagem para o Codex (seção abaixo).
 
+## Em revisão pelo Codex — 15/11/2026
+- Branch `codex/organizar-painel`, origem `main` 4adda6d. Sem merge e sem alteração de produção.
+- Pedido de Carlos: administração para alterações de conteúdo quando a IA não estiver disponível; organizar configurações, exclusão de conta e entrada por `/admin`.
+- Implementação e limites: `docs/ADMINISTRACAO.md`. Verificações efetivas: entrega correspondente em `docs/TAREFAS.md`.
+- A configuração de conteúdo usa a tabela `site_config`, criada automaticamente pelo servidor se ausente; `migrations/0004_site_config.sql` registra o esquema. Nenhuma migração foi aplicada manualmente em produção.
+
 ## Passagem para o Codex (15/11/2026)
 - Os créditos do Claude Code acabaram por ora; o trabalho segue no Codex (ChatGPT) até voltarem. O Codex segue `AGENTS.md` e `docs/GUIA-OUTRO-ASSISTENTE.md` (branch e pull request, sem merge), a não ser que Carlos ou Fer digam outra coisa.
 - Conferido em 15/11: DNS do domínio na Cloudflare (`meadow` e `steven`), `seuchefemcasa.com.br` ligado ao Pages.
