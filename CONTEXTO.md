@@ -1,7 +1,16 @@
 # Contexto do projeto — Seu Chef em Casa
 
 Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `docs/` (PROJETO, TAREFAS, DECISOES, ATIVAR-CLOUDFLARE).
-Atualizado em 09/11/2026, na passagem do projeto para o Claude Code.
+Atualizado em 15/11/2026, na passagem para o Codex (seção abaixo).
+
+## Passagem para o Codex (15/11/2026)
+- Os créditos do Claude Code acabaram por ora; o trabalho segue no Codex (ChatGPT) até voltarem. O Codex segue `AGENTS.md` e `docs/GUIA-OUTRO-ASSISTENTE.md` (branch e pull request, sem merge), a não ser que Carlos ou Fer digam outra coisa.
+- Conferido em 15/11: DNS do domínio na Cloudflare (`meadow` e `steven`), `seuchefemcasa.com.br` ligado ao Pages.
+- Em andamento: Fer vai excluir pelo painel o perfil de teste "Fernanda Belle" (`chef-739181ff72214424`). Depois, conferir que `/api/chefs` não o mostra mais. Os cadastros de teste locais do Claude já foram apagados.
+- Ramo `icones-redes-sociais` (e9097f6, ícones de Instagram, TikTok e Facebook no perfil) ainda não está na `main`: revisar antes de juntar.
+- Ambiente: o Windows do projeto não tem Node instalado; use Node 18+ (sem dependências) para `npm run check`, `npm test` e `npm run build`.
+- Entregas de 09/11 (detalhes em `docs/TAREFAS.md` e `docs/DECISOES.md`): aba Serviços com 15 experiências (o chef marca as dele em Painel > Atendimento) e fotos ilustrativas do Unsplash; perfil só aparece com foto, prato e cidade; situação do pedido (Novo, Respondido, Fechado); próximos passos depois do WhatsApp; cidades com etiquetas; símbolo novo (cloche dentro da casa); `_headers` com CSP; `assets/real.js` evita baixar os perfis de exemplo na versão real.
+- Decisões em aberto, de Carlos e Fer: e-mail de contato e revisão dos Termos; WhatsApp de suporte para quem esquece a senha; repositório público ou privado; GitHub Pages por Actions. Ideia de comissão cancelada por enquanto (DECISOES, 09/11).
 
 ## O que é
 - Marketplace para achar personal chefs (foco em Santa Catarina), montar o cardápio e pedir orçamento pelo WhatsApp.
