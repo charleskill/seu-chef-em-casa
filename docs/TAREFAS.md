@@ -370,3 +370,8 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Todos começam ocultos; o botão alterna ícone, descrição acessível e aria-pressed, sem enviar o formulário. Área de toque de 44 px. Nenhuma alteração de senha ou autenticação no servidor.
 - Arquivos: assets/app.js, assets/improvements.css e index.html recarimbado.
 - Verificado: npm run check, npm test (52/52), npm run build; no navegador local, alternância independente dos dois campos e estado aria-pressed. Campos vazios, sem envio nem alteração de senha real.
+
+
+## Entrega — 15/11/2026 (medição de visitas e contexto)
+- _headers: a CSP passa a permitir o script e o envio do Web Analytics da Cloudflare, antes bloqueados (erro no console em toda página). CONTEXTO.md atualizado com o estado depois do Codex.
+- Verificado: npm run check, npm test (61 de 61), npm run build; cabeçalho conferido no site publicado.

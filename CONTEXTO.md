@@ -1,7 +1,13 @@
 # Contexto do projeto — Seu Chef em Casa
 
 Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `docs/` (PROJETO, TAREFAS, DECISOES, ATIVAR-CLOUDFLARE).
-Atualizado em 15/11/2026, na passagem para o Codex (seção abaixo).
+Atualizado em 15/11/2026 (noite). Leia primeiro a seção logo abaixo.
+
+## Estado em 15/11/2026 (noite), depois do Codex
+- O Codex entregou e publicou (PRs 4 a 15): administração em `/admin` (visão geral, chefs e contas, conteúdo do site; guia em `docs/ADMINISTRACAO.md`), Configurações com Excluir minha conta, 55 serviços com fotos locais em `assets/servicos`, prévia dos serviços na página inicial. Testes: 61.
+- **Atenção:** há três perfis fictícios na vitrine pública, sem rótulo, autorizados por Carlos para a apresentação aos sócios (`docs/PERFIS-APRESENTACAO.md`). Depois da apresentação, esconder em Chefs e contas > Gerenciar conta > Esconder, ou rotular como exemplo. Decisão pendente de Carlos e Fer.
+- CSP: liberado o script de medição de visitas da Cloudflare (`_headers`), que estava bloqueado.
+- As pendências 1, 2 e 5 da lista abaixo estão concluídas; a seção "Passagem para o Codex" é histórico.
 
 ## Em revisão pelo Codex — 15/11/2026
 - Atualização administrativa: branch `codex/dashboard-administrativo`, baseada na main 4140142 (inclui PRs 4, 5, 6 e 8 já publicados a pedido de Carlos). Navegação própria, dashboard por datas e relatório por impressão em PDF. Detalhes e limites em docs/ADMINISTRACAO.md; validação em docs/TAREFAS.md.
