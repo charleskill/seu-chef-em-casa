@@ -1,4 +1,9 @@
 # Tarefas
+## Entrega — 15/11/2026: prévia de Serviços na página inicial
+- Antes de Cozinha com identidade, nova seção Serviços para cada ocasião com quatro experiências: jantar a dois, churrasco, noite japonesa e brunch. Fotos locais existentes em destaque e descrições do catálogo, sem duplicar dados de serviços.
+- Ver todos os serviços abre o catálogo completo; cartões reutilizam a seleção de experiência e levam à busca correspondente. Grade de quatro colunas no desktop e duas nas telas menores, com respeito a movimento reduzido.
+- Verificação: npm run check, npm test (59), npm run build e revisão visual desktop/celular. Quatro fotos carregadas, sem transbordamento no celular; link abre 55 serviços e cartão japonês abre a busca com a experiência selecionada.
+
 ## Entrega — 15/11/2026: 55 serviços com fotografias
 - Mais vinte experiências: paella, peruana/ceviches, tailandesa, coreana, nhoque, crepes, queijos, sopas, pães, saladas, peixes, carnes nobres, costela, moqueca, café colonial, piquenique, finger food, grega, lámen e poke. Mesma integração com atendimento do chef, busca e tipo de pedido; começam desligadas nos perfis.
 - Todos os 55 cartões têm foto: substituídos os ícones das quarenta experiências adicionadas nas duas entregas. Imagens selecionadas do Unsplash e Pexels, conferidas em folhas de contato; substituídas opções com recorte ruim. Fontes e licenças em FOTOS-SERVICOS.json.
