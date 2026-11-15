@@ -326,3 +326,13 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Cartão de acesso com conteúdo centralizado, ícone discreto de cadeado, espaçamento entre título e apresentação, texto de apoio mais curto e botão verde de largura total. Ajuste responsivo para telas pequenas, preservando o acesso sem menu ou cabeçalho.
 - Arquivos: assets/management.js, assets/improvements.css e index.html recarimbado. Sem alteração de autenticação.
 - Validação: npm run check, npm test (52/52) e npm run build.
+
+
+## Em revisão — 15/11/2026 (harmonia visual do site)
+Origem: main ffae684. Branch: codex/estetica-profissional.
+- assets/editorial.css: tipografia, cores, botões, cartões, espaçamentos, navegação, home, busca, Serviços, perfil, cardápio, orçamento, formulários e painéis. Fotos dos serviços ampliadas na origem para os cartões maiores.
+- functions/c/[id].js: fundo e textos alinhados à paleta, botões e galeria com os mesmos cantos, contraste das categorias do cardápio. Nenhuma lógica alterada.
+- Build inclui a nova folha também na cópia HTML de revisão.
+- Conferido no navegador local: home, serviços com fotos, busca, perfil de exemplo e orçamento; perfil/orçamento com 390 px sem rolagem lateral. Dados locais de demonstração, sem mudanças de conteúdo real.
+- Limites: dispositivo físico, painel autenticado real e vitrine servida pela Cloudflare ainda não conferidos nesta entrega.
+- Validação: npm run check, npm test (52/52), npm run build e checagem sintática da vitrine aprovados.

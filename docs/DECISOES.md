@@ -152,3 +152,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 15/11/2026 — Tela de acesso administrativo
 - Carlos pediu que o acesso ao administrador tenha somente a área de acesso, sem o cabeçalho e a navegação pública. Aplicado à tela restrita e ao formulário de login administrativo; a administração autenticada preserva sua navegação.
+
+
+## 15/11/2026 — Direção visual gastronômica
+- Carlos aprovou o cartão de acesso administrativo como referência de qualidade para o site: aparência sóbria, sofisticada e profissional, ligada à gastronomia.
+- Aplicação: verde profundo, creme, títulos em serifa, detalhes discretos em terracota, mais espaço entre elementos e fotografias em destaque. A camada assets/editorial.css concentra o refinamento do app; a vitrine compartilhável mantém sua estrutura e recebe ajustes coerentes.
+- Preservados nomes, conteúdos cadastrados, regras, autenticação, banco e fluxos do orçamento.
