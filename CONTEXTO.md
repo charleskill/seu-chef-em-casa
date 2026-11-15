@@ -7,6 +7,12 @@ Atualizado em 15/11/2026 (noite). Leia primeiro a seção logo abaixo.
 - O Codex entregou e publicou (PRs 4 a 15): administração em `/admin` (visão geral, chefs e contas, conteúdo do site; guia em `docs/ADMINISTRACAO.md`), Configurações com Excluir minha conta, 55 serviços com fotos locais em `assets/servicos`, prévia dos serviços na página inicial. Testes: 61.
 - **Atenção:** há três perfis fictícios na vitrine pública, sem rótulo, autorizados por Carlos para a apresentação aos sócios (`docs/PERFIS-APRESENTACAO.md`). Depois da apresentação, esconder em Chefs e contas > Gerenciar conta > Esconder, ou rotular como exemplo. Decisão pendente de Carlos e Fer.
 - CSP: liberado o script de medição de visitas da Cloudflare (`_headers`), que estava bloqueado.
+- **Continuação no Antigravity (IDE local), a partir de 15/11 à noite.** Pasta: `repo`, branch `main`, em dia com o GitHub. Ver `docs/GUIA-OUTRO-ASSISTENTE.md`, seção 8. Próximos passos, em ordem:
+  1. Esconder ou rotular os três perfis fictícios depois da apresentação; tirar o link "Administração" do rodapé público.
+  2. E-mails (recuperar senha e aviso de pedido novo): o domínio já está ativo; os registros SPF `-all` e MX nulo precisam mudar.
+  3. Contato do projeto (e-mail e WhatsApp) em `/admin` > Conteúdo do site; credencial do login com Google; revisão dos Termos.
+  4. Agrupar ou dar busca aos 55 serviços; revisar as telas no celular (conferir se a capa da página inicial está escura demais).
+  5. Testar com Carlos ou Fer: chef real em celular físico com WhatsApp de verdade, e cada função do `/admin`.
 - As pendências 1, 2 e 5 da lista abaixo estão concluídas; a seção "Passagem para o Codex" é histórico.
 
 ## Em revisão pelo Codex — 15/11/2026
