@@ -1,4 +1,11 @@
 # Tarefas
+## Entrega — 15/11/2026: dashboard e navegação administrativa
+- Branch codex/dashboard-administrativo, baseada na main 4140142. Menu contextual, cabeçalho próprio, seções, ações de conta agrupadas e estilos responsivos em assets/admin.css.
+- Dashboard com períodos rápidos e personalizado, indicadores e comparação anterior, evolução diária, situações, modalidades, ranking, vitrine atual, tabela diária e estados vazio/erro. API somente de leitura, protegida por sessão e autorização da equipe.
+- Salvar PDF usa impressão do navegador com stylesheet A4 horizontal e metodologia. O navegador integrado não mostrou uma prévia; a gravação do PDF no Chrome não foi concluída durante uso simultâneo pelo usuário. Não foi validado um arquivo PDF final.
+- npm run check, npm test (57 testes) e npm run build passaram. Testes cobrem autorização, agregações, meia-noite de Brasília, períodos inválidos, comparação e zeros; sem dados pessoais de clientes na resposta.
+- Revisão no navegador com SQLite e dados fictícios locais: desktop e 390px, filtros e período vazio, navegação, chefs, menu de conta e editor de conteúdo. Sem erros de console. Nenhum dado fictício enviado à produção.
+
 ## Concluído
 - [x] Carlos criou repositório privado.
 - [x] Preservar protótipo original como index.html.

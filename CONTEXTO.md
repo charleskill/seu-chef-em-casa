@@ -4,6 +4,8 @@ Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `doc
 Atualizado em 15/11/2026, na passagem para o Codex (seção abaixo).
 
 ## Em revisão pelo Codex — 15/11/2026
+- Atualização administrativa: branch `codex/dashboard-administrativo`, baseada na main 4140142 (inclui PRs 4, 5, 6 e 8 já publicados a pedido de Carlos). Navegação própria, dashboard por datas e relatório por impressão em PDF. Detalhes e limites em docs/ADMINISTRACAO.md; validação em docs/TAREFAS.md.
+- O ajuste visual geral do site segue separado na PR 7, `codex/estetica-profissional`. Preservar também `icones-redes-sociais`.
 - Branch `codex/organizar-painel`, origem `main` 4adda6d. Sem merge e sem alteração de produção.
 - Pedido de Carlos: administração para alterações de conteúdo quando a IA não estiver disponível; organizar configurações, exclusão de conta e entrada por `/admin`.
 - Implementação e limites: `docs/ADMINISTRACAO.md`. Verificações efetivas: entrega correspondente em `docs/TAREFAS.md`.
