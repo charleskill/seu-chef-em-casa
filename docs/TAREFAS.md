@@ -1,4 +1,9 @@
 # Tarefas
+## Entrega — 15/11/2026: perfis para apresentação aos sócios
+- Três personagens completos, cada um com 25 pratos e nove fotos (pratos, eventos e preparo), além de retrato gerado por IA. Conteúdo e inclusão manual/idempotente em scripts/perfis-apresentacao.cjs; arquivos em assets/apresentacao e fontes/prompts em docs.
+- Caminho local de fotos reconhecido no app e na página compartilhável /c/. Edição administrativa preserva apenas os arquivos estáticos previamente pertencentes ao perfil, sem aceitar fotos estáticas de outro personagem. Nenhuma mudança de autenticação, autorização ou credencial de conta existente.
+- Validação local: check, sintaxe do gerador e /c/, 61 testes e build. Testes cobrem 3/9/25, número de teste, arquivos presentes, rejeição de caminhos inválidos e preservação/rejeição de fotos na edição. SQLite local e navegador: três perfis na busca, nove fotos e cardápio completo, desktop e celular. Inserção em produção é uma etapa manual após publicar as imagens.
+
 ## Entrega — 15/11/2026: prévia de Serviços na página inicial
 - Antes de Cozinha com identidade, nova seção Serviços para cada ocasião com quatro experiências: jantar a dois, churrasco, noite japonesa e brunch. Fotos locais existentes em destaque e descrições do catálogo, sem duplicar dados de serviços.
 - Ver todos os serviços abre o catálogo completo; cartões reutilizam a seleção de experiência e levam à busca correspondente. Grade de quatro colunas no desktop e duas nas telas menores, com respeito a movimento reduzido.

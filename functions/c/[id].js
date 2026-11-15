@@ -15,7 +15,7 @@ const e = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&
 const dinheiro = n => Number(n).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const ORDEM = ['Entradas', 'Massas', 'Frutos do mar', 'Pratos Principais', 'Sobremesas', 'Bebidas & drinks'];
 // Só fotos do próprio site ou do Unsplash (as mesmas origens que a política de segurança permite).
-const fotoOk = (u, origem) => { u = String(u || ''); return /^\/api\/foto\/[a-f\d]{32}$/.test(u) ? origem + u : /^https:\/\/images\.unsplash\.com\//.test(u) ? u : ''; };
+const fotoOk = (u, origem) => { u = String(u || ''); return /^\/api\/foto\/[a-f\d]{32}$/.test(u) || /^\/assets\/apresentacao\/[a-z0-9-]+\.webp$/.test(u) ? origem + u : /^https:\/\/images\.unsplash\.com\//.test(u) ? u : ''; };
 const paragrafos = t => String(t || '').split(/\n\s*\n|\r?\n/).map(s => s.trim()).filter(Boolean).slice(0, 8).map(s => '<p>' + e(s) + '</p>').join('');
 
 const CABECALHOS = {
