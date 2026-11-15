@@ -296,3 +296,20 @@ Branch `equipe-senha-excluir`, prévia em https://equipe-senha-excluir.seu-chef-
 - [x] `index.html` recarimbado pelo build de verdade (os carimbos anteriores tinham sido calculados à mão).
 - [x] Guia: seção 8, para quem trabalha na pasta local (Antigravity).
 - Feito (2026-11-11): apresentação do brandbook em slides (26 slides): https://claude.ai/artifact/4nKGsM5nKvxq2Bk1oyxhgW (privada). Usa as cores e fontes do brandbook, o símbolo em vetor, um print do app no celular, o post-modelo e a foto de perfil. Não foi aberta para conferência visual depois de publicada.
+
+
+## Entrega em revisão — 15/11/2026 (administração e configurações)
+Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/organizar-painel.
+- [x] /admin redireciona à administração; entrada da equipe identificada; login por senha de administrador leva à área administrativa. Retorno administrativo com Google preparado, mas Google real não foi testado.
+- [x] Conteúdo do site: título, apresentação, capa Unsplash e legenda, convite aos chefs, e-mail de contato, WhatsApp e redes. Prévia e confirmação de salvamento; esquema validado no servidor e verificação de versão para evitar substituir edição já salva por outra pessoa.
+- [x] Gestão: busca de chefs por nome/e-mail/cidade; edição de perfil, pratos, foto do perfil, portfólio e legendas. Mantidos esconder, nova senha e excluir. A edição de conteúdo não altera credenciais ou permissões.
+- [x] Configurações: acesso/e-mail, pausa, exclusão com confirmação EXCLUIR, saída e ajuda. Conta local também pode ser excluída; clientes sem conta têm limpeza dos dados locais com explicação dos limites.
+- [x] Removida a aba Publicar, duplicada com Fotos; Pedidos passa a ser a abertura do painel. Filtro da vitrine não inclui o próprio chef incompleto, pausado ou escondido.
+- [x] Login no domínio real não oferece conta local quando a API está indisponível. Salvamento de configurações da conta espera a confirmação do servidor antes de informar sucesso.
+- [x] Guia de uso em docs/ADMINISTRACAO.md e aba Como usar no painel.
+- Banco: nova tabela site_config, criada automaticamente; migração 0004 registra o esquema. Não aplicado em produção.
+- Arquivos principais: assets/app.js, cloud.js, site-settings.js, management.js, improvements.css, termos.js; functions/admin.js e functions/api/[[rota]].js; index.html, build e checagem; teste de integração da API com SQLite real.
+- Verificado no navegador, com contas fictícias e API local: /admin e entrada por senha, salvar texto e conferir na home, editar nome/prato/preço, enviar e salvar foto de perfil, atualização da lista; chef comum sem acesso administrativo; Configurações e modal de exclusão (cancelado); navegação de busca e Serviços; largura de 390 px sem rolagem horizontal no editor.
+- Verificado automaticamente: npm run check, npm test (52/52) e npm run build. A suíte integra SQL real em Node 26; em Node 18/20, somente os novos testes SQLite são explicitamente pulados (requerem Node 22.13+).
+- Não verificado: banco D1 da Cloudflare, Google real, dispositivo físico, envio de WhatsApp, exclusão pelo navegador e animações. A exclusão foi exercitada pela API exclusivamente em banco de teste. Nenhuma conta ou conteúdo real foi alterado.
+- Ainda depende de revisão e merge do PR por Carlos. A prévia da branch não tem banco, portanto não testa administração real.

@@ -5,6 +5,7 @@
 // ADMIN_EMAILS (e-mails da equipe, separados por vírgula: veem o painel /#/admin),
 // EMAIL_REMETENTE + CF_ACCOUNT_ID + CF_EMAIL_TOKEN (aviso de pedido por e-mail ao chef, via Cloudflare Email Service; sem elas, não envia).
 import Core from '../../assets/app-core.js';
+import Site from '../../assets/site-settings.js';
 
 const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
 const SESSAO_DIAS = 30, PBKDF2_ITER = 100000; // 100 mil é o máximo aceito pelos Workers
@@ -185,6 +186,7 @@ async function garantirEsquema(env) {
     try { await env.DB.prepare('ALTER TABLE chefs ADD COLUMN oculto INTEGER NOT NULL DEFAULT 0').run(); }
     catch (e) { if (!/duplicate column/i.test(String(e && e.message))) throw e; }
   }
+  await env.DB.prepare('CREATE TABLE IF NOT EXISTS site_config (id INTEGER PRIMARY KEY CHECK (id = 1), dados TEXT NOT NULL, atualizado_em TEXT NOT NULL, atualizado_por TEXT NOT NULL)').run();
   esquemaOk = true;
 }
 
@@ -193,6 +195,27 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
   await garantirEsquema(env);
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
+    if (rota === '/site' && metodo === 'GET') {
+      const row = await env.DB.prepare('SELECT dados FROM site_config WHERE id = 1').first();
+      return json({ config: Site.clean(row ? JSON.parse(row.dados) : {}) });
+    }
+    if (rota === '/admin/site') {
+      const c = await chefDaSessao(env, req);
+      if (!c) return erro('Entre com a conta da equipe.', 401);
+      if (!ehAdmin(env, c)) return erro('Acesso só para a equipe.', 403);
+      const row = await env.DB.prepare('SELECT dados, atualizado_em FROM site_config WHERE id = 1').first();
+      if (metodo === 'GET') return json({ config: Site.clean(row ? JSON.parse(row.dados) : {}), versao: row?.atualizado_em || '' });
+      if (metodo === 'PUT') {
+        const b = await corpo(req), config = Site.clean(b.config), expected = String(b.versao || '');
+        if ((row?.atualizado_em || '') !== expected) return erro('Outra pessoa atualizou o site. Recarregue antes de editar.', 409);
+        const versao = agora();
+        const result = row
+          ? await env.DB.prepare('UPDATE site_config SET dados = ?, atualizado_em = ?, atualizado_por = ? WHERE id = 1 AND atualizado_em = ?').bind(JSON.stringify(config), versao, c.id, expected).run()
+          : await env.DB.prepare('INSERT OR IGNORE INTO site_config (id, dados, atualizado_em, atualizado_por) VALUES (1, ?, ?, ?)').bind(JSON.stringify(config), versao, c.id).run();
+        if (!result.meta.changes) return erro('Outra pessoa atualizou o site. Recarregue antes de editar.', 409);
+        return json({ config, versao });
+      }
+    }
     if (rota === '/saude') return json({ ok: true, google: googleOn(env), convite: !!env.CONVITE });
 
     if (rota === '/google/iniciar' && metodo === 'POST') {
@@ -389,6 +412,18 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
           criado_em: r.criado_em, atualizado_em: r.atualizado_em, pedidos: r.pedidos, pedidos7: r.pedidos7, ultimo: r.ultimo }; }) });
       }
       const id = rota.slice(13);
+      if (/^chef-[a-f\d]{16}$/.test(id) && ['GET', 'PUT'].includes(metodo)) {
+        const alvo = await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first();
+        if (!alvo) return erro('Chef não encontrado.', 404);
+        if (metodo === 'GET') return json({ chef: doDono(alvo, env), versao: alvo.atualizado_em });
+        const b = await corpo(req);
+        if (b.versao !== alvo.atualizado_em) return erro('O perfil foi atualizado. Reabra antes de editar.', 409);
+        // A edição de conteúdo preserva e-mail, credenciais, permissões e pausa.
+        const perfil = await limparPerfil(env, id, b.perfil || {}, JSON.parse(alvo.perfil));
+        const versao = agora();
+        await env.DB.prepare('UPDATE chefs SET perfil = ?, atualizado_em = ? WHERE id = ?').bind(JSON.stringify(perfil), versao, id).run();
+        return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first(), env), versao });
+      }
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'POST') {
         const b = await corpo(req);
         // Gera um link para o chef criar uma senha nova. A equipe nunca vê nem escolhe a senha.
@@ -407,7 +442,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       }
       // Exclui a conta de um chef: perfil, fotos, pedidos e sessões. Não tem volta.
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'DELETE') {
-        if (id === c.id) return erro('Para excluir a sua própria conta, use Painel > Perfil.');
+        if (id === c.id) return erro('Para excluir a sua própria conta, use Painel > Configurações.');
         if (!await env.DB.prepare('SELECT 1 FROM chefs WHERE id = ?').bind(id).first()) return erro('Chef não encontrado.', 404);
         await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
         return json({ ok: true });
