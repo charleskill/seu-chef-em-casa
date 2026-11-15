@@ -1,4 +1,10 @@
 # Tarefas
+## Entrega — 15/11/2026: 55 serviços com fotografias
+- Mais vinte experiências: paella, peruana/ceviches, tailandesa, coreana, nhoque, crepes, queijos, sopas, pães, saladas, peixes, carnes nobres, costela, moqueca, café colonial, piquenique, finger food, grega, lámen e poke. Mesma integração com atendimento do chef, busca e tipo de pedido; começam desligadas nos perfis.
+- Todos os 55 cartões têm foto: substituídos os ícones das quarenta experiências adicionadas nas duas entregas. Imagens selecionadas do Unsplash e Pexels, conferidas em folhas de contato; substituídas opções com recorte ruim. Fontes e licenças em FOTOS-SERVICOS.json.
+- Hospedagem local em assets/servicos: 55 WebPs de 640 × 640, aproximadamente 3,55 MB no conjunto, carregamento sob demanda. Sem dependência de CDN externo para as fotos dos cartões. assets/service-photos.js associa serviço e arquivo; build inclui o mapa na cópia de revisão.
+- Verificação: check, checagem sintática do novo mapa, 59 testes e build. Teste de integridade cobre todos os serviços, chaves únicas e arquivos WebP presentes. No navegador local: 55 cartões, 55 fotos carregadas com largura natural 640, zero quebradas; revisão desktop e celular sem transbordamento horizontal.
+
 ## Entrega — 15/11/2026: mais vinte experiências gastronômicas
 - Catálogo passa de 15 para 35 serviços. Novas opções: brunch, café da manhã, massas, risotos, japonesa, italiana, francesa, mediterrânea, mexicana, árabe, indiana, nordestina, feijoada, vegetariana, vegana, degustação, harmonização, tapas, confeitaria e chá da tarde.
 - Cadastro compartilhado em ChefCore.EXPERIENCIAS: gera serviços, opções de atendimento do chef e tipos de encontro no pedido. Novas capacidades começam desligadas; a busca considera a escolha do profissional, sem atribuir serviços a perfis reais automaticamente.

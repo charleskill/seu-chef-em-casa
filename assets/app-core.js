@@ -124,7 +124,27 @@ const EXPERIENCIAS=[
  ['Jantar harmonizado','Pratos e bebidas combinados com o chef.','x_harmonizado','wine'],
  ['Tapas e petiscos','Pequenas porções e grandes conversas à mesa.','x_tapas','menu'],
  ['Confeitaria em casa','Bolos e sobremesas preparados para a sua ocasião.','x_confeitaria','cake'],
- ['Chá da tarde','Chás, quitutes e uma pausa gostosa para receber.','x_cha','cup']
+ ['Chá da tarde','Chás, quitutes e uma pausa gostosa para receber.','x_cha','cup'],
+ ['Paella em casa','Arroz, frutos do mar e uma receita para compartilhar.','x_paella','bowl'],
+ ['Ceviches e sabores peruanos','Frescor, cítricos e combinações da cozinha peruana.','x_peruana','bowl'],
+ ['Cozinha Tailandesa','Curries e ervas aromáticas em um menu vibrante.','x_tailandesa','bowl'],
+ ['Cozinha Coreana','Sabores fermentados e receitas para uma mesa generosa.','x_coreana','bowl'],
+ ['Noite do Nhoque','Nhoques delicados com os molhos da sua preferência.','x_nhoque','menu'],
+ ['Festival de Crepes','Recheios doces e salgados preparados na hora.','x_crepes','menu'],
+ ['Queijos e tábuas artesanais','Queijos, frutas e acompanhamentos para receber bem.','x_queijos','wine'],
+ ['Sopas e caldos','Receitas aconchegantes para noites mais frescas.','x_sopas','bowl'],
+ ['Pães artesanais','Uma experiência com massas, fermentação e pão fresco.','x_paes','cup'],
+ ['Saladas gourmet','Folhas, grãos e molhos em combinações cheias de sabor.','x_saladas','leaf'],
+ ['Peixes grelhados','Peixes e acompanhamentos com preparo delicado.','x_peixes','cloche'],
+ ['Carnes nobres','Cortes selecionados, ponto e acompanhamentos a combinar.','x_carnes','cloche'],
+ ['Costela de preparo lento','Carne macia e sabores que pedem tempo e cuidado.','x_costela','cloche'],
+ ['Moqueca à mesa','Peixe, temperos e o aroma de uma boa moqueca.','x_moqueca','bowl'],
+ ['Café colonial','Pães, bolos e quitutes para uma mesa farta.','x_colonial','cup'],
+ ['Piquenique especial','Um cardápio pensado para aproveitar ao ar livre.','x_piquenique','cup'],
+ ['Finger food para receber','Pequenas criações para encontros e recepções.','x_fingerfood','menu'],
+ ['Cozinha Grega','Frescor, azeite e receitas inspiradas na Grécia.','x_grega','leaf'],
+ ['Noite do Lámen','Caldo aromático, macarrão e acompanhamentos à sua escolha.','x_lamen','bowl'],
+ ['Pokes e bowls','Tigelas coloridas, ingredientes frescos e combinações leves.','x_poke','bowl']
 ];
 EXPERIENCIAS.forEach(([nome,,key])=>OPCOES.push([key,'Ofereço '+nome,'Você aparece nesta experiência, na aba Serviços.',false]));
 const RESTR={'Sem glúten':'r_gluten','Sem lactose':'r_lactose','Vegetariano':'r_vegetariano','Vegano':'r_vegano','Alergia a frutos do mar':'r_mar'};
