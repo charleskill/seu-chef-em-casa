@@ -1,4 +1,7 @@
 # Decisões
+## 15/11/2026 — Ampliação de Serviços
+- Carlos pediu mais vinte tipos. As novas experiências integram o catálogo público, os tipos de pedido e as opções de atendimento do chef. Cada profissional opta pelas experiências que oferece; os novos campos começam desligados.
+
 ## 15/11/2026 — Dashboard e organização administrativa
 - Carlos pediu administração com estética profissional, navegação familiar, gráficos por período e PDF para apresentações.
 - Navegação própria da equipe e indicadores do D1. O servidor confere sessão e ADMIN_EMAILS; sem nova permissão ou migração.

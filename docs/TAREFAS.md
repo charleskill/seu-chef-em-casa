@@ -1,4 +1,10 @@
 # Tarefas
+## Entrega — 15/11/2026: mais vinte experiências gastronômicas
+- Catálogo passa de 15 para 35 serviços. Novas opções: brunch, café da manhã, massas, risotos, japonesa, italiana, francesa, mediterrânea, mexicana, árabe, indiana, nordestina, feijoada, vegetariana, vegana, degustação, harmonização, tapas, confeitaria e chá da tarde.
+- Cadastro compartilhado em ChefCore.EXPERIENCIAS: gera serviços, opções de atendimento do chef e tipos de encontro no pedido. Novas capacidades começam desligadas; a busca considera a escolha do profissional, sem atribuir serviços a perfis reais automaticamente.
+- Novos cartões usam ícones SVG gastronômicos em marfim e verde. Preservadas as fotos existentes, sem dependências ou novas imagens externas.
+- Validação: npm run check, npm test (58), npm run build e revisão local do catálogo e clique Brunch → busca filtrada. Revisão responsiva em 390px. Sem alteração de dados em produção.
+
 ## Ajuste — 15/11/2026: harmonia das etapas
 - A pedido de Carlos, removidos números soltos. Ícones em medalhões circulares com acabamento marfim e borda discreta, cor única e espaçamento alinhado aos títulos. Preservados os textos.
 - Verificação: check, 57 testes e build; revisão visual desktop e celular.
