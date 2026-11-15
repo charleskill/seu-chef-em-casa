@@ -1,4 +1,8 @@
 # Tarefas
+## Entrega — 15/11/2026: ícones nas etapas de Como funciona
+- Ícones vetoriais de busca, cloche e conversa, reutilizando o conjunto existente. Bases suaves em areia, verde e terracota; números e textos preservados. Ícones decorativos ocultos dos leitores de tela.
+- Mudança focada em assets/app.js e assets/improvements.css; sem imagens externas ou dependências. Verificação: check, testes e build, além de revisão visual responsiva.
+
 ## Entrega — 15/11/2026: dashboard e navegação administrativa
 - Branch codex/dashboard-administrativo, baseada na main 4140142. Menu contextual, cabeçalho próprio, seções, ações de conta agrupadas e estilos responsivos em assets/admin.css.
 - Dashboard com períodos rápidos e personalizado, indicadores e comparação anterior, evolução diária, situações, modalidades, ranking, vitrine atual, tabela diária e estados vazio/erro. API somente de leitura, protegida por sessão e autorização da equipe.
