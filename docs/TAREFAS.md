@@ -320,3 +320,9 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Ao entrar na administração ou navegar para outra página, o layout normal é restaurado. Nenhuma regra de autenticação foi alterada.
 - Arquivos: assets/app.js, assets/improvements.css e index.html recarimbado pelo build.
 - Verificações: npm run check, npm test (52/52), npm run build.
+
+
+## Entrega — 15/11/2026 (aparência do cartão administrativo)
+- Cartão de acesso com conteúdo centralizado, ícone discreto de cadeado, espaçamento entre título e apresentação, texto de apoio mais curto e botão verde de largura total. Ajuste responsivo para telas pequenas, preservando o acesso sem menu ou cabeçalho.
+- Arquivos: assets/management.js, assets/improvements.css e index.html recarimbado. Sem alteração de autenticação.
+- Validação: npm run check, npm test (52/52) e npm run build.
