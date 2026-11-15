@@ -104,6 +104,29 @@ const OPCOES=[
   ['x_fondue','Faço Noite do Fondue','Você aparece nesta experiência, na aba Serviços.',false],
   ['x_aula','Dou aula de cozinha em casa','Você aparece nesta experiência, na aba Serviços.',false]
 ];
+const EXPERIENCIAS=[
+ ['Brunch em casa','Uma manhã sem pressa, com receitas doces e salgadas.','x_brunch','cup'],
+ ['Café da manhã especial','Comece o dia com uma mesa preparada com carinho.','x_cafe','cup'],
+ ['Noite de Massas','Massas e molhos preparados para o seu encontro.','x_massas','menu'],
+ ['Festival de Risotos','Receitas cremosas e combinações para compartilhar.','x_risotos','bowl'],
+ ['Noite Japonesa','Sushis e sabores japoneses preparados na sua casa.','x_japonesa','bowl'],
+ ['Cozinha Italiana','Clássicos italianos em um menu cheio de afeto.','x_italiana','menu'],
+ ['Cozinha Francesa','Técnica e delicadeza em um jantar especial.','x_francesa','cloche'],
+ ['Cozinha Mediterrânea','Azeite, vegetais e sabores frescos à mesa.','x_mediterranea','leaf'],
+ ['Noite Mexicana','Tacos, guacamole e sabores para uma noite animada.','x_mexicana','bowl'],
+ ['Noite Árabe','Pastas, especiarias e receitas para dividir.','x_arabe','bowl'],
+ ['Cozinha Indiana','Aromas de especiarias em um menu cheio de personalidade.','x_indiana','bowl'],
+ ['Cozinha Nordestina','Receitas e ingredientes que celebram o Nordeste.','x_nordestina','cloche'],
+ ['Feijoada em casa','Um clássico brasileiro para reunir a turma.','x_feijoada','bowl'],
+ ['Menu Vegetariano','Vegetais como protagonistas de uma refeição especial.','x_vegetariano','leaf'],
+ ['Menu Vegano','Uma experiência criativa com ingredientes de origem vegetal.','x_vegano','leaf'],
+ ['Menu Degustação','Uma sequência de pequenas criações do chef.','x_degustacao','cloche'],
+ ['Jantar harmonizado','Pratos e bebidas combinados com o chef.','x_harmonizado','wine'],
+ ['Tapas e petiscos','Pequenas porções e grandes conversas à mesa.','x_tapas','menu'],
+ ['Confeitaria em casa','Bolos e sobremesas preparados para a sua ocasião.','x_confeitaria','cake'],
+ ['Chá da tarde','Chás, quitutes e uma pausa gostosa para receber.','x_cha','cup']
+];
+EXPERIENCIAS.forEach(([nome,,key])=>OPCOES.push([key,'Ofereço '+nome,'Você aparece nesta experiência, na aba Serviços.',false]));
 const RESTR={'Sem glúten':'r_gluten','Sem lactose':'r_lactose','Vegetariano':'r_vegetariano','Vegano':'r_vegano','Alergia a frutos do mar':'r_mar'};
 const opcoes=c=>{const o=c&&c.opcoes&&typeof c.opcoes==='object'?c.opcoes:{};const r={};OPCOES.forEach(([k,,,d])=>{r[k]=typeof o[k]==='boolean'?o[k]:d});return r};
 const cleanOpcoes=o=>{if(!o||typeof o!=='object')return null;const r={};OPCOES.forEach(([k])=>{if(typeof o[k]==='boolean')r[k]=o[k]});return Object.keys(r).length?r:null};
@@ -151,6 +174,6 @@ async function verifyPassword(password,account,cryptoApi){
   if(!/^[a-f\d]{64}$/i.test(account.pass)||!c?.subtle)return false;
   return account.pass===hex(await c.subtle.digest('SHA-256',new TextEncoder().encode(account.id+':'+password)));
 }
-const api={faltaPerfil,norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
+const api={faltaPerfil,norm,email,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);

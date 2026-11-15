@@ -133,6 +133,7 @@ html{scroll-padding-top:90px}
 .servico{flex-direction:row;align-items:center;gap:14px;padding:12px}
 .servico img,.servico-sem{flex:none;width:84px;height:84px;border-radius:12px;object-fit:cover}
 .servico-sem{display:flex;align-items:center;justify-content:center;background:#1c2520;color:#f7f5f0}
+.servico-ilustrado{background:linear-gradient(145deg,#f2eee4,#e7e4d8);color:#354739;border:1px solid #ded8c7}.servico-ilustrado .ic{stroke-width:1.35}
 .servico-txt{display:flex;flex-direction:column;gap:4px;min-width:0}/* Área da equipe */
 .eq-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 16px}.eq-nums div{background:#fff;border:1px solid var(--line,#e4e1d6);border-radius:12px;padding:12px}.eq-nums b{display:block;font-size:24px;color:#1c2520}.eq-nums span{font-size:12px;color:var(--mut,#6b6b60)}
 .eq-chef{display:flex;gap:14px;align-items:flex-start;margin-top:12px}.eq-av{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:none}.eq-info{flex:1;min-width:0}.eq-info h3{margin:2px 0;font-size:18px}.eq-info .form-help{margin:2px 0;word-break:break-word}
