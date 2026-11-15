@@ -6,6 +6,7 @@
 // EMAIL_REMETENTE + CF_ACCOUNT_ID + CF_EMAIL_TOKEN (aviso de pedido por e-mail ao chef, via Cloudflare Email Service; sem elas, não envia).
 import Core from '../../assets/app-core.js';
 import Site from '../../assets/site-settings.js';
+import Dashboard from '../../assets/dashboard-core.js';
 
 const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
 const SESSAO_DIAS = 30, PBKDF2_ITER = 100000; // 100 mil é o máximo aceito pelos Workers
@@ -195,6 +196,42 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
   await garantirEsquema(env);
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
+    if (rota === '/admin/dashboard' && metodo === 'GET') {
+      const c = await chefDaSessao(env, req);
+      if (!c) return erro('Entre com a conta da equipe.', 401);
+      if (!ehAdmin(env, c)) return erro('Acesso só para a equipe.', 403);
+      const q = new URL(req.url).searchParams, periodo = Dashboard.range(q.get('inicio'), q.get('fim'));
+      const [daily, previous, summary, registered, ranking] = await Promise.all([
+        env.DB.prepare("SELECT date(criado_em, '-3 hours') AS dia, COUNT(*) AS total FROM pedidos WHERE criado_em >= ? AND criado_em < ? GROUP BY dia ORDER BY dia").bind(periodo.from, periodo.until).all(),
+        env.DB.prepare('SELECT COUNT(*) AS total FROM pedidos WHERE criado_em >= ? AND criado_em < ?').bind(periodo.previousFrom, periodo.from).first(),
+        env.DB.prepare(`SELECT COUNT(*) AS total, COUNT(DISTINCT chef_id) AS chefs,
+          COALESCE(SUM(CASE WHEN COALESCE(json_extract(dados, '$.status'), 'novo') = 'novo' THEN 1 ELSE 0 END),0) AS novos,
+          COALESCE(SUM(CASE WHEN json_extract(dados, '$.status') = 'respondido' THEN 1 ELSE 0 END),0) AS respondidos,
+          COALESCE(SUM(CASE WHEN json_extract(dados, '$.status') = 'fechado' THEN 1 ELSE 0 END),0) AS fechados,
+          COALESCE(SUM(CASE WHEN json_extract(dados, '$.mode') = 'marmita' THEN 1 ELSE 0 END),0) AS marmitas
+          FROM pedidos WHERE criado_em >= ? AND criado_em < ?`).bind(periodo.from, periodo.until).first(),
+        env.DB.prepare('SELECT id, perfil, publicado, oculto, criado_em FROM chefs').all(),
+        env.DB.prepare(`SELECT c.id, json_extract(c.perfil, '$.name') AS nome, COUNT(*) AS total
+          FROM pedidos p JOIN chefs c ON c.id = p.chef_id WHERE p.criado_em >= ? AND p.criado_em < ?
+          GROUP BY c.id ORDER BY total DESC, nome LIMIT 5`).bind(periodo.from, periodo.until).all()
+      ]);
+      const chefs = { cadastrados: registered.results.length, visiveis: 0, pausados: 0, ocultos: 0, incompletos: 0 };
+      let cadastrosPeriodo = 0, cadastrosAnterior = 0;
+      const newRows = [];
+      for (const r of registered.results) {
+        const falta = C.faltaPerfil(JSON.parse(r.perfil || '{}'));
+        if (!r.publicado) chefs.pausados++;
+        if (r.oculto) chefs.ocultos++;
+        if (falta.length) chefs.incompletos++;
+        if (r.publicado && !r.oculto && !falta.length) chefs.visiveis++;
+        if (r.criado_em >= periodo.from && r.criado_em < periodo.until) {
+          cadastrosPeriodo++; newRows.push({ dia: Dashboard.iso(Date.parse(r.criado_em)-3*3600000), total: 1 });
+        } else if (r.criado_em >= periodo.previousFrom && r.criado_em < periodo.from) cadastrosAnterior++;
+      }
+      const grouped = new Map();for (const r of newRows) grouped.set(r.dia,(grouped.get(r.dia)||0)+1);
+      return json({ periodo, geradoEm: agora(), pedidos: { ...summary, anterior: previous.total, variacao: Dashboard.change(summary.total, previous.total), serie: Dashboard.series(periodo, daily.results) },
+        cadastros: { total: cadastrosPeriodo, anterior: cadastrosAnterior, variacao: Dashboard.change(cadastrosPeriodo, cadastrosAnterior), serie: Dashboard.series(periodo, [...grouped].map(([dia,total])=>({dia,total}))) }, chefs, ranking: ranking.results });
+    }
     if (rota === '/site' && metodo === 'GET') {
       const row = await env.DB.prepare('SELECT dados FROM site_config WHERE id = 1').first();
       return json({ config: Site.clean(row ? JSON.parse(row.dados) : {}) });

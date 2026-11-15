@@ -31,6 +31,7 @@
       Cloud.on = true;
       return { chefs: lista.chefs || [], me: eu.chef || null };
     },
+    dashboard: (inicio,fim) => req('GET', '/admin/dashboard?'+new URLSearchParams({inicio,fim})),
     site: () => req('GET', '/site'),
     adminSite: () => req('GET', '/admin/site'),
     salvarSite: (config, versao) => req('PUT', '/admin/site', {config, versao}),

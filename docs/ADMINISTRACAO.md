@@ -1,5 +1,17 @@
 # Administração sem depender da IA
 
+## Dashboard e relatórios
+
+A entrada do administrador abre **Visão geral**. Use os atalhos de 7 dias, 30 dias ou mês atual, ou preencha **De** e **Até** e toque em **Aplicar período**. Até 366 dias, incluindo as duas datas, no horário de Brasília.
+
+Indicadores: pedidos registrados, novos cadastros, chefs com pedidos, média diária, evolução diária, situação e modalidade dos pedidos, cinco chefs com mais pedidos e situação atual da vitrine. A comparação considera o intervalo anterior com a mesma duração. Sem registros, os valores são zero; sem base anterior, não há percentual inventado. **Consultar os dados diários** mostra os valores do gráfico.
+
+Para uma apresentação, selecione o período e toque em **Salvar PDF**. Na impressão do navegador, escolha **Salvar como PDF**. O relatório usa A4 horizontal, gráficos, período e metodologia; menus, filtros e botões ficam de fora. Desative cabeçalhos e rodapés do navegador se quiser remover URL e numeração automática.
+
+Pedidos não são vendas: não há medição de visitas, faturamento, contratação ou pagamento. O estado dos pedidos é o atual, mesmo em um período passado. Contas e pedidos excluídos deixam de entrar no histórico. A situação da vitrine é sempre atual e as categorias podem se sobrepor.
+
+A navegação separa Visão geral, Chefs e contas, Conteúdo do site e Ajuda. As ações de acesso, visibilidade e exclusão ficam em **Gerenciar conta**, em cada chef; a edição de conteúdo continua disponível diretamente.
+
 Depois que o pull request desta entrega for aprovado e publicado, abra **https://seuchefemcasa.com.br/admin**. O endereço leva à área da equipe. Use uma conta com e-mail autorizado em `ADMIN_EMAILS`; a senha é a mesma da conta. Um chef comum não ganha acesso por conhecer o endereço.
 
 ## Conteúdo do site

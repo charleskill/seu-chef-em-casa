@@ -3,17 +3,20 @@
 'use strict';
 const C=root.ChefCore,CL=root.ChefCloud,Site=root.ChefSite;
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-let tab='chefs',site=null,editor=null,error='',loading=false,dirty=false,refresh=()=>{};
+let tab='dashboard',site=null,editor=null,error='',loading=false,dirty=false,refresh=()=>{};
 const field=(id,label,value='',extra='')=>'<div class="f"><label for="'+id+'">'+esc(label)+'</label><input id="'+id+'" value="'+esc(value)+'" '+extra+'></div>';
 const area=(id,label,value,max)=>'<div class="f"><label for="'+id+'">'+esc(label)+'</label><textarea id="'+id+'" maxlength="'+max+'">'+esc(value)+'</textarea></div>';
 const button=(action,label,extra='')=>'<button type="button" class="b b2" data-manage="'+action+'" '+extra+'>'+label+'</button>';
 function draw(){const open=[...document.querySelectorAll('#manage-chef details,#manage-site details')].map(d=>d.open);refresh();document.querySelectorAll('#manage-chef details,#manage-site details').forEach((d,i)=>{if(open[i]!==undefined)d.open=open[i];});}
-function shell(){return '<header class="management-head"><div><p class="sec">Seu Chef em Casa · Equipe</p><h1>Administração</h1><p>Cuide do site e dos cadastros em um só lugar.</p></div><a class="b b2" href="#/painel">Meu painel</a></header><nav class="management-nav" aria-label="Administração">'+[['chefs','Chefs e contas'],['site','Conteúdo do site'],['help','Como usar']].map(([key,label])=>'<button type="button" data-manage="tab" data-tab="'+key+'" class="b '+(tab===key?'b1':'b2')+'" '+(tab===key?'aria-current="page"':'')+'>'+label+'</button>').join('')+'</nav>'+(error?'<p class="err" role="alert">'+esc(error)+'</p>':'');}
+const navIcons={dashboard:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',chefs:'<circle cx="9" cy="8" r="3"/><path d="M3 21v-2a6 6 0 0112 0v2m2-16a3 3 0 010 6m4 10v-2a6 6 0 00-4-5"/>',site:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 9v12"/>',help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 115 0c0 2-2.5 2-2.5 4m0 3v.01"/>'};
+function shell(c){const titles={dashboard:['Visão geral','Acompanhe os indicadores e a saúde da sua vitrine.'],chefs:['Chefs e contas','Organize cadastros e cuide dos profissionais da plataforma.'],site:['Conteúdo do site','Atualize a apresentação, os contatos e as redes sociais.'],help:['Central de ajuda','Orientações para administrar o site com autonomia.']},t=titles[tab]||titles.dashboard;return '<aside class="management-side"><a class="management-brand" href="#/admin"><span class="management-brand-icon">SC</span><span>Seu Chef em Casa<small>Administração</small></span></a><p class="management-side-label">ESPAÇO DA EQUIPE</p><nav aria-label="Administração">'+[['dashboard','Visão geral'],['chefs','Chefs e contas'],['site','Conteúdo do site'],['help','Ajuda']].map(([key,label])=>'<button type="button" data-manage="tab" data-tab="'+key+'" class="'+(tab===key?'is-active':'')+'" '+(tab===key?'aria-current="page"':'')+'><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">'+navIcons[key]+'</svg><span>'+label+'</span></button>').join('')+'</nav><div class="management-side-bottom"><a href="#/configuracoes">Configurações da minha conta</a><button type="button" data-a="logout">Sair da conta</button><small>Acesso restrito à equipe</small></div></aside><header class="management-topbar"><p>Administração <span>/</span> '+t[0]+'</p><div><a href="#/">Ver site ↗</a><span class="management-account"><i>'+esc((c.name||'E').charAt(0).toUpperCase())+'</i><b>'+esc(c.name||'Equipe')+'</b></span></div></header><div class="management-heading"><p class="sec">Seu Chef em Casa</p><h1>'+t[0]+'</h1><p>'+t[1]+'</p></div>'+(error?'<p class="err management-message" role="alert">'+esc(error)+'</p>':'');}
+
 function render(c,chefs){
  if(!c?.admin||!CL.on)return '<section class="card admin-access-card"><span class="admin-access-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 018 0v3M12 14v3"/></svg></span><p class="sec">Acesso restrito</p><h1>Administração</h1><p class="admin-access-copy">Entre com sua conta da equipe para cuidar do Seu Chef em Casa.</p><a class="b b1 admin-access-button" href="#/entrar/admin">Entrar como administrador <span aria-hidden="true">→</span></a>'+(c?'<p class="form-help">Esta conta não tem permissão de administrador. Saia pelo seu painel para usar outra conta.</p>':'')+'</section>';
- let h=shell();
+ let h=shell(c);
  if(loading)return h+'<p class="empty" role="status">Carregando…</p>';
  if(editor)return h+editHtml();
+ if(tab==='dashboard')return h+root.ChefDashboard.render();
  if(tab==='chefs')return h+chefs();
  if(tab==='help')return h+'<section class="card"><h2>Alterações sem depender de IA</h2><ol class="admin-guide"><li><b>Conteúdo do site:</b> edite a apresentação, imagem de capa, contatos e links das redes. Confira a prévia e toque em Salvar alterações no site.</li><li><b>Chefs e contas:</b> busque por nome, cidade ou e-mail. Abra Editar conteúdo para corrigir perfil, cardápio ou fotos.</li><li><b>Fotos:</b> envie JPG, PNG ou WebP. As imagens são reduzidas automaticamente antes de salvar.</li><li><b>Visibilidade:</b> esconder retira o chef da busca e do link público; Mostrar de novo desfaz isso se o perfil estiver pronto e ativo.</li><li><b>Senha esquecida:</b> gere o link e entregue somente ao dono da conta. Ele vale 48 horas.</li><li><b>Excluir conta:</b> apaga os dados de forma permanente. Para uma retirada temporária, prefira esconder.</li></ol><p class="note">Ao salvar, a mudança de conteúdo já vale para quem abrir o site. Mudanças na programação, domínio e acesso dos administradores continuam fora deste painel.</p><p>Guarde este endereço: <b>'+esc(location.origin)+'/admin</b>.</p></section>';
  if(!site)return h+'<section class="card"><h2>Conteúdo do site</h2><p>Carregue os campos para editar.</p>'+button('loadsite','Carregar conteúdo')+'</section>';
@@ -32,7 +35,7 @@ function captureChef(){if(!editor||!document.querySelector('#manage-chef'))retur
 async function loadSite(){loading=true;dirty=false;error='';draw();try{site=await CL.adminSite();}catch(e){error=e.message;}finally{loading=false;draw();}}
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-manage]');if(!b)return;e.preventDefault();if(loading)return;
  const a=b.dataset.manage;
- if(a==='tab'){if(dirty){if(!confirm('Sair desta edição? Alterações que não foram salvas serão descartadas.'))return;}tab=b.dataset.tab;editor=null;dirty=false;error='';if(tab==='site')return loadSite();draw();return;}
+ if(a==='tab'){if(dirty){if(!confirm('Sair desta edição? Alterações que não foram salvas serão descartadas.'))return;}tab=b.dataset.tab;editor=null;dirty=false;error='';root.scrollTo({top:0,left:0,behavior:'instant'});if(tab==='site')return loadSite();draw();return;}
  if(a==='loadsite'){if(dirty&&site&&document.querySelector('#manage-site')&&!confirm('Recarregar os campos e descartar alterações não salvas?'))return;return loadSite();}
  if(a==='edit'){loading=true;error='';draw();try{editor=await CL.adminPerfil(b.dataset.id);dirty=false;}catch(e){error=e.message;}finally{loading=false;draw();}return;}
  if(a==='cancel'){if(dirty&&!confirm('Voltar à lista? Alterações não salvas serão descartadas.'))return;editor=null;dirty=false;draw();return;}
@@ -42,6 +45,8 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-mana
  if(a==='removephoto')p.gallery.splice(+b.dataset.index,1);
  if(a==='removeavatar')p.avatar='';draw();
 });
+document.addEventListener('click',e=>{document.querySelectorAll('.eq-account-actions[open]').forEach(d=>{if(!d.contains(e.target))d.open=false;});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.eq-account-actions[open]').forEach(d=>d.open=false);});
 document.addEventListener('input',e=>{if(e.target.closest('#manage-site,#manage-chef'))dirty=true;const key=e.target.id?.replace(/^site-/,'');if(!Site.fields[key])return;
  if(key==='heroImage'){try{const u=new URL(e.target.value);if(u.protocol==='https:'&&u.hostname==='images.unsplash.com')document.getElementById('site-image-preview').src=u.href;}catch{}}
  const ids={heroTitle:'site-title-preview',heroText:'site-text-preview',heroCaption:'site-caption-preview'};if(ids[key])document.getElementById(ids[key]).textContent=e.target.value;
@@ -60,5 +65,5 @@ document.addEventListener('submit',async e=>{if(!['manage-site','manage-chef'].i
 });
 document.addEventListener('click',e=>{if(!e.target.closest('a[href]'))return;if(editor)captureChef();if(site&&document.querySelector('#manage-site'))for(const key of Object.keys(Site.fields))site.config[key]=document.getElementById('site-'+key).value;});
 root.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
-root.ChefManagement={render,init:fn=>refresh=fn,reset:()=>{editor=null;site=null;tab='chefs';error='';dirty=false;},busy:()=>loading};
+root.ChefManagement={render,view:()=>tab,init:fn=>{refresh=fn;root.ChefDashboard.init(()=>{if(tab==='dashboard'&&!editor)refresh();});},reset:()=>{editor=null;site=null;tab='dashboard';error='';dirty=false;root.ChefDashboard.reset();},busy:()=>loading};
 })(window);

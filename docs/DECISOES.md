@@ -1,4 +1,10 @@
 # Decisões
+## 15/11/2026 — Dashboard e organização administrativa
+- Carlos pediu administração com estética profissional, navegação familiar, gráficos por período e PDF para apresentações.
+- Navegação própria da equipe e indicadores do D1. O servidor confere sessão e ADMIN_EMAILS; sem nova permissão ou migração.
+- Datas inclusivas no horário de Brasília, até 366 dias; comparação com período anterior de igual duração. Estado atual dos pedidos e da vitrine explicitado.
+- Relatório por impressão do navegador em A4 horizontal, sem menus. Sem inventar visitas, receita, vendas ou confirmação de envio pelo WhatsApp.
+
 ## 15/11/2026 — Administração para alterações sem IA
 - Carlos pediu um painel para editar conteúdo em situações em que a IA ou seus créditos não estejam disponíveis. A IA continua sendo usada para desenvolvimento.
 - Acesso por `/admin`, usando as contas já autorizadas em `ADMIN_EMAILS`, com verificação de permissão no servidor em todas as novas rotas administrativas.
