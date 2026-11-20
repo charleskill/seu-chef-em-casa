@@ -375,3 +375,9 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 ## Entrega — 15/11/2026 (medição de visitas e contexto)
 - _headers: a CSP passa a permitir o script e o envio do Web Analytics da Cloudflare, antes bloqueados (erro no console em toda página). CONTEXTO.md atualizado com o estado depois do Codex.
 - Verificado: npm run check, npm test (61 de 61), npm run build; cabeçalho conferido no site publicado.
+
+
+## Entrega — 20/11/2026 (administração só para o Carlos)
+- Feita pelo Codex em 15/11 e publicada pelo Claude em 20/11, a pedido da Fer. /admin e as rotas /api/admin/* passam a aceitar só carlosmendes.ricci@gmail.com (ChefCore.isAdminEmail). ADMIN_EMAILS na Cloudflare deixa de ampliar o acesso. O link Administração do rodapé só aparece para esse administrador.
+- Trocar o administrador exige mudar ADMIN_EMAIL em ssets/app-core.js e publicar.
+- Verificado: npm run check, npm test (63 de 63, com 2 testes novos da regra), npm run build; no site, código novo servido e rotas administrativas recusando quem não está logado. Não testado: entrar como Carlos no /admin.

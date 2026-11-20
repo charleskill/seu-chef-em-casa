@@ -170,3 +170,7 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 15/11/2026 — Tela de acesso administrativo
 - Carlos pediu que o acesso ao administrador tenha somente a área de acesso, sem o cabeçalho e a navegação pública. Aplicado à tela restrita e ao formulário de login administrativo; a administração autenticada preserva sua navegação.
+
+
+## 20/11 · Administração exclusiva
+- Só a conta de Carlos administra o site; a lista ADMIN_EMAILS não dá mais acesso. Publicado a pedido da Fer, ciente de que ela perde o acesso ao /admin.

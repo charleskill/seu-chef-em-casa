@@ -53,7 +53,7 @@ Atualizado em 15/11/2026 (noite). Leia primeiro a seção logo abaixo.
 - Não afirmar que abrir o WhatsApp confirma envio.
 
 ## Área da equipe ligada (10/11)
-- `ADMIN_EMAILS` criada na Cloudflare (Carlos e Fer). Quem entra com um desses e-mails vê o botão Equipe (`/#/admin`), com esconder perfil, link de nova senha e excluir conta.
+- Desde 20/11, só `carlosmendes.ricci@gmail.com` administra (`ADMIN_EMAIL` em `assets/app-core.js`); `ADMIN_EMAILS` na Cloudflare não amplia mais o acesso.
 
 ## Site aberto de novo (10/11)
 - A senha de acesso foi desligada no código em 10/11 (`LIGADA = false` em `functions/_middleware.js`). A variável `SENHA_SITE` continua na Cloudflare, sem efeito.

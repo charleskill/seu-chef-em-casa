@@ -2,7 +2,7 @@
 // Rotas em /api/*. Cada chef só altera o próprio perfil (a sessão decide quem é).
 // Variáveis: DB (binding D1), CONVITE (opcional: se existir, exige esse código para criar conta de chef; sem ela, cadastro aberto),
 // GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET (login com Google; sem elas o botão não aparece),
-// ADMIN_EMAILS (e-mails da equipe, separados por vírgula: veem o painel /#/admin),
+// Administração restrita ao único e-mail autorizado em ChefCore.isAdminEmail; ADMIN_EMAILS legado não amplia acesso.
 // EMAIL_REMETENTE + CF_ACCOUNT_ID + CF_EMAIL_TOKEN (aviso de pedido por e-mail ao chef, via Cloudflare Email Service; sem elas, não envia).
 import Core from '../../assets/app-core.js';
 import Site from '../../assets/site-settings.js';
@@ -145,7 +145,7 @@ function lerIdToken(t) {
 }
 
 const publico = row => ({ ...JSON.parse(row.perfil), id: row.id, cloud: true });
-const ehAdmin = (env, row) => !!row && String(env.ADMIN_EMAILS || '').split(/[\s,;]+/).map(e => C.email(e)).filter(Boolean).includes(C.email(row.email));
+const ehAdmin = (env, row) => !!row && C.isAdminEmail(row.email);
 const doDono = (row, env = {}) => ({ ...publico(row), email: row.email, pausado: !row.publicado, oculto: !!row.oculto, admin: ehAdmin(env, row) });
 
 // ---------- Aviso de pedido por e-mail (Cloudflare Email Service, API REST) ----------
