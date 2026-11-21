@@ -1,6 +1,6 @@
 (function(root){
 'use strict';
-const defaults={heroTitle:'Boa comida. Boas histórias.',heroText:'Encontre um personal chef para transformar um encontro em casa em uma experiência especial.',heroImage:'/assets/capa/jantar-no-quintal.webp',heroCaption:'O cuidado começa antes do primeiro prato.',ctaTitle:'Seu talento merece uma vitrine.',ctaText:'Organize seu portfólio e apresente sua cozinha.',contactEmail:'',supportWhatsapp:'',instagram:'https://www.instagram.com/seuchefemcasaoficial/',facebook:'',tiktok:''};
+const defaults={heroTitle:'Boa comida. Boas histórias.',heroText:'Encontre um personal chef para transformar um encontro em casa em uma experiência especial.',heroImage:'/assets/capa/jantar-no-quintal-2.webp',heroCaption:'O cuidado começa antes do primeiro prato.',ctaTitle:'Seu talento merece uma vitrine.',ctaText:'Organize seu portfólio e apresente sua cozinha.',contactEmail:'',supportWhatsapp:'',instagram:'https://www.instagram.com/seuchefemcasaoficial/',facebook:'',tiktok:''};
 const fields={heroTitle:['Título da página inicial',100],heroText:['Apresentação da página inicial',400],heroImage:['Endereço da imagem de capa (Unsplash)',500],heroCaption:['Legenda da capa',160],ctaTitle:['Título do convite aos chefs',120],ctaText:['Texto do convite aos chefs',300],contactEmail:['E-mail de contato',160],supportWhatsapp:['WhatsApp de suporte com DDD',30],instagram:['Link do Instagram',300],facebook:['Link do Facebook',300],tiktok:['Link do TikTok',300]};
 function clean(input){
  const out={};
