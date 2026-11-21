@@ -12,6 +12,7 @@ function safeUrl(value,image=false){
   if(image&&/^data:image\/(jpeg|png|webp|gif);base64,[a-z\d+/=\s]+$/i.test(v))return v;
   if(image&&/^\/api\/foto\/[a-f\d]{32}$/.test(v))return v; // foto guardada no banco do piloto
   if(image&&/^\/assets\/apresentacao\/[a-z0-9-]+\.webp$/.test(v))return v;
+  if(image&&/^\/assets\/capa\/[a-z0-9-]+\.webp$/.test(v))return v; // capa padrão da página inicial
   try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:''}catch{return ''}
 }
 function phone(value){

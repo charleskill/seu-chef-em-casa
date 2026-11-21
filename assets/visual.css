@@ -28,6 +28,12 @@ h1 { letter-spacing: -0.035em; }
 /* Cores: as mesmas da marca; só o texto secundário fica mais escuro, para ler melhor */
 :root { --mut: #5f675e; }
 
+/* Capa no celular: a faixa da foto era baixa demais (180 px) e cortava o prato */
+@media (max-width: 650px) {
+  .hero-image { min-height: 240px; }
+  .hero-image img { object-position: 50% 50%; }
+}
+
 /* ---------------------------------------------------------------- cartão do chef (21/11/2026)
    O chef em destaque (foto de perfil, nome, cidades e especialidade) e três pratos pequenos,
    no lugar da foto grande de prato no topo do cartão. */
