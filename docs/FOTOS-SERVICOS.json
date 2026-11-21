@@ -15,16 +15,16 @@
   },
   "Brunch em casa": {
     "file": "assets/servicos/brunch-em-casa.webp",
-    "source": "https://images.unsplash.com/photo-1741606552241-fbd67e574f7f",
-    "page": "https://unsplash.com",
-    "photographer": "phoebe lynch",
+    "source": "https://images.unsplash.com/photo-1793904485821-48988323a2cb",
+    "page": "https://unsplash.com/photos/MuqlFQTVgjg",
+    "photographer": "",
     "license": "https://unsplash.com/license"
   },
   "Café colonial": {
     "file": "assets/servicos/cafe-colonial.webp",
-    "source": "https://images.pexels.com/photos/11803079/pexels-photo-11803079.jpeg",
-    "page": "https://www.pexels.com/photo/11803079/",
-    "photographer": "CLAUDIO ROCHA",
+    "source": "https://images.unsplash.com/photo-1787069789754-636ce94929e5",
+    "page": "https://unsplash.com/photos/wrWGGlnN3kg",
+    "photographer": "",
     "license": "https://www.pexels.com/license/"
   },
   "Café da manhã especial": {
@@ -71,8 +71,8 @@
   },
   "Churrasco em casa": {
     "file": "assets/servicos/churrasco-em-casa.webp",
-    "source": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1",
-    "page": "https://unsplash.com",
+    "source": "https://images.unsplash.com/photo-1614119068601-483274e9dcb7",
+    "page": "https://unsplash.com/photos/9Qs_9n2oSJo",
     "photographer": "",
     "license": "https://unsplash.com/license"
   },
@@ -183,8 +183,8 @@
   },
   "Jantar a dois": {
     "file": "assets/servicos/jantar-a-dois.webp",
-    "source": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0",
-    "page": "https://unsplash.com",
+    "source": "https://images.unsplash.com/photo-1789758385591-71b1a42235ee",
+    "page": "https://unsplash.com/photos/qU3aijmqKIo",
     "photographer": "",
     "license": "https://unsplash.com/license"
   },
@@ -205,15 +205,15 @@
   "Marmitas da semana": {
     "file": "assets/servicos/marmitas-da-semana.webp",
     "source": "https://images.unsplash.com/photo-1543352632-5a4b24e4d2a6",
-    "page": "https://unsplash.com",
+    "page": "https://unsplash.com/photos/lMcRyBx4G50",
     "photographer": "",
     "license": "https://unsplash.com/license"
   },
   "Menu Degustação": {
     "file": "assets/servicos/menu-degustacao.webp",
-    "source": "https://images.pexels.com/photos/28435314/pexels-photo-28435314.jpeg",
-    "page": "https://www.pexels.com/photo/28435314/",
-    "photographer": "Nadin Sh",
+    "source": "https://images.unsplash.com/photo-1775497950071-965cf9e20b2f",
+    "page": "https://unsplash.com/photos/Bq44jpoeFf4",
+    "photographer": "",
     "license": "https://www.pexels.com/license/"
   },
   "Menu Vegano": {

@@ -1,0 +1,83 @@
+/* Visual trazido da prévia de 21/11/2026 (docs/DECISOES.md): fonte Rethink Sans, tom de texto
+   secundário mais escuro e os efeitos de assets/efeitos.js. Carregado depois dos outros estilos. */
+
+/* Fonte própria (licença SIL OFL, assets/fonts/OFL.txt), servida pelo site: a política de segurança
+   (_headers) não permite fontes de outros endereços. */
+@font-face {
+  font-family: 'Rethink Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(fonts/rethink-sans-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Rethink Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(fonts/rethink-sans-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Uma família no site todo: substitui Georgia nos títulos e a fonte do sistema no texto */
+body, body *:not(svg):not(svg *) { font-family: 'Rethink Sans', system-ui, -apple-system, 'Segoe UI', sans-serif !important; }
+h1, h2, h3, .serif { font-weight: 400; letter-spacing: -0.025em; }
+h1 { letter-spacing: -0.035em; }
+
+/* Cores: as mesmas da marca; só o texto secundário fica mais escuro, para ler melhor */
+:root { --mut: #5f675e; }
+
+/* ---------------------------------------------------------------- efeitos (tipo React Bits)
+   Todos param com "reduzir movimento" ligado no aparelho. */
+
+/* título da capa surgindo palavra por palavra, saindo do desfoque */
+/* visível por padrão: se alguma regra desligar a animação, a palavra continua aparecendo */
+.fx-word {
+  display: inline-block;
+  animation: fx-word-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(0.15s + var(--i) * 0.09s);
+}
+@keyframes fx-word-in { from { opacity: 0; filter: blur(10px); transform: translateY(0.25em); } }
+
+/* número contando: largura fixa para o texto ao lado não pular */
+[data-count] { font-variant-numeric: tabular-nums; }
+
+/* brilho que segue o mouse sobre os cartões */
+.fx-spot { position: relative; }
+.fx-spot__light {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 246, 232, 0.32), transparent 60%);
+  mix-blend-mode: soft-light;
+  z-index: 2;
+}
+.fx-spot:hover .fx-spot__light { opacity: 1; }
+
+/* brilho passando pelo botão principal */
+.fx-shine { position: relative; overflow: hidden; isolation: isolate; }
+.fx-shine__light {
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.38) 50%, transparent 100%);
+  transform: translateX(-160%) skewX(-18deg);
+  animation: fx-shine 4.2s ease-in-out 1.6s infinite;
+}
+@keyframes fx-shine {
+  0% { transform: translateX(-160%) skewX(-18deg); }
+  35%, 100% { transform: translateX(360%) skewX(-18deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not(.fx-force) .fx-word { animation: none; }
+  :root:not(.fx-force) .fx-spot__light, :root:not(.fx-force) .fx-shine__light { display: none; }
+  /* ?movimento: vence a regra de styles.css que desliga todas as animações */
+  :root.fx-force .fx-word { animation: fx-word-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both !important; animation-delay: calc(0.15s + var(--i) * 0.09s) !important; }
+  :root.fx-force .fx-shine__light { animation: fx-shine 4.2s ease-in-out 1.6s infinite !important; }
+}

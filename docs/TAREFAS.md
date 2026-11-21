@@ -381,3 +381,9 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Feita pelo Codex em 15/11 e publicada pelo Claude em 20/11, a pedido da Fer. /admin e as rotas /api/admin/* passam a aceitar só carlosmendes.ricci@gmail.com (ChefCore.isAdminEmail). ADMIN_EMAILS na Cloudflare deixa de ampliar o acesso. O link Administração do rodapé só aparece para esse administrador.
 - Trocar o administrador exige mudar ADMIN_EMAIL em ssets/app-core.js e publicar.
 - Verificado: npm run check, npm test (63 de 63, com 2 testes novos da regra), npm run build; no site, código novo servido e rotas administrativas recusando quem não está logado. Não testado: entrar como Carlos no /admin.
+
+## 21/11/2026 — Visual: fotos, fonte e efeitos (ramo visual-fotos-fontes-efeitos)
+- Fonte Rethink Sans no site todo, servida de assets/fonts (licença OFL); texto secundário mais escuro (--mut #5f675e). Arquivo: assets/visual.css.
+- Capa nova (Unsplash photo-1681270543584); 6 serviços com fotos novas (Jantar a dois, Churrasco, Menu Degustação, Marmitas, Café colonial, Brunch) e 28 baixados de novo em 1200 px. Os 21 de outras fontes continuam em 640 px. Fontes em docs/FOTOS-SERVICOS.json.
+- Efeitos na página inicial (assets/efeitos.js): título palavra por palavra, contagem em 'Ver os N serviços', brilho no botão da capa, luz que segue o mouse nos cartões. Param com 'reduzir movimento'; ?movimento no endereço liga para revisar.
+- check, 63 testes e build passando. Sem publicar.

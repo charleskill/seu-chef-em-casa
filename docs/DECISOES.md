@@ -174,3 +174,6 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 20/11 · Administração exclusiva
 - Só a conta de Carlos administra o site; a lista ADMIN_EMAILS não dá mais acesso. Publicado a pedido da Fer, ciente de que ela perde o acesso ao /admin.
+
+## 21/11/2026 — Visual trazido da prévia
+- Fer escolheu levar da prévia (pasta previa/, fora do site) só fotos, efeitos, cores e fonte, sem mudar a estrutura das telas. A fonte fica no próprio site porque a CSP não permite fontes externas.
