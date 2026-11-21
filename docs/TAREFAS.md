@@ -387,3 +387,4 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Capa nova (Unsplash photo-1681270543584); 6 serviços com fotos novas (Jantar a dois, Churrasco, Menu Degustação, Marmitas, Café colonial, Brunch) e 28 baixados de novo em 1200 px. Os 21 de outras fontes continuam em 640 px. Fontes em docs/FOTOS-SERVICOS.json.
 - Efeitos na página inicial (assets/efeitos.js): título palavra por palavra, contagem em 'Ver os N serviços', brilho no botão da capa, luz que segue o mouse nos cartões. Param com 'reduzir movimento'; ?movimento no endereço liga para revisar.
 - check, 63 testes e build passando. Sem publicar.
+- Cartão do chef (início e busca): foto de perfil maior, nome, cidades e especialidade em destaque e 3 pratos pequenos da galeria, no lugar da foto grande de prato. check, 63 testes e build passando.
