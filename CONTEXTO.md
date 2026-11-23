@@ -1,3 +1,9 @@
+## Bastão
+_Atualizado em 23/11/2026 por Codex._
+- **Estado:** nova direção visual para a página inicial em codex/identidade-mesa, baseada na main. Paleta ameixa, lavanda e verde pera.
+- **Testes:** npm run check, npm test (63) e npm run build passaram.
+- **Próximo passo:** Carlos confere a prévia e aprova o merge. O branch visual-fotos-fontes-efeitos segue separado.
+
 # Contexto do projeto — Seu Chef em Casa
 
 Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `docs/` (PROJETO, TAREFAS, DECISOES, ATIVAR-CLOUDFLARE).

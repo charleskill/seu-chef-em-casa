@@ -174,3 +174,6 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 20/11 · Administração exclusiva
 - Só a conta de Carlos administra o site; a lista ADMIN_EMAILS não dá mais acesso. Publicado a pedido da Fer, ciente de que ela perde o acesso ao /admin.
+
+## 23/11/2026 · Proposta visual para a página inicial
+- Ameixa, lavanda e verde pera diferenciam o Seu Chef em Casa do projeto Seu Restaurante Online. Prévia sujeita à aprovação do Carlos antes de publicar.
