@@ -390,3 +390,10 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 ## Entrega — 23/11/2026 · Identidade da página inicial
 - Nova abertura e busca integrada, estilos da sequência de atendimento e da seleção de serviços. Fotos e ações existentes reaproveitadas.
 - Check, 63 testes e build passaram.
+
+## 23/11/2026 · Tema global e menus especiais (PR 17)
+- Paleta escolhida por Carlos: oliva/marfim/vinho discreto em todas as telas do app e na vitrine compartilhável. Fotos dos serviços em cartões maiores; cabeçalho e abas ajustados para celular.
+- Nova criação de menus por ocasião no painel do chef, vitrine filtrável, detalhe, pedido registrado no painel e link público com metadados. Download PNG quadrado/feed/story, cópia de mensagem e compartilhamento nativo quando suportado. Sem serviços pagos ou créditos de IA para gerar cada arte.
+- Persistência por sessão e versão, filtros públicos para rascunhos/vencidos, preservação de menus/fotos nas edições do perfil. Sem migração de banco. API modificada para implementar este recurso explicitamente solicitado.
+- Testado com SQLite real local e navegação com personagem de demonstração. PNGs dos três formatos foram baixados; mensagem copiada; pedido local apareceu no painel. Busca e navegação por serviço preservadas; nenhum envio por WhatsApp/Instagram. Ver `docs/MENUS-ESPECIAIS.md` para limites.
+- `npm run check`, `npm test` (70 testes) e `npm run build` passaram nesta entrega. Nenhum dado de demonstração foi inserido em produção. Sem merge ou publicação oficial.

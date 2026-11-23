@@ -1,3 +1,6 @@
+## Continuação em revisão · 23/11/2026
+Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
+
 ## Bastão
 _Revisão em 23/11/2026: PR 17 refinado a partir de d48e759; enquadramento mobile, título, campos e estados de interação conferidos. Prévia Cloudflare confirmada. Check, 63 testes e build passaram. Ver docs/REVISAO-IDENTIDADE-MESA.md. Sem merge e sem publicação oficial; aguarda OK de Carlos. Branch visual-fotos-fontes-efeitos preservado._
 _Atualizado em 23/11/2026 por Codex._

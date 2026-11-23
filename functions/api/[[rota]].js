@@ -7,6 +7,8 @@
 import Core from '../../assets/app-core.js';
 import Site from '../../assets/site-settings.js';
 import Dashboard from '../../assets/dashboard-core.js';
+import Menus from '../../assets/menus-core.js';
+import ServicePhotos from '../../assets/service-photos.js';
 
 const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
 const SESSAO_DIAS = 30, PBKDF2_ITER = 100000; // 100 mil é o máximo aceito pelos Workers
@@ -121,7 +123,7 @@ async function limparPerfil(env, chefId, p, atual) {
   const a = C.cleanAgenda(p.agenda); if (a) out.agenda = a;
   // Grava fotos novas e apaga as que o perfil deixou de usar.
   for (const f of novas) await env.DB.prepare('INSERT INTO fotos (id, chef_id, tipo, dados, criado_em) VALUES (?, ?, ?, ?, ?)').bind(f.id, chefId, 'image/jpeg', f.bin, agora()).run();
-  const usadas = new Set([out.avatar, ...out.gallery.map(g => g.url)].filter(Boolean).map(u => u.slice(10)));
+  const usadas = new Set([out.avatar, ...out.gallery.map(g => g.url), ...(atual?.menus||[]).map(m=>m.photo)].filter(Boolean).map(u => u.slice(10)));
   for (const id of minhas) if (!usadas.has(id)) await env.DB.prepare('DELETE FROM fotos WHERE id = ? AND chef_id = ?').bind(id, chefId).run();
   return out;
 }
@@ -144,9 +146,9 @@ function lerIdToken(t) {
   try { return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(parte.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0)))); } catch { return null; }
 }
 
-const publico = row => ({ ...JSON.parse(row.perfil), id: row.id, cloud: true });
+const publico = row => {const p=JSON.parse(row.perfil);delete p.menusVersao;return {...p,menus:Menus.active(p.menus),id:row.id,cloud:true}};
 const ehAdmin = (env, row) => !!row && C.isAdminEmail(row.email);
-const doDono = (row, env = {}) => ({ ...publico(row), email: row.email, pausado: !row.publicado, oculto: !!row.oculto, admin: ehAdmin(env, row) });
+const doDono = (row, env = {}) => ({ ...publico(row), menus:JSON.parse(row.perfil).menus||[],menusVersao:JSON.parse(row.perfil).menusVersao||'', email: row.email, pausado: !row.publicado, oculto: !!row.oculto, admin: ehAdmin(env, row) });
 
 // ---------- Aviso de pedido por e-mail (Cloudflare Email Service, API REST) ----------
 // Nunca atrapalha o pedido: qualquer falha é ignorada. EMAIL_API_TESTE só existe para teste local.
@@ -385,6 +387,17 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first(), env) }, 200, { 'set-cookie': cookieSessao(sessao, SESSAO_DIAS) });
     }
 
+    if (rota === '/eu/menus' && metodo === 'PUT') {
+      const c=await chefDaSessao(env,req);if(!c)return erro('Entre de novo para salvar.',401);
+      const b=await corpo(req),p=JSON.parse(c.perfil);
+      if(b.versao!==(p.menusVersao||''))return erro('Os menus mudaram em outra aba. Recarregue antes de editar.',409);
+      const fotos=new Set([p.avatar,...(p.gallery||[]).map(g=>g.url),...(p.menus||[]).map(m=>m.photo),...Object.values(ServicePhotos).map(u=>'/'+u.replace(/^\//,''))].filter(Boolean));
+      const menus=Menus.clean(b.menus,fotos),versao=aleatorio(12);
+      const result=await env.DB.prepare("UPDATE chefs SET perfil=json_set(perfil,'$.menus',json(?),'$.menusVersao',?),atualizado_em=? WHERE id=? AND COALESCE(json_extract(perfil,'$.menusVersao'),'')=?").bind(JSON.stringify(menus),versao,agora(),c.id,b.versao).run();
+      if(!result.meta.changes)return erro('Os menus mudaram em outra aba. Recarregue antes de editar.',409);
+      return json({menus,versao});
+    }
+
     if (rota === '/eu' && metodo === 'PUT') {
       const c = await chefDaSessao(env, req); if (!c) return erro('Entre de novo para salvar.', 401);
       const b = await corpo(req), p = b.perfil || {};
@@ -393,7 +406,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       if (email !== c.email && await env.DB.prepare('SELECT 1 FROM chefs WHERE email = ? AND id <> ?').bind(email, c.id).first()) return erro('Este e-mail já está cadastrado.', 409);
       const perfil = await limparPerfil(env, c.id, p, JSON.parse(c.perfil));
       const publicado = typeof p.pausado === 'boolean' ? (p.pausado ? 0 : 1) : c.publicado;
-      await env.DB.prepare('UPDATE chefs SET email = ?, perfil = ?, publicado = ?, atualizado_em = ? WHERE id = ?').bind(email, JSON.stringify(perfil), publicado, agora(), c.id).run();
+      await env.DB.prepare("UPDATE chefs SET email = ?, perfil = json_set(?,'$.menus',json(COALESCE(json_extract(perfil,'$.menus'),'[]')),'$.menusVersao',COALESCE(json_extract(perfil,'$.menusVersao'),'')), publicado = ?, atualizado_em = ? WHERE id = ?").bind(email, JSON.stringify(perfil), publicado, agora(), c.id).run();
       return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(c.id).first(), env) });
     }
 
@@ -410,6 +423,13 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       if (!alvo || C.faltaPerfil(JSON.parse(alvo.perfil)).length) return erro('Chef não encontrado.', 404);
       const texto = txt(b.texto, 6000); if (texto.length < 20) return erro('Pedido incompleto.');
       const extra = b.dados && typeof b.dados === 'object' ? { ...b.dados } : {}; delete extra.status;
+      if(extra.mode==='especial'){
+        const perfil=JSON.parse(alvo.perfil),menu=Menus.active(perfil.menus).find(m=>m.id===extra.menuId);
+        if(!menu)return erro('Este menu não está mais disponível.',410);
+        const data=extra.f?.date,pessoas=Number(extra.pessoas);
+        if(!Menus.date(data)||data<Menus.today()||!C.isFree(perfil,data)||!Number.isInteger(pessoas)||pessoas<menu.serves||pessoas>500)return erro('Confira a data e a quantidade de pessoas.');
+        extra.menu=menu; // O registro usa o menu vigente do chef, não uma cópia enviada pelo cliente.
+      }
       const dadosJson = JSON.stringify(extra), dados = dadosJson.length > 20000 ? '{}' : dadosJson;
       const id = aleatorio(12);
       await env.DB.prepare('INSERT INTO pedidos (id, chef_id, texto, dados, criado_em) VALUES (?, ?, ?, ?, ?)').bind(id, chefId, texto, dados, agora()).run();
@@ -460,7 +480,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         // A edição de conteúdo preserva e-mail, credenciais, permissões e pausa.
         const perfil = await limparPerfil(env, id, b.perfil || {}, JSON.parse(alvo.perfil));
         const versao = agora();
-        await env.DB.prepare('UPDATE chefs SET perfil = ?, atualizado_em = ? WHERE id = ?').bind(JSON.stringify(perfil), versao, id).run();
+        await env.DB.prepare("UPDATE chefs SET perfil = json_set(?,'$.menus',json(COALESCE(json_extract(perfil,'$.menus'),'[]')),'$.menusVersao',COALESCE(json_extract(perfil,'$.menusVersao'),'')), atualizado_em = ? WHERE id = ?").bind(JSON.stringify(perfil), versao, id).run();
         return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first(), env), versao });
       }
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'POST') {

@@ -40,6 +40,7 @@
     cadastro: d => req('POST', '/cadastro', d).then(j => j.chef),
     entrar: (email, senha) => req('POST', '/entrar', { email, senha }).then(j => j.chef),
     sair: () => req('POST', '/sair', {}).catch(() => null),
+    salvarMenus: (menus,versao) => req('PUT', '/eu/menus', {menus,versao}),
     salvar: perfil => req('PUT', '/eu', { perfil }).then(j => j.chef),
     // Ids dos chefs que estão recebendo pedidos agora (os pausados não aparecem).
     ativos: () => req('GET', '/chefs').then(j => (j.chefs || []).map(c => c.id)),

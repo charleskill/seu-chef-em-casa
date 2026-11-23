@@ -177,3 +177,9 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 23/11/2026 · Proposta visual para a página inicial
 - Ameixa, lavanda e verde pera diferenciam o Seu Chef em Casa do projeto Seu Restaurante Online. Prévia sujeita à aprovação do Carlos antes de publicar.
+
+## 23/11/2026 · Identidade em todas as telas e menus especiais
+- Carlos escolheu **verde oliva, marfim e vinho discreto**, substituindo a proposta inicial ameixa/lavanda/pera. Identidade aplicada também a busca, serviços, perfil, orçamento, acesso, configurações, painel do chef, administração e vitrine compartilhável.
+- Recurso aprovado na conversa: menus por ocasião, com cardápio, preço/base explícita, quantidade, modo de atendimento, inclusões e prazo; divulgação por PNG quadrado/feed/story e mensagem com link próprio. Não exige geração por IA para cada arte.
+- Datas comemorativas ficam reunidas em Menus especiais, dentro de Serviços e com entrada na página inicial. Não se cria uma aba permanente para cada feriado.
+- Esta autorização permite desenvolver e preparar a prévia. A restrição de Carlos continua: **sem merge e sem publicação oficial até seu OK**. `visual-fotos-fontes-efeitos` permanece separado e intocado.
