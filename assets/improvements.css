@@ -214,7 +214,7 @@ body.admin-access .card:last-child{margin-bottom:0}
   --ol:var(--mesa-ameixa);
   --mesa-titulo:Palatino,"Palatino Linotype",Georgia,serif;
 }
-body:has(.home-page){background:#fcf9fd;color:#281e30}
+body:has(.home-page){--ol:#392645;--cu:#392645;--cu2:#523660;--ink:#281e30;--mut:#5c5063;--line:#d9cddd;background:#fcf9fd;color:#281e30}
 body:has(.home-page) .top,
 body:has(.home-page) .nav{background:#fcf9fd;border-color:#e5dce8}
 body:has(.home-page) .brand b{font-family:Palatino,"Palatino Linotype",Georgia,serif}
@@ -226,12 +226,12 @@ body:has(.home-page) .nav a.on{background:#f2ebf6}
 body:has(.home-page) :focus-visible{outline-color:#765487}
 .home-page h1,.home-page h2,.home-page h3{font-family:var(--mesa-titulo)}
 .home-page .hero{
-  grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+  grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
   min-height:440px;
   border-radius:32px 32px 0 0;
   background:var(--mesa-ameixa);
 }
-.home-page .hero-copy{padding:clamp(30px,4.5vw,62px);min-width:0}
+.home-page .hero-copy{padding:clamp(28px,3vw,48px);min-width:0}
 .home-page .hero .eyebrow{
   color:var(--mesa-pera);
   font-size:14px;
@@ -240,12 +240,14 @@ body:has(.home-page) :focus-visible{outline-color:#765487}
   margin-bottom:14px;
 }
 .home-page .hero h1{
-  font-size:clamp(2.65rem,4.7vw,5rem);
-  line-height:1;
+  font-size:clamp(2.65rem,4.2vw,4.5rem);
+  line-height:1.06;
   letter-spacing:-.045em;
-  max-width:12ch;
-  overflow-wrap:anywhere;
+  max-width:14ch;
+  overflow-wrap:normal;
+  text-wrap:balance;
 }
+.home-page .hero-image img{object-position:50% 32%}
 .home-page .hero p{font-size:16px;color:#f3eaf7;max-width:40ch}
 .home-page .hero .b{background:var(--mesa-pera);color:var(--mesa-tinta);border-radius:999px}
 .home-page .hero .b:hover{background:#edf4cc}
@@ -279,6 +281,11 @@ body:has(.home-page) :focus-visible{outline-color:#765487}
   background:#fff;
 }
 .home-page .home-search .b{width:auto;border-radius:999px}
+.home-page .home-search .b:hover{background:#523660}
+.home-page .home-search input:focus{border-color:#765487;box-shadow:0 0 0 3px #76548718}
+.home-page .home-search input::placeholder{color:#75677c;opacity:1}
+body:has(.home-page) .top .b2:hover{background:#f2ebf6;border-color:#d9cddd}
+body:has(.home-page) ::selection{background:#dce9a8;color:#281e30}
 .home-page .section-heading{margin-top:clamp(38px,6vw,76px)}
 .home-page .section-heading h2{font-size:clamp(2rem,4.1vw,3.3rem);letter-spacing:-.045em}
 .home-page .section-heading .sec{letter-spacing:0;text-transform:none;color:var(--mesa-texto);margin-bottom:7px}
@@ -289,20 +296,43 @@ body:has(.home-page) :focus-visible{outline-color:#765487}
 .home-page .home-service-card{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
 .home-page .home-service-card:hover{transform:none}
 .home-page .home-service-card>img{border-radius:18px 18px 4px 4px;aspect-ratio:4/3}
+.home-page .home-service-card[data-k="x_japonesa"]>img{object-position:50% 58%}
+.home-page .home-service-card[data-k="x_brunch"]>img{object-position:50% 56%}
 .home-page .home-service-copy{padding:14px 1px 0}
 .home-page .home-service-title{font-family:var(--mesa-titulo)}
+.home-page .home-service-title{font-size:clamp(1.25rem,1.85vw,1.65rem);line-height:1.25}
+.home-page .home-service-description{font-size:14px;line-height:1.65}
+.home-page .home-service-card:focus-visible{outline:3px solid #765487;outline-offset:6px;border-radius:18px 18px 4px 4px}
 .home-page .home-service-card:hover .home-service-title{text-decoration:underline;text-underline-offset:4px}
 .home-page .chef-cta{margin-top:clamp(32px,6vw,68px);background:var(--mesa-lavanda)}
 .home-page .chef-cta h2{font-size:clamp(1.8rem,3.5vw,2.75rem)}
 .home-page .chef-cta .b{border-radius:999px}
+.home-page .chef-cta .b:hover{background:#523660}
+@media(min-width:781px) and (max-width:1050px){
+  .home-page .hero{grid-template-columns:1fr 1fr}
+  .home-page .hero-copy{padding:28px}
+  .home-page .hero h1{font-size:clamp(2.25rem,4.7vw,3rem)}
+  .home-page .home-search{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .home-page .home-search .b{grid-column:1/-1;justify-self:end;min-width:150px}
+}
 @media(max-width:780px){
   .home-page .hero{grid-template-columns:1fr;min-height:0;border-radius:24px 24px 0 0}
-  .home-page .hero-image{grid-row:1;min-height:0;aspect-ratio:16/9}
+  .home-page .hero-image{grid-row:1;min-height:0;aspect-ratio:4/3}
   .home-page .hero-copy{padding:28px 24px 30px}
   .home-page .hero h1{max-width:15ch}
   .home-page .home-search{grid-template-columns:repeat(2,minmax(0,1fr))}
   .home-page .home-search .hs:first-child{grid-column:1/-1}
   .home-page .home-search .b{grid-column:1/-1}
+}
+@media(max-width:600px){
+  .home-page .hero h1{font-size:clamp(2.15rem,10.5vw,2.85rem);letter-spacing:-.04em}
+  .home-page .hero p{font-size:15px;line-height:1.7}
+  .home-page .hero-caption{font-size:11px;line-height:1.5;padding:8px 11px;bottom:12px;left:12px;max-width:calc(100% - 24px)}
+  .home-page .home-search{padding:20px 16px;gap:16px 12px}
+  .home-page .home-search input{font-size:16px;min-width:0}
+  .home-page .home-search .b{width:100%;min-height:48px}
+  .home-page .home-service-title{font-size:21px}
+  .home-page .home-service-description{font-size:13px}
 }
 @media(max-width:650px){
   .home-page .how-item h3{display:block;margin-left:0}

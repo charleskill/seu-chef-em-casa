@@ -1,4 +1,5 @@
 ## Bastão
+_Revisão em 23/11/2026: PR 17 refinado a partir de d48e759; enquadramento mobile, título, campos e estados de interação conferidos. Prévia Cloudflare confirmada. Check, 63 testes e build passaram. Ver docs/REVISAO-IDENTIDADE-MESA.md. Sem merge e sem publicação oficial; aguarda OK de Carlos. Branch visual-fotos-fontes-efeitos preservado._
 _Atualizado em 23/11/2026 por Codex._
 - **Estado:** nova direção visual para a página inicial em codex/identidade-mesa, baseada na main. Paleta ameixa, lavanda e verde pera.
 - **Testes:** npm run check, npm test (63) e npm run build passaram.

@@ -1,4 +1,9 @@
 # Tarefas
+## Revisão — 23/11/2026: identidade mesa, PR 17
+- Continuação de d48e759: título com largura equilibrada, foto da abertura sem cortar o rosto no celular, formulário responsivo, foco/hover coerentes e ajustes de leitura e recorte dos serviços. Foto principal com carregamento prioritário.
+- Prévia original da Cloudflare abriu. Revisão desktop/820/390/320px e fluxos de busca (cidade, data, pessoas), quatro experiências e catálogo com 55 cartões. Check, 63 testes, build e diff --check passaram. Detalhes em REVISAO-IDENTIDADE-MESA.md.
+- Mantidos conteúdo e fluxos. Nenhuma alteração em backend/banco ou no branch visual-fotos-fontes-efeitos. Somente prévia no PR; produção aguarda OK explícito de Carlos.
+
 ## Entrega — 15/11/2026: perfis para apresentação aos sócios
 - Três personagens completos, cada um com 25 pratos e nove fotos (pratos, eventos e preparo), além de retrato gerado por IA. Conteúdo e inclusão manual/idempotente em scripts/perfis-apresentacao.cjs; arquivos em assets/apresentacao e fontes/prompts em docs.
 - Caminho local de fotos reconhecido no app e na página compartilhável /c/. Edição administrativa preserva apenas os arquivos estáticos previamente pertencentes ao perfil, sem aceitar fotos estáticas de outro personagem. Nenhuma mudança de autenticação, autorização ou credencial de conta existente.
