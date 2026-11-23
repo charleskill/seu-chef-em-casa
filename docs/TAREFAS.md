@@ -385,3 +385,13 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 ## Entrega — 23/11/2026 · Identidade da página inicial
 - Nova abertura e busca integrada, estilos da sequência de atendimento e da seleção de serviços. Fotos e ações existentes reaproveitadas.
 - Check, 63 testes e build passaram.
+
+## Entrega — 23/11/2026 · Correções da Auditoria da Jornada do Chef e SEO
+- SEO técnico: adicionados robots.txt e sitemap.xml reais (copiados para dist/ no build); adicionadas tags canonical e og:url em index.html.
+- Mobile UX: adicionado padding-bottom de respiro em #view > .wrap para telas menores de 1200px, impedindo que a barra de navegação inferior (.nav) sobreponha botões, textos e o link de recuperação de senha.
+- UX de Cadastro: reordenados os campos do formulário de cadastro (os Termos de Uso agora ficam no final, logo antes do botão de envio); texto de login com Google condicionado ao recurso estar de fato habilitado.
+- Recuperação de senha: ação "Esqueci minha senha" passa a oferecer botão direto para o WhatsApp da equipe (ou e-mail de contato configurado).
+- Busca: botão "Limpar busca" quando nenhum chef é encontrado agora aciona a ação clearsearch, limpando os filtros e ocasiões selecionados de forma confiável.
+- Título dinâmico: rota #/termos, #/marmitas e #/como-funciona passam a ter títulos específicos no navegador.
+- Arquivos: robots.txt, sitemap.xml, scripts/build.cjs, index.html, assets/app.js, assets/improvements.css.
+- Validação: npm run check, npm test (63/63) e npm run build.

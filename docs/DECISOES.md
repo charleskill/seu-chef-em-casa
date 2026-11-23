@@ -177,3 +177,8 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 23/11/2026 · Proposta visual para a página inicial
 - Ameixa, lavanda e verde pera diferenciam o Seu Chef em Casa do projeto Seu Restaurante Online. Prévia sujeita à aprovação do Carlos antes de publicar.
+
+## 23/11/2026 · Ajustes técnicos e UX pós-auditoria do Chef
+- Criação estática de robots.txt e sitemap.xml para desarmar o fallback de SPA no Cloudflare Pages para essas rotas e garantir leitura pelos crawlers.
+- Limpar busca: botão de estado vazio passa a disparar a ação de limpeza de filtros em vez de ser um link passivo para #/buscar.
+- Termos de uso reposicionados no fim do formulário de cadastro, respeitando a convenção de mercado.

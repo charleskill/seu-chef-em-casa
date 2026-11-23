@@ -312,3 +312,6 @@ body:has(.home-page) :focus-visible{outline-color:#765487}
   .home-page .hero h1{font-size:2.35rem}
   .home-page .home-services-grid{grid-template-columns:1fr}
 }
+@media(max-width:1199px){
+  #view>.wrap{padding-bottom:calc(var(--nav) + 36px + env(safe-area-inset-bottom,0px))}
+}

@@ -12,6 +12,8 @@ fs.writeFileSync(path.join(root,'index.html'),marcado);
 fs.writeFileSync(path.join(out,'index.html'),marcado);
 fs.cpSync(path.join(root,'assets'),path.join(out,'assets'),{recursive:true});
 fs.copyFileSync(path.join(root,'_headers'),path.join(out,'_headers'));
+if(fs.existsSync(path.join(root,'robots.txt')))fs.copyFileSync(path.join(root,'robots.txt'),path.join(out,'robots.txt'));
+if(fs.existsSync(path.join(root,'sitemap.xml')))fs.copyFileSync(path.join(root,'sitemap.xml'),path.join(out,'sitemap.xml'));
 // Portable review copy, with the same sources, for opening without a server.
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 html=html.replace(/\?v=[a-f0-9]+"/g,'"');
