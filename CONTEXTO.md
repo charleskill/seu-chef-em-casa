@@ -2,10 +2,11 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
-_Atualizado em 24/11/2026 por Claude (continuação do Antigravity)._
-- **Estado:** main publicada com perfil estilo Instagram, bio com "ver mais", corporativo/NF e menus especiais. Branch `limpeza-como-funciona` (pasta `repo-limpeza`): "Como funciona" em cartões numerados 1-2-3 com textos curtos e mais espaço antes de Serviços. Check, 70 testes e build passaram.
-- **Próximo passo:** branch `equipe-de-apoio`: opção "Tenho equipe de apoio" no cadastro (Painel > Atendimento), filtro "Com equipe" na busca, selo "Equipe" no perfil e no cartão, e "Preciso de equipe de apoio" no pedido (vai no resumo do WhatsApp). 71 testes passaram. Aguarda OK do Carlos para publicar.
-- **Não mexer:** segredos, `functions/api`, `migrations`; nada de publicar sem OK.
+_Atualizado em 24/11/2026 por Claude (preparação para a aula do Senac, 05/12)._
+- **No ar:** Google OAuth publicado (Em produção, sem logo para não exigir verificação). Google cria conta em um toque; aviso Complete seu cadastro + sino; e-mails temporários bloqueados (lista em app-core.js). Conta de cliente: escolha Sou chef / Quero contratar em Cadastro/Entrar, tipo salvo em perfil.tipo, cliente fora da vitrine e de /c/; pedido de orçamento só com conta. 74 testes.
+- **Próximo passo:** postagens do chef (pratos, eventos) com curtir, comentar e seguir chefs; exige tabelas novas no D1 (pedir SIM do Carlos antes de aplicar). Depois: teste no celular, QR e material da aula, posts do Instagram, ensaio.
+- **Pendente:** termos ainda são rascunho (revisão do Diogo) e sem e-mail de contato.
+- **Não mexer:** segredos; nada de publicar sem OK.
 
 # Contexto do projeto — Seu Chef em Casa
 
