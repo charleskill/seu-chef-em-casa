@@ -132,7 +132,7 @@ export async function onRequest({ request, env, params }) {
   if (id === 'exemplo') p = EXEMPLO;
   else if (/^chef-[a-f\d]{16}$/.test(id) && env.DB) {
     try {
-      const row = await env.DB.prepare('SELECT perfil FROM chefs WHERE id = ? AND publicado = 1 AND COALESCE(oculto, 0) = 0').bind(id).first();
+      const row = await env.DB.prepare("SELECT perfil FROM chefs WHERE id = ? AND publicado = 1 AND COALESCE(oculto, 0) = 0 AND COALESCE(json_extract(perfil, '$.tipo'), 'chef') <> 'cliente'").bind(id).first();
       if (row) { const x = JSON.parse(row.perfil || '{}'); if (x.name && !C.faltaPerfil(x).length) p = x; }
     } catch (err) { p = null; }
   }

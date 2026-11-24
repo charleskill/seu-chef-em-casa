@@ -98,12 +98,12 @@ async function limparPerfil(env, chefId, p, atual) {
     return '/api/foto/' + id;
   }
   const whatsapp = txt(p.whatsapp, 30);
-  if (!C.phone(whatsapp) && !(p.semWhatsapp && !whatsapp)) throw new Error('Informe um WhatsApp válido com DDD.');
+  if (!C.phone(whatsapp) && !((p.semWhatsapp || p.tipo === 'cliente' || (atual && atual.tipo === 'cliente')) && !whatsapp)) throw new Error('Informe um WhatsApp válido com DDD.');
   let instagram = txt(p.instagram, 200);
   if (instagram) { try { const u = new URL(instagram); if (u.protocol !== 'https:' || !['instagram.com', 'www.instagram.com'].includes(u.hostname)) instagram = ''; } catch { instagram = ''; } }
   const nome = txt(p.name, 120); if (nome.length < 2) throw new Error('Informe um nome com pelo menos 2 caracteres.');
   const out = {
-    name: nome, whatsapp, instagram,
+    name: nome, whatsapp, instagram, tipo: atual ? (atual.tipo === 'cliente' ? 'cliente' : 'chef') : (p.tipo === 'cliente' ? 'cliente' : 'chef'),
     phone: txt(p.phone, 30), cities: txt(p.cities, 160), specialty: txt(p.specialty, 80), bio: txt(p.bio, 2000),
     avatar: await foto(p.avatar),
     gallery: [], dishes: []
@@ -262,12 +262,12 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
     if (rota === '/google/iniciar' && metodo === 'POST') {
       if (!googleOn(env)) return erro('Login com Google ainda não está ativado.', 503);
       if (!await limitar(env, req, 'google', 20, 900)) return erro('Muitas tentativas. Espere 15 minutos.', 429);
-      const b = await corpo(req), modo = b.modo === 'cadastro' ? 'cadastro' : 'entrar';
-      let dados = {};
+      const b = await corpo(req), modo = b.modo === 'cadastro' ? 'cadastro' : 'entrar', tipo = b.tipo === 'cliente' ? 'cliente' : 'chef';
+      let dados = { tipo };
       if (modo === 'cadastro') {
-        if (env.CONVITE && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
+        if (env.CONVITE && b.tipo !== 'cliente' && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
         const whatsapp = txt(b.whatsapp, 30); if (whatsapp && !C.phone(whatsapp)) return erro('Informe um WhatsApp válido com DDD.');
-        dados = { nome: txt(b.nome, 120), whatsapp, cidades: txt(b.cidades, 160) };
+        dados = { nome: txt(b.nome, 120), whatsapp, cidades: txt(b.cidades, 160), tipo };
       }
       const estado = aleatorio(24), verificador = b64url(crypto.getRandomValues(new Uint8Array(32))), nonce = aleatorio(16);
       const desafio = b64url(await crypto.subtle.digest('SHA-256', enc.encode(verificador)));
@@ -308,9 +308,10 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         if (row) await env.DB.prepare('UPDATE chefs SET google_sub = ?, atualizado_em = ? WHERE id = ?').bind(sub, agora(), row.id).run();
       }
       if (!row) {
-        if (p.modo !== 'cadastro' && env.CONVITE) return falha('sem-conta');
-        const d = JSON.parse(p.dados || '{}'), chefId = 'chef-' + aleatorio(8);
-        const perfil = await limparPerfil(env, chefId, { name: d.nome || txt(id.name, 120) || email.split('@')[0], whatsapp: d.whatsapp || '', cities: d.cidades || '', semWhatsapp: true }, null);
+        const d = JSON.parse(p.dados || '{}');
+        if (p.modo !== 'cadastro' && env.CONVITE && d.tipo !== 'cliente') return falha('sem-conta');
+        const chefId = 'chef-' + aleatorio(8);
+        const perfil = await limparPerfil(env, chefId, { name: d.nome || txt(id.name, 120) || email.split('@')[0], whatsapp: d.whatsapp || '', cities: d.cidades || '', semWhatsapp: true, tipo: d.tipo }, null);
         await env.DB.prepare('INSERT INTO chefs (id, email, credencial, perfil, publicado, criado_em, atualizado_em, google_sub) VALUES (?, ?, ?, ?, 1, ?, ?, ?)')
           .bind(chefId, email, JSON.stringify({ algoritmo: 'google' }), JSON.stringify(perfil), agora(), agora(), sub).run();
         row = { id: chefId };
@@ -323,7 +324,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
 
     if (rota === '/chefs' && metodo === 'GET') {
       const { results } = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE publicado = 1 AND oculto = 0 ORDER BY criado_em').all();
-      return json({ chefs: results.map(publico).filter(c => !C.faltaPerfil(c).length) }, 200, { 'cache-control': 'public, max-age=30' });
+      return json({ chefs: results.map(publico).filter(c => c.tipo !== 'cliente' && !C.faltaPerfil(c).length) }, 200, { 'cache-control': 'public, max-age=30' });
     }
 
     if (rota.startsWith('/foto/') && metodo === 'GET') {
@@ -340,13 +341,13 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
     if (rota === '/cadastro' && metodo === 'POST') {
       if (!await limitar(env, req, 'cadastro', 10, 3600)) return erro('Muitas tentativas. Tente de novo em uma hora.', 429);
       const b = await corpo(req);
-      if (env.CONVITE && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
+      if (env.CONVITE && b.tipo !== 'cliente' && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
       const email = C.email(b.email); if (!C.validEmail(email)) return erro('Confira o e-mail informado.');
       if (C.emailTemporario(email)) return erro('E-mails temporários não são aceitos. Use seu e-mail pessoal ou entre com Google.');
       const senha = String(b.senha || ''); if (senha.length < 8 || senha.length > 200) return erro('Crie uma senha com pelo menos 8 caracteres.');
       if (await env.DB.prepare('SELECT 1 FROM chefs WHERE email = ?').bind(email).first()) return erro('Este e-mail já está cadastrado. Use Entrar.', 409);
       const id = 'chef-' + aleatorio(8);
-      const perfil = await limparPerfil(env, id, { name: b.nome, whatsapp: b.whatsapp, cities: b.cidades }, null);
+      const perfil = await limparPerfil(env, id, { name: b.nome, whatsapp: b.whatsapp, cities: b.cidades, tipo: b.tipo }, null);
       await env.DB.prepare('INSERT INTO chefs (id, email, credencial, perfil, publicado, criado_em, atualizado_em) VALUES (?, ?, ?, ?, 1, ?, ?)')
         .bind(id, email, JSON.stringify(await criarCredencial(senha)), JSON.stringify(perfil), agora(), agora()).run();
       const token = await abrirSessao(env, id);
