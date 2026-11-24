@@ -395,3 +395,12 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Título dinâmico: rota #/termos, #/marmitas e #/como-funciona passam a ter títulos específicos no navegador.
 - Arquivos: robots.txt, sitemap.xml, scripts/build.cjs, index.html, assets/app.js, assets/improvements.css.
 - Validação: npm run check, npm test (63/63) e npm run build.
+
+## Entrega — 24/11/2026 · Mercado Corporativo, FAQ e Cidades na Home
+- Mercado Corporativo: adicionadas opções de atendimento `corporativo` ("Atendo eventos corporativos e empresas") e `nota_fiscal` ("Emito Nota Fiscal (PJ / MEI)") em OPCOES do app-core.js; novos filtros na busca; tags no perfil do chef; campos opcionais de Empresa e Nota Fiscal no formulário de pedido e na mensagem formatada do WhatsApp.
+- Página Inicial:
+  - Adicionado bloco de atalhos rápidos das Cidades atendidas logo abaixo da busca.
+  - Adicionada seção de destaque "Mercado Corporativo" com botão direto para filtrar chefs empresariais.
+  - Adicionada seção de FAQ direto com as 4 dúvidas essenciais (ingredientes, limpeza, emissão de NF e pagamento).
+- Arquivos: assets/app-core.js, assets/app.js, assets/improvements.css, index.html.
+- Validação: npm run check, npm test (63/63) e npm run build.
