@@ -2,11 +2,10 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
-_Atualizado em 24/11/2026 por Claude (preparação para a aula do Senac, 05/12)._
-- **No ar:** Google OAuth publicado (Em produção, sem logo para não exigir verificação). Google cria conta em um toque; aviso Complete seu cadastro + sino; e-mails temporários bloqueados (lista em app-core.js). Conta de cliente: escolha Sou chef / Quero contratar em Cadastro/Entrar, tipo salvo em perfil.tipo, cliente fora da vitrine e de /c/; pedido de orçamento só com conta. 74 testes.
-- **Próximo passo:** postagens do chef (pratos, eventos) com curtir, comentar e seguir chefs; exige tabelas novas no D1 (pedir SIM do Carlos antes de aplicar). Depois: teste no celular, QR e material da aula, posts do Instagram, ensaio.
-- **Pendente:** termos ainda são rascunho (revisão do Diogo) e sem e-mail de contato.
-- **Não mexer:** segredos; nada de publicar sem OK.
+_24/11/2026, Claude → Codex. Branch: main (tudo publicado, até 3eb06d1)._
+- **No ar:** Google OAuth em produção; Google em um toque + Complete seu cadastro + sino; e-mail temporário bloqueado; conta de cliente (Sou chef / Quero contratar, perfil.tipo); pedido só com conta; perfil do chef estilo Instagram; seguir, curtir e comentar fotos da galeria (tabelas seguidores, curtidas, comentarios criadas pelo servidor; migrations/0005_social.sql). 75 testes.
+- **Falta:** Carlos testar no celular (Android e iPhone) com conta nova: chef, cliente, seguir/curtir/comentar, pedido. Depois: QR code e material da aula do Senac (05/12), 3 posts do Instagram, ensaio com 2-3 pessoas. Termos ainda são rascunho (Diogo revisa; falta e-mail de contato).
+- **Próximo comando:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
 
 # Contexto do projeto — Seu Chef em Casa
 
