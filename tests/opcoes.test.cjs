@@ -15,3 +15,5 @@ test('mapsUrl',()=>{
   assert.equal(C.mapsUrl('  '),'');
   assert.equal(C.mapsUrl('Pedra Branca, Palhoça'),'https://www.google.com/maps/search/?api=1&query=Pedra%20Branca%2C%20Palho%C3%A7a');
 });
+
+test('opção equipe de apoio é aceita e começa desligada',()=>{assert.equal(C.opcoes({}).equipe,false);assert.equal(JSON.stringify(C.cleanOpcoes({equipe:true})),'{"equipe":true}')});

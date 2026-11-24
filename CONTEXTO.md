@@ -4,7 +4,7 @@ Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o dese
 ## Bastão
 _Atualizado em 24/11/2026 por Claude (continuação do Antigravity)._
 - **Estado:** main publicada com perfil estilo Instagram, bio com "ver mais", corporativo/NF e menus especiais. Branch `limpeza-como-funciona` (pasta `repo-limpeza`): "Como funciona" em cartões numerados 1-2-3 com textos curtos e mais espaço antes de Serviços. Check, 70 testes e build passaram.
-- **Próximo passo:** Carlos aprova o merge (publica). Depois: opção "Tenho equipe de apoio" (cadastro, filtro, selo no perfil, campo no pedido), proposta pelo Antigravity e ainda sem resposta do Carlos.
+- **Próximo passo:** branch `equipe-de-apoio`: opção "Tenho equipe de apoio" no cadastro (Painel > Atendimento), filtro "Com equipe" na busca, selo "Equipe" no perfil e no cartão, e "Preciso de equipe de apoio" no pedido (vai no resumo do WhatsApp). 71 testes passaram. Aguarda OK do Carlos para publicar.
 - **Não mexer:** segredos, `functions/api`, `migrations`; nada de publicar sem OK.
 
 # Contexto do projeto — Seu Chef em Casa
