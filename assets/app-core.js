@@ -82,7 +82,9 @@ function withDemo(data,demo){
 }
 function stripDemo(data){return {...data,chefs:(data.chefs||[]).filter(c=>!isTransientDemo(c))}}
 // O que falta para o perfil aparecer aos clientes: foto, ao menos um prato e cidade.
-const faltaPerfil=c=>{const f=[];if(!(c&&(c.avatar||(c.gallery||[]).length)))f.push('foto');if(!(c&&(c.dishes||[]).length))f.push('prato');if(!String(c&&c.cities||'').trim())f.push('cidade');return f};
+const TEMPORARIOS=new Set('10minutemail.com 10minutemail.net 10minemail.com 20minutemail.com 33mail.com mailinator.com mailinator.net mailinator2.com guerrillamail.com guerrillamail.net guerrillamail.org guerrillamail.biz guerrillamail.de guerrillamailblock.com sharklasers.com grr.la pokemail.net spam4.me yopmail.com yopmail.net yopmail.fr cool.fr.nf jetable.fr.nf courriel.fr.nf moncourrier.fr.nf monemail.fr.nf monmail.fr.nf tempmail.com temp-mail.org temp-mail.io tempmail.net tempmail.dev tempmail.plus tempmailo.com tempr.email tempinbox.com tempmailaddress.com throwawaymail.com trashmail.com trashmail.net trashmail.de trashmail.io trash-mail.com wegwerfmail.de wegwerfemail.de dispostable.com discard.email discardmail.com maildrop.cc mailnesia.com mailcatch.com mintemail.com mohmal.com getnada.com nada.email getairmail.com fakeinbox.com fakemail.net emailondeck.com mytemp.email mytrashmail.com spamgourmet.com spambox.us spamex.com mailpoof.com burnermail.io inboxkitten.com emailfake.com emailtemporanea.com emailtemporario.com.br email-temporario.com.br tempail.com 1secmail.com 1secmail.net 1secmail.org esiix.com wwjmp.com dropmail.me 10mail.org emltmp.com minutemail.com harakirimail.com mail.tm mail.gw tmpmail.org tmpmail.net tmails.net luxusmail.org owlymail.com moakt.com tmail.ws byom.de anonbox.net crazymailing.com mailtemp.net instaddr.com chacuo.net linshiyouxiang.net'.split(' '));
+const emailTemporario=v=>{const d=String(v||'').trim().toLowerCase().split('@')[1]||'';return [...TEMPORARIOS].some(t=>d===t||d.endsWith('.'+t))};
+const faltaPerfil=c=>{const f=[];if(!String(c&&c.whatsapp||'').trim())f.push('whatsapp');if(!(c&&(c.avatar||(c.gallery||[]).length)))f.push('foto');if(!(c&&(c.dishes||[]).length))f.push('prato');if(!String(c&&c.cities||'').trim())f.push('cidade');return f};
 const OPCOES=[
   ['criancas','Atendo eventos com crianças','Quem não marcar não verá o campo de crianças no pedido.',true],
   ['compras','Faço as compras dos ingredientes','O cliente poderá pedir esse serviço no orçamento.',true],
@@ -201,6 +203,6 @@ async function verifyPassword(password,account,cryptoApi){
   if(!/^[a-f\d]{64}$/i.test(account.pass)||!c?.subtle)return false;
   return account.pass===hex(await c.subtle.digest('SHA-256',new TextEncoder().encode(account.id+':'+password)));
 }
-const api={faltaPerfil,norm,email,isAdminEmail,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
+const api={faltaPerfil,emailTemporario,norm,email,isAdminEmail,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);

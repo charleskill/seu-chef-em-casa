@@ -19,3 +19,13 @@ test('pedido inclui pratos escolhidos e cuidados sem afirmar envio',()=>{const t
 test('senha local usa sal aleatório, verifica credencial e rejeita senha incorreta',async()=>{const one=await C.passwordRecord('senha-de-teste',webcrypto),two=await C.passwordRecord('senha-de-teste',webcrypto);assert.notEqual(one.salt,two.salt);assert.notEqual(one.hash,two.hash);assert.ok(await C.verifyPassword('senha-de-teste',{credential:one},webcrypto));assert.equal(await C.verifyPassword('incorreta',{credential:one},webcrypto),false);assert.equal(await C.verifyPassword('senha',{credential:{algorithm:'qualquer',iterations:1}},webcrypto),false)});
 test('compatibilidade com senha SHA256 legada exige a senha correta',async()=>{const id='old',p='teste-legado';const pass=Buffer.from(await webcrypto.subtle.digest('SHA-256',new TextEncoder().encode(id+':'+p))).toString('hex');assert.ok(await C.verifyPassword(p,{id,pass},webcrypto));assert.equal(await C.verifyPassword('outra',{id,pass},webcrypto),false);assert.equal(await C.verifyPassword('',{id},webcrypto),false)});
 test('compatibilidade com hash legado de navegador não permite trocar senha por dados públicos',async()=>{const id='old',p='teste-legado';let h=5381;for(const ch of id+':'+p)h=((h<<5)+h+ch.charCodeAt(0))>>>0;const account={id,pass:'x'+h};assert.ok(await C.verifyPassword(p,account,webcrypto));assert.equal(await C.verifyPassword('email-publico',account,webcrypto),false)});
+
+test('bloqueia e-mails temporários e aceita os comuns',()=>{
+  for(const e of ['x@mailinator.com','a@yopmail.com','b@sub.guerrillamail.com','c@10minutemail.com'])assert.equal(C.emailTemporario(e),true,e);
+  for(const e of ['x@gmail.com','y@hotmail.com','z@senac.br','w@outlook.com'])assert.equal(C.emailTemporario(e),false,e);
+});
+test('perfil sem WhatsApp fica pendente',()=>{
+  const c={avatar:'/x.jpg',dishes:[{name:'Risoto'}],cities:'Florianópolis'};
+  assert.deepEqual(C.faltaPerfil(c),['whatsapp']);
+  assert.deepEqual(C.faltaPerfil({...c,whatsapp:'(48) 99110-6355'}),[]);
+});

@@ -98,7 +98,7 @@ async function limparPerfil(env, chefId, p, atual) {
     return '/api/foto/' + id;
   }
   const whatsapp = txt(p.whatsapp, 30);
-  if (!C.phone(whatsapp)) throw new Error('Informe um WhatsApp válido com DDD.');
+  if (!C.phone(whatsapp) && !(p.semWhatsapp && !whatsapp)) throw new Error('Informe um WhatsApp válido com DDD.');
   let instagram = txt(p.instagram, 200);
   if (instagram) { try { const u = new URL(instagram); if (u.protocol !== 'https:' || !['instagram.com', 'www.instagram.com'].includes(u.hostname)) instagram = ''; } catch { instagram = ''; } }
   const nome = txt(p.name, 120); if (nome.length < 2) throw new Error('Informe um nome com pelo menos 2 caracteres.');
@@ -266,7 +266,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       let dados = {};
       if (modo === 'cadastro') {
         if (env.CONVITE && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
-        const whatsapp = txt(b.whatsapp, 30); if (!C.phone(whatsapp)) return erro('Informe um WhatsApp válido com DDD.');
+        const whatsapp = txt(b.whatsapp, 30); if (whatsapp && !C.phone(whatsapp)) return erro('Informe um WhatsApp válido com DDD.');
         dados = { nome: txt(b.nome, 120), whatsapp, cidades: txt(b.cidades, 160) };
       }
       const estado = aleatorio(24), verificador = b64url(crypto.getRandomValues(new Uint8Array(32))), nonce = aleatorio(16);
@@ -308,9 +308,9 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         if (row) await env.DB.prepare('UPDATE chefs SET google_sub = ?, atualizado_em = ? WHERE id = ?').bind(sub, agora(), row.id).run();
       }
       if (!row) {
-        if (p.modo !== 'cadastro') return falha('sem-conta');
+        if (p.modo !== 'cadastro' && env.CONVITE) return falha('sem-conta');
         const d = JSON.parse(p.dados || '{}'), chefId = 'chef-' + aleatorio(8);
-        const perfil = await limparPerfil(env, chefId, { name: d.nome || txt(id.name, 120) || email.split('@')[0], whatsapp: d.whatsapp, cities: d.cidades }, null);
+        const perfil = await limparPerfil(env, chefId, { name: d.nome || txt(id.name, 120) || email.split('@')[0], whatsapp: d.whatsapp || '', cities: d.cidades || '', semWhatsapp: true }, null);
         await env.DB.prepare('INSERT INTO chefs (id, email, credencial, perfil, publicado, criado_em, atualizado_em, google_sub) VALUES (?, ?, ?, ?, 1, ?, ?, ?)')
           .bind(chefId, email, JSON.stringify({ algoritmo: 'google' }), JSON.stringify(perfil), agora(), agora(), sub).run();
         row = { id: chefId };
@@ -342,6 +342,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       const b = await corpo(req);
       if (env.CONVITE && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
       const email = C.email(b.email); if (!C.validEmail(email)) return erro('Confira o e-mail informado.');
+      if (C.emailTemporario(email)) return erro('E-mails temporários não são aceitos. Use seu e-mail pessoal ou entre com Google.');
       const senha = String(b.senha || ''); if (senha.length < 8 || senha.length > 200) return erro('Crie uma senha com pelo menos 8 caracteres.');
       if (await env.DB.prepare('SELECT 1 FROM chefs WHERE email = ?').bind(email).first()) return erro('Este e-mail já está cadastrado. Use Entrar.', 409);
       const id = 'chef-' + aleatorio(8);
@@ -403,6 +404,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       const b = await corpo(req), p = b.perfil || {};
       const email = C.email(p.email || c.email);
       if (!C.validEmail(email)) return erro('Confira o e-mail informado.');
+      if (email !== c.email && C.emailTemporario(email)) return erro('E-mails temporários não são aceitos.');
       if (email !== c.email && await env.DB.prepare('SELECT 1 FROM chefs WHERE email = ? AND id <> ?').bind(email, c.id).first()) return erro('Este e-mail já está cadastrado.', 409);
       const perfil = await limparPerfil(env, c.id, p, JSON.parse(c.perfil));
       const publicado = typeof p.pausado === 'boolean' ? (p.pausado ? 0 : 1) : c.publicado;

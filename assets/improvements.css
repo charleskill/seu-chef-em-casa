@@ -441,3 +441,4 @@ body:has(.home-page) ::selection{background:#dce9a8;color:#281e30}
 .home-page .home-services{margin-top:clamp(56px,8vw,104px)}
 @media(max-width:780px){.home-page .how-cards{grid-template-columns:1fr;gap:12px}.home-page .how-cards .how-item{padding:20px 20px 22px}.home-page .how-cards .how-step-heading{margin-bottom:14px}}
 @media(prefers-reduced-motion:reduce){.home-page .how-cards .how-item{transition:none}.home-page .how-cards .how-item:hover{transform:none}}
+.sino{position:relative;display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;color:inherit;flex-shrink:0}.sino:hover{background:rgba(0,0,0,.06)}.sino-n{position:absolute;top:4px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#8a2a2a;color:#fff;font:700 11px/17px system-ui,sans-serif;text-align:center;font-variant-numeric:tabular-nums}
