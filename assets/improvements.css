@@ -345,3 +345,28 @@ body:has(.home-page) :focus-visible{outline-color:#765487}
 .faq-item summary::after{content:'+';font-size:18px;color:var(--cu);font-weight:700}
 .faq-item[open] summary::after{content:'−'}
 .faq-item p{font-size:14px;color:var(--mut);line-height:1.7;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+
+/* Estilo Instagram para Previa dos Chefs */
+.insta-card{border:1px solid var(--line);border-radius:18px;background:var(--paper);box-shadow:0 4px 16px rgba(28,37,32,0.04);transition:transform .25s ease,box-shadow .25s ease;overflow:hidden;display:flex;flex-direction:column}
+.insta-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(28,37,32,0.1)}
+.insta-card-header{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--paper)}
+.insta-avatar-wrap{position:relative;flex:none}
+.insta-av{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--cu);padding:1.5px;background:white}
+.insta-user-info{flex:1;min-width:0}
+.insta-user-name{display:flex;align-items:center;gap:6px}
+.insta-user-name h3{font-size:15px;font-weight:700;color:var(--ink);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:system-ui,-apple-system,sans-serif}
+.insta-badge{font-size:10px;font-weight:700;background:#eef3eb;color:#2e5934;border-radius:4px;padding:1px 5px;letter-spacing:0.5px}
+.insta-location{font-size:12px;color:var(--mut);margin:2px 0 0;display:flex;align-items:center;gap:4px}
+.insta-dots{color:var(--mut);font-size:18px;letter-spacing:1px;padding-left:4px}
+.insta-cover{height:220px;background:#202b25;position:relative;overflow:hidden}
+.insta-cover img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.insta-card:hover .insta-cover img{transform:scale(1.03)}
+.insta-content{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1}
+.insta-stats-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--mut);margin-bottom:10px}
+.insta-stats-bar b{color:var(--ink)}
+.tag-corp{font-size:10px;font-weight:600;background:#e6ebf5;color:#2b4570;border-radius:4px;padding:2px 6px;text-transform:uppercase}
+.insta-caption{font-size:13.5px;line-height:1.5;color:var(--ink);margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
+.insta-caption b{font-weight:700;margin-right:5px;color:var(--ink)}
+.insta-foot{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;display:flex;align-items:center;justify-content:space-between;font-size:12px}
+.insta-foot span{color:var(--mut)}
+.insta-foot b{color:var(--cu);font-weight:600}
