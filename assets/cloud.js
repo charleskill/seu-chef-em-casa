@@ -50,6 +50,12 @@
     // Registra o pedido antes de abrir o WhatsApp. keepalive mantém o envio mesmo se a aba mudar.
     pedido: (chefId, texto, dados) => req('POST', '/pedidos', { chefId, texto, dados }, { keepalive: true }),
     // Login com Google: o servidor devolve o endereço do Google para onde o navegador deve ir.
+    social: id => req('GET', '/social/' + encodeURIComponent(id)),
+    seguir: (id, on) => req('POST', '/social/' + encodeURIComponent(id) + '/seguir', { on }),
+    curtir: (id, foto, on) => req('POST', '/social/' + encodeURIComponent(id) + '/curtir', { foto, on }),
+    comentarios: (id, foto) => req('GET', '/social/' + encodeURIComponent(id) + '/comentarios?foto=' + encodeURIComponent(foto)),
+    comentar: (id, foto, texto) => req('POST', '/social/' + encodeURIComponent(id) + '/comentarios', { foto, texto }),
+    apagarComentario: id => req('DELETE', '/social/comentario/' + encodeURIComponent(id)),
     google: (modo, dados) => req('POST', '/google/iniciar', { modo, ...dados }).then(j => j.url),
     // Painel da equipe (só e-mails em ADMIN_EMAILS no servidor).
     adminChefs: () => req('GET', '/admin/chefs').then(j => j.chefs || []),

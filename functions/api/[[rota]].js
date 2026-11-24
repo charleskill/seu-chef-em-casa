@@ -192,6 +192,15 @@ async function garantirEsquema(env) {
     catch (e) { if (!/duplicate column/i.test(String(e && e.message))) throw e; }
   }
   await env.DB.prepare('CREATE TABLE IF NOT EXISTS site_config (id INTEGER PRIMARY KEY CHECK (id = 1), dados TEXT NOT NULL, atualizado_em TEXT NOT NULL, atualizado_por TEXT NOT NULL)').run();
+  for (const q of [
+    'CREATE TABLE IF NOT EXISTS seguidores (chef_id TEXT NOT NULL, conta_id TEXT NOT NULL, criado_em TEXT NOT NULL, PRIMARY KEY (chef_id, conta_id))',
+    'CREATE INDEX IF NOT EXISTS seguidores_conta ON seguidores(conta_id)',
+    'CREATE TABLE IF NOT EXISTS curtidas (chef_id TEXT NOT NULL, foto_id TEXT NOT NULL, conta_id TEXT NOT NULL, criado_em TEXT NOT NULL, PRIMARY KEY (chef_id, foto_id, conta_id))',
+    'CREATE INDEX IF NOT EXISTS curtidas_conta ON curtidas(conta_id)',
+    'CREATE TABLE IF NOT EXISTS comentarios (id TEXT PRIMARY KEY, chef_id TEXT NOT NULL, foto_id TEXT NOT NULL, conta_id TEXT NOT NULL, texto TEXT NOT NULL, criado_em TEXT NOT NULL)',
+    'CREATE INDEX IF NOT EXISTS comentarios_foto ON comentarios(chef_id, foto_id, criado_em)',
+    'CREATE INDEX IF NOT EXISTS comentarios_conta ON comentarios(conta_id)'
+  ]) await env.DB.prepare(q).run();
   esquemaOk = true;
 }
 
@@ -322,6 +331,62 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       return new Response(null, { status: 302, headers: h });
     }
 
+    // ---------- Social: seguir chefs, curtir e comentar fotos da galeria (só com conta) ----------
+    if (rota.startsWith('/social/')) {
+      const partes = rota.split('/').slice(2), eu = await chefDaSessao(env, req);
+      if (partes[0] === 'comentario' && metodo === 'DELETE') {
+        if (!eu) return erro('Entre para continuar.', 401);
+        const cm = await env.DB.prepare('SELECT id, chef_id, conta_id FROM comentarios WHERE id = ?').bind(txt(partes[1], 40)).first();
+        if (!cm) return erro('Comentário não encontrado.', 404);
+        if (cm.conta_id !== eu.id && cm.chef_id !== eu.id && !ehAdmin(env, eu)) return erro('Você não pode apagar este comentário.', 403);
+        await env.DB.prepare('DELETE FROM comentarios WHERE id = ?').bind(cm.id).run();
+        return json({ ok: true });
+      }
+      const chefId = txt(partes[0], 40), acao = partes[1] || '';
+      const alvo = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE id = ? AND publicado = 1 AND COALESCE(oculto, 0) = 0').bind(chefId).first();
+      const perfilAlvo = alvo ? JSON.parse(alvo.perfil) : null;
+      if (!perfilAlvo || perfilAlvo.tipo === 'cliente') return erro('Chef não encontrado.', 404);
+      const contar = async (sql, ...v) => Number((await env.DB.prepare(sql).bind(...v).first()).n);
+      if (!acao && metodo === 'GET') {
+        const sigo = eu ? !!await env.DB.prepare('SELECT 1 FROM seguidores WHERE chef_id = ? AND conta_id = ?').bind(chefId, eu.id).first() : false;
+        const cur = (await env.DB.prepare('SELECT foto_id, COUNT(*) n, MAX(conta_id = ?) eu FROM curtidas WHERE chef_id = ? GROUP BY foto_id').bind(eu ? eu.id : '', chefId).all()).results;
+        const com = (await env.DB.prepare('SELECT foto_id, COUNT(*) n FROM comentarios WHERE chef_id = ? GROUP BY foto_id').bind(chefId).all()).results;
+        const fotos = {};
+        for (const r of cur) fotos[r.foto_id] = { curtidas: Number(r.n), curti: !!r.eu, comentarios: 0 };
+        for (const r of com) (fotos[r.foto_id] ||= { curtidas: 0, curti: false, comentarios: 0 }).comentarios = Number(r.n);
+        return json({ seguidores: await contar('SELECT COUNT(*) n FROM seguidores WHERE chef_id = ?', chefId), sigo, fotos }, 200, { 'cache-control': 'no-store' });
+      }
+      if (acao === 'comentarios' && metodo === 'GET') {
+        const foto = txt(new URL(req.url).searchParams.get('foto'), 40), admin = !!eu && ehAdmin(env, eu);
+        const { results } = await env.DB.prepare("SELECT c.id, c.conta_id, c.texto, c.criado_em, json_extract(x.perfil, '$.name') nome FROM comentarios c LEFT JOIN chefs x ON x.id = c.conta_id WHERE c.chef_id = ? AND c.foto_id = ? ORDER BY c.criado_em LIMIT 200").bind(chefId, foto).all();
+        return json({ comentarios: results.map(r => ({ id: r.id, nome: r.nome || 'Conta removida', texto: r.texto, criado_em: r.criado_em, podeApagar: !!eu && (r.conta_id === eu.id || chefId === eu.id || admin) })) }, 200, { 'cache-control': 'no-store' });
+      }
+      if (metodo !== 'POST') return erro('Rota não encontrada.', 404);
+      if (!eu) return erro('Crie sua conta grátis para continuar.', 401);
+      const b = await corpo(req), on = b.on !== false;
+      if (acao === 'seguir') {
+        if (eu.id === chefId) return erro('Você não pode seguir o próprio perfil.');
+        if (on) await env.DB.prepare('INSERT OR IGNORE INTO seguidores (chef_id, conta_id, criado_em) VALUES (?, ?, ?)').bind(chefId, eu.id, agora()).run();
+        else await env.DB.prepare('DELETE FROM seguidores WHERE chef_id = ? AND conta_id = ?').bind(chefId, eu.id).run();
+        return json({ seguidores: await contar('SELECT COUNT(*) n FROM seguidores WHERE chef_id = ?', chefId), sigo: on });
+      }
+      const foto = txt(b.foto, 40);
+      if (!(perfilAlvo.gallery || []).some(g => String(g.id) === foto)) return erro('Foto não encontrada.', 404);
+      if (acao === 'curtir') {
+        if (on) await env.DB.prepare('INSERT OR IGNORE INTO curtidas (chef_id, foto_id, conta_id, criado_em) VALUES (?, ?, ?, ?)').bind(chefId, foto, eu.id, agora()).run();
+        else await env.DB.prepare('DELETE FROM curtidas WHERE chef_id = ? AND foto_id = ? AND conta_id = ?').bind(chefId, foto, eu.id).run();
+        return json({ curtidas: await contar('SELECT COUNT(*) n FROM curtidas WHERE chef_id = ? AND foto_id = ?', chefId, foto), curti: on });
+      }
+      if (acao === 'comentarios') {
+        if (!await limitar(env, req, 'comentario', 30, 3600)) return erro('Muitos comentários seguidos. Tente mais tarde.', 429);
+        const texto = txt(b.texto, 500); if (!texto) return erro('Escreva um comentário.');
+        const id = aleatorio(12);
+        await env.DB.prepare('INSERT INTO comentarios (id, chef_id, foto_id, conta_id, texto, criado_em) VALUES (?, ?, ?, ?, ?, ?)').bind(id, chefId, foto, eu.id, texto, agora()).run();
+        return json({ ok: true, id }, 201);
+      }
+      return erro('Rota não encontrada.', 404);
+    }
+
     if (rota === '/chefs' && metodo === 'GET') {
       const { results } = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE publicado = 1 AND oculto = 0 ORDER BY criado_em').all();
       return json({ chefs: results.map(publico).filter(c => c.tipo !== 'cliente' && !C.faltaPerfil(c).length) }, 200, { 'cache-control': 'public, max-age=30' });
@@ -415,7 +480,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
 
     if (rota === '/eu' && metodo === 'DELETE') {
       const c = await chefDaSessao(env, req); if (!c) return erro('Entre de novo para excluir a conta.', 401);
-      await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(c.id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(c.id)));
+      await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(c.id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(c.id, c.id))).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(c.id)));
       return json({ ok: true }, 200, { 'set-cookie': cookieSessao('', 0) });
     }
 
@@ -506,7 +571,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'DELETE') {
         if (id === c.id) return erro('Para excluir a sua própria conta, use Painel > Configurações.');
         if (!await env.DB.prepare('SELECT 1 FROM chefs WHERE id = ?').bind(id).first()) return erro('Chef não encontrado.', 404);
-        await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
+        await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(id, id))).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
         return json({ ok: true });
       }
     }
