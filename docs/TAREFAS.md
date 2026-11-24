@@ -1,4 +1,9 @@
 # Tarefas
+## Revisão — 23/11/2026: identidade mesa, PR 17
+- Continuação de d48e759: título com largura equilibrada, foto da abertura sem cortar o rosto no celular, formulário responsivo, foco/hover coerentes e ajustes de leitura e recorte dos serviços. Foto principal com carregamento prioritário.
+- Prévia original da Cloudflare abriu. Revisão desktop/820/390/320px e fluxos de busca (cidade, data, pessoas), quatro experiências e catálogo com 55 cartões. Check, 63 testes, build e diff --check passaram. Detalhes em REVISAO-IDENTIDADE-MESA.md.
+- Mantidos conteúdo e fluxos. Nenhuma alteração em backend/banco ou no branch visual-fotos-fontes-efeitos. Somente prévia no PR; produção aguarda OK explícito de Carlos.
+
 ## Entrega — 15/11/2026: perfis para apresentação aos sócios
 - Três personagens completos, cada um com 25 pratos e nove fotos (pratos, eventos e preparo), além de retrato gerado por IA. Conteúdo e inclusão manual/idempotente em scripts/perfis-apresentacao.cjs; arquivos em assets/apresentacao e fontes/prompts em docs.
 - Caminho local de fotos reconhecido no app e na página compartilhável /c/. Edição administrativa preserva apenas os arquivos estáticos previamente pertencentes ao perfil, sem aceitar fotos estáticas de outro personagem. Nenhuma mudança de autenticação, autorização ou credencial de conta existente.
@@ -386,6 +391,13 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Nova abertura e busca integrada, estilos da sequência de atendimento e da seleção de serviços. Fotos e ações existentes reaproveitadas.
 - Check, 63 testes e build passaram.
 
+## 23/11/2026 · Tema global e menus especiais (PR 17)
+- Paleta escolhida por Carlos: oliva/marfim/vinho discreto em todas as telas do app e na vitrine compartilhável. Fotos dos serviços em cartões maiores; cabeçalho e abas ajustados para celular.
+- Nova criação de menus por ocasião no painel do chef, vitrine filtrável, detalhe, pedido registrado no painel e link público com metadados. Download PNG quadrado/feed/story, cópia de mensagem e compartilhamento nativo quando suportado. Sem serviços pagos ou créditos de IA para gerar cada arte.
+- Persistência por sessão e versão, filtros públicos para rascunhos/vencidos, preservação de menus/fotos nas edições do perfil. Sem migração de banco. API modificada para implementar este recurso explicitamente solicitado.
+- Testado com SQLite real local e navegação com personagem de demonstração. PNGs dos três formatos foram baixados; mensagem copiada; pedido local apareceu no painel. Busca e navegação por serviço preservadas; nenhum envio por WhatsApp/Instagram. Ver `docs/MENUS-ESPECIAIS.md` para limites.
+- `npm run check`, `npm test` (70 testes) e `npm run build` passaram nesta entrega.
+
 ## Entrega — 23/11/2026 · Correções da Auditoria da Jornada do Chef e SEO
 - SEO técnico: adicionados robots.txt e sitemap.xml reais (copiados para dist/ no build); adicionadas tags canonical e og:url em index.html.
 - Mobile UX: adicionado padding-bottom de respiro em #view > .wrap para telas menores de 1200px, impedindo que a barra de navegação inferior (.nav) sobreponha botões, textos e o link de recuperação de senha.
@@ -394,7 +406,7 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Busca: botão "Limpar busca" quando nenhum chef é encontrado agora aciona a ação clearsearch, limpando os filtros e ocasiões selecionados de forma confiável.
 - Título dinâmico: rota #/termos, #/marmitas e #/como-funciona passam a ter títulos específicos no navegador.
 - Arquivos: robots.txt, sitemap.xml, scripts/build.cjs, index.html, assets/app.js, assets/improvements.css.
-- Validação: npm run check, npm test (63/63) e npm run build.
+- Validação: npm run check, npm test e npm run build.
 
 ## Entrega — 24/11/2026 · Mercado Corporativo, FAQ e Cidades na Home
 - Mercado Corporativo: adicionadas opções de atendimento `corporativo` ("Atendo eventos corporativos e empresas") e `nota_fiscal` ("Emito Nota Fiscal (PJ / MEI)") em OPCOES do app-core.js; novos filtros na busca; tags no perfil do chef; campos opcionais de Empresa e Nota Fiscal no formulário de pedido e na mensagem formatada do WhatsApp.
@@ -403,4 +415,8 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
   - Adicionada seção de destaque "Mercado Corporativo" com botão direto para filtrar chefs empresariais.
   - Adicionada seção de FAQ direto com as 4 dúvidas essenciais (ingredientes, limpeza, emissão de NF e pagamento).
 - Arquivos: assets/app-core.js, assets/app.js, assets/improvements.css, index.html.
-- Validação: npm run check, npm test (63/63) e npm run build.
+
+## Entrega — 24/11/2026 · Visual Instagram dos Chefs e Bio Recolhível
+- Prévia dos perfis (`card(c)`) com header de avatar, badge PJ, localização e cover edge-to-edge.
+- Perfil do chef (`profile(id)`) com anel de história, estatísticas e bio recolhível com "ver mais" / "ver menos".
+- Validação: npm run check, npm test e npm run build.

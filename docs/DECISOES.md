@@ -1,184 +1,23 @@
-# Decisões
-## 15/11/2026 — Três personagens para apresentação pública
-- Carlos pediu três chefs fictícios, sem identificar isso na interface, para apresentar aos sócios; informou que explicará que são fictícios. Confirmou que devem aparecer na vitrine pública.
-- Preparados Helena Duarte, Rafael Monteiro e André Valença: nove fotos e 25 pratos cada, mais retratos gerados para personagens inventados. Sem prêmios, diplomas ou vínculos com restaurantes reais; sem pedidos ou avaliações inventadas.
-- Contato no número de teste do projeto; nenhum acesso de login ou administrativo concedido. Registros normais no D1 para edição/ocultação/exclusão pela administração. Procedimento em PERFIS-APRESENTACAO.md.
+# Decisões do Projeto
 
-## 15/11/2026 — Fotografias em todo o catálogo
-- Carlos pediu mais vinte tipos e fotos boas em todos os serviços, incluindo os que ainda tinham ícones. Catálogo ampliado para 55 opções.
-- Fotos ilustrativas selecionadas e hospedadas junto ao site, otimizadas em WebP. Mantidas as preferências dos chefs existentes; nenhum serviço é ativado automaticamente. As fotos não representam o portfólio de um profissional específico.
+Registro de escolhas arquiteturais, limites e regras de negócio para manter consistência e rastreabilidade.
 
-## 15/11/2026 — Ampliação de Serviços
-- Carlos pediu mais vinte tipos. As novas experiências integram o catálogo público, os tipos de pedido e as opções de atendimento do chef. Cada profissional opta pelas experiências que oferece; os novos campos começam desligados.
-
-## 15/11/2026 — Dashboard e organização administrativa
-- Carlos pediu administração com estética profissional, navegação familiar, gráficos por período e PDF para apresentações.
-- Navegação própria da equipe e indicadores do D1. O servidor confere sessão e ADMIN_EMAILS; sem nova permissão ou migração.
-- Datas inclusivas no horário de Brasília, até 366 dias; comparação com período anterior de igual duração. Estado atual dos pedidos e da vitrine explicitado.
-- Relatório por impressão do navegador em A4 horizontal, sem menus. Sem inventar visitas, receita, vendas ou confirmação de envio pelo WhatsApp.
-
-## 15/11/2026 — Administração para alterações sem IA
-- Carlos pediu um painel para editar conteúdo em situações em que a IA ou seus créditos não estejam disponíveis. A IA continua sendo usada para desenvolvimento.
-- Acesso por `/admin`, usando as contas já autorizadas em `ADMIN_EMAILS`, com verificação de permissão no servidor em todas as novas rotas administrativas.
-- Primeira entrega: apresentação e capa da página inicial, convite aos chefs, contatos e redes sociais; edição de perfis, pratos e fotos dos chefs. Conteúdo salvo no D1, sem precisar publicar código a cada edição.
-- Configurações concentra acesso, pausa, exclusão da própria conta e ajuda. Clientes continuam sem conta; limpeza local não promete exclusão de dados no servidor ou WhatsApp.
-- Alterações de código seguem em branch própria e pull request, sem merge automático. O ramo `icones-redes-sociais` foi preservado.
-
-## 28/10/2026 — Carlos e ChatGPT
-- Repositório privado charleskill/seu-chef-em-casa é a fonte oficial do projeto.
-- Aproveitar o protótipo existente.
-- Primeiro piloto focado em encontrar chefs e pedir orçamento pelo WhatsApp.
-- Adicionar banco compartilhado e autenticação real.
-- Adiar chat interno, stories e interações sociais para depois do piloto.
-- Carlos decide prioridades e aprova decisões de produto.
-- Claude e Gemini ainda precisam ser conectados/importar este repositório pelo usuário.
-- Conexão ao repositório não implica comunicação automática entre IAs.
-- Envio inicial preserva o HTML; não implementa backend nem publica o aplicativo.
-
-
-## Proposta técnica anterior preservada
-A branch feat/preparacao-piloto já continha validação de orçamento e fundação SQL para Supabase. A escolha do Supabase continua sendo uma proposta técnica: não há conta/projeto conectado nem migração aplicada. Ver PREPARACAO-PILOTO.md.
-
-## 29/10/2026 — Revisão solicitada pelo usuário
-- Partir do main 8922addac6322d2ec916dbec577ab681f505bd1a e incorporar a revisão ao PR #1 existente, preservando seus testes e SQL.
-- Separar interface, estilos, dados de exemplo e regras puras para manutenção e testes. Gerar também HTML único para revisão.
-- Manter conversas locais com coluna lateral, conforme solicitação de interface. Identificar explicitamente que são rascunhos: isto não antecipa o lançamento do chat multiusuário.
-- Remover recuperação de senha por informações públicas. Credenciais novas locais usam PBKDF2; hashes antigos são aceitos somente após verificação da senha e migrados. Isso não é autenticação de produção.
-- Identificar os perfis fictícios e impedir contato com números fictícios. Remover notícias e depoimentos sem verificação.
-- Gravar dados locais de forma atômica, preservar chaves antigas e mostrar erros de quota/leitura. Não migrar dados automaticamente para serviços externos.
-- Não publicar nem aplicar a migração SQL nesta revisão.
-
-
-## 30/10/2026 — Perfis de teste e marmitas, a pedido de Carlos
-- Os 50 perfis de teste ficam no código, não no armazenamento do navegador, para aparecerem em qualquer navegador e serem removidos com uma chave ou apagando dois arquivos. Continuam sem contato real e identificados como exemplo.
-- Marmitas entram como um segundo tipo de pedido ("Plano de marmitas") dentro do mesmo orçamento, com o mesmo envio por WhatsApp. Cada chef informa um preço de referência por marmita, o mínimo por entrega, as frequências e as formas de atendimento; os pratos de marmita são marcados no cardápio.
-- Proposta, ainda sem validação com chefs: estimativa = preço por marmita × marmitas por entrega × entregas por mês (semanal 4, quinzenal 2, mensal 1) × meses. Sem desconto por prazo, sem taxa de entrega e sem cobrança recorrente; tudo é combinado com o chef. Não há pagamento nem contrato no app.
-- Imagens dos perfis de teste são ilustrações geradas, não fotos de pratos reais, para não depender de serviços externos nem usar fotos de terceiros sem controle.
-
-## 30/10/2026 — Publicação autorizada
-- Carlos autorizou publicar o site e pediu que as atualizações sejam enviadas direto ao `main`, sem pull request.
-- Hospedagem: GitHub Pages por workflow (`.github/workflows/publicar.yml`), publicando só `dist/` (index.html e assets/) depois de `check` e `test`. Docs, testes, scripts e SQL não são publicados. Ativação: Settings → Pages → Source: GitHub Actions.
-- Isso publica o protótipo local (dados no navegador de cada pessoa, sem banco compartilhado nem login real) com perfis de exemplo identificados. Não substitui o piloto com dados compartilhados. A migração SQL continua sem aplicação.
-
-## 30/10 · Mapa e opções de atendimento do chef
-- Google Maps: links "Ver/Conferir no Google Maps" (sem chave de API) no perfil, no campo de local do pedido, no painel do chef e uma linha "Mapa:" no texto do WhatsApp. Autocomplete de endereço exige chave da Places API (faturamento + restrição por domínio) e fica para quando houver chave.
-- Painel > Atendimento: o chef liga/desliga 13 opções (crianças, compras, limpeza, utensílios, garçom, grupos grandes, fins de semana, outras cidades, glúten, lactose, vegetariano, vegano, frutos do mar). Sem escolha, valem os padrões (a maioria ligada). Efeito: aparece no perfil, esconde campos no pedido e filtra a busca.
-
-## 30/10 · Busca por data e agenda do chef
-- Home e busca: Onde? / Quando? / Quantas pessoas? filtram os chefs livres na data. Mais de 20 pessoas só mostra quem ativou "grupos grandes".
-- Painel do chef > Agenda: calendário em que o chef marca os dias ocupados (estilo Airbnb). Dia ocupado tira o chef da busca daquela data e o pedido nessa data é recusado.
-- Perfis de teste ganham datas ocupadas aleatórias (não salvas) para o filtro ser visível.
-- Referência: ChefMaison / Take a Chef (busca com data + convidados antes de ver chefs).
-
-## 30/10 · Termos de uso e privacidade
-- Página #/termos (assets/termos.js): o app é vitrine; contratação, pagamento e serviço são diretos entre cliente e chef; sem verificação de chefs ou clientes; responsabilidade "nos limites da lei"; LGPD resumida.
-- Chef precisa aceitar os termos ao criar conta; o resumo do pedido lembra que é vitrine.
-- PENDENTE: revisão por advogado(a) antes do lançamento; preencher CONTATO em assets/termos.js (e-mail); trocar o nome quando virar Mesa Posta.
-
-## 30/10 · Aba Marmitas, sugestões do chef e montagem
-- Nova aba "Marmitas" (#/marmitas): lista chefs que fazem marmita (filtro por cidade) e leva ao plano do chef.
-- No plano: "Sugestões do chef" (kits criados por ele no painel > Marmitas) com um toque, ou "monte a sua" com quantidade por prato, agrupado por categoria. O total vira a quantidade por entrega e precisa atingir o mínimo do chef.
-- A mensagem do WhatsApp lista "5x Frango..." por entrega. Máximo de 6 sugestões por chef; cada uma deve ter ao menos o mínimo do chef.
-- Hipótese a validar com os chefs: preço por marmita e mínimos (pesquisa mostra R$ 21–30 em SP; ver docs/pesquisa).
-
-
-## 07/11 · Banco e login na Cloudflare (D1)
-- Carlos escolheu "deixar real para os 2 chefs" na mesma base da plataforma Seu Restaurante Online: Cloudflare Pages + Pages Functions + D1, plano gratuito. Substitui a proposta do Supabase (o gratuito pausa após 7 dias sem uso); a migração SQL do Supabase fica só como histórico.
-- Conta de chef só com código de convite (variável secreta `CONVITE`), para o piloto ficar fechado aos chefs convidados.
-- Fotos no próprio D1 (JPEG até 1,5 MB), sem R2, para não exigir cartão.
-- GitHub Pages continua publicando a demonstração local; o app detecta a API e só liga o modo real na Cloudflare.
-
-
-## 08/11 · Número de teste em todo dado fictício
-- Pedido de Carlos: todo dado fictício do app usa o telefone (48) 99110-6355 — os 50 perfis de exemplo (WhatsApp e telefone, via `scripts/gerar-demo.cjs`) e os números dos testes automáticos.
-- Consequência: perfis de exemplo passam a mostrar "Abrir WhatsApp" no resumo do pedido, que abre o WhatsApp nesse número. O aviso do resumo diz que é perfil de exemplo e que abrir o aplicativo não confirma o envio. Como a demonstração é pública, qualquer visitante que conclua um pedido de teste manda mensagem para esse número.
-- Os textos de exemplo dos campos (placeholders, ex.: "(48) 99999-0000") continuam genéricos, para não parecer que o campo já vem preenchido.
-
-## 08/11 · Sugestões de endereço enquanto digita
-- Pedido de Carlos: ao digitar "flori", sugerir "Florianópolis, Santa Catarina", como no Google.
-- Feito com o Photon (photon.komoot.io, dados do OpenStreetMap): gratuito, sem chave nem cartão, e funciona no GitHub Pages. Fica em `assets/endereco.js`.
-- Campos: endereço do pedido (endereço completo; mantém o número digitado), "Onde?" da página inicial (cidades) e "Cidades onde atende" no cadastro e no perfil do chef (troca só a última cidade da lista).
-- Google Places (o padrão do Google): precisa de projeto no Google Cloud com faturamento (cartão) e chave restrita ao domínio. Há cota gratuita mensal, mas a conta fica sujeita a cobrança acima dela. Se Carlos quiser, troca-se só a função `buscar()` de `endereco.js`.
-- Limite: o Photon público é um serviço comunitário sem garantia de disponibilidade; se falhar, o campo continua funcionando como texto normal.
-
-## 08/11 · Login com Google
-- Carlos escolheu o login com Google (Microsoft fica para depois).
-- Só para chefs; clientes continuam sem login. Criar conta com Google ainda exige o código de convite, WhatsApp e aceite dos termos (dados pedidos antes de ir ao Google).
-- Fluxo OpenID Connect com código + PKCE no servidor (Pages Functions): estado de uso único guardado no D1 (10 min) e preso ao navegador por cookie; id_token obtido direto do Google com o segredo; conferidos aud, iss, validade, nonce e e-mail verificado.
-- Mesmo e-mail de conta existente: o Google é ligado a essa conta (não duplica). Conta criada pelo Google não tem senha; login por senha nela orienta a usar o Google.
-- Liga só com GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET; sem elas, nada muda. Banco: `migrations/0002_google.sql`.
-
-
-## 09/11 · Pausar e excluir conta
-- Pausar usa a coluna `publicado` já existente: o chef pausado sai da lista e não recebe pedidos, sem perder dados. Excluir apaga de vez perfil, fotos, pedidos e sessões.
-- Versão real reconhecida pelo domínio e pela resposta da API; a demonstração do GitHub Pages continua com os 50 perfis de exemplo.
-
-## 09/11 · Identidade visual
-- Novo símbolo escolhido: cloche dentro da casa (une chef e casa), no cabeçalho e no ícone da aba. Frase sob o nome: "Personal chefs e marmitas na sua casa". Cores mantidas.
-
-
-## 09/11 · Perfil só aparece quando pronto
-- O chef só aparece aos clientes e só recebe pedidos com foto, ao menos um prato e cidade (regra em C.faltaPerfil, aplicada no servidor). O painel mostra o que falta.
-
-
-## 09/11 · Mediação e comissão
-- Ideia de o app intermediar pagamentos e ficar com um percentual cancelada por enquanto. O app continua vitrine, com contato direto pelo WhatsApp e sem comissão.
-
-## 09/11 · Aba Serviços
-- A aba Marmitas virou Serviços (Noite do Lanche, Noite da Pizza, Lounge, cardápio temático, jantar a dois, almoço em família, encontro com amigos, celebração e marmitas; o chef marca as experiências que oferece em Painel > Atendimento), para marmita ser complemento, não o foco. Frase sob o nome: "Personal chefs na sua casa".
-
-## 09/11 · Mais experiências em Serviços
-- Acrescentadas Noite do Boteco, Churrasco em casa, Sequência de frutos do mar, Noite da Tainha, Noite do Fondue e Aula com o chef. Sugestão a validar com os chefs do piloto; referência: página da Take a Chef em Florianópolis.
-## 09/11 · Cadastro de chef aberto (sem código de convite)
-- Pedido de Carlos: tirar o código de convite e oferecer o Google para entrar e para criar conta.
-- O código virou opcional: só é exigido se a variável `CONVITE` existir na Cloudflare. Sem ela, qualquer pessoa cria conta de chef (Google ou e-mail e senha). `/api/saude` informa `convite: true/false` e o app esconde o campo quando não é exigido.
-- Para fechar o cadastro de novo no futuro, basta recriar a variável `CONVITE`.
-- Risco aceito: perfis falsos ou de teste podem aparecer; continua valendo o limite de tentativas e a regra de só mostrar perfis prontos.
-
-## 10/11 · Catálogo de pratos clássicos
-- Pedido feito na sessão do Claude Code: oferecer aos chefs uma lista grande de pratos conhecidos para escolher ao cadastrar. Confirmar com Carlos.
-- O catálogo traz só nome, categoria e cozinha, escritos para o projeto. Nenhum texto foi copiado de livros (o pedido citava "Chef Profissional") nem de sites: nomes de pratos são de uso comum, mas receitas, descrições e a organização de um livro têm direito autoral.
-- É sugestão, não lista fechada: o chef continua podendo escrever qualquer nome. Descrição e preço são sempre do chef.
-- O arquivo (cerca de 36 KB) carrega junto com o app, também para clientes; se pesar, passar a carregar só no painel.
-
-## 10/11 · Site fechado com senha no período de testes
-- Pedido feito na sessão do Claude Code: deixar o site fechado para teste, abrindo só com uma senha. Confirmar com Carlos.
-- Feito com `functions/_middleware.js`: se a variável secreta `SENHA_SITE` existir na Cloudflare, tudo pede a senha; sem ela, o site fica aberto como antes. A senha fica só na Cloudflare, fora do código e dos documentos (que hoje são públicos pelo GitHub Pages).
-- É uma porta simples, com uma senha só para todos; não é controle de acesso por pessoa. Alternativa mais forte, se precisar: Cloudflare Access.
-- Não cobre a demonstração do GitHub Pages nem as prévias de branch.
-
-## 10/11 · Vitrine do chef
-- Pedido feito na sessão do Claude Code: o chef compartilhar o perfil como uma página bonita, "como se fosse um site próprio do chef". Confirmar com Carlos.
-- A vitrine fica no link que o app já compartilhava (`/c/<id>`). A marca em destaque é o nome do chef; a plataforma aparece só no rodapé, com o aviso de que é uma vitrine.
-- Texto em primeira pessoa (o chef falando), usando só o que o chef já preencheu no perfil; nada é inventado sobre ele.
-- Preços aparecem como "referência por pessoa", com aviso de que o valor final é combinado.
-
-## 10/11 · Verde mais escuro na identidade
-- Pedido feito na sessão do Claude Code: usar em todo o projeto o verde escuro da tela de senha, no lugar do verde anterior. Confirmar com Carlos.
-- Verde da marca `--ol`: de `#304e3b` para `#1c2520`; cor do texto `--ink`: de `#283b30` para `#202b25`; tom de realce escuro: de `#1d3226` para `#141a17`. Terracota, dourado e fundos claros não mudaram.
-- O brandbook (Design System no Claude) ainda mostra o verde antigo e precisa ser atualizado por quem o mantém.
-
-## 10/11 · Site aberto de novo
-- Pedido feito na sessão do Claude Code: remover a senha do site principal. Com isso o site fica público, com cadastro de chef aberto (sem convite). Confirmar com Carlos.
-
-## 10/11 · Nova senha e exclusão pela equipe
-- Pedido feito na sessão do Claude Code. Confirmar com Carlos.
-- Senha esquecida: em vez de a equipe definir uma senha, ela gera um link de uso único (48 horas) e o chef cria a própria senha. Resolve a troca de senha sem depender de envio de e-mail.
-- Risco aceito: quem tiver o link entra na conta; por isso a tela pede para enviar só ao próprio chef. Gerar um link novo invalida o anterior.
-- Exclusão pela equipe apaga tudo de vez, como a exclusão feita pelo próprio chef.
-
-
-## 15/11/2026 — Tela de acesso administrativo
-- Carlos pediu que o acesso ao administrador tenha somente a área de acesso, sem o cabeçalho e a navegação pública. Aplicado à tela restrita e ao formulário de login administrativo; a administração autenticada preserva sua navegação.
-
-
-## 20/11 · Administração exclusiva
-- Só a conta de Carlos administra o site; a lista ADMIN_EMAILS não dá mais acesso. Publicado a pedido da Fer, ciente de que ela perde o acesso ao /admin.
-
-## 23/11/2026 · Proposta visual para a página inicial
-- Ameixa, lavanda e verde pera diferenciam o Seu Chef em Casa do projeto Seu Restaurante Online. Prévia sujeita à aprovação do Carlos antes de publicar.
+## 23/11/2026 · Identidade em todas as telas e menus especiais
+- Carlos escolheu **verde oliva, marfim e vinho discreto**, substituindo a proposta inicial ameixa/lavanda/pera. Identidade aplicada também a busca, serviços, perfil, orçamento, acesso, configurações, painel do chef, administração e vitrine compartilhável.
+- Recurso aprovado na conversa: menus por ocasião, com cardápio, preço/base explícita, quantidade, modo de atendimento, inclusões e prazo; divulgação por PNG quadrado/feed/story e mensagem com link próprio. Não exige geração por IA para cada arte.
+- Datas comemorativas ficam reunidas em Menus especiais, dentro de Serviços e com entrada na página inicial. Não se cria uma aba permanente para cada feriado.
 
 ## 23/11/2026 · Ajustes técnicos e UX pós-auditoria do Chef
 - Criação estática de robots.txt e sitemap.xml para desarmar o fallback de SPA no Cloudflare Pages para essas rotas e garantir leitura pelos crawlers.
 - Limpar busca: botão de estado vazio passa a disparar a ação de limpeza de filtros em vez de ser um link passivo para #/buscar.
 - Termos de uso reposicionados no fim do formulário de cadastro, respeitando a convenção de mercado.
+
+## 24/11/2026 · Mercado Corporativo e Blindagem Fiscal
+- O Seu Chef em Casa atua estritamente como vitrine de divulgação e ponte de contato entre clientes e chefs.
+- A plataforma não tem relação jurídica com a emissão de Notas Fiscais dos serviços gastronômicos contratados.
+- Cada chef cadastrado (PJ / MEI) é o único responsável legal pela prestação do serviço e pela emissão da Nota Fiscal diretamente à empresa ou cliente contratante.
+- Inclusão dos filtros e sinalizações "Corporativo & Empresas" e "Emite Nota Fiscal (PJ)".
+
+## 24/11/2026 · Perfil do Chef Estilo Instagram com Bio Recolhível
+- Previa dos chefs e perfil individual redesenhados com referências ao Instagram (anel de avatar, badges PJ, alinhamento limpo, botões de ação horizontais).
+- Textos de apresentação (bio) extensos são limitados com "ver mais" / "ver menos" para evitar poluição visual e páginas excessivamente compridas.

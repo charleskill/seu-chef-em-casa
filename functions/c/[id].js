@@ -24,23 +24,23 @@ const CABECALHOS = {
   'content-security-policy': "default-src 'none'; img-src 'self' data: https://images.unsplash.com; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 };
 
-const SERIFA = 'Georgia,"Times New Roman",serif';
+const SERIFA = 'Palatino,"Palatino Linotype",Georgia,serif';
 const ESTILO = [
   '*{box-sizing:border-box}html{scroll-behavior:smooth}',
-  'body{margin:0;background:#f6f3ec;color:#26342c;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}',
+  'body{margin:0;background:#f6f3eb;color:#303629;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}',
   'img{display:block;max-width:100%}a{color:inherit}',
   '.l{width:100%;max-width:1040px;margin:0 auto;padding:0 22px}',
   'h1,h2,h3{font-family:' + SERIFA + ';font-weight:400;margin:0;text-wrap:balance}',
-  '.olho{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:#a5583c;margin:0 0 12px}',
+  '.olho{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:#754653;margin:0 0 12px}',
   // Botões
   '.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:13px 26px;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1px solid transparent;transition:background .2s,color .2s,border-color .2s}',
-  '.b1{background:#a5583c;color:#fff}.b1:hover{background:#8f4a31}',
-  '.b2{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}.b2:hover{background:#fff;color:#26342c}',
-  '.b3{background:transparent;color:#1c2520;border-color:#1c2520}.b3:hover{background:#1c2520;color:#fff}',
+  '.b1{background:#754653;color:#fff}.b1:hover{background:#613744}',
+  '.b2{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}.b2:hover{background:#fff;color:#303629}',
+  '.b3{background:transparent;color:#455238;border-color:#455238}.b3:hover{background:#455238;color:#fff}',
   '.b:focus-visible{outline:3px solid #e2c48f;outline-offset:3px}',
   '.acoes{display:flex;flex-wrap:wrap;gap:12px}',
   // Capa
-  '.capa{position:relative;min-height:88vh;display:flex;flex-direction:column;color:#fff;background:#1c2520;overflow:hidden}',
+  '.capa{position:relative;min-height:88vh;display:flex;flex-direction:column;color:#fff;background:#455238;overflow:hidden}',
   '.capa>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}',
   '.capa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,20,17,.62) 0%,rgba(15,20,17,.18) 30%,rgba(15,20,17,.55) 62%,rgba(15,20,17,.92) 100%)}',
   '.topo{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:22px;padding-bottom:22px}',
@@ -62,7 +62,7 @@ const ESTILO = [
   '.prato small{display:block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#7b857c;margin-bottom:4px}',
   '.prato h3{font-size:1.28rem;line-height:1.3}',
   '.prato p{margin:6px 0 0;color:#56635a;font-size:.96rem}',
-  '.prato span{display:block;margin-top:8px;font-size:.88rem;color:#a5583c;font-weight:600}',
+  '.prato span{display:block;margin-top:8px;font-size:.88rem;color:#754653;font-weight:600}',
   '.nota{margin:22px 0 0;font-size:.88rem;color:#6a756c;max-width:44em}',
   // Fotos
   '.fotos{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}',
@@ -71,16 +71,16 @@ const ESTILO = [
   '.fotos figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;font-size:.82rem;line-height:1.35;color:#fff;background:linear-gradient(180deg,rgba(15,20,17,0),rgba(15,20,17,.78))}',
   // Como trabalho
   '.lista{list-style:none;margin:0;padding:0;display:grid;gap:12px 40px}',
-  '.lista li{position:relative;padding-left:28px}.lista li::before{content:"";position:absolute;left:2px;top:.52em;width:12px;height:7px;border-left:2px solid #a5583c;border-bottom:2px solid #a5583c;transform:rotate(-45deg)}',
+  '.lista li{position:relative;padding-left:28px}.lista li::before{content:"";position:absolute;left:2px;top:.52em;width:12px;height:7px;border-left:2px solid #754653;border-bottom:2px solid #754653;transform:rotate(-45deg)}',
   '.exp{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.exp span{border:1px solid rgba(28,37,32,.4);border-radius:999px;padding:8px 18px;font-size:.92rem}',
   // Passos
   '.passos{counter-reset:p;list-style:none;margin:0;padding:0;display:grid;gap:30px}',
-  '.passos li{counter-increment:p}.passos li::before{content:"0" counter(p);display:block;font-family:' + SERIFA + ';font-size:1.5rem;color:#a5583c;margin-bottom:6px}',
+  '.passos li{counter-increment:p}.passos li::before{content:"0" counter(p);display:block;font-family:' + SERIFA + ';font-size:1.5rem;color:#754653;margin-bottom:6px}',
   '.passos b{display:block;font-family:' + SERIFA + ';font-weight:400;font-size:1.2rem;margin-bottom:4px}.passos span{color:#56635a;font-size:.96rem}',
   // Chamada final e rodapé
-  '.final{background:#1c2520;color:#f3eee4;text-align:center;padding:84px 0;border:0}',
+  '.final{background:#455238;color:#f3eee4;text-align:center;padding:84px 0;border:0}',
   '.final h2{margin-bottom:12px}.final p{margin:0 auto 30px;color:#c9c3b6;max-width:30em}.final .acoes{justify-content:center}.final .olho{color:#e2c48f}',
-  'footer{background:#141a17;color:#9aa39b;font-size:.84rem;padding:28px 0 96px;text-align:center}footer p{margin:0 0 6px}footer a{color:#c9c3b6}',
+  'footer{background:#354229;color:#9aa39b;font-size:.84rem;padding:28px 0 96px;text-align:center}footer p{margin:0 0 6px}footer a{color:#c9c3b6}',
   // Barra fixa no celular
   '.barra{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(246,243,236,.96);border-top:1px solid rgba(28,37,32,.18)}',
   '.barra .b{flex:1;min-height:48px;padding:10px 12px;font-size:.92rem}',
@@ -121,7 +121,7 @@ const EXEMPLO = {
 function indisponivel(origem) {
   const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">'
     + '<title>' + e(PADRAO.titulo) + '</title><meta property="og:title" content="' + e(PADRAO.titulo) + '"><meta property="og:description" content="' + e(PADRAO.desc) + '"><meta property="og:image" content="' + e(PADRAO.imagem) + '">'
-    + '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f6f3ec;color:#26342c;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:24px;text-align:center}h1{font-family:' + SERIFA + ';font-weight:400;font-size:1.8rem;margin:0 0 10px}p{margin:0 0 24px;color:#56635a}a{display:inline-block;padding:13px 26px;border-radius:999px;background:#a5583c;color:#fff;text-decoration:none;font-weight:600}</style></head>'
+    + '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f6f3eb;color:#303629;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:24px;text-align:center}h1{font-family:' + SERIFA + ';font-weight:400;font-size:1.8rem;margin:0 0 10px}p{margin:0 0 24px;color:#56635a}a{display:inline-block;padding:13px 26px;border-radius:999px;background:#754653;color:#fff;text-decoration:none;font-weight:600}</style></head>'
     + '<body><main><h1>Este perfil não está disponível</h1><p>O chef pode ter pausado a página ou o endereço mudou.</p><a href="' + e(origem + '/#/buscar') + '">Conhecer outros chefs</a></main></body></html>';
   return new Response(html, { status: 404, headers: { ...CABECALHOS, 'cache-control': 'no-store' } });
 }
@@ -166,7 +166,7 @@ export async function onRequest({ request, env, params }) {
     + (zap ? '<a class="b ' + (claro ? 'b2' : 'b3') + '" href="' + e(zap) + '" target="_blank" rel="noopener">Conversar no WhatsApp</a>' : '') + '</div>';
 
   const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-    + '<title>' + e(titulo) + '</title><meta name="description" content="' + e(desc) + '"><meta name="theme-color" content="#1c2520">'
+    + '<title>' + e(titulo) + '</title><meta name="description" content="' + e(desc) + '"><meta name="theme-color" content="#455238">'
     + '<meta property="og:type" content="profile"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Seu Chef em Casa">'
     + '<meta property="og:title" content="' + e(titulo) + '"><meta property="og:description" content="' + e(desc) + '">'
     + '<meta property="og:image" content="' + e(capa || PADRAO.imagem) + '"><meta property="og:url" content="' + e(esteLink) + '">'
