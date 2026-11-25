@@ -5,7 +5,7 @@
   const BASE = '/api';
   async function req(metodo, rota, corpo, opts = {}) {
     const r = await fetch(BASE + rota, {
-      method: metodo, credentials: 'same-origin', keepalive: !!opts.keepalive,
+      method: metodo, signal: opts.signal, credentials: 'same-origin', keepalive: !!opts.keepalive,
       headers: corpo ? { 'content-type': 'application/json' } : {},
       body: corpo ? JSON.stringify(corpo) : undefined
     });
@@ -19,17 +19,18 @@
     temConvite: false,
     // Descobre se há banco e traz chefs reais e a sessão do chef (se houver).
     async start() {
+      const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 8000);
       try {
-        const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 4000);
-        const r = await fetch(BASE + '/saude', { signal: ctl.signal, credentials: 'same-origin' }); clearTimeout(t);
+        const r = await fetch(BASE + '/saude', { signal: ctl.signal, credentials: 'same-origin' });
         const saude = r.ok ? await r.json() : null;
         if (!saude || !saude.ok) return null;
         Cloud.temGoogle = !!saude.google;
         Cloud.temConvite = !!saude.convite;
+        const [lista, eu] = await Promise.all(['/chefs', '/eu'].map(rota => req('GET', rota, null, { signal: ctl.signal })));
+        Cloud.on = true;
+        return { chefs: lista.chefs || [], me: eu.chef || null };
       } catch (e) { return null; }
-      const [lista, eu] = await Promise.all([req('GET', '/chefs'), req('GET', '/eu')]);
-      Cloud.on = true;
-      return { chefs: lista.chefs || [], me: eu.chef || null };
+      finally { clearTimeout(t); }
     },
     dashboard: (inicio,fim) => req('GET', '/admin/dashboard?'+new URLSearchParams({inicio,fim})),
     site: () => req('GET', '/site'),

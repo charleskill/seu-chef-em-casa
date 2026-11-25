@@ -19,3 +19,10 @@ test('endereço: loja no endereço digitado vira só o endereço',()=>{
   const it=E.item(F({type:'house',name:'Banco do Brasil',street:'Rua Bocaiúva',housenumber:'2468',district:'Centro',city:'Florianópolis',state:'Santa Catarina'}),'endereco','rua bocaiuva 2468');
   assert.equal(it.valor,'Rua Bocaiúva, 2468, Centro, Florianópolis - SC');
 });
+
+test('cadastro: sugestões aceitam municípios de SC e descartam os de outros estados',()=>{
+  assert.equal(E.item(F({type:'city',name:'Florianópolis',state:'Santa Catarina'}),'cidade-sc','florian').valor,'Florianópolis');
+  const parana=F({type:'city',name:'São José dos Pinhais',state:'Paraná'});
+  assert.equal(E.item(parana,'cidade-sc','são josé'),null);
+  assert.equal(E.item(parana,'cidade','são josé').valor,'São José dos Pinhais');
+});

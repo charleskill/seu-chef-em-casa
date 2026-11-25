@@ -20,7 +20,7 @@
     const cidade = ehCidade ? p.name : (p.city || p.county || '');
     const estado = uf(p.state);
     if (modo !== 'endereco') {
-      if (!ehCidade || !p.name) return null;
+      if (!ehCidade || !p.name || (modo === 'cidade-sc' && estado !== 'SC')) return null;
       return { titulo: p.name, detalhe: [p.state, 'Brasil'].filter(Boolean).join(', '), valor: p.name };
     }
     let rua = p.street || '', nome = p.name || '';
@@ -43,7 +43,7 @@
     u.searchParams.set('q', texto); u.searchParams.set('limit', '10');
     // Prioriza a Grande Florianópolis e limita ao Brasil.
     u.searchParams.set('lat', '-27.6'); u.searchParams.set('lon', '-48.6');
-    u.searchParams.set('bbox', '-74,-34,-34,6');
+    u.searchParams.set('bbox', modo === 'cidade-sc' ? '-54,-30,-48,-25.8' : '-74,-34,-34,6');
     if (modo !== 'endereco') ['city', 'locality'].forEach(l => u.searchParams.append('layer', l));
     const r = await fetch(u, { signal: sinal });
     if (!r.ok) throw new Error('sem sugestões');
@@ -115,7 +115,8 @@
     const caixa = document.createElement('div'); caixa.className = 'cid-box';
     const lista = document.createElement('div'); lista.className = 'cid-lista';
     const novo = document.createElement('input');
-    novo.type = 'text'; novo.id = campo.id + '_novo'; novo.dataset.endereco = 'cidade'; novo.autocomplete = 'off'; novo.setAttribute('enterkeyhint', 'done');
+    const somenteSC = campo.hasAttribute('data-cidade-sc');
+    novo.type = 'text'; novo.id = campo.id + '_novo'; novo.dataset.endereco = somenteSC ? 'cidade-sc' : 'cidade'; novo.autocomplete = 'off'; novo.setAttribute('enterkeyhint', 'done');
     const rotulo = document.querySelector('label[for="' + campo.id + '"]'); if (rotulo) rotulo.htmlFor = novo.id;
     let cidades = String(campo.value || '').split(/[,;&]|\s+e\s+/).map(v => v.trim()).filter(Boolean);
     function desenhar() {
@@ -126,7 +127,7 @@
         x.addEventListener('click', () => { cidades.splice(i, 1); salvar(); novo.focus(); });
         s.appendChild(x); lista.appendChild(s);
       });
-      novo.placeholder = cidades.length ? 'Adicionar outra cidade' : 'Digite e escolha uma cidade';
+      novo.placeholder = cidades.length ? 'Adicionar outra cidade' : somenteSC ? 'Digite e escolha uma cidade de SC' : 'Digite e escolha uma cidade';
     }
     function salvar() {
       desenhar(); campo.value = cidades.join(', ');
@@ -140,10 +141,10 @@
     };
     novo.addEventListener('keydown', e => {
       if (e.defaultPrevented) return;
-      if (e.key === 'Enter' || e.key === ',') { if (novo.value.trim() || e.key === ',') { e.preventDefault(); novo.adicionarCidade(novo.value); } }
+      if (e.key === 'Enter' || e.key === ',') { if (novo.value.trim() || e.key === ',') { e.preventDefault(); if (!somenteSC) novo.adicionarCidade(novo.value); } }
       else if (e.key === 'Backspace' && !novo.value && cidades.length) { cidades.pop(); salvar(); }
     });
-    novo.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== novo && novo.value.trim()) novo.adicionarCidade(novo.value); }, 200));
+    if (!somenteSC) novo.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== novo && novo.value.trim()) novo.adicionarCidade(novo.value); }, 200));
     caixa.append(lista, novo); campo.hidden = true; campo.after(caixa); desenhar();
   }
 
@@ -155,10 +156,12 @@
   document.addEventListener('input', e => {
     const el = e.target; if (!el.matches || !el.matches('input[data-endereco]') || !e.isTrusted) return;
     preparar(el); clearTimeout(timer); if (ctl) ctl.abort();
+    const n = ++seq;
+    fechar();
     const t = trecho(el).texto.trim();
     if (t.length < 3) { fechar(); return; }
     timer = setTimeout(async () => {
-      const n = ++seq; ctl = new AbortController();
+      ctl = new AbortController();
       try {
         const itens = await buscar(t, el.dataset.endereco, ctl.signal);
         if (n !== seq || document.activeElement !== el) return;
@@ -171,10 +174,10 @@
     const n = atual.itens.length;
     if (e.key === 'ArrowDown') { e.preventDefault(); atual.sel = (atual.sel + 1) % n; desenhar(); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); atual.sel = (atual.sel - 1 + n) % n; desenhar(); }
-    else if (e.key === 'Enter' && (atual.sel >= 0 || atual.el.adicionarCidade)) { e.preventDefault(); escolher(Math.max(atual.sel, 0)); }
+    else if (e.key === 'Enter' && (atual.sel >= 0 || (atual.el.adicionarCidade && atual.el.dataset.endereco !== 'cidade-sc'))) { e.preventDefault(); escolher(Math.max(atual.sel, 0)); }
     else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); fechar(); }
   }, true);
-  document.addEventListener('focusout', e => { if (atual && e.target === atual.el) setTimeout(fechar, 150); });
+  document.addEventListener('focusout', e => { if (atual && e.target === atual.el) { const lista = atual; setTimeout(() => { if (atual === lista) fechar(); }, 150); } });
   window.addEventListener('hashchange', fechar);
   window.addEventListener('resize', () => { if (atual) desenhar(); });
   document.addEventListener('scroll', () => { if (atual) caixa(atual.el); }, true);

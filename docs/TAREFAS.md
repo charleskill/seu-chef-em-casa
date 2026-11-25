@@ -435,3 +435,13 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - 25/11/2026: Sentry ligado no site (aviso de erros dos visitantes). Conta pelo GitHub, organização seu-chef-em-casa, projeto JavaScript do navegador. CSP liberada para sentry-cdn e ingest.us.sentry.io.
 - 25/11/2026: "Esqueci minha senha" mostra botão do Instagram quando não há WhatsApp nem e-mail de suporte. robots.txt, sitemap e Limpar busca conferidos no ar (já corrigidos).
 - 25/11/2026: SEO, branch seo-indexavel (PR, sem merge): perfil do chef em /chef/<nome>-<6 hex do id> montado no servidor (title, description, canonical, Open Graph, JSON-LD Person + Menu + Breadcrumb); /c/<id> redireciona 301; páginas /personal-chef/<cidade> (21 cidades de SC) e /servicos/<experiência> (51), com noindex enquanto não houver chef real; sitemap.xml gerado do banco; robots.txt bloqueia /api e /acesso; 404 de verdade (404.html); capa da home sem lazy e com preload (LCP no celular). Botão Compartilhar do app usa o endereço novo. Verificado: npm run check, npm test (82, 5 novos em tests/seo.test.cjs), npm run build e rotas no wrangler pages dev (sem banco).
+
+
+## Entrega em revisão — 25/11/2026: correções da jornada
+- Origem: `origin/main` em `91f551c`. Itens 3–7 e 12–15 do relatório em `teste-jornada`.
+- Foto de perfil com recorte quadrado, guia circular, arraste, setas e zoom. O pedido sugere nome e WhatsApp da conta de cliente e mantém os campos editáveis.
+- Aceite da cliente menciona o chef. O cadastro do chef só adiciona cidades de SC escolhidas nas sugestões, sem gravar texto incompleto.
+- Cadastro e redefinição mostram as regras conforme a pessoa digita e barram senhas com menos de 10 caracteres ou padrões óbvios no formulário. A API conserva a regra anterior.
+- Painéis têm saída visível. O perfil tem confirmação própria, o aviso de recursos futuros saiu e a tela de conexão só mostra mensagem se falhar.
+- Verificação local: `npm run check`, `npm test` (83 testes), `npm run build` e `git diff --check`. Fluxos completos em navegador ainda não foram verificados.
+- Prévia: https://correcoes-jornada.seu-chef-em-casa.pages.dev. Produção aguarda aprovação do Carlos.
