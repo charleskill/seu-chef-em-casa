@@ -2,9 +2,9 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
-_24/11/2026, Claude → Codex. Branch: main (tudo publicado, até 3eb06d1)._
-- **No ar:** Google OAuth em produção; Google em um toque + Complete seu cadastro + sino; e-mail temporário bloqueado; conta de cliente (Sou chef / Quero contratar, perfil.tipo); pedido só com conta; perfil do chef estilo Instagram; seguir, curtir e comentar fotos da galeria (tabelas seguidores, curtidas, comentarios criadas pelo servidor; migrations/0005_social.sql). 75 testes.
-- **Falta:** Carlos testar no celular (Android e iPhone) com conta nova: chef, cliente, seguir/curtir/comentar, pedido. Depois: QR code e material da aula do Senac (05/12), 3 posts do Instagram, ensaio com 2-3 pessoas. Termos ainda são rascunho (Diogo revisa; falta e-mail de contato).
+_25/11/2026, Claude. Branch: main (publicado até 56eb95d)._
+- **No ar:** tudo de 24/11 + avisos no sino (seguidor, comentário, pedido), denunciar comentário, aba Comentários no /admin, termos atualizados (rascunho para o Diogo), menu Entrar e pedido em uma coluna no celular. 76 testes. Material da aula em docs/aula-senac (QR, artes, roteiro da omelete). VoiceStudio instalado no PC (VoxCPM2, uso comercial).
+- **Falta:** Carlos esconder os 3 perfis fictícios no /admin; e-mail do domínio (Email Routing da Cloudflare + serviço de envio, com SIM); Diogo revisar termos; teste no celular; slides e pesquisa da aula (05/12).
 - **Próximo comando:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
 
 # Contexto do projeto — Seu Chef em Casa
