@@ -204,6 +204,10 @@ async function verifyPassword(password,account,cryptoApi){
   if(!/^[a-f\d]{64}$/i.test(account.pass)||!c?.subtle)return false;
   return account.pass===hex(await c.subtle.digest('SHA-256',new TextEncoder().encode(account.id+':'+password)));
 }
-const api={faltaPerfil,emailTemporario,norm,email,isAdminEmail,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
+// Endereços para o Google (SEO): /chef/<nome>-<6 primeiros hex do id>, sem mudar o banco.
+const slug=v=>norm(v).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60).replace(/-+$/,'');
+const slugChef=(nome,id)=>{const h=(String(id||'').match(/^chef-([a-f\d]{6})/)||[])[1]||'';return h?(slug(nome)||'chef')+'-'+h:''};
+const idDoSlug=s=>(String(s||'').match(/-([a-f\d]{6})$/)||[])[1]||'';
+const api={slug,slugChef,idDoSlug,faltaPerfil,emailTemporario,norm,email,isAdminEmail,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);

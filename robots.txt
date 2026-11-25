@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /api/
+Disallow: /acesso
 Disallow: /c/exemplo
 
 Sitemap: https://seuchefemcasa.com.br/sitemap.xml

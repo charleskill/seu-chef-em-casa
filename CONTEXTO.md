@@ -2,15 +2,10 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
-_25/11/2026, Claude. Branch: main (publicado até 56eb95d)._
-- **No ar:** tudo de 24/11 + avisos no sino (seguidor, comentário, pedido), denunciar comentário, aba Comentários no /admin, termos atualizados (rascunho para o Diogo), menu Entrar e pedido em uma coluna no celular. 76 testes. Material da aula em docs/aula-senac (QR, artes, roteiro da omelete). VoiceStudio instalado no PC (VoxCPM2, uso comercial).
-- **Falta:** Carlos esconder os 3 perfis fictícios no /admin; e-mail do domínio (Email Routing da Cloudflare + serviço de envio, com SIM); Diogo revisar termos; teste no celular; slides e pesquisa da aula (05/12).
-- **Próximo comando:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
-
-# Contexto do projeto — Seu Chef em Casa
-
-Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `docs/` (PROJETO, TAREFAS, DECISOES, ATIVAR-CLOUDFLARE).
-Atualizado em 15/11/2026 (noite). Leia primeiro a seção logo abaixo.
+_25/11/2026 (noite), Claude. Branch: seo-indexavel (PR aberto, sem merge); main até 4997b2c + plano-seo._
+- **Feito no branch:** passos 1 a 5 do docs/SEO-PLANO.md (perfis /chef/slug no servidor, cidades e serviços com noindex sem chef, sitemap dinâmico, robots, 404, capa mais rápida). Ver docs/TAREFAS.md.
+- **Falta:** Carlos ver a prévia e dar o SIM para o merge; depois Search Console (verificação DNS na Cloudflare, enviar sitemap) com o Carlos. Textos de blog (passo 7) só depois.
+- **Comandos:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
 
 ## Estado em 15/11/2026 (noite), depois do Codex
 - O Codex entregou e publicou (PRs 4 a 15): administração em `/admin` (visão geral, chefs e contas, conteúdo do site; guia em `docs/ADMINISTRACAO.md`), Configurações com Excluir minha conta, 55 serviços com fotos locais em `assets/servicos`, prévia dos serviços na página inicial. Testes: 61.
