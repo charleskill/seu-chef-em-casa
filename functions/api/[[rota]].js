@@ -160,6 +160,8 @@ const doDono = (row, env = {}) => ({ ...publico(row), menus:JSON.parse(row.perfi
 // Layout dos e-mails: tabela com estilos inline (funciona no Gmail, Outlook e celular).
 const escH = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const pEmail = h => '<p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#283b30">' + h + '</p>';
+// Saudação: chef recebe 'Chef Nome' (sem repetir se o nome já começa com Chef); cliente, só o nome.
+const saudacao = perfil => { const n = txt(perfil && perfil.name, 80) || 'Chef'; return perfil && perfil.tipo === 'cliente' ? n : (/^chef\b/i.test(n) ? n : 'Chef ' + n); };
 function layoutEmail(origem, { titulo, corpo, botao, link, nota }) {
   return '<!doctype html><html><body style="margin:0;padding:0;background:#f7f5f0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0;padding:32px 12px"><tr><td align="center">'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fffefb;border-radius:18px;overflow:hidden;border:1px solid #e8e3d8;font-family:Segoe UI,Helvetica,Arial,sans-serif;color:#283b30">'
@@ -175,12 +177,12 @@ function emailPedido(perfil, texto, origem) {
   const data = (String(texto).match(/^(?:Data|Início desejado): (.+)$/m) || [])[1] || '';
   const assunto = 'Novo pedido de orçamento de ' + cliente + (data ? ' para ' + data : '');
   const painel = origem + '/#/painel';
-  const corpoTxt = 'Olá, ' + (perfil.name || 'chef') + '!\n\nVocê recebeu um pedido de orçamento pelo Seu Chef em Casa.\n'
+  const corpoTxt = 'Olá, ' + saudacao(perfil) + '!\n\nVocê recebeu um pedido de orçamento pelo Seu Chef em Casa.\n'
     + 'O cliente deve enviar a mesma mensagem pelo WhatsApp. Se não chegar, você pode responder pelo painel.\n\n'
     + texto + '\n\nVer no painel: ' + painel + '\n';
   const e = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const html = layoutEmail(origem, { titulo: 'Chegou um pedido de orçamento',
-    corpo: pEmail('Olá, ' + e(perfil.name || 'chef') + '!') + pEmail('Um cliente montou um pedido para você no <b>Seu Chef em Casa</b>. Ele também deve te chamar no WhatsApp com a mesma mensagem.')
+    corpo: pEmail('Olá, ' + e(saudacao(perfil)) + '!') + pEmail('Um cliente montou um pedido para você no <b>Seu Chef em Casa</b>. Ele também deve te chamar no WhatsApp com a mesma mensagem.')
       + '<div style="background:#f7f5f0;border-left:3px solid #e9a98f;border-radius:10px;padding:16px 18px;margin:6px 0 10px;white-space:pre-wrap;font-size:14px;line-height:1.6;color:#283b30">' + e(texto) + '</div>',
     botao: 'Ver no painel', link: painel, nota: 'Se a mensagem não chegar no seu WhatsApp, você também pode responder o cliente pelo painel.' });
   return { assunto, texto: corpoTxt, html };
@@ -490,7 +492,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         const token = aleatorio(24), cred = JSON.parse(row.credencial || '{}');
         cred.redefinir = { hash: await sha256(token), expira: Date.now() + 3600e3 };
         await env.DB.prepare('UPDATE chefs SET credencial = ? WHERE id = ?').bind(JSON.stringify(cred), row.id).run();
-        const envio = enviarEmail(env, email, emailSenha(nomeDe(row), new URL(req.url).origin + '/#/nova-senha/' + row.id + '/' + token));
+        const envio = enviarEmail(env, email, emailSenha(saudacao(JSON.parse(row.perfil || '{}')), new URL(req.url).origin + '/#/nova-senha/' + row.id + '/' + token));
         if (typeof waitUntil === 'function') waitUntil(envio); else await envio;
       }
       // Mesma resposta exista ou não a conta, para não revelar quem está cadastrado.

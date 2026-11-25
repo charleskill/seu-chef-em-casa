@@ -92,7 +92,7 @@ test('esqueci a senha: só com e-mail ativo, não revela conta e manda link pelo
   const e2={...env,EMAIL_REMETENTE:'Seu Chef em Casa <avisos@envio.seuchefemcasa.com.br>',RESEND_API_KEY:'re_teste'};
   const r=await call(e2,{email:'fa@example.com'});assert.equal(r.status,200);
   assert.equal(enviados.length,1);assert.equal(enviados[0].u,'https://api.resend.com/emails');assert.deepEqual(enviados[0].b.to,['fa@example.com']);
-  assert.match(enviados[0].b.text,/#\/nova-senha\/chef-4444444444444444\/[a-f\d]{48}/);
+  assert.match(enviados[0].b.text,/#\/nova-senha\/chef-4444444444444444\/[a-f\d]{48}/);assert.match(enviados[0].b.text,/^Olá, Fã!/);
   const r2=await call(e2,{email:'ninguem@example.com'});assert.equal(r2.status,200);assert.equal(enviados.length,1);
  }finally{globalThis.fetch=orig}
 });
