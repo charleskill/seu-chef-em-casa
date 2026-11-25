@@ -431,3 +431,5 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Validação: npm run check, npm test e npm run build.
 
 - 25/11/2026: PR 16 juntado ao main: cartão estilo Instagram + fonte Rethink Sans, capa nova, efeitos e prévia de 3 pratos no cartão.
+
+- 25/11/2026: Sentry ligado no site (aviso de erros dos visitantes). Conta pelo GitHub, organização seu-chef-em-casa, projeto JavaScript do navegador. CSP liberada para sentry-cdn e ingest.us.sentry.io.
