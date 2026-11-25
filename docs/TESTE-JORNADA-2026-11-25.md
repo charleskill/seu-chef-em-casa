@@ -58,3 +58,10 @@ Feed da cliente e área do chef são o mesmo projeto: o chef publica, a cliente 
 ## Resultado final do teste
 - Pedido da Ana chegou no painel do chef (status Novo, Responder no WhatsApp, Copiar pedido).
 - Perfil Rafael Teste pausado: saiu da vitrine e do sitemap; /chef/rafael-teste-be5cd2 dá 404. As contas +chefteste e +clienteteste continuam existindo (excluir quando não forem mais úteis).
+
+## Proposta: bate-papo chef ↔ cliente no site (pedido do Carlos)
+- Uma conversa por orçamento, com o resumo do pedido no topo; histórico guardado; WhatsApp continua como opção.
+- Avisos pelo sino do site e por e-mail (Resend); sem isso a mensagem fica sem ser vista (site não tem notificação no celular).
+- Status do pedido visível: enviado, respondido, combinado (base para avaliações reais e para medir conversão).
+- Cuidados: termos dizem que as mensagens ficam guardadas (Diogo revisa); bloquear e denunciar desde o início; o site não intermedeia pagamento.
+- Ordem sugerida: correções rápidas antes do Senac (05/12); depois, juntos, Meus orçamentos + bate-papo + feed da cliente + área do chef, começando por protótipo para o Carlos aprovar.
