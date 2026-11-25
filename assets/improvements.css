@@ -198,3 +198,251 @@ body.admin-access .card:last-child{margin-bottom:0}
 .how-item p{max-width:43ch}
 @media(max-width:600px){.how-step-heading{margin-bottom:20px}.how-item .how-step-icon{width:58px;height:58px}.how-item{padding-top:24px;padding-bottom:8px}}
 .pw input{padding-right:56px}.pw button{width:44px;height:44px;top:2px;right:2px;display:grid;place-items:center}
+/* Página inicial: ameixa, lavanda e verde pera. */
+.home-page{
+  --mesa-ameixa:#392645;
+  --mesa-tinta:#281e30;
+  --mesa-lavanda:#f2ebf6;
+  --mesa-pera:#dce9a8;
+  --mesa-texto:#5c5063;
+  --mesa-linha:#d9cddd;
+  --ink:var(--mesa-tinta);
+  --mut:var(--mesa-texto);
+  --line:var(--mesa-linha);
+  --cu:var(--mesa-ameixa);
+  --cu2:#523660;
+  --ol:var(--mesa-ameixa);
+  --mesa-titulo:Palatino,"Palatino Linotype",Georgia,serif;
+}
+body:has(.home-page){--ol:#392645;--cu:#392645;--cu2:#523660;--ink:#281e30;--mut:#5c5063;--line:#d9cddd;background:#fcf9fd;color:#281e30}
+body:has(.home-page) .top,
+body:has(.home-page) .nav{background:#fcf9fd;border-color:#e5dce8}
+body:has(.home-page) .brand b{font-family:Palatino,"Palatino Linotype",Georgia,serif}
+body:has(.home-page) .brand small,
+body:has(.home-page) .nav .on,
+body:has(.home-page) .nav .nav-brand{color:#392645}
+body:has(.home-page) .logo{background:#392645}
+body:has(.home-page) .nav a.on{background:#f2ebf6}
+body:has(.home-page) :focus-visible{outline-color:#765487}
+.home-page h1,.home-page h2,.home-page h3{font-family:var(--mesa-titulo)}
+.home-page .hero{
+  grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+  min-height:440px;
+  border-radius:32px 32px 0 0;
+  background:var(--mesa-ameixa);
+}
+.home-page .hero-copy{padding:clamp(28px,3vw,48px);min-width:0}
+.home-page .hero .eyebrow{
+  color:var(--mesa-pera);
+  font-size:14px;
+  letter-spacing:0;
+  text-transform:none;
+  margin-bottom:14px;
+}
+.home-page .hero h1{
+  font-size:clamp(2.65rem,4.2vw,4.5rem);
+  line-height:1.06;
+  letter-spacing:-.045em;
+  max-width:14ch;
+  overflow-wrap:normal;
+  text-wrap:balance;
+}
+.home-page .hero-image img{object-position:50% 32%}
+.home-page .hero p{font-size:16px;color:#f3eaf7;max-width:40ch}
+.home-page .hero .b{background:var(--mesa-pera);color:var(--mesa-tinta);border-radius:999px}
+.home-page .hero .b:hover{background:#edf4cc}
+.home-page .hero-image::after{content:none}
+.home-page .hero-caption{
+  background:#281e30;
+  color:white;
+  max-width:calc(100% - 36px);
+  left:18px;
+  bottom:18px;
+}
+.home-page .home-search{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,1fr) auto;
+  align-items:end;
+  gap:14px;
+  max-width:none;
+  margin:0;
+  padding:18px clamp(16px,3vw,34px) 22px;
+  border:0;
+  border-radius:0 0 24px 24px;
+  background:var(--mesa-lavanda);
+  box-shadow:none;
+}
+.home-page .home-search .hs{width:auto;min-width:0}
+.home-page .home-search .hs label{color:var(--mesa-tinta)}
+.home-page .home-search .hs input{
+  width:100%;
+  min-height:48px;
+  border:1px solid var(--mesa-linha);
+  background:#fff;
+}
+.home-page .home-search .b{width:auto;border-radius:999px}
+.home-page .home-search .b:hover{background:#523660}
+.home-page .home-search input:focus{border-color:#765487;box-shadow:0 0 0 3px #76548718}
+.home-page .home-search input::placeholder{color:#75677c;opacity:1}
+body:has(.home-page) .top .b2:hover{background:#f2ebf6;border-color:#d9cddd}
+body:has(.home-page) ::selection{background:#dce9a8;color:#281e30}
+.home-page .section-heading{margin-top:clamp(38px,6vw,76px)}
+.home-page .section-heading h2{font-size:clamp(2rem,4.1vw,3.3rem);letter-spacing:-.045em}
+.home-page .section-heading .sec{letter-spacing:0;text-transform:none;color:var(--mesa-texto);margin-bottom:7px}
+.home-page .section-heading a{text-decoration:underline;text-underline-offset:4px}
+.home-page .how-grid{padding:10px 0 0}
+.home-page .how-item .how-step-icon{background:var(--mesa-lavanda);border:0;box-shadow:none}
+.home-page .how-item h3{font-size:1.5rem}
+.home-page .home-service-card{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.home-page .home-service-card:hover{transform:none}
+.home-page .home-service-card>img{border-radius:18px 18px 4px 4px;aspect-ratio:4/3}
+.home-page .home-service-card[data-k="x_japonesa"]>img{object-position:50% 58%}
+.home-page .home-service-card[data-k="x_brunch"]>img{object-position:50% 56%}
+.home-page .home-service-copy{padding:14px 1px 0}
+.home-page .home-service-title{font-family:var(--mesa-titulo)}
+.home-page .home-service-title{font-size:clamp(1.25rem,1.85vw,1.65rem);line-height:1.25}
+.home-page .home-service-description{font-size:14px;line-height:1.65}
+.home-page .home-service-card:focus-visible{outline:3px solid #765487;outline-offset:6px;border-radius:18px 18px 4px 4px}
+.home-page .home-service-card:hover .home-service-title{text-decoration:underline;text-underline-offset:4px}
+.home-page .chef-cta{margin-top:clamp(32px,6vw,68px);background:var(--mesa-lavanda)}
+.home-page .chef-cta h2{font-size:clamp(1.8rem,3.5vw,2.75rem)}
+.home-page .chef-cta .b{border-radius:999px}
+.home-page .chef-cta .b:hover{background:#523660}
+@media(min-width:781px) and (max-width:1050px){
+  .home-page .hero{grid-template-columns:1fr 1fr}
+  .home-page .hero-copy{padding:28px}
+  .home-page .hero h1{font-size:clamp(2.25rem,4.7vw,3rem)}
+  .home-page .home-search{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .home-page .home-search .b{grid-column:1/-1;justify-self:end;min-width:150px}
+}
+@media(max-width:780px){
+  .home-page .hero{grid-template-columns:1fr;min-height:0;border-radius:24px 24px 0 0}
+  .home-page .hero-image{grid-row:1;min-height:0;aspect-ratio:4/3}
+  .home-page .hero-copy{padding:28px 24px 30px}
+  .home-page .hero h1{max-width:15ch}
+  .home-page .home-search{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .home-page .home-search .hs:first-child{grid-column:1/-1}
+  .home-page .home-search .b{grid-column:1/-1}
+}
+@media(max-width:600px){
+  .home-page .hero h1{font-size:clamp(2.15rem,10.5vw,2.85rem);letter-spacing:-.04em}
+  .home-page .hero p{font-size:15px;line-height:1.7}
+  .home-page .hero-caption{font-size:11px;line-height:1.5;padding:8px 11px;bottom:12px;left:12px;max-width:calc(100% - 24px)}
+  .home-page .home-search{padding:20px 16px;gap:16px 12px}
+  .home-page .home-search input{font-size:16px;min-width:0}
+  .home-page .home-search .b{width:100%;min-height:48px}
+  .home-page .home-service-title{font-size:21px}
+  .home-page .home-service-description{font-size:13px}
+}
+@media(max-width:650px){
+  .home-page .how-item h3{display:block;margin-left:0}
+  .home-page .how-step-heading{margin-bottom:12px}
+}
+@media(max-width:360px){
+  .home-page .hero h1{font-size:2.35rem}
+  .home-page .home-services-grid{grid-template-columns:1fr}
+}
+@media(max-width:1199px){
+  #view>.wrap{padding-bottom:calc(var(--nav) + 36px + env(safe-area-inset-bottom,0px))}
+}
+
+/* Cidades em destaque na Home */
+.home-cidades{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:12px 0 28px}
+.home-cidades-label{font-size:12px;color:var(--mut);font-weight:600}
+.home-cidades-list{display:flex;flex-wrap:wrap;gap:6px}
+
+/* Bloco Corporativo na Home */
+.home-corp{background:linear-gradient(135deg,#1c2520 0%,#28382e 100%);color:#fff;border-radius:20px;padding:36px;margin:38px 0;display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
+.home-corp h2{color:#fff;font-size:clamp(1.5rem,2.8vw,2.2rem);margin:8px 0 14px}
+.home-corp p{color:#d5dfd3;font-size:14px;line-height:1.7;margin-bottom:20px}
+.home-corp .eyebrow{color:#d2ba8e}
+.home-corp-badges{display:flex;flex-direction:column;gap:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:20px}
+.home-corp-badges div{border-left:3px solid #d2ba8e;padding-left:12px}
+.home-corp-badges b{display:block;font-size:14px;color:#fff}
+.home-corp-badges small{color:#b6c5b4;font-size:12px}
+@media(max-width:780px){
+  .home-corp{grid-template-columns:1fr;padding:24px}
+}
+
+/* FAQ na Home */
+.home-faq{margin:40px 0}
+.faq-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.faq-item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 20px;transition:border-color .2s}
+.faq-item[open]{border-color:var(--cu)}
+.faq-item summary{cursor:pointer;font-weight:600;list-style:none;display:flex;align-items:center;justify-content:space-between}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary h3{font-size:15px;font-family:inherit;font-weight:600;margin:0;color:var(--ink)}
+.faq-item summary::after{content:'+';font-size:18px;color:var(--cu);font-weight:700}
+.faq-item[open] summary::after{content:'−'}
+.faq-item p{font-size:14px;color:var(--mut);line-height:1.7;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+
+/* Estilo Instagram para Previa dos Chefs */
+.insta-card{border:1px solid var(--line);border-radius:18px;background:var(--paper);box-shadow:0 4px 16px rgba(28,37,32,0.04);transition:transform .25s ease,box-shadow .25s ease;overflow:hidden;display:flex;flex-direction:column}
+.insta-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(28,37,32,0.1)}
+.insta-card-header{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--paper)}
+.insta-avatar-wrap{position:relative;flex:none}
+.insta-av{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--cu);padding:1.5px;background:white}
+.insta-user-info{flex:1;min-width:0}
+.insta-user-name{display:flex;align-items:center;gap:6px}
+.insta-user-name h3{font-size:15px;font-weight:700;color:var(--ink);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:system-ui,-apple-system,sans-serif}
+.insta-badge{font-size:10px;font-weight:700;background:#eef3eb;color:#2e5934;border-radius:4px;padding:1px 5px;letter-spacing:0.5px}
+.insta-location{font-size:12px;color:var(--mut);margin:2px 0 0;display:flex;align-items:center;gap:4px}
+.insta-dots{color:var(--mut);font-size:18px;letter-spacing:1px;padding-left:4px}
+.insta-cover{height:220px;background:#202b25;position:relative;overflow:hidden}
+.insta-cover img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.insta-card:hover .insta-cover img{transform:scale(1.03)}
+.insta-content{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1}
+.insta-stats-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--mut);margin-bottom:10px}
+.insta-stats-bar b{color:var(--ink)}
+.tag-corp{font-size:10px;font-weight:600;background:#e6ebf5;color:#2b4570;border-radius:4px;padding:2px 6px;text-transform:uppercase}
+.insta-caption{font-size:13.5px;line-height:1.5;color:var(--ink);margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
+.insta-caption b{font-weight:700;margin-right:5px;color:var(--ink)}
+.insta-foot{margin-top:auto;border-top:1px solid var(--line);padding-top:12px;display:flex;align-items:center;justify-content:space-between;font-size:12px}
+.insta-foot span{color:var(--mut)}
+.insta-foot b{color:var(--cu);font-weight:600}
+
+/* Perfil do Chef Estilo Instagram */
+.profile-insta-top{display:flex;align-items:center;gap:20px;margin-bottom:16px}
+.profile-av-wrap{position:relative;flex:none}
+.profile-insta-av{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid var(--cu);padding:2px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+.profile-insta-copy{flex:1;min-width:0}
+.profile-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.profile-title-row h1{font-size:22px;margin:0;font-weight:700;color:var(--ink)}
+.profile-spec{font-size:14px;color:var(--ink);margin:0 0 4px}
+.profile-loc{font-size:13px;color:var(--mut);margin:0 0 10px;display:flex;align-items:center;gap:4px}
+.profile-insta-stats{display:flex;gap:16px;font-size:13px;color:var(--mut);padding:8px 0 0;border-top:1px solid var(--line)}
+.profile-insta-stats span{display:inline-flex;gap:4px}
+.profile-insta-stats b{color:var(--ink);font-weight:700}
+.profile-bio{font-size:14px;line-height:1.6;color:var(--ink);margin:14px 0 18px}
+.bio-more-btn{background:none;border:none;padding:0;margin-left:4px;color:var(--mut);font-weight:600;font-size:13px;cursor:pointer;text-decoration:underline}
+.bio-more-btn:hover{color:var(--cu)}
+.profile-insta-acts{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.profile-insta-acts .flex-btn{flex:1 1 auto;min-width:140px;justify-content:center}
+.profile-insta-tabs{margin-top:24px;border-top:1px solid var(--line);padding-top:12px}
+
+@media(max-width:540px){
+  .profile-insta-top{gap:14px}
+  .profile-insta-av{width:76px;height:76px}
+  .profile-title-row h1{font-size:19px}
+  .profile-insta-stats{gap:10px;font-size:12px}
+  .profile-insta-acts .flex-btn{flex:1 1 100%}
+}
+
+
+/* Como funciona em cartões numerados e mais respiro antes dos Serviços (24/11/2026) */
+.home-page .how-cards{list-style:none;margin:0;padding:10px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.home-page .how-cards .how-item{background:#fffefb;border:1px solid var(--line);border-radius:18px;padding:26px 26px 28px;transition:transform .2s ease,box-shadow .2s ease}
+.home-page .how-cards .how-item:hover{transform:translateY(-2px);box-shadow:0 18px 40px -28px rgba(40,40,20,.35)}
+.home-page .how-cards .how-step-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 22px}
+.home-page .how-cards .how-num{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ol);color:#fff;font:600 1.15rem/1 var(--mesa-titulo,inherit)}
+.home-page .how-cards .how-step-icon{width:44px;height:44px;color:var(--ol)}
+.home-page .how-cards h3{font-size:1.35rem;margin:0 0 8px}
+.home-page .how-cards p{margin:0;max-width:32ch;color:var(--mut);line-height:1.6}
+.home-page .home-services{margin-top:clamp(56px,8vw,104px)}
+@media(max-width:780px){.home-page .how-cards{grid-template-columns:1fr;gap:12px}.home-page .how-cards .how-item{padding:20px 20px 22px}.home-page .how-cards .how-step-heading{margin-bottom:14px}}
+@media(prefers-reduced-motion:reduce){.home-page .how-cards .how-item{transition:none}.home-page .how-cards .how-item:hover{transform:none}}
+.sino{position:relative;display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;color:inherit;flex-shrink:0}.sino:hover{background:rgba(0,0,0,.06)}.sino-n{position:absolute;top:4px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#8a2a2a;color:#fff;font:700 11px/17px system-ui,sans-serif;text-align:center;font-variant-numeric:tabular-nums}
+.escolha h1{font-size:clamp(22px,5vw,28px);margin-bottom:14px}.escolha-grid{display:grid;gap:12px;margin:8px 0 14px}@media(min-width:640px){.escolha-grid{grid-template-columns:1fr 1fr}}.escolha-op{display:grid;gap:6px;text-align:left;padding:18px;border-radius:16px;border:1.5px solid rgba(0,0,0,.14);background:#fff;font:inherit;color:inherit;cursor:pointer;transition:border-color .15s,transform .15s}.escolha-op:hover{border-color:currentColor}.escolha-op:active{transform:scale(.98)}.escolha-op b{font-size:18px}.escolha-op span{opacity:.75;font-size:14px}.linkbtn{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}
+.ig-head{padding:4px 0 10px}.ig-row{display:flex;align-items:center;gap:22px}.ig-av{display:block;width:86px;height:86px;border-radius:50%;object-fit:cover;flex-shrink:0;box-shadow:0 0 0 3px #fff,0 0 0 5px rgba(0,0,0,.1)}.ig-stats{flex:1;display:grid;grid-template-columns:repeat(3,1fr);text-align:center}.ig-stats span{display:flex;flex-direction:column;gap:2px;font-size:13px;line-height:1.2;opacity:.8}.ig-stats b{font-size:19px;font-weight:700;opacity:1;font-variant-numeric:tabular-nums}.ig-info{margin-top:12px}.ig-name{font-family:inherit;font-size:16px;font-weight:700;margin:0;line-height:1.3;letter-spacing:0}.ig-spec{margin:2px 0 0;font-size:14px;opacity:.75}.ig-loc{margin:4px 0 0;font-size:13px;opacity:.75;display:flex;align-items:center;gap:4px;flex-wrap:wrap}.ig-info .profile-bio,.ig-info .profile-bio p{font-size:14px;line-height:1.45;margin:6px 0 0}.ig-head+.profile-insta-acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:4px 0 14px}.ig-head+.profile-insta-acts .b{font-size:14px;padding:10px 12px;min-height:40px}@media(min-width:720px){.ig-row{gap:56px}.ig-av{width:150px;height:150px}.ig-stats{max-width:380px}.ig-name{font-size:20px}}
+.profile-insta-tabs+[role=tabpanel]>.grid{grid-template-columns:repeat(3,1fr)!important;gap:3px!important}.profile-insta-tabs+[role=tabpanel]>.grid .tile{aspect-ratio:1/1;border-radius:4px;overflow:hidden;height:auto;min-height:0}.profile-insta-tabs+[role=tabpanel]>.grid .tile img{width:100%;height:100%;object-fit:cover}.profile-insta-tabs+[role=tabpanel]>.grid .tile-label{display:none}
+.social-bar{display:flex;gap:18px;align-items:center;margin:10px 0 6px}.social-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:6px 2px;font:inherit;font-size:14px;color:inherit;cursor:pointer;transition:transform .12s}.social-btn b{font-variant-numeric:tabular-nums}.social-btn.on{color:#b3261e}.social-btn:active{transform:scale(.9)}.coments{display:grid;gap:8px;margin-bottom:12px}.coment{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px}.coment p{margin:0}.coment-form{display:flex;gap:8px}.coment-form input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid rgba(0,0,0,.18);font:inherit;font-size:16px}

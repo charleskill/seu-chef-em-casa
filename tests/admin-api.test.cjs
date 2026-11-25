@@ -52,3 +52,21 @@ test('dashboard rejeita período inválido e retorna zeros em período vazio',as
 test('exclusão própria exige sessão e apaga conta, fotos, pedidos e sessões',async()=>{const id=ids.chef;db.prepare('INSERT INTO pedidos VALUES (?,?,?,?,?)').run('p1',id,'Pedido fictício','{}','agora');assert.equal((await req('eu','DELETE')).status,401);assert.equal((await req('eu','DELETE',undefined,'chef')).status,200);for(const table of ['fotos','pedidos','sessoes'])assert.equal(db.prepare('SELECT COUNT(*) AS n FROM '+table+' WHERE chef_id = ?').get(id).n,0);assert.equal(db.prepare('SELECT COUNT(*) AS n FROM chefs WHERE id = ?').get(id).n,0);assert.equal(db.prepare('SELECT COUNT(*) AS n FROM chefs WHERE id = ?').get(ids.admin).n,1)});
 
 test('cadastro novo não ganha administração mesmo enviando admin e estando na lista antiga',async()=>{const request=new Request('https://example.com/api/cadastro',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:'fer-teste@example.com',nome:'Conta de teste',senha:'SomenteTesteLocal1234',whatsapp:'(48) 99110-6355',cidades:'Florianópolis',admin:true})});const r=await api.onRequest({request,env,params:{rota:['cadastro']}});assert.equal(r.status,201);const j=await r.json();assert.equal(j.chef.admin,false);const cookie=r.headers.get('set-cookie').split(';')[0];const denied=await api.onRequest({request:new Request('https://example.com/api/admin/chefs',{headers:{cookie}}),env,params:{rota:['admin','chefs']}});assert.equal(denied.status,403);});
+test('conta de cliente sem WhatsApp é criada e não aparece na vitrine',async()=>{const call=(rota,init={})=>api.onRequest({request:new Request('https://example.com/api/'+rota,init),env,params:{rota:rota.split('/')}});const r=await call('cadastro',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({tipo:'cliente',email:'cliente-teste@example.com',nome:'Cliente Teste',senha:'SomenteTesteLocal1234'})});assert.equal(r.status,201);const j=await r.json();assert.equal(j.chef.tipo,'cliente');const lista=await (await call('chefs')).json();assert.ok(!lista.chefs.some(c=>c.id===j.chef.id));const t=await call('cadastro',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({tipo:'cliente',email:'x@yopmail.com',nome:'Temp',senha:'SomenteTesteLocal1234'})});assert.equal(t.status,400);});
+test('seguir, curtir e comentar exigem conta e contam certo',async()=>{
+ db.prepare("UPDATE chefs SET perfil=json_set(perfil,'$.gallery',json(?)) WHERE id=?").run(JSON.stringify([{id:'g1',url:'/assets/x.webp',caption:'Prato'}]),ids.other);
+ const o=ids.other;ids.fa='chef-4444444444444444';tokens.fa='c'.repeat(64);db.prepare('INSERT INTO chefs (id,email,credencial,perfil,criado_em,atualizado_em) VALUES (?,?,?,?,?,?)').run(ids.fa,'fa@example.com','{}',JSON.stringify({name:'Fã',tipo:'cliente'}),'2026-11-24T10:00:00Z','v1');db.prepare('INSERT INTO sessoes VALUES (?,?,?)').run(await digest(tokens.fa),ids.fa,'2099-01-01T00:00:00Z');
+ assert.equal((await req('social/'+o+'/seguir','POST',{on:true})).status,401);
+ assert.equal((await req('social/'+o+'/seguir','POST',{on:true},'fa')).status,200);
+ assert.equal((await req('social/'+ids.admin+'/seguir','POST',{on:true},'admin')).status,400);
+ assert.equal((await req('social/'+o+'/curtir','POST',{foto:'g1',on:true},'fa')).status,200);
+ assert.equal((await req('social/'+o+'/curtir','POST',{foto:'nao-existe',on:true},'fa')).status,404);
+ assert.equal((await req('social/'+o+'/comentarios','POST',{foto:'g1',texto:'Que lindo!'},'fa')).status,201);
+ const s=await (await req('social/'+o)).json();
+ assert.equal(s.seguidores,1);assert.equal(s.sigo,false);assert.deepEqual(s.fotos.g1,{curtidas:1,curti:false,comentarios:1});
+ const meu=await (await req('social/'+o,'GET',undefined,'fa')).json();assert.equal(meu.sigo,true);assert.equal(meu.fotos.g1.curti,true);
+ const lista=await (await req('social/'+o+'/comentarios?foto=g1','GET',undefined,'admin')).json();
+ assert.equal(lista.comentarios[0].nome,'Fã');assert.equal(lista.comentarios[0].podeApagar,true);
+ assert.equal((await req('social/comentario/'+lista.comentarios[0].id,'DELETE',undefined,'admin')).status,200);
+ assert.equal((await (await req('social/'+o)).json()).fotos.g1.comentarios,0);
+});

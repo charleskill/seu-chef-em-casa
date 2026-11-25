@@ -7,6 +7,8 @@
 import Core from '../../assets/app-core.js';
 import Site from '../../assets/site-settings.js';
 import Dashboard from '../../assets/dashboard-core.js';
+import Menus from '../../assets/menus-core.js';
+import ServicePhotos from '../../assets/service-photos.js';
 
 const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
 const SESSAO_DIAS = 30, PBKDF2_ITER = 100000; // 100 mil é o máximo aceito pelos Workers
@@ -96,12 +98,12 @@ async function limparPerfil(env, chefId, p, atual) {
     return '/api/foto/' + id;
   }
   const whatsapp = txt(p.whatsapp, 30);
-  if (!C.phone(whatsapp)) throw new Error('Informe um WhatsApp válido com DDD.');
+  if (!C.phone(whatsapp) && !((p.semWhatsapp || p.tipo === 'cliente' || (atual && atual.tipo === 'cliente')) && !whatsapp)) throw new Error('Informe um WhatsApp válido com DDD.');
   let instagram = txt(p.instagram, 200);
   if (instagram) { try { const u = new URL(instagram); if (u.protocol !== 'https:' || !['instagram.com', 'www.instagram.com'].includes(u.hostname)) instagram = ''; } catch { instagram = ''; } }
   const nome = txt(p.name, 120); if (nome.length < 2) throw new Error('Informe um nome com pelo menos 2 caracteres.');
   const out = {
-    name: nome, whatsapp, instagram,
+    name: nome, whatsapp, instagram, tipo: atual ? (atual.tipo === 'cliente' ? 'cliente' : 'chef') : (p.tipo === 'cliente' ? 'cliente' : 'chef'),
     phone: txt(p.phone, 30), cities: txt(p.cities, 160), specialty: txt(p.specialty, 80), bio: txt(p.bio, 2000),
     avatar: await foto(p.avatar),
     gallery: [], dishes: []
@@ -121,7 +123,7 @@ async function limparPerfil(env, chefId, p, atual) {
   const a = C.cleanAgenda(p.agenda); if (a) out.agenda = a;
   // Grava fotos novas e apaga as que o perfil deixou de usar.
   for (const f of novas) await env.DB.prepare('INSERT INTO fotos (id, chef_id, tipo, dados, criado_em) VALUES (?, ?, ?, ?, ?)').bind(f.id, chefId, 'image/jpeg', f.bin, agora()).run();
-  const usadas = new Set([out.avatar, ...out.gallery.map(g => g.url)].filter(Boolean).map(u => u.slice(10)));
+  const usadas = new Set([out.avatar, ...out.gallery.map(g => g.url), ...(atual?.menus||[]).map(m=>m.photo)].filter(Boolean).map(u => u.slice(10)));
   for (const id of minhas) if (!usadas.has(id)) await env.DB.prepare('DELETE FROM fotos WHERE id = ? AND chef_id = ?').bind(id, chefId).run();
   return out;
 }
@@ -144,9 +146,9 @@ function lerIdToken(t) {
   try { return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(parte.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0)))); } catch { return null; }
 }
 
-const publico = row => ({ ...JSON.parse(row.perfil), id: row.id, cloud: true });
+const publico = row => {const p=JSON.parse(row.perfil);delete p.menusVersao;return {...p,menus:Menus.active(p.menus),id:row.id,cloud:true}};
 const ehAdmin = (env, row) => !!row && C.isAdminEmail(row.email);
-const doDono = (row, env = {}) => ({ ...publico(row), email: row.email, pausado: !row.publicado, oculto: !!row.oculto, admin: ehAdmin(env, row) });
+const doDono = (row, env = {}) => ({ ...publico(row), menus:JSON.parse(row.perfil).menus||[],menusVersao:JSON.parse(row.perfil).menusVersao||'', email: row.email, pausado: !row.publicado, oculto: !!row.oculto, admin: ehAdmin(env, row) });
 
 // ---------- Aviso de pedido por e-mail (Cloudflare Email Service, API REST) ----------
 // Nunca atrapalha o pedido: qualquer falha é ignorada. EMAIL_API_TESTE só existe para teste local.
@@ -190,6 +192,15 @@ async function garantirEsquema(env) {
     catch (e) { if (!/duplicate column/i.test(String(e && e.message))) throw e; }
   }
   await env.DB.prepare('CREATE TABLE IF NOT EXISTS site_config (id INTEGER PRIMARY KEY CHECK (id = 1), dados TEXT NOT NULL, atualizado_em TEXT NOT NULL, atualizado_por TEXT NOT NULL)').run();
+  for (const q of [
+    'CREATE TABLE IF NOT EXISTS seguidores (chef_id TEXT NOT NULL, conta_id TEXT NOT NULL, criado_em TEXT NOT NULL, PRIMARY KEY (chef_id, conta_id))',
+    'CREATE INDEX IF NOT EXISTS seguidores_conta ON seguidores(conta_id)',
+    'CREATE TABLE IF NOT EXISTS curtidas (chef_id TEXT NOT NULL, foto_id TEXT NOT NULL, conta_id TEXT NOT NULL, criado_em TEXT NOT NULL, PRIMARY KEY (chef_id, foto_id, conta_id))',
+    'CREATE INDEX IF NOT EXISTS curtidas_conta ON curtidas(conta_id)',
+    'CREATE TABLE IF NOT EXISTS comentarios (id TEXT PRIMARY KEY, chef_id TEXT NOT NULL, foto_id TEXT NOT NULL, conta_id TEXT NOT NULL, texto TEXT NOT NULL, criado_em TEXT NOT NULL)',
+    'CREATE INDEX IF NOT EXISTS comentarios_foto ON comentarios(chef_id, foto_id, criado_em)',
+    'CREATE INDEX IF NOT EXISTS comentarios_conta ON comentarios(conta_id)'
+  ]) await env.DB.prepare(q).run();
   esquemaOk = true;
 }
 
@@ -260,12 +271,12 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
     if (rota === '/google/iniciar' && metodo === 'POST') {
       if (!googleOn(env)) return erro('Login com Google ainda não está ativado.', 503);
       if (!await limitar(env, req, 'google', 20, 900)) return erro('Muitas tentativas. Espere 15 minutos.', 429);
-      const b = await corpo(req), modo = b.modo === 'cadastro' ? 'cadastro' : 'entrar';
-      let dados = {};
+      const b = await corpo(req), modo = b.modo === 'cadastro' ? 'cadastro' : 'entrar', tipo = b.tipo === 'cliente' ? 'cliente' : 'chef';
+      let dados = { tipo };
       if (modo === 'cadastro') {
-        if (env.CONVITE && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
-        const whatsapp = txt(b.whatsapp, 30); if (!C.phone(whatsapp)) return erro('Informe um WhatsApp válido com DDD.');
-        dados = { nome: txt(b.nome, 120), whatsapp, cidades: txt(b.cidades, 160) };
+        if (env.CONVITE && b.tipo !== 'cliente' && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
+        const whatsapp = txt(b.whatsapp, 30); if (whatsapp && !C.phone(whatsapp)) return erro('Informe um WhatsApp válido com DDD.');
+        dados = { nome: txt(b.nome, 120), whatsapp, cidades: txt(b.cidades, 160), tipo };
       }
       const estado = aleatorio(24), verificador = b64url(crypto.getRandomValues(new Uint8Array(32))), nonce = aleatorio(16);
       const desafio = b64url(await crypto.subtle.digest('SHA-256', enc.encode(verificador)));
@@ -306,9 +317,10 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         if (row) await env.DB.prepare('UPDATE chefs SET google_sub = ?, atualizado_em = ? WHERE id = ?').bind(sub, agora(), row.id).run();
       }
       if (!row) {
-        if (p.modo !== 'cadastro') return falha('sem-conta');
-        const d = JSON.parse(p.dados || '{}'), chefId = 'chef-' + aleatorio(8);
-        const perfil = await limparPerfil(env, chefId, { name: d.nome || txt(id.name, 120) || email.split('@')[0], whatsapp: d.whatsapp, cities: d.cidades }, null);
+        const d = JSON.parse(p.dados || '{}');
+        if (p.modo !== 'cadastro' && env.CONVITE && d.tipo !== 'cliente') return falha('sem-conta');
+        const chefId = 'chef-' + aleatorio(8);
+        const perfil = await limparPerfil(env, chefId, { name: d.nome || txt(id.name, 120) || email.split('@')[0], whatsapp: d.whatsapp || '', cities: d.cidades || '', semWhatsapp: true, tipo: d.tipo }, null);
         await env.DB.prepare('INSERT INTO chefs (id, email, credencial, perfil, publicado, criado_em, atualizado_em, google_sub) VALUES (?, ?, ?, ?, 1, ?, ?, ?)')
           .bind(chefId, email, JSON.stringify({ algoritmo: 'google' }), JSON.stringify(perfil), agora(), agora(), sub).run();
         row = { id: chefId };
@@ -319,9 +331,65 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       return new Response(null, { status: 302, headers: h });
     }
 
+    // ---------- Social: seguir chefs, curtir e comentar fotos da galeria (só com conta) ----------
+    if (rota.startsWith('/social/')) {
+      const partes = rota.split('/').slice(2), eu = await chefDaSessao(env, req);
+      if (partes[0] === 'comentario' && metodo === 'DELETE') {
+        if (!eu) return erro('Entre para continuar.', 401);
+        const cm = await env.DB.prepare('SELECT id, chef_id, conta_id FROM comentarios WHERE id = ?').bind(txt(partes[1], 40)).first();
+        if (!cm) return erro('Comentário não encontrado.', 404);
+        if (cm.conta_id !== eu.id && cm.chef_id !== eu.id && !ehAdmin(env, eu)) return erro('Você não pode apagar este comentário.', 403);
+        await env.DB.prepare('DELETE FROM comentarios WHERE id = ?').bind(cm.id).run();
+        return json({ ok: true });
+      }
+      const chefId = txt(partes[0], 40), acao = partes[1] || '';
+      const alvo = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE id = ? AND publicado = 1 AND COALESCE(oculto, 0) = 0').bind(chefId).first();
+      const perfilAlvo = alvo ? JSON.parse(alvo.perfil) : null;
+      if (!perfilAlvo || perfilAlvo.tipo === 'cliente') return erro('Chef não encontrado.', 404);
+      const contar = async (sql, ...v) => Number((await env.DB.prepare(sql).bind(...v).first()).n);
+      if (!acao && metodo === 'GET') {
+        const sigo = eu ? !!await env.DB.prepare('SELECT 1 FROM seguidores WHERE chef_id = ? AND conta_id = ?').bind(chefId, eu.id).first() : false;
+        const cur = (await env.DB.prepare('SELECT foto_id, COUNT(*) n, MAX(conta_id = ?) eu FROM curtidas WHERE chef_id = ? GROUP BY foto_id').bind(eu ? eu.id : '', chefId).all()).results;
+        const com = (await env.DB.prepare('SELECT foto_id, COUNT(*) n FROM comentarios WHERE chef_id = ? GROUP BY foto_id').bind(chefId).all()).results;
+        const fotos = {};
+        for (const r of cur) fotos[r.foto_id] = { curtidas: Number(r.n), curti: !!r.eu, comentarios: 0 };
+        for (const r of com) (fotos[r.foto_id] ||= { curtidas: 0, curti: false, comentarios: 0 }).comentarios = Number(r.n);
+        return json({ seguidores: await contar('SELECT COUNT(*) n FROM seguidores WHERE chef_id = ?', chefId), sigo, fotos }, 200, { 'cache-control': 'no-store' });
+      }
+      if (acao === 'comentarios' && metodo === 'GET') {
+        const foto = txt(new URL(req.url).searchParams.get('foto'), 40), admin = !!eu && ehAdmin(env, eu);
+        const { results } = await env.DB.prepare("SELECT c.id, c.conta_id, c.texto, c.criado_em, json_extract(x.perfil, '$.name') nome FROM comentarios c LEFT JOIN chefs x ON x.id = c.conta_id WHERE c.chef_id = ? AND c.foto_id = ? ORDER BY c.criado_em LIMIT 200").bind(chefId, foto).all();
+        return json({ comentarios: results.map(r => ({ id: r.id, nome: r.nome || 'Conta removida', texto: r.texto, criado_em: r.criado_em, podeApagar: !!eu && (r.conta_id === eu.id || chefId === eu.id || admin) })) }, 200, { 'cache-control': 'no-store' });
+      }
+      if (metodo !== 'POST') return erro('Rota não encontrada.', 404);
+      if (!eu) return erro('Crie sua conta grátis para continuar.', 401);
+      const b = await corpo(req), on = b.on !== false;
+      if (acao === 'seguir') {
+        if (eu.id === chefId) return erro('Você não pode seguir o próprio perfil.');
+        if (on) await env.DB.prepare('INSERT OR IGNORE INTO seguidores (chef_id, conta_id, criado_em) VALUES (?, ?, ?)').bind(chefId, eu.id, agora()).run();
+        else await env.DB.prepare('DELETE FROM seguidores WHERE chef_id = ? AND conta_id = ?').bind(chefId, eu.id).run();
+        return json({ seguidores: await contar('SELECT COUNT(*) n FROM seguidores WHERE chef_id = ?', chefId), sigo: on });
+      }
+      const foto = txt(b.foto, 40);
+      if (!(perfilAlvo.gallery || []).some(g => String(g.id) === foto)) return erro('Foto não encontrada.', 404);
+      if (acao === 'curtir') {
+        if (on) await env.DB.prepare('INSERT OR IGNORE INTO curtidas (chef_id, foto_id, conta_id, criado_em) VALUES (?, ?, ?, ?)').bind(chefId, foto, eu.id, agora()).run();
+        else await env.DB.prepare('DELETE FROM curtidas WHERE chef_id = ? AND foto_id = ? AND conta_id = ?').bind(chefId, foto, eu.id).run();
+        return json({ curtidas: await contar('SELECT COUNT(*) n FROM curtidas WHERE chef_id = ? AND foto_id = ?', chefId, foto), curti: on });
+      }
+      if (acao === 'comentarios') {
+        if (!await limitar(env, req, 'comentario', 30, 3600)) return erro('Muitos comentários seguidos. Tente mais tarde.', 429);
+        const texto = txt(b.texto, 500); if (!texto) return erro('Escreva um comentário.');
+        const id = aleatorio(12);
+        await env.DB.prepare('INSERT INTO comentarios (id, chef_id, foto_id, conta_id, texto, criado_em) VALUES (?, ?, ?, ?, ?, ?)').bind(id, chefId, foto, eu.id, texto, agora()).run();
+        return json({ ok: true, id }, 201);
+      }
+      return erro('Rota não encontrada.', 404);
+    }
+
     if (rota === '/chefs' && metodo === 'GET') {
       const { results } = await env.DB.prepare('SELECT id, perfil FROM chefs WHERE publicado = 1 AND oculto = 0 ORDER BY criado_em').all();
-      return json({ chefs: results.map(publico).filter(c => !C.faltaPerfil(c).length) }, 200, { 'cache-control': 'public, max-age=30' });
+      return json({ chefs: results.map(publico).filter(c => c.tipo !== 'cliente' && !C.faltaPerfil(c).length) }, 200, { 'cache-control': 'public, max-age=30' });
     }
 
     if (rota.startsWith('/foto/') && metodo === 'GET') {
@@ -338,12 +406,13 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
     if (rota === '/cadastro' && metodo === 'POST') {
       if (!await limitar(env, req, 'cadastro', 10, 3600)) return erro('Muitas tentativas. Tente de novo em uma hora.', 429);
       const b = await corpo(req);
-      if (env.CONVITE && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
+      if (env.CONVITE && b.tipo !== 'cliente' && txt(b.convite, 80) !== env.CONVITE) return erro('Código de convite inválido. Peça o código à equipe.', 403);
       const email = C.email(b.email); if (!C.validEmail(email)) return erro('Confira o e-mail informado.');
+      if (C.emailTemporario(email)) return erro('E-mails temporários não são aceitos. Use seu e-mail pessoal ou entre com Google.');
       const senha = String(b.senha || ''); if (senha.length < 8 || senha.length > 200) return erro('Crie uma senha com pelo menos 8 caracteres.');
       if (await env.DB.prepare('SELECT 1 FROM chefs WHERE email = ?').bind(email).first()) return erro('Este e-mail já está cadastrado. Use Entrar.', 409);
       const id = 'chef-' + aleatorio(8);
-      const perfil = await limparPerfil(env, id, { name: b.nome, whatsapp: b.whatsapp, cities: b.cidades }, null);
+      const perfil = await limparPerfil(env, id, { name: b.nome, whatsapp: b.whatsapp, cities: b.cidades, tipo: b.tipo }, null);
       await env.DB.prepare('INSERT INTO chefs (id, email, credencial, perfil, publicado, criado_em, atualizado_em) VALUES (?, ?, ?, ?, 1, ?, ?)')
         .bind(id, email, JSON.stringify(await criarCredencial(senha)), JSON.stringify(perfil), agora(), agora()).run();
       const token = await abrirSessao(env, id);
@@ -385,21 +454,33 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first(), env) }, 200, { 'set-cookie': cookieSessao(sessao, SESSAO_DIAS) });
     }
 
+    if (rota === '/eu/menus' && metodo === 'PUT') {
+      const c=await chefDaSessao(env,req);if(!c)return erro('Entre de novo para salvar.',401);
+      const b=await corpo(req),p=JSON.parse(c.perfil);
+      if(b.versao!==(p.menusVersao||''))return erro('Os menus mudaram em outra aba. Recarregue antes de editar.',409);
+      const fotos=new Set([p.avatar,...(p.gallery||[]).map(g=>g.url),...(p.menus||[]).map(m=>m.photo),...Object.values(ServicePhotos).map(u=>'/'+u.replace(/^\//,''))].filter(Boolean));
+      const menus=Menus.clean(b.menus,fotos),versao=aleatorio(12);
+      const result=await env.DB.prepare("UPDATE chefs SET perfil=json_set(perfil,'$.menus',json(?),'$.menusVersao',?),atualizado_em=? WHERE id=? AND COALESCE(json_extract(perfil,'$.menusVersao'),'')=?").bind(JSON.stringify(menus),versao,agora(),c.id,b.versao).run();
+      if(!result.meta.changes)return erro('Os menus mudaram em outra aba. Recarregue antes de editar.',409);
+      return json({menus,versao});
+    }
+
     if (rota === '/eu' && metodo === 'PUT') {
       const c = await chefDaSessao(env, req); if (!c) return erro('Entre de novo para salvar.', 401);
       const b = await corpo(req), p = b.perfil || {};
       const email = C.email(p.email || c.email);
       if (!C.validEmail(email)) return erro('Confira o e-mail informado.');
+      if (email !== c.email && C.emailTemporario(email)) return erro('E-mails temporários não são aceitos.');
       if (email !== c.email && await env.DB.prepare('SELECT 1 FROM chefs WHERE email = ? AND id <> ?').bind(email, c.id).first()) return erro('Este e-mail já está cadastrado.', 409);
       const perfil = await limparPerfil(env, c.id, p, JSON.parse(c.perfil));
       const publicado = typeof p.pausado === 'boolean' ? (p.pausado ? 0 : 1) : c.publicado;
-      await env.DB.prepare('UPDATE chefs SET email = ?, perfil = ?, publicado = ?, atualizado_em = ? WHERE id = ?').bind(email, JSON.stringify(perfil), publicado, agora(), c.id).run();
+      await env.DB.prepare("UPDATE chefs SET email = ?, perfil = json_set(?,'$.menus',json(COALESCE(json_extract(perfil,'$.menus'),'[]')),'$.menusVersao',COALESCE(json_extract(perfil,'$.menusVersao'),'')), publicado = ?, atualizado_em = ? WHERE id = ?").bind(email, JSON.stringify(perfil), publicado, agora(), c.id).run();
       return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(c.id).first(), env) });
     }
 
     if (rota === '/eu' && metodo === 'DELETE') {
       const c = await chefDaSessao(env, req); if (!c) return erro('Entre de novo para excluir a conta.', 401);
-      await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(c.id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(c.id)));
+      await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(c.id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(c.id, c.id))).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(c.id)));
       return json({ ok: true }, 200, { 'set-cookie': cookieSessao('', 0) });
     }
 
@@ -410,6 +491,13 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       if (!alvo || C.faltaPerfil(JSON.parse(alvo.perfil)).length) return erro('Chef não encontrado.', 404);
       const texto = txt(b.texto, 6000); if (texto.length < 20) return erro('Pedido incompleto.');
       const extra = b.dados && typeof b.dados === 'object' ? { ...b.dados } : {}; delete extra.status;
+      if(extra.mode==='especial'){
+        const perfil=JSON.parse(alvo.perfil),menu=Menus.active(perfil.menus).find(m=>m.id===extra.menuId);
+        if(!menu)return erro('Este menu não está mais disponível.',410);
+        const data=extra.f?.date,pessoas=Number(extra.pessoas);
+        if(!Menus.date(data)||data<Menus.today()||!C.isFree(perfil,data)||!Number.isInteger(pessoas)||pessoas<menu.serves||pessoas>500)return erro('Confira a data e a quantidade de pessoas.');
+        extra.menu=menu; // O registro usa o menu vigente do chef, não uma cópia enviada pelo cliente.
+      }
       const dadosJson = JSON.stringify(extra), dados = dadosJson.length > 20000 ? '{}' : dadosJson;
       const id = aleatorio(12);
       await env.DB.prepare('INSERT INTO pedidos (id, chef_id, texto, dados, criado_em) VALUES (?, ?, ?, ?, ?)').bind(id, chefId, texto, dados, agora()).run();
@@ -460,7 +548,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         // A edição de conteúdo preserva e-mail, credenciais, permissões e pausa.
         const perfil = await limparPerfil(env, id, b.perfil || {}, JSON.parse(alvo.perfil));
         const versao = agora();
-        await env.DB.prepare('UPDATE chefs SET perfil = ?, atualizado_em = ? WHERE id = ?').bind(JSON.stringify(perfil), versao, id).run();
+        await env.DB.prepare("UPDATE chefs SET perfil = json_set(?,'$.menus',json(COALESCE(json_extract(perfil,'$.menus'),'[]')),'$.menusVersao',COALESCE(json_extract(perfil,'$.menusVersao'),'')), atualizado_em = ? WHERE id = ?").bind(JSON.stringify(perfil), versao, id).run();
         return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first(), env), versao });
       }
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'POST') {
@@ -483,7 +571,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'DELETE') {
         if (id === c.id) return erro('Para excluir a sua própria conta, use Painel > Configurações.');
         if (!await env.DB.prepare('SELECT 1 FROM chefs WHERE id = ?').bind(id).first()) return erro('Chef não encontrado.', 404);
-        await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
+        await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(id, id))).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
         return json({ ok: true });
       }
     }

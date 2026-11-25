@@ -1,28 +1,22 @@
-# Decisões
-## 15/11/2026 — Três personagens para apresentação pública
-- Carlos pediu três chefs fictícios, sem identificar isso na interface, para apresentar aos sócios; informou que explicará que são fictícios. Confirmou que devem aparecer na vitrine pública.
-- Preparados Helena Duarte, Rafael Monteiro e André Valença: nove fotos e 25 pratos cada, mais retratos gerados para personagens inventados. Sem prêmios, diplomas ou vínculos com restaurantes reais; sem pedidos ou avaliações inventadas.
-- Contato no número de teste do projeto; nenhum acesso de login ou administrativo concedido. Registros normais no D1 para edição/ocultação/exclusão pela administração. Procedimento em PERFIS-APRESENTACAO.md.
+# Decisões do Projeto
 
-## 15/11/2026 — Fotografias em todo o catálogo
-- Carlos pediu mais vinte tipos e fotos boas em todos os serviços, incluindo os que ainda tinham ícones. Catálogo ampliado para 55 opções.
-- Fotos ilustrativas selecionadas e hospedadas junto ao site, otimizadas em WebP. Mantidas as preferências dos chefs existentes; nenhum serviço é ativado automaticamente. As fotos não representam o portfólio de um profissional específico.
+Registro de escolhas arquiteturais, limites e regras de negócio para manter consistência e rastreabilidade.
 
-## 15/11/2026 — Ampliação de Serviços
-- Carlos pediu mais vinte tipos. As novas experiências integram o catálogo público, os tipos de pedido e as opções de atendimento do chef. Cada profissional opta pelas experiências que oferece; os novos campos começam desligados.
+## 23/11/2026 · Identidade em todas as telas e menus especiais
+- Carlos escolheu **verde oliva, marfim e vinho discreto**, substituindo a proposta inicial ameixa/lavanda/pera. Identidade aplicada também a busca, serviços, perfil, orçamento, acesso, configurações, painel do chef, administração e vitrine compartilhável.
+- Recurso aprovado na conversa: menus por ocasião, com cardápio, preço/base explícita, quantidade, modo de atendimento, inclusões e prazo; divulgação por PNG quadrado/feed/story e mensagem com link próprio. Não exige geração por IA para cada arte.
+- Datas comemorativas ficam reunidas em Menus especiais, dentro de Serviços e com entrada na página inicial. Não se cria uma aba permanente para cada feriado.
 
-## 15/11/2026 — Dashboard e organização administrativa
-- Carlos pediu administração com estética profissional, navegação familiar, gráficos por período e PDF para apresentações.
-- Navegação própria da equipe e indicadores do D1. O servidor confere sessão e ADMIN_EMAILS; sem nova permissão ou migração.
-- Datas inclusivas no horário de Brasília, até 366 dias; comparação com período anterior de igual duração. Estado atual dos pedidos e da vitrine explicitado.
-- Relatório por impressão do navegador em A4 horizontal, sem menus. Sem inventar visitas, receita, vendas ou confirmação de envio pelo WhatsApp.
+## 23/11/2026 · Ajustes técnicos e UX pós-auditoria do Chef
+- Criação estática de robots.txt e sitemap.xml para desarmar o fallback de SPA no Cloudflare Pages para essas rotas e garantir leitura pelos crawlers.
+- Limpar busca: botão de estado vazio passa a disparar a ação de limpeza de filtros em vez de ser um link passivo para #/buscar.
+- Termos de uso reposicionados no fim do formulário de cadastro, respeitando a convenção de mercado.
 
-## 15/11/2026 — Administração para alterações sem IA
-- Carlos pediu um painel para editar conteúdo em situações em que a IA ou seus créditos não estejam disponíveis. A IA continua sendo usada para desenvolvimento.
-- Acesso por `/admin`, usando as contas já autorizadas em `ADMIN_EMAILS`, com verificação de permissão no servidor em todas as novas rotas administrativas.
-- Primeira entrega: apresentação e capa da página inicial, convite aos chefs, contatos e redes sociais; edição de perfis, pratos e fotos dos chefs. Conteúdo salvo no D1, sem precisar publicar código a cada edição.
-- Configurações concentra acesso, pausa, exclusão da própria conta e ajuda. Clientes continuam sem conta; limpeza local não promete exclusão de dados no servidor ou WhatsApp.
-- Alterações de código seguem em branch própria e pull request, sem merge automático. O ramo `icones-redes-sociais` foi preservado.
+## 24/11/2026 · Mercado Corporativo e Blindagem Fiscal
+- O Seu Chef em Casa atua estritamente como vitrine de divulgação e ponte de contato entre clientes e chefs.
+- A plataforma não tem relação jurídica com a emissão de Notas Fiscais dos serviços gastronômicos contratados.
+- Cada chef cadastrado (PJ / MEI) é o único responsável legal pela prestação do serviço e pela emissão da Nota Fiscal diretamente à empresa ou cliente contratante.
+- Inclusão dos filtros e sinalizações "Corporativo & Empresas" e "Emite Nota Fiscal (PJ)".
 
 ## 28/10/2026 — Carlos e ChatGPT
 - Repositório privado charleskill/seu-chef-em-casa é a fonte oficial do projeto.
@@ -177,3 +171,6 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 
 ## 21/11/2026 — Visual trazido da prévia
 - Fer escolheu levar da prévia (pasta previa/, fora do site) só fotos, efeitos, cores e fonte, sem mudar a estrutura das telas. A fonte fica no próprio site porque a CSP não permite fontes externas.
+## 24/11/2026 · Perfil do Chef Estilo Instagram com Bio Recolhível
+- Previa dos chefs e perfil individual redesenhados com referências ao Instagram (anel de avatar, badges PJ, alinhamento limpo, botões de ação horizontais).
+- Textos de apresentação (bio) extensos são limitados com "ver mais" / "ver menos" para evitar poluição visual e páginas excessivamente compridas.
