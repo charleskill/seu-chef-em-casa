@@ -44,3 +44,17 @@ Para quem entra como cliente (e, com menos itens, para quem não entrou):
 ## Pendente do teste
 - Chef de teste continua visível na vitrine e no sitemap: esconder (Chefs e contas > Esconder, ou entrar como chef > Pausar perfil) ou excluir a conta. As duas contas de teste podem ser excluídas depois.
 - Conferir o e-mail de pedido novo em `+chefteste` e o pedido no painel do chef.
+
+## Proposta: área do chef como lugar para ficar (pedido do Carlos)
+Hoje o painel são 8 abas de formulário e parece um menu de configurações.
+- **Início do chef ("A cozinha"):** comandas do dia (pedidos novos em cartão: responder no WhatsApp, marcar respondido/fechado), próximos eventos da agenda, números da semana (visitas, seguidores, curtidas, comentários).
+- **Botão + Publicar:** foto de prato ou evento com legenda, como no Instagram. Alimenta o feed das clientes.
+- **Feed do chef:** suas publicações com curtidas e comentários para responder; posts de chefs que ele segue.
+- **Mise en place:** o "complete seu perfil" vira etapas com progresso; selos (perfil completo, primeiro orçamento, 10 orçamentos).
+- **Editar no próprio perfil** (tocar no que quer mudar), no lugar das 8 abas.
+- **Menu de baixo do chef:** Cozinha · Comandas · + · Meu perfil · Conta.
+Feed da cliente e área do chef são o mesmo projeto: o chef publica, a cliente acompanha e pede.
+
+## Resultado final do teste
+- Pedido da Ana chegou no painel do chef (status Novo, Responder no WhatsApp, Copiar pedido).
+- Perfil Rafael Teste pausado: saiu da vitrine e do sitemap; /chef/rafael-teste-be5cd2 dá 404. As contas +chefteste e +clienteteste continuam existindo (excluir quando não forem mais úteis).
