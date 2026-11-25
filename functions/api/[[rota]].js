@@ -3,7 +3,7 @@
 // Variáveis: DB (binding D1), CONVITE (opcional: se existir, exige esse código para criar conta de chef; sem ela, cadastro aberto),
 // GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET (login com Google; sem elas o botão não aparece),
 // Administração restrita ao único e-mail autorizado em ChefCore.isAdminEmail; ADMIN_EMAILS legado não amplia acesso.
-// EMAIL_REMETENTE + CF_ACCOUNT_ID + CF_EMAIL_TOKEN (aviso de pedido por e-mail ao chef, via Cloudflare Email Service; sem elas, não envia).
+// EMAIL_REMETENTE + RESEND_API_KEY (Resend, preferido) ou CF_ACCOUNT_ID + CF_EMAIL_TOKEN (Cloudflare Email Service): aviso de pedido e recuperação de senha por e-mail; sem elas, não envia.
 import Core from '../../assets/app-core.js';
 import Site from '../../assets/site-settings.js';
 import Dashboard from '../../assets/dashboard-core.js';
@@ -171,14 +171,26 @@ function emailPedido(perfil, texto, origem) {
     + '<p><a href="' + e(painel) + '">Ver no painel</a></p>';
   return { assunto, texto: corpoTxt, html };
 }
+const emailAtivo = env => !!(env.EMAIL_REMETENTE && (env.EMAIL_API_TESTE || env.RESEND_API_KEY || (env.CF_ACCOUNT_ID && env.CF_EMAIL_TOKEN)));
+// Envia pelo Resend quando há RESEND_API_KEY; senão pela Cloudflare. Nunca lança erro: devolve true/false.
+async function enviarEmail(env, para, m) {
+  if (!emailAtivo(env) || !C.validEmail(C.email(para))) return false;
+  const resend = !!env.RESEND_API_KEY;
+  const url = env.EMAIL_API_TESTE || (resend ? 'https://api.resend.com/emails' : 'https://api.cloudflare.com/client/v4/accounts/' + env.CF_ACCOUNT_ID + '/email/sending/send');
+  try {
+    const r = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + (env.RESEND_API_KEY || env.CF_EMAIL_TOKEN || 'teste') },
+      body: JSON.stringify({ to: resend ? [C.email(para)] : C.email(para), from: env.EMAIL_REMETENTE, subject: m.assunto, text: m.texto, html: m.html }) });
+    return r.ok;
+  } catch { return false; }
+}
 async function avisarChef(env, para, perfil, texto, origem) {
-  if (!env.EMAIL_REMETENTE || !C.validEmail(C.email(para))) return false;
-  const url = env.EMAIL_API_TESTE || (env.CF_ACCOUNT_ID && env.CF_EMAIL_TOKEN ? 'https://api.cloudflare.com/client/v4/accounts/' + env.CF_ACCOUNT_ID + '/email/sending/send' : '');
-  if (!url) return false;
-  const m = emailPedido(perfil, texto, origem);
-  const r = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + (env.CF_EMAIL_TOKEN || 'teste') },
-    body: JSON.stringify({ to: C.email(para), from: env.EMAIL_REMETENTE, subject: m.assunto, text: m.texto, html: m.html }) });
-  return r.ok;
+  return enviarEmail(env, para, emailPedido(perfil, texto, origem));
+}
+function emailSenha(nome, link) {
+  const e = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  return { assunto: 'Crie uma senha nova no Seu Chef em Casa',
+    texto: 'Olá, ' + nome + '!\n\nRecebemos um pedido para trocar a senha da sua conta no Seu Chef em Casa.\nUse este link em até 1 hora:\n' + link + '\n\nSe não foi você, ignore este e-mail. Sua senha continua a mesma.\n',
+    html: '<p>Olá, ' + e(nome) + '!</p><p>Recebemos um pedido para trocar a senha da sua conta no <b>Seu Chef em Casa</b>.</p><p><a href="' + e(link) + '" style="display:inline-block;background:#304e3b;color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none">Criar senha nova</a></p><p>O link vale por 1 hora. Se não foi você, ignore este e-mail: sua senha continua a mesma.</p>' };
 }
 
 async function corpo(req) {
@@ -453,6 +465,23 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
     }
 
     // Nova senha por link gerado pela equipe (/#/nova-senha/<id>/<token>). O link vale 48 horas e uma vez só.
+    if (rota === '/esqueci' && metodo === 'POST') {
+      if (!emailAtivo(env)) return erro('A recuperação por e-mail ainda não está ativa. Fale com a equipe.', 503);
+      if (!await limitar(env, req, 'esqueci', 5, 900)) return erro('Muitas tentativas. Espere 15 minutos.', 429);
+      const b = await corpo(req), email = C.email(b.email);
+      if (!C.validEmail(email)) return erro('Confira o e-mail informado.');
+      const row = await env.DB.prepare('SELECT id, perfil, credencial FROM chefs WHERE email = ?').bind(email).first();
+      if (row) {
+        const token = aleatorio(24), cred = JSON.parse(row.credencial || '{}');
+        cred.redefinir = { hash: await sha256(token), expira: Date.now() + 3600e3 };
+        await env.DB.prepare('UPDATE chefs SET credencial = ? WHERE id = ?').bind(JSON.stringify(cred), row.id).run();
+        const envio = enviarEmail(env, email, emailSenha(nomeDe(row), new URL(req.url).origin + '/#/nova-senha/' + row.id + '/' + token));
+        if (typeof waitUntil === 'function') waitUntil(envio); else await envio;
+      }
+      // Mesma resposta exista ou não a conta, para não revelar quem está cadastrado.
+      return json({ ok: true });
+    }
+
     if (rota === '/nova-senha' && metodo === 'POST') {
       if (!await limitar(env, req, 'novasenha', 10, 900)) return erro('Muitas tentativas. Espere 15 minutos.', 429);
       const b = await corpo(req), id = txt(b.id, 40), token = txt(b.token, 80), senha = String(b.senha || '');

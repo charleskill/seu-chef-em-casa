@@ -84,3 +84,15 @@ test('avisos do sino, denúncia e moderação pela equipe',async()=>{
  const meus=await (await req('notificacoes','GET',undefined,'fa')).json();assert.equal(typeof meus.naoLidas,'number');
  assert.equal((await req('notificacoes/lidas','POST',{},'fa')).status,200);
 });
+test('esqueci a senha: só com e-mail ativo, não revela conta e manda link pelo Resend',async()=>{
+ const call=(e,body)=>api.onRequest({request:new Request('https://example.com/api/esqueci',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}),env:e,params:{rota:['esqueci']}});
+ assert.equal((await call(env,{email:'fa@example.com'})).status,503);
+ const enviados=[],orig=globalThis.fetch;globalThis.fetch=async(u,o)=>{enviados.push({u,b:JSON.parse(o.body),h:o.headers});return new Response('{}',{status:200})};
+ try{
+  const e2={...env,EMAIL_REMETENTE:'Seu Chef em Casa <avisos@envio.seuchefemcasa.com.br>',RESEND_API_KEY:'re_teste'};
+  const r=await call(e2,{email:'fa@example.com'});assert.equal(r.status,200);
+  assert.equal(enviados.length,1);assert.equal(enviados[0].u,'https://api.resend.com/emails');assert.deepEqual(enviados[0].b.to,['fa@example.com']);
+  assert.match(enviados[0].b.text,/#\/nova-senha\/chef-4444444444444444\/[a-f\d]{48}/);
+  const r2=await call(e2,{email:'ninguem@example.com'});assert.equal(r2.status,200);assert.equal(enviados.length,1);
+ }finally{globalThis.fetch=orig}
+});

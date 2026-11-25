@@ -55,6 +55,7 @@
     curtir: (id, foto, on) => req('POST', '/social/' + encodeURIComponent(id) + '/curtir', { foto, on }),
     comentarios: (id, foto) => req('GET', '/social/' + encodeURIComponent(id) + '/comentarios?foto=' + encodeURIComponent(foto)),
     comentar: (id, foto, texto) => req('POST', '/social/' + encodeURIComponent(id) + '/comentarios', { foto, texto }),
+    esqueci: email => req('POST', '/esqueci', { email }),
     denunciar: id => req('POST', '/social/comentario/' + encodeURIComponent(id) + '/denunciar', {}),
     notificacoes: () => req('GET', '/notificacoes'),
     lerNotificacoes: () => req('POST', '/notificacoes/lidas', {}),
