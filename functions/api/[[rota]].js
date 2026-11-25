@@ -177,12 +177,12 @@ function emailPedido(perfil, texto, origem) {
   const data = (String(texto).match(/^(?:Data|Início desejado): (.+)$/m) || [])[1] || '';
   const assunto = 'Novo pedido de orçamento de ' + cliente + (data ? ' para ' + data : '');
   const painel = origem + '/#/painel';
-  const corpoTxt = 'Olá, ' + saudacao(perfil) + '!\n\nVocê recebeu um pedido de orçamento pelo Seu Chef em Casa.\n'
+  const corpoTxt = 'Olá, ' + saudacao(perfil) + ', tudo bem?\n\nVocê recebeu um pedido de orçamento pelo Seu Chef em Casa.\n'
     + 'O cliente deve enviar a mesma mensagem pelo WhatsApp. Se não chegar, você pode responder pelo painel.\n\n'
     + texto + '\n\nVer no painel: ' + painel + '\n';
   const e = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const html = layoutEmail(origem, { titulo: 'Chegou um pedido de orçamento',
-    corpo: pEmail('Olá, ' + e(saudacao(perfil)) + '!') + pEmail('Um cliente montou um pedido para você no <b>Seu Chef em Casa</b>. Ele também deve te chamar no WhatsApp com a mesma mensagem.')
+    corpo: pEmail('Olá, ' + e(saudacao(perfil)) + ', tudo bem?') + pEmail('Um cliente montou um pedido para você no <b>Seu Chef em Casa</b>. Ele também deve te chamar no WhatsApp com a mesma mensagem.')
       + '<div style="background:#f7f5f0;border-left:3px solid #e9a98f;border-radius:10px;padding:16px 18px;margin:6px 0 10px;white-space:pre-wrap;font-size:14px;line-height:1.6;color:#283b30">' + e(texto) + '</div>',
     botao: 'Ver no painel', link: painel, nota: 'Se a mensagem não chegar no seu WhatsApp, você também pode responder o cliente pelo painel.' });
   return { assunto, texto: corpoTxt, html };
@@ -205,8 +205,8 @@ async function avisarChef(env, para, perfil, texto, origem) {
 function emailSenha(nome, link) {
   const e = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   return { assunto: 'Crie uma senha nova no Seu Chef em Casa',
-    texto: 'Olá, ' + nome + '!\n\nRecebemos um pedido para trocar a senha da sua conta no Seu Chef em Casa.\nUse este link em até 1 hora:\n' + link + '\n\nSe não foi você, ignore este e-mail. Sua senha continua a mesma.\n',
-    html: layoutEmail(new URL(link).origin, { titulo: 'Vamos criar sua senha nova', corpo: pEmail('Olá, ' + e(nome) + '!') + pEmail('Recebemos um pedido para trocar a senha da sua conta no <b>Seu Chef em Casa</b>. É só tocar no botão e escolher a nova.'),
+    texto: 'Olá, ' + nome + ', tudo bem?\n\nRecebemos um pedido para trocar a senha da sua conta no Seu Chef em Casa.\nUse este link em até 1 hora:\n' + link + '\n\nSe não foi você, ignore este e-mail. Sua senha continua a mesma.\n',
+    html: layoutEmail(new URL(link).origin, { titulo: 'Vamos criar sua senha nova', corpo: pEmail('Olá, ' + e(nome) + ', tudo bem?') + pEmail('Recebemos um pedido para trocar a senha da sua conta no <b>Seu Chef em Casa</b>. É só tocar no botão e escolher a nova.'),
       botao: 'Criar senha nova', link, nota: 'O link vale por 1 hora. Se não foi você que pediu, pode ignorar este e-mail: sua senha continua a mesma.' }) };
 }
 
