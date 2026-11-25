@@ -174,3 +174,7 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 ## 24/11/2026 · Perfil do Chef Estilo Instagram com Bio Recolhível
 - Previa dos chefs e perfil individual redesenhados com referências ao Instagram (anel de avatar, badges PJ, alinhamento limpo, botões de ação horizontais).
 - Textos de apresentação (bio) extensos são limitados com "ver mais" / "ver menos" para evitar poluição visual e páginas excessivamente compridas.
+
+## 25/11/2026 · Oferta do Seu Restaurante Online aos chefs (adiada)
+Ideia do Carlos: oferecer o Seu Restaurante Online (pago) aos chefs do Seu Chef em Casa (grátis). Decisão: não agora. No futuro, quando houver chefs com perfil completo, testar o interesse com um cartão discreto no painel ('Quero saber mais') antes de vender. Incluir na pesquisa da turma do Senac: 'Você pagaria por um site próprio de chef? Quanto?'.
+
