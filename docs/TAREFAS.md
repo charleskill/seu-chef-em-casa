@@ -444,4 +444,4 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Cadastro e redefinição mostram as regras conforme a pessoa digita e barram senhas com menos de 10 caracteres ou padrões óbvios no formulário. A API conserva a regra anterior.
 - Painéis têm saída visível. O perfil tem confirmação própria, o aviso de recursos futuros saiu e a tela de conexão só mostra mensagem se falhar.
 - Verificação local: `npm run check`, `npm test` (83 testes), `npm run build` e `git diff --check`. Fluxos completos em navegador ainda não foram verificados.
-- Prévia: https://correcoes-jornada.seu-chef-em-casa.pages.dev. Produção aguarda aprovação do Carlos.
+- Prévia: https://correcoes-jornada.seu-chef-em-casa.pages.dev. A prévia roda em demonstração, pois o banco não está configurado no branch. Produção aguarda aprovação do Carlos.
