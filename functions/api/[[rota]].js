@@ -411,7 +411,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       const b = await corpo(req), on = b.on !== false;
       if (acao === 'seguir') {
         if (eu.id === chefId) return erro('Você não pode seguir o próprio perfil.');
-        if (on) { const r = await env.DB.prepare('INSERT OR IGNORE INTO seguidores (chef_id, conta_id, criado_em) VALUES (?, ?, ?)').bind(chefId, eu.id, agora()).run(); if (r && r.meta && r.meta.changes) await notificar(env, chefId, 'seguidor', nomeDe(eu) + ' começou a seguir você.', JSON.parse(eu.perfil).tipo === 'cliente' ? '' : '#/chef/' + eu.id); }
+        if (on) { const r = await env.DB.prepare('INSERT OR IGNORE INTO seguidores (chef_id, conta_id, criado_em) VALUES (?, ?, ?)').bind(chefId, eu.id, agora()).run(); if (r && r.meta && r.meta.changes) await notificar(env, chefId, 'seguidor', nomeDe(eu) + ' agora acompanha a sua cozinha.', JSON.parse(eu.perfil).tipo === 'cliente' ? '' : '#/chef/' + eu.id); }
         else await env.DB.prepare('DELETE FROM seguidores WHERE chef_id = ? AND conta_id = ?').bind(chefId, eu.id).run();
         return json({ seguidores: await contar('SELECT COUNT(*) n FROM seguidores WHERE chef_id = ?', chefId), sigo: on });
       }
@@ -427,7 +427,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         const texto = txt(b.texto, 500); if (!texto) return erro('Escreva um comentário.');
         const id = aleatorio(12);
         await env.DB.prepare('INSERT INTO comentarios (id, chef_id, foto_id, conta_id, texto, criado_em) VALUES (?, ?, ?, ?, ?, ?)').bind(id, chefId, foto, eu.id, texto, agora()).run();
-        if (eu.id !== chefId) await notificar(env, chefId, 'comentario', nomeDe(eu) + ' comentou sua foto: ' + texto.slice(0, 80), '#/chef/' + chefId);
+        if (eu.id !== chefId) await notificar(env, chefId, 'comentario', nomeDe(eu) + ' comentou um prato seu: ' + texto.slice(0, 80), '#/chef/' + chefId);
         return json({ ok: true, id }, 201);
       }
       return erro('Rota não encontrada.', 404);
@@ -564,7 +564,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       const dadosJson = JSON.stringify(extra), dados = dadosJson.length > 20000 ? '{}' : dadosJson;
       const id = aleatorio(12);
       await env.DB.prepare('INSERT INTO pedidos (id, chef_id, texto, dados, criado_em) VALUES (?, ?, ?, ?, ?)').bind(id, chefId, texto, dados, agora()).run();
-    await notificar(env, chefId, 'pedido', 'Você recebeu um pedido de orçamento. Confira em Meus pedidos.', '#/painel');
+    await notificar(env, chefId, 'pedido', 'Comanda nova na mesa: você recebeu um pedido de orçamento.', '#/painel');
       const aviso = avisarChef(env, alvo.email, JSON.parse(alvo.perfil), texto, new URL(req.url).origin).catch(() => false);
       if (typeof waitUntil === 'function') waitUntil(aviso); else await aviso;
       return json({ id }, 201);
