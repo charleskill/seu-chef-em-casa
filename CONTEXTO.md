@@ -2,10 +2,11 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
-_25/11/2026, Claude. Branch: main (publicado até 56eb95d)._
-- **No ar:** tudo de 24/11 + avisos no sino (seguidor, comentário, pedido), denunciar comentário, aba Comentários no /admin, termos atualizados (rascunho para o Diogo), menu Entrar e pedido em uma coluna no celular. 76 testes. Material da aula em docs/aula-senac (QR, artes, roteiro da omelete). VoiceStudio instalado no PC (VoxCPM2, uso comercial).
-- **Falta:** Carlos esconder os 3 perfis fictícios no /admin; e-mail do domínio (Email Routing da Cloudflare + serviço de envio, com SIM); Diogo revisar termos; teste no celular; slides e pesquisa da aula (05/12).
-- **Próximo comando:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
+_25/11/2026 (tarde), Claude. Branch de trabalho: claude/compassionate-rhodes-88dfdc; main publicada até as Comandas (4997b2c)._
+- **No ar:** e-mail pelo Resend (pedido novo e Esqueci minha senha, layout da marca, 'Olá, Chef Nome, tudo bem?'); contato@seuchefemcasa.com.br repassa ao Gmail (Cloudflare Email Routing); Comandas e mise en place no sino; perfis fictícios escondidos (vitrine com 0 chefs reais).
+- **Próximo:** SEO conforme docs/SEO-PLANO.md (perfis em /chef/slug renderizados no servidor, páginas de cidade, sitemap dinâmico, Search Console). Depois tráfego pago.
+- **Falta também:** teste no celular com contas reais; termos com o Diogo (docs/REVISAO-JURIDICA-DIOGO.md); pedido bloqueado sem conta também no servidor; pedido pré-preenchido; conferir backup do D1; responder como contato@ no Gmail.
+- **Comandos:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
 
 # Contexto do projeto — Seu Chef em Casa
 
