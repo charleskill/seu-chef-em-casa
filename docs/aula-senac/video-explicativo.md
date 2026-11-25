@@ -21,7 +21,7 @@ Um chef de verdade (o Carlos ou um colega que autorize por escrito) faz a omelet
 | # | Tempo | Na bancada | Fala do chef | Tela do app (inserção) |
 |---|---|---|---|---|
 | 1 | 0–8 s | Quebra 3 ovos na tigela | "Essa omelete leva dois minutos. Aposto que, até ela ficar pronta, você vai ter um jeito novo de conseguir cliente." | — (cronômetro começa: 00:00) |
-| 2 | 8–20 s | Bate os ovos com uma pitada de sal | "Você cozinha bem. O problema é que pouca gente sabe disso. Seu trabalho vive no boca a boca e numa pasta de fotos no celular." | — |
+| 2 | 8–20 s | Bate os ovos com uma pitada de sal | "Você é chef, cozinheiro ou trabalha com gastronomia? Então você sabe. Talento não falta. O que falta é o cliente te encontrar. Seu trabalho vive no boca a boca e numa pasta de fotos esquecida no celular." | — |
 | 3 | 20–32 s | Manteiga na frigideira, fogo médio | "Por isso existe o Seu Chef em Casa, a vitrine dos personal chefs de Santa Catarina. Você entra com o Google e coloca suas fotos, seus pratos e as cidades onde atende." | Cadastro/Entrar → Sou chef → Google → painel |
 | 4 | 32–50 s | Ovos na frigideira, mexe com o garfo | "Pronto. Agora quem procura um chef pra um jantar, um aniversário ou as marmitas da semana encontra você. Segue, curte e comenta o seu trabalho." | Perfil estilo Instagram, botão Seguir, coração |
 | 5 | 50–62 s | Enrola a omelete na frigideira | "E quando quer te contratar, o pedido chega direto no seu WhatsApp. Sem intermediário. O cliente é seu." | Pedido de orçamento abrindo o WhatsApp |
@@ -69,3 +69,35 @@ No canto das cenas 1, 2 e 7, aparece sempre: **"Cena ilustrativa · pessoas cria
 ## O que eu preparo e o que fica com você
 - **Eu:** roteiro e legendas prontos para colar, títulos e cartela final em PNG (1080×1920 e 1920×1080) e textos das telas.
 - **Você:** gravar as telas no celular (ou eu gravo pelo navegador do computador em tamanho de celular), escolher a voz e montar no CapCut.
+
+## Texto para a voz de IA (escrito para ser falado)
+Regras: frases curtas, uma ideia por frase; pontuação faz o ritmo (sem colchetes, reticências ou travessão); números por extenso; palavra forte no fim; gerar em 3 pedaços de 15 a 20 s para a voz não mudar. Público: profissionais (chef, cozinheiro, gastronomia), nunca "quem cozinha bem".
+
+Parte 1:
+Essa omelete leva dois minutos.
+Aposto que, até ela ficar pronta, você vai ter um jeito novo de conseguir clientes.
+Você é chef, cozinheiro ou trabalha com gastronomia?
+Então você sabe.
+Talento não falta.
+O que falta é o cliente te encontrar.
+Seu trabalho vive no boca a boca.
+E numa pasta de fotos esquecida no celular.
+
+Parte 2:
+Para isso existe o Seu Chef em Casa.
+Uma vitrine de chefs de Santa Catarina.
+Você entra com o Google.
+Coloca suas fotos, seus pratos e as cidades onde atende.
+E agora, quem procura um chef para um jantar, um aniversário ou as marmitas da semana, encontra você.
+
+Parte 3:
+O cliente segue, curte e comenta o seu trabalho.
+Quando quer te contratar, chama direto no seu WhatsApp.
+Sem intermediário.
+O cliente é seu.
+Viu?
+Omelete pronta.
+Perfil no ar.
+Agora é com você.
+Aponte a câmera e crie o seu perfil.
+É de graça.
