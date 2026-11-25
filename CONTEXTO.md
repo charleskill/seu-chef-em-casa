@@ -2,10 +2,10 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
-_25/11/2026 (noite), Claude. main publicada com o SEO (PR 18). Teste da jornada no ar: docs/TESTE-JORNADA-2026-11-25.md._
-- **Feito no branch:** passos 1 a 5 do docs/SEO-PLANO.md (perfis /chef/slug no servidor, cidades e serviços com noindex sem chef, sitemap dinâmico, robots, 404, capa mais rápida). Ver docs/TAREFAS.md.
-- **Falta:** correções do teste da jornada (prioridades no doc), esconder o chef de teste Rafael Teste; Search Console (verificação DNS na Cloudflare, enviar sitemap) com o Carlos. Textos de blog (passo 7) só depois.
-- **Comandos:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
+_25/11/2026 (noite), Claude → Codex. Branch: teste-jornada (só docs, sem PR); main publicada com o SEO (PR 18)._
+- **Feito:** SEO no ar; teste da jornada chef/cliente no ar; relatório e propostas (feed, área do chef, bate-papo) em docs/TESTE-JORNADA-2026-11-25.md. Perfil Rafael Teste pausado.
+- **Próximo:** PR de correções rápidas antes do Senac (05/12): itens 3, 4, 5, 6, 7 e 12 a 15 do relatório (foto quadrada, pedido puxa nome/telefone, texto 'entre mim e o chef', cidade cortada/SC, regras de senha, avisos). Feed/bate-papo só depois, com protótipo para o Carlos.
+- **Comandos:** git fetch; git checkout teste-jornada; npm run check; npm test; npm run build. Branch novo a partir da main para as correções; publicar só com OK do Carlos.
 
 ## Estado em 15/11/2026 (noite), depois do Codex
 - O Codex entregou e publicou (PRs 4 a 15): administração em `/admin` (visão geral, chefs e contas, conteúdo do site; guia em `docs/ADMINISTRACAO.md`), Configurações com Excluir minha conta, 55 serviços com fotos locais em `assets/servicos`, prévia dos serviços na página inicial. Testes: 61.
