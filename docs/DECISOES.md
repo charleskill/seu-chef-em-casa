@@ -178,3 +178,6 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 ## 25/11/2026 · Oferta do Seu Restaurante Online aos chefs (adiada)
 Ideia do Carlos: oferecer o Seu Restaurante Online (pago) aos chefs do Seu Chef em Casa (grátis). Decisão: não agora. No futuro, quando houver chefs com perfil completo, testar o interesse com um cartão discreto no painel ('Quero saber mais') antes de vender. Incluir na pesquisa da turma do Senac: 'Você pagaria por um site próprio de chef? Quanto?'.
 
+
+## 25/11/2026 · Endereços para o Google
+Perfil do chef em /chef/<nome>-<6 primeiros hex do id>, sem mudar o banco; se o nome mudar, o endereço antigo redireciona (301). /c/<id> também redireciona. Cidade e serviço só entram no sitemap e no Google com ao menos um chef real; perfis de apresentação (@apresentacao.invalid) e prévias *.pages.dev ficam sempre com noindex. Canonical sempre em https://seuchefemcasa.com.br.

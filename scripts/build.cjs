@@ -13,7 +13,9 @@ fs.writeFileSync(path.join(out,'index.html'),marcado);
 fs.cpSync(path.join(root,'assets'),path.join(out,'assets'),{recursive:true});
 fs.copyFileSync(path.join(root,'_headers'),path.join(out,'_headers'));
 if(fs.existsSync(path.join(root,'robots.txt')))fs.copyFileSync(path.join(root,'robots.txt'),path.join(out,'robots.txt'));
-if(fs.existsSync(path.join(root,'sitemap.xml')))fs.copyFileSync(path.join(root,'sitemap.xml'),path.join(out,'sitemap.xml'));
+// sitemap.xml agora é gerado pelo servidor (functions/sitemap.xml.js). 404.html desliga o 'tudo vira index.html' da Cloudflare: endereço inexistente responde 404 de verdade.
+fs.rmSync(path.join(out,'sitemap.xml'),{force:true});
+fs.copyFileSync(path.join(root,'404.html'),path.join(out,'404.html'));
 // Portable review copy, with the same sources, for opening without a server.
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 html=html.replace(/\?v=[a-f0-9]+"/g,'"');
