@@ -20,12 +20,12 @@ Um chef de verdade (o Carlos ou um colega que autorize por escrito) faz a omelet
 
 | # | Tempo | Na bancada | Fala do chef | Tela do app (inserção) |
 |---|---|---|---|---|
-| 1 | 0–8 s | Quebra 3 ovos na tigela | "Você cozinha bem. Mas quem te encontra? Enquanto essa omelete fica pronta, eu te mostro." | — (cronômetro começa: 00:00) |
-| 2 | 8–20 s | Bate os ovos com uma pitada de sal | "O Seu Chef em Casa é uma vitrine de personal chefs de Santa Catarina. Você entra com o Google, em um toque." | Cadastro/Entrar → Sou chef → Google |
-| 3 | 20–32 s | Manteiga na frigideira, fogo médio | "Coloca sua foto, seus pratos e as cidades onde atende." | Painel com foto, prato e cidade; o sino zerando |
-| 4 | 32–50 s | Ovos na frigideira, mexe com o garfo | "Pronto: seu perfil fica no ar. O cliente te acha, segue, curte e comenta suas fotos." | Perfil estilo Instagram, botão Seguir, coração |
-| 5 | 50–62 s | Enrola a omelete na frigideira | "E quando quer te contratar, pede o orçamento direto no seu WhatsApp. O combinado é entre vocês." | Pedido de orçamento abrindo o WhatsApp |
-| 6 | 62–75 s | Vira no prato, omelete lisa e brilhante | "Viu como foi rápido? Seu perfil fica pronto no tempo de uma omelete francesa." | Cartela final com QR e seuchefemcasa.com.br |
+| 1 | 0–8 s | Quebra 3 ovos na tigela | "Essa omelete leva dois minutos. Aposto que, até ela ficar pronta, você vai ter um jeito novo de conseguir cliente." | — (cronômetro começa: 00:00) |
+| 2 | 8–20 s | Bate os ovos com uma pitada de sal | "Você cozinha bem. O problema é que pouca gente sabe disso. Seu trabalho vive no boca a boca e numa pasta de fotos no celular." | — |
+| 3 | 20–32 s | Manteiga na frigideira, fogo médio | "Por isso existe o Seu Chef em Casa, a vitrine dos personal chefs de Santa Catarina. Você entra com o Google e coloca suas fotos, seus pratos e as cidades onde atende." | Cadastro/Entrar → Sou chef → Google → painel |
+| 4 | 32–50 s | Ovos na frigideira, mexe com o garfo | "Pronto. Agora quem procura um chef pra um jantar, um aniversário ou as marmitas da semana encontra você. Segue, curte e comenta o seu trabalho." | Perfil estilo Instagram, botão Seguir, coração |
+| 5 | 50–62 s | Enrola a omelete na frigideira | "E quando quer te contratar, o pedido chega direto no seu WhatsApp. Sem intermediário. O cliente é seu." | Pedido de orçamento abrindo o WhatsApp |
+| 6 | 62–75 s | Vira no prato, omelete lisa e brilhante | "Viu? Omelete pronta, perfil no ar. Agora é com você: aponta a câmera e cria o seu, de graça." | Cartela final com QR e seuchefemcasa.com.br |
 
 Dicas de gravação: celular em pé no tripé, luz de frente (janela ou ring light), som direto do celular com microfone de lapela se tiver. Gravar a cena da bancada inteira de uma vez e as telas do app separadas; na edição, as telas entram por cima. Se errar a fala, repete só a frase: a omelete não precisa ser refeita, a voz pode ser regravada por cima.
 
