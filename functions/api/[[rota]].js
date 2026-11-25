@@ -157,6 +157,19 @@ const doDono = (row, env = {}) => ({ ...publico(row), menus:JSON.parse(row.perfi
 
 // ---------- Aviso de pedido por e-mail (Cloudflare Email Service, API REST) ----------
 // Nunca atrapalha o pedido: qualquer falha é ignorada. EMAIL_API_TESTE só existe para teste local.
+// Layout dos e-mails: tabela com estilos inline (funciona no Gmail, Outlook e celular).
+const escH = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pEmail = h => '<p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#283b30">' + h + '</p>';
+function layoutEmail(origem, { titulo, corpo, botao, link, nota }) {
+  return '<!doctype html><html><body style="margin:0;padding:0;background:#f7f5f0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0;padding:32px 12px"><tr><td align="center">'
+    + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fffefb;border-radius:18px;overflow:hidden;border:1px solid #e8e3d8;font-family:Segoe UI,Helvetica,Arial,sans-serif;color:#283b30">'
+    + '<tr><td style="background:#304e3b;padding:20px 28px"><table role="presentation" cellpadding="0" cellspacing="0"><tr><td><img src="' + origem + '/assets/email-logo.png" width="40" height="40" alt="" style="display:block;border-radius:10px"></td><td style="padding-left:12px;font-family:Georgia,serif;font-size:20px;color:#f7f5f0">Seu Chef em Casa</td></tr></table></td></tr>'
+    + '<tr><td style="padding:32px 28px 4px"><h1 style="margin:0 0 18px;font-family:Georgia,serif;font-weight:400;font-size:26px;line-height:1.25;color:#283b30">' + escH(titulo) + '</h1>' + corpo + '</td></tr>'
+    + (botao ? '<tr><td style="padding:10px 28px 6px"><a href="' + escH(link) + '" style="display:inline-block;background:#304e3b;color:#fffefb;text-decoration:none;padding:14px 26px;border-radius:12px;font-weight:600;font-size:15px">' + escH(botao) + '</a></td></tr>' : '')
+    + (nota ? '<tr><td style="padding:16px 28px 0;font-size:13px;line-height:1.55;color:#6b7a70">' + nota + '</td></tr>' : '')
+    + '<tr><td style="padding:28px 28px 26px"><div style="border-top:1px solid #e8e3d8;padding-top:16px;font-size:12px;line-height:1.7;color:#8a948d">Boa comida. Boas histórias.<br><a href="' + origem + '" style="color:#b45335;text-decoration:none">seuchefemcasa.com.br</a> · <a href="mailto:contato@seuchefemcasa.com.br" style="color:#b45335;text-decoration:none">contato@seuchefemcasa.com.br</a></div></td></tr>'
+    + '</table></td></tr></table></body></html>';
+}
 function emailPedido(perfil, texto, origem) {
   const cliente = (String(texto).match(/^Cliente: (.+)$/m) || [])[1] || 'um cliente';
   const data = (String(texto).match(/^(?:Data|Início desejado): (.+)$/m) || [])[1] || '';
@@ -166,9 +179,10 @@ function emailPedido(perfil, texto, origem) {
     + 'O cliente deve enviar a mesma mensagem pelo WhatsApp. Se não chegar, você pode responder pelo painel.\n\n'
     + texto + '\n\nVer no painel: ' + painel + '\n';
   const e = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const html = '<p>Olá, ' + e(perfil.name || 'chef') + '!</p><p>Você recebeu um pedido de orçamento pelo <b>Seu Chef em Casa</b>. O cliente deve enviar a mesma mensagem pelo WhatsApp; se não chegar, você pode responder pelo painel.</p>'
-    + '<pre style="white-space:pre-wrap;font-family:inherit;background:#f6f3ec;padding:14px;border-radius:10px">' + e(texto) + '</pre>'
-    + '<p><a href="' + e(painel) + '">Ver no painel</a></p>';
+  const html = layoutEmail(origem, { titulo: 'Chegou um pedido de orçamento',
+    corpo: pEmail('Olá, ' + e(perfil.name || 'chef') + '!') + pEmail('Um cliente montou um pedido para você no <b>Seu Chef em Casa</b>. Ele também deve te chamar no WhatsApp com a mesma mensagem.')
+      + '<div style="background:#f7f5f0;border-left:3px solid #e9a98f;border-radius:10px;padding:16px 18px;margin:6px 0 10px;white-space:pre-wrap;font-size:14px;line-height:1.6;color:#283b30">' + e(texto) + '</div>',
+    botao: 'Ver no painel', link: painel, nota: 'Se a mensagem não chegar no seu WhatsApp, você também pode responder o cliente pelo painel.' });
   return { assunto, texto: corpoTxt, html };
 }
 const emailAtivo = env => !!(env.EMAIL_REMETENTE && (env.EMAIL_API_TESTE || env.RESEND_API_KEY || (env.CF_ACCOUNT_ID && env.CF_EMAIL_TOKEN)));
@@ -190,7 +204,8 @@ function emailSenha(nome, link) {
   const e = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   return { assunto: 'Crie uma senha nova no Seu Chef em Casa',
     texto: 'Olá, ' + nome + '!\n\nRecebemos um pedido para trocar a senha da sua conta no Seu Chef em Casa.\nUse este link em até 1 hora:\n' + link + '\n\nSe não foi você, ignore este e-mail. Sua senha continua a mesma.\n',
-    html: '<p>Olá, ' + e(nome) + '!</p><p>Recebemos um pedido para trocar a senha da sua conta no <b>Seu Chef em Casa</b>.</p><p><a href="' + e(link) + '" style="display:inline-block;background:#304e3b;color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none">Criar senha nova</a></p><p>O link vale por 1 hora. Se não foi você, ignore este e-mail: sua senha continua a mesma.</p>' };
+    html: layoutEmail(new URL(link).origin, { titulo: 'Vamos criar sua senha nova', corpo: pEmail('Olá, ' + e(nome) + '!') + pEmail('Recebemos um pedido para trocar a senha da sua conta no <b>Seu Chef em Casa</b>. É só tocar no botão e escolher a nova.'),
+      botao: 'Criar senha nova', link, nota: 'O link vale por 1 hora. Se não foi você que pediu, pode ignorar este e-mail: sua senha continua a mesma.' }) };
 }
 
 async function corpo(req) {
