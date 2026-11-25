@@ -387,6 +387,15 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Trocar o administrador exige mudar ADMIN_EMAIL em ssets/app-core.js e publicar.
 - Verificado: npm run check, npm test (63 de 63, com 2 testes novos da regra), npm run build; no site, código novo servido e rotas administrativas recusando quem não está logado. Não testado: entrar como Carlos no /admin.
 
+## 21/11/2026 — Visual: fotos, fonte e efeitos (ramo visual-fotos-fontes-efeitos)
+- Fonte Rethink Sans no site todo, servida de assets/fonts (licença OFL); texto secundário mais escuro (--mut #5f675e). Arquivo: assets/visual.css.
+- Capa nova (Unsplash photo-1681270543584); 6 serviços com fotos novas (Jantar a dois, Churrasco, Menu Degustação, Marmitas, Café colonial, Brunch) e 28 baixados de novo em 1200 px. Os 21 de outras fontes continuam em 640 px. Fontes em docs/FOTOS-SERVICOS.json.
+- Efeitos na página inicial (assets/efeitos.js): título palavra por palavra, contagem em 'Ver os N serviços', brilho no botão da capa, luz que segue o mouse nos cartões. Param com 'reduzir movimento'; ?movimento no endereço liga para revisar.
+- check, 63 testes e build passando. Sem publicar.
+- Cartão do chef (início e busca): foto de perfil maior, nome, cidades e especialidade em destaque e 3 pratos pequenos da galeria, no lugar da foto grande de prato. check, 63 testes e build passando.
+- Capa trocada por foto horizontal (Unsplash photo-1794867875846, prato com pinça sobre fundo escuro), que funciona na faixa larga do celular; no celular a foto passa de 180 para 240 px de altura, centralizada.
+- Capa nova: jantar no quintal com chef apresentando o prato e convidados, gerada no Adobe Firefly (conta da Fer/Carlos) e ampliada 4x; servida do próprio site em assets/capa (webp 1800 px e jpg 1200 px para compartilhamento). app-core.safeUrl aceita /assets/capa/*.webp e o /admin aceita esse endereço padrão. Imagem criada com IA: trocar por foto real quando houver evento.
+- Capa trocada pela versão do Gemini (a do Firefly saiu com rostos deformados): assets/capa/jantar-no-quintal-2.webp (1376 px) e jantar-no-quintal-2-share.jpg (1200x630). Nome novo para não ficar a antiga no cache. Imagem criada com IA.
 ## Entrega — 23/11/2026 · Identidade da página inicial
 - Nova abertura e busca integrada, estilos da sequência de atendimento e da seleção de serviços. Fotos e ações existentes reaproveitadas.
 - Check, 63 testes e build passaram.
@@ -420,3 +429,5 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Prévia dos perfis (`card(c)`) com header de avatar, badge PJ, localização e cover edge-to-edge.
 - Perfil do chef (`profile(id)`) com anel de história, estatísticas e bio recolhível com "ver mais" / "ver menos".
 - Validação: npm run check, npm test e npm run build.
+
+- 25/11/2026: PR 16 juntado ao main: cartão estilo Instagram + fonte Rethink Sans, capa nova, efeitos e prévia de 3 pratos no cartão.
