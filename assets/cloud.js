@@ -55,6 +55,10 @@
     curtir: (id, foto, on) => req('POST', '/social/' + encodeURIComponent(id) + '/curtir', { foto, on }),
     comentarios: (id, foto) => req('GET', '/social/' + encodeURIComponent(id) + '/comentarios?foto=' + encodeURIComponent(foto)),
     comentar: (id, foto, texto) => req('POST', '/social/' + encodeURIComponent(id) + '/comentarios', { foto, texto }),
+    denunciar: id => req('POST', '/social/comentario/' + encodeURIComponent(id) + '/denunciar', {}),
+    notificacoes: () => req('GET', '/notificacoes'),
+    lerNotificacoes: () => req('POST', '/notificacoes/lidas', {}),
+    adminComentarios: () => req('GET', '/admin/comentarios').then(j => j.comentarios || []),
     apagarComentario: id => req('DELETE', '/social/comentario/' + encodeURIComponent(id)),
     google: (modo, dados) => req('POST', '/google/iniciar', { modo, ...dados }).then(j => j.url),
     // Painel da equipe (só e-mails em ADMIN_EMAILS no servidor).

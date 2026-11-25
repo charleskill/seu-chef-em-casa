@@ -70,3 +70,17 @@ test('seguir, curtir e comentar exigem conta e contam certo',async()=>{
  assert.equal((await req('social/comentario/'+lista.comentarios[0].id,'DELETE',undefined,'admin')).status,200);
  assert.equal((await (await req('social/'+o)).json()).fotos.g1.comentarios,0);
 });
+test('avisos do sino, denúncia e moderação pela equipe',async()=>{
+ const o=ids.other;
+ const n=db.prepare("SELECT tipo FROM notificacoes WHERE conta_id=? ORDER BY criado_em").all(o).map(r=>r.tipo);
+ assert.ok(n.includes('seguidor'));assert.ok(n.includes('comentario'));
+ assert.equal((await req('notificacoes')).status,401);
+ const r=await req('social/'+o+'/comentarios','POST',{foto:'g1',texto:'Comentário ruim'},'fa');assert.equal(r.status,201);const {id}=await r.json();
+ assert.equal((await req('social/comentario/'+id+'/denunciar','POST',{})).status,401);
+ assert.equal((await req('social/comentario/'+id+'/denunciar','POST',{},'admin')).status,200);
+ assert.equal((await req('admin/comentarios','GET',undefined,'fa')).status,403);
+ const lista=(await (await req('admin/comentarios','GET',undefined,'admin')).json()).comentarios;
+ assert.equal(lista[0].id,id);assert.equal(lista[0].denuncias,1);assert.equal(lista[0].autor,'Fã');
+ const meus=await (await req('notificacoes','GET',undefined,'fa')).json();assert.equal(typeof meus.naoLidas,'number');
+ assert.equal((await req('notificacoes/lidas','POST',{},'fa')).status,200);
+});

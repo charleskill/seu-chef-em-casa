@@ -5,7 +5,7 @@ const CONTATO='';/* preencher com o e-mail de contato quando existir */
 const sec=(t,items)=>'<section class="card termos-sec"><h2>'+t+'</h2>'+items.map(x=>'<p>'+x+'</p>').join('')+'</section>';
 function html(){
 const contato=String(root.ChefSiteConfig?.contactEmail||CONTATO).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-return '<p class="form-help">Última atualização: 09/11/2026. Ao usar o site, você concorda com estes termos.</p>'
+return '<p class="form-help">Última atualização: 25/11/2026 (rascunho em revisão jurídica). Ao usar o site, você concorda com estes termos.</p>'
 +sec('1. O que é este serviço',[
 'O <b>Seu Chef em Casa</b> é uma <b>plataforma de vitrine</b>: um espaço onde personal chefs divulgam seu trabalho (perfil, fotos, cardápio, região e agenda) e onde qualquer pessoa pode conhecer esses perfis e entrar em contato para pedir um orçamento ou combinar um evento ou um plano de marmitas.',
 'A plataforma <b>não é empresa de personal chef</b>, não presta serviços de cozinha, não contrata nem emprega chefs, não vende comida, não recebe nem repassa pagamentos e <b>não é parte</b> de nenhum contrato firmado entre cliente e chef.'])
@@ -24,13 +24,16 @@ return '<p class="form-help">Última atualização: 09/11/2026. Ao usar o site, 
 +sec('6. Compromissos dos clientes',[
 'Dar informações verdadeiras no pedido; informar alergias e restrições ao chef; tratar os chefs com respeito; e combinar com o chef as condições antes de contar com o serviço.'])
 +sec('7. Conteúdo e remoção',[
-'A plataforma pode remover perfis, fotos ou conteúdos que violem estes termos, a lei ou direitos de terceiros, e pode suspender o acesso de quem os descumprir. Quem publica o conteúdo responde por ele.'])
+'A plataforma pode remover perfis, fotos ou conteúdos que violem estes termos, a lei ou direitos de terceiros, e pode suspender o acesso de quem os descumprir. Quem publica o conteúdo responde por ele.',
+'<b>Comentários, curtidas e seguidores:</b> quem tem conta pode seguir chefs, curtir e comentar as fotos publicadas. Não são permitidos ofensas, discriminação, assédio, spam, propaganda, dados pessoais de terceiros ou avaliações falsas. Qualquer pessoa com conta pode denunciar um comentário; a equipe analisa e pode apagá-lo. O chef pode apagar comentários nas próprias fotos.'])
 +sec('8. Disponibilidade',[
 'O serviço é oferecido "como está", sem garantia de funcionar sem interrupções ou erros.'])
 +sec('9. Privacidade (LGPD)',[
+'<b>Contas:</b> há contas de chef e de cliente, criadas com e-mail e senha ou com a conta Google. Pelo Google recebemos apenas nome, e-mail e foto do perfil. Para seguir, curtir, comentar ou pedir orçamento é preciso ter conta; navegar é livre.',
 '<b>Dados tratados:</b> nome, telefone, e-mail (opcional), cidade ou endereço, data, número de convidados, preferências e restrições alimentares informados no pedido, além dos dados do perfil do chef (nome, WhatsApp, fotos, cidades, textos).',
 '<b>Para que usamos:</b> montar o pedido de orçamento e permitir que você fale com o chef que escolheu. Ao tocar em "Abrir WhatsApp", o texto do pedido é enviado ao chef por você, e o chef passa a ter esses dados. Restrições e alergias são informações sensíveis: você escolhe se as inclui no pedido.',
 '<b>Onde ficam:</b> os perfis dos chefs e os pedidos de orçamento feitos a chefs cadastrados ficam guardados no servidor da plataforma, hospedado na Cloudflare. O pedido é registrado quando você toca em "Abrir WhatsApp", para que o chef possa consultá-lo no painel dele. O rascunho de um pedido ainda não enviado fica apenas no seu navegador.',
+'<b>Atividade na plataforma:</b> guardamos quem segue quem, curtidas, comentários, denúncias e os avisos exibidos no sino, para mostrar essas informações e moderar o conteúdo. Ao excluir a conta, esses registros são apagados.',
 '<b>Seus direitos:</b> você pode pedir acesso, correção ou exclusão dos seus dados, e o chef pode apagar o próprio perfil a qualquer momento.'+(contato?' Fale conosco em '+contato+'.':'')])
 +sec('10. Alterações',[
 'Estes termos podem mudar. A versão em vigor é sempre a publicada nesta página, com a data da última atualização. Regem-se pela lei brasileira.']);
