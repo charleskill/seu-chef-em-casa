@@ -32,9 +32,18 @@ test('conta de chef salva fotos de prato do acervo, do portfólio e de um envio 
   {id:'d3',name:'Risoto do feed',price:45,photo:feed},
   {id:'d4',name:'Risoto com novo envio',price:50,photo:jpeg}
  ];
- const salvo=await call('eu','PUT',{perfil:{...perfilInicial,dishes:pratos}},cookie);
+ const salvo=await call('eu','PUT',{perfil:{...perfilInicial,dishes:pratos,
+  contatos:['linkedin','contactEmail','location'],linkedin:'https://www.linkedin.com/in/chef-teste',
+  contactEmail:'contato-chef@example.com',facebook:'https://www.facebook.com/chef-teste'}},cookie);
  assert.equal(salvo.status,200,await salvo.clone().text());
  const atual=(await (await call('eu','GET',undefined,cookie)).json()).chef;
+ assert.equal(atual.contactEmail,'contato-chef@example.com');
+ assert.equal(atual.facebook,'https://www.facebook.com/chef-teste');
+ const perfilPublico=(await (await call('chefs')).json()).chefs.find(c=>c.id===atual.id);
+ assert.equal(perfilPublico.linkedin,'https://www.linkedin.com/in/chef-teste');
+ assert.equal(perfilPublico.contactEmail,'contato-chef@example.com');
+ assert.equal(perfilPublico.facebook,undefined);
+ assert.equal(perfilPublico.email,undefined);
  assert.equal(atual.dishes[0].photoPreset,'tiramisu');
  assert.equal(atual.dishes[1].photoPreset,'tiramisu-2');
  assert.equal(atual.dishes[2].photo,feed);

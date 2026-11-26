@@ -44,6 +44,16 @@ test('/c/<id> leva (301) ao endereço novo; /c/exemplo continua, com noindex',as
  assert.equal((await abre(c,PROD+'/c/chef-bbbbbb0000000002',{id:'chef-bbbbbb0000000002'})).status,404);
  const ex=await abre(c,PROD+'/c/exemplo',{id:'exemplo'});assert.equal(ex.status,200);assert.match(await ex.text(),/noindex/);
 });
+test('perfil exibe apenas ícones habilitados e mantém e-mail de contato separado da conta',async()=>{
+ const {vitrine}=await import('../functions/_lib/vitrine.js');
+ const p=perfil('Chef Contato',{contatos:['instagram','linkedin','phone','location','contactEmail','tiktok','facebook'],
+  instagram:'https://instagram.com/chef',linkedin:'https://www.linkedin.com/in/chef',phone:'(48) 99110-6355',
+  contactEmail:'chefe+eventos@example.com',email:'acesso@example.com',tiktok:'https://www.tiktok.com/@chef',facebook:'https://www.facebook.com/chef'});
+ const html=await vitrine(p,{origem:PROD,id:'chef-aaaaaa0000000001',esteLink:PROD+'/chef/chef-contato-aaaaaa'}).text();
+ for(const nome of ['Instagram','LinkedIn','Telefone','Localização','E-mail','TikTok','Facebook']) assert.ok(html.includes('aria-label="'+nome+'"'),nome);
+ assert.doesNotMatch(html,/aria-label="WhatsApp"|wa\.me|acesso@example\.com/);
+ assert.match(html,/mailto:chefe%2Beventos@example\.com/);
+});
 test('perfil compartilhado renderiza a primeira publicação, cardápio e contadores públicos',async()=>{
  const url=PROD+'/chef/maria-teste-aaaaaa',params={slug:'maria-teste-aaaaaa'};
  const novo=await (await abre(chef,url,params)).text();

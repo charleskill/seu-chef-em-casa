@@ -47,6 +47,7 @@ const ESTILO = [
   '#foto-publica .foto-topo,#foto-publica .conversa,#foto-publica .foto-compartilhar,#foto-publica .conversa li+li{border-color:var(--foto-linha)}#foto-publica .foto-midia{background:var(--foto-linho)}#foto-publica .foto-nav{background:#f4eddf}#foto-publica .conversa,#foto-publica textarea{background:var(--foto-papel)}#foto-publica textarea{border-color:#8a8273}',
   '#foto-publica .b:not(.b1),#foto-publica .foto-nav output,#foto-publica .nota{color:var(--foto-oliva)}#foto-publica [data-curtir]{background:#ececde}#foto-publica [data-curtir][aria-pressed=true]{background:#f2e1e7;border-color:var(--foto-vinho);color:var(--foto-vinho)}#foto-publica .b1{background:var(--foto-vinho);border-color:var(--foto-vinho)}#foto-publica .b1:hover{background:#5d303d}#foto-publica :focus-visible{outline-color:var(--foto-vinho)}',
   '.pular{position:absolute;top:8px;left:8px;z-index:2;padding:8px 12px;background:#fffdf8;color:#455238;transform:translateY(-150%)}.pular:focus{transform:none}#foto-publica,.conversa ol{overscroll-behavior:contain}',
+  '.contatos-chef{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.contatos-chef a{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid #b9b19f;border-radius:50%;color:#455238}.contatos-chef a:hover{background:#eee6d7;color:#754653}',
   '@media(min-width:670px){.perfil{padding-top:30px}.fotos{gap:8px}.pratos{grid-template-columns:1fr 1fr}}'
   ,'.prato-foto{float:left;width:94px;margin:0 12px 5px 0}.prato-foto img{width:94px;height:82px;object-fit:cover;border-radius:6px}.prato-foto figcaption{font-size:.68rem;color:#455238}.credito-prato{display:none}.foto-prato-ampliada figure{margin:0}.foto-prato-ampliada header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.foto-prato-ampliada header h2{font-size:1.35rem}.foto-prato-ampliada figcaption{margin-top:8px;color:#455238;font-size:.85rem}.prato{display:flow-root}'
 ].join('');
@@ -125,7 +126,11 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const linkFoto = (g, i, base) => base + '?foto=' + encodeURIComponent(idFoto(g, i));
   const linkPerfil = origem + new URL(esteLink).pathname;
   const fone = C.phone(p.whatsapp);
-  const zap = fone ? 'https://wa.me/' + fone + '?text=' + encodeURIComponent('Olá, ' + p.name + '! Vi sua página no Seu Chef em Casa e gostaria de conversar sobre um encontro.') : '';
+  const contatos = C.linksContato(p).filter(({ chave }) => !exemplo || chave === 'location');
+  const zap = fone && contatos.some(({ chave }) => chave === 'whatsapp') ? 'https://wa.me/' + fone + '?text=' + encodeURIComponent('Olá, ' + p.name + '! Vi sua página no Seu Chef em Casa e gostaria de conversar sobre um encontro.') : '';
+  const iconesContato = contatos.length ? '<nav class="contatos-chef" aria-label="Contatos do chef">'
+    + contatos.map(({ chave, nome, href }) => '<a href="' + e(chave === 'whatsapp' ? zap : href) + '" title="' + e(nome) + '" aria-label="' + e(nome) + '"'
+      + (href.startsWith('https:') ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + C.iconeContato(chave) + '</a>').join('') + '</nav>' : '';
   const linha = [p.specialty, p.cities].map(s => String(s || '').trim()).filter(Boolean).join(' · ');
   const titulo = p.name + ' · Personal chef';
   const desc = (linha ? linha + '. ' : '') + 'Veja os trabalhos e o cardápio do chef. Peça um orçamento para seu encontro.';
@@ -172,6 +177,8 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
         + itens.map(prato).join('') + '</div>').join('') + '</section>' : '')
       + '<section class="portfolio-secao contato"><h2>Contato e orçamento</h2><p><a href="' + e(linkPerfil) + '">Ver perfil completo</a></p>'
       + (zap && !exemplo ? '<p><a href="' + e(zap) + '">WhatsApp · ' + e(p.whatsapp) + '</a></p>' : '')
+      + (!exemplo ? contatos.filter(({ chave }) => chave !== 'whatsapp').map(({ chave, nome, href }) => '<p><a href="' + e(href) + '">' + e(nome)
+        + (chave === 'phone' || chave === 'contactEmail' ? ' · ' + e(p[chave]) : '') + '</a></p>').join('') : '')
       + '</section></main></body></html>';
     return new Response(html, { headers: CABECALHOS });
   }
@@ -197,7 +204,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + '</div><div class="acoes"><a class="b b1" href="' + e(pedido) + '">Pedir orçamento</a>'
     + (pratos.length ? '<a class="b" href="#cardapio">Ver cardápio</a>' : '')
     + '<a class="b" href="' + e(linkPerfil + '?portfolio=pdf') + '">Portfólio em PDF</a>'
-    + (!exemplo ? '<a class="b" href="' + e(perfil) + '">Acompanhar chef</a>' : '') + '</div></div>';
+    + (!exemplo ? '<a class="b" href="' + e(perfil) + '">Acompanhar chef</a>' : '') + '</div>' + iconesContato + '</div>';
 
   const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     + '<title>' + e(titulo) + '</title><meta name="description" content="' + e(desc) + '"><meta name="theme-color" content="#455238">'
