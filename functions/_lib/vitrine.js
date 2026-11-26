@@ -79,6 +79,11 @@ function fotoParaImpressao(src, largura) {
 // /c/exemplo: vitrine de um chef fictício, para mostrar aos chefs como a página fica (e para testar sem banco).
 // Tudo inventado; fotos ilustrativas do Unsplash; telefone de teste do projeto.
 const U = id => 'https://images.unsplash.com/photo-' + id + '?w=1400&q=80&auto=format&fit=crop';
+const LINKS_EXEMPLO = {
+  instagram: 'https://www.instagram.com/seuchefemcasaoficial/', linkedin: 'https://www.linkedin.com/',
+  phone: 'tel:+5548991106355', whatsapp: 'https://wa.me/5548991106355', contactEmail: 'mailto:exemplo@seuchefemcasa.com.br',
+  tiktok: 'https://www.tiktok.com/', facebook: 'https://www.facebook.com/'
+};
 export const EXEMPLO = {
   name: 'Helena Duarte', specialty: 'Cozinha italiana', cities: 'Florianópolis, São José, Palhoça', whatsapp: '(48) 99110-6355',
   bio: 'Cozinho há quinze anos e acredito que um bom jantar começa muito antes do primeiro prato: na escolha dos ingredientes, na conversa sobre a ocasião, no cuidado com cada detalhe.\n\nLevo a cozinha até a sua casa, preparo tudo na hora e deixo o ambiente pronto para você só receber quem gosta. (Este é um perfil de exemplo, com dados fictícios.)',
@@ -126,7 +131,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const linkFoto = (g, i, base) => base + '?foto=' + encodeURIComponent(idFoto(g, i));
   const linkPerfil = origem + new URL(esteLink).pathname;
   const fone = C.phone(p.whatsapp);
-  const contatos = exemplo ? C.CONTATOS.map(([chave, nome]) => ({ chave, nome, href: 'https://google.com/' })) : C.linksContato(p);
+  const contatos = exemplo ? C.CONTATOS.map(([chave, nome]) => ({ chave, nome, href: LINKS_EXEMPLO[chave] || C.mapsUrl(p.cities) })) : C.linksContato(p);
   const zap = !exemplo && fone && contatos.some(({ chave }) => chave === 'whatsapp') ? 'https://wa.me/' + fone + '?text=' + encodeURIComponent('Olá, ' + p.name + '! Vi sua página no Seu Chef em Casa e gostaria de conversar sobre um encontro.') : '';
   const iconesContato = contatos.length ? '<nav class="contatos-chef" aria-label="Contatos do chef">'
     + contatos.map(({ chave, nome, href }) => '<a href="' + e(chave === 'whatsapp' && zap ? zap : href) + '" title="' + e(nome) + '" aria-label="' + e(nome) + '"'
