@@ -39,6 +39,9 @@ const ESTILO = [
   '.lista{padding-left:22px}.exp{display:flex;flex-wrap:wrap;gap:8px}.exp span{border:1px solid #dfd9cc;padding:6px 12px;border-radius:999px}.final{padding-bottom:28px}footer{background:#455238;color:#f6f3eb;padding:18px 0;font-size:.88rem}',
   'dialog{box-sizing:border-box;width:min(100% - 24px,660px);max-height:calc(100dvh - 24px);border:0;border-radius:12px;padding:14px;color:#303629;background:#f6f3eb}dialog::backdrop{background:#252a21cc}.foto-topo,.foto-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}.foto-topo h2{font-size:1.3rem}dialog img{width:100%;max-height:56dvh;object-fit:contain;background:#e8e3d6}dialog button{min-height:44px;cursor:pointer;background:transparent}dialog button:disabled{opacity:.5;cursor:default}dialog p{white-space:pre-wrap;overflow-wrap:anywhere}',
   '.conversa{border-top:1px solid #dfd9cc;margin-top:12px;padding-top:12px}.conversa h3{font-size:1.3rem;margin-top:10px}.conversa [aria-pressed=true]{color:#754653;border-color:#754653}.conversa ol{list-style:none;padding:0;margin:4px 0 12px;max-height:12rem;overflow:auto}.conversa li{padding:6px 0;overflow-wrap:anywhere}.conversa li+li{border-top:1px solid #dfd9cc}.conversa li p{margin:0}.conversa form{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.conversa textarea{flex:1 1 200px;min-width:0;min-height:44px;padding:8px;border:1px solid #827e70;border-radius:8px;background:#fffdf8;color:inherit;font:inherit;resize:vertical}.conversa button.b1{background:#754653}.conversa [role=status]{font-size:.87rem;margin:6px 0}',
+  '#foto-publica{width:min(100% - 24px,960px);padding:0;border-radius:16px}.foto-topo{padding:8px 16px;border-bottom:1px solid #dfd9cc}.foto-topo h2{font-size:1.2rem}.foto-topo .b{border-color:transparent}.foto-corpo{display:grid}.foto-midia{min-width:0;background:#ebe7dc}.foto-midia img{max-height:42dvh;background:transparent}.foto-nav{padding:2px 12px;background:#f1eee4}.foto-nav .b{border-color:transparent}.foto-nav output{color:#455238;font-size:.82rem;font-variant-numeric:tabular-nums}',
+  '.conversa{display:flex;flex-direction:column;min-width:0;margin:0;padding:12px 16px;border-top:0;background:#fffdf8}.conversa #foto-legenda{margin:0 0 8px;max-height:7rem;overflow:auto}.conversa h3{margin:0;font-size:1.18rem}.conversa-cabecalho{display:flex;justify-content:space-between;align-items:center;gap:8px}.conversa [data-curtir]{border-color:transparent;background:#f2ede3}.conversa [data-curtir][aria-pressed=true]{background:#f3e5e9}.conversa ol{margin:6px 0;max-height:clamp(5rem,25dvh,15rem)}.conversa li{font-size:.91rem}.conversa [data-social-status]:empty{display:none}.conversa form{flex-wrap:nowrap;align-items:flex-end;margin-top:auto;padding-top:8px}.conversa textarea{flex:1 1 auto;max-height:9rem;font-size:.9rem}.conversa .nota{font-size:.75rem;margin-top:6px}.conversa .foto-compartilhar{border-top:1px solid #e9e3d7;margin-top:9px;gap:4px 10px}.foto-compartilhar .b{padding:5px 2px;border-color:transparent;color:#455238;font-size:.79rem;text-decoration:underline;text-underline-offset:3px}.conversa [data-link-manual]{width:100%;min-height:38px}',
+  '@media(min-width:760px){.foto-corpo{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}.foto-midia{display:flex;flex-direction:column;justify-content:space-between}.foto-midia img{height:clamp(220px,56dvh,530px);max-height:none}.conversa{border-left:1px solid #dfd9cc;padding:16px}.foto-topo{padding-inline:20px}}',
   '@media(min-width:670px){.perfil{padding-top:30px}.fotos{gap:8px}.pratos{grid-template-columns:1fr 1fr}}'
 ].join('');
 
@@ -186,18 +189,18 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
         + e(g.url) + '" alt="' + e(alt) + '" width="300" height="300"' + (i >= 3 ? ' loading="lazy"' : '') + ' decoding="async"></a>';
     }).join('') + '</div>' : '<p class="nota">O chef está preparando seu portfólio.</p>') + '</section>'
     + (galeria.length ? '<dialog id="foto-publica" aria-labelledby="foto-titulo" data-chef="' + e(id) + '"><div class="foto-topo"><h2 id="foto-titulo">Da minha cozinha</h2><button class="b" data-fechar autofocus>Fechar</button></div>'
-      + '<img alt=""><p id="foto-legenda"></p><div class="foto-nav"><button class="b" data-anterior>Anterior</button>'
-      + '<output aria-live="polite"></output><button class="b" data-proxima>Próxima</button></div>'
-      + '<div class="acoes"><a class="b b1" data-whatsapp target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp</a>'
-      + '<button class="b" data-copiar>Copiar link da foto</button>'
-      + '</div><section class="conversa" aria-label="Curtidas e comentários">'
-      + '<button class="b" type="button" data-curtir aria-pressed="false">♡ Curtir</button>'
-      + '<h3>Comentários</h3><ol data-comentarios aria-label="Comentários da publicação"></ol>'
+      + '<div class="foto-corpo"><div class="foto-midia"><img alt=""><div class="foto-nav"><button class="b" data-anterior>Anterior</button>'
+      + '<output aria-live="polite"></output><button class="b" data-proxima>Próxima</button></div></div>'
+      + '<section class="conversa" aria-label="Curtidas e comentários"><p id="foto-legenda"></p>'
+      + '<div class="conversa-cabecalho"><h3>Comentários</h3><button class="b" type="button" data-curtir aria-pressed="false">♡ Curtir</button></div>'
+      + '<ol data-comentarios aria-label="Comentários da publicação"></ol>'
       + '<p data-social-status role="status"></p><a href="/#/entrar" data-entrar hidden>Entrar para participar</a>'
       + '<form data-comentar><textarea aria-label="Seu comentário" placeholder="Escreva um comentário…" maxlength="500" rows="1" required></textarea>'
       + '<button class="b b1" type="submit">Publicar</button></form>'
-      + (exemplo ? '<p class="nota">Interações de demonstração nesta aba.</p>' : '') + '</section>'
-      + '<p data-compartilhamento role="status" hidden></p><input type="url" data-link-manual aria-label="Link da foto" readonly hidden></dialog>' : '')
+      + '<div class="acoes foto-compartilhar"><a class="b" data-whatsapp target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp</a>'
+      + '<button class="b" data-copiar>Copiar link da foto</button></div>'
+      + '<p data-compartilhamento role="status" hidden></p><input type="url" data-link-manual aria-label="Link da foto" readonly hidden>'
+      + (exemplo ? '<p class="nota">Interações de demonstração nesta aba.</p>' : '') + '</section></div></dialog>' : '')
     + (mostra.length ? '<section id="cardapio"><h2>Meu cardápio</h2><div class="pratos">' + mostra.map(prato).join('') + '</div>'
       + (pratos.length > mostra.length ? '<details class="mais"><summary>Ver mais pratos</summary><div class="pratos">'
         + pratos.slice(mostra.length, 60).map(prato).join('') + '</div></details>' : '')
