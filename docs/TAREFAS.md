@@ -451,3 +451,4 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - A página `/chef/<slug>` abre com apresentação, contagens de publicações, seguidores e seguindo, grade de três colunas, cardápio e pedido de orçamento. A galeria abre fotos com legenda e navegação. Curtir e comentar abrem a publicação no app.
 - O HTML inclui canonical, Open Graph e JSON-LD. Mantidos os links de cidades, redirecionamentos e o noindex nas prévias e no exemplo. Os contadores usam relações existentes e exibem totais.
 - Verificação local: `npm run check`, checagem sintática do visualizador, 84 testes, build e `git diff --check`. O teste de SEO cobre a presença da publicação no HTML, o escape de legendas e os contadores com e sem tabela social.
+- Cada publicação pode ser enviada pelo WhatsApp ou ter o link copiado. O link abre a foto escolhida e usa essa imagem no Open Graph. O endereço canônico continua sendo o perfil do chef.

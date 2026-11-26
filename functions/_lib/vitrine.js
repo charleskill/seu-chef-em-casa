@@ -86,6 +86,10 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const galeria = (Array.isArray(p.gallery) ? p.gallery : []).map(g => ({ id: g?.id, url: fotoOk(g && g.url, origem), legenda: String((g && g.caption) || '').trim() })).filter(g => g.url);
   const avatar = fotoOk(p.avatar, origem);
   const capa = (galeria[0] && galeria[0].url) || avatar;
+  const idFoto = (g, i) => String(g.id ?? 'foto-' + (i + 1));
+  const fotoSelecionada = galeria.find((g, i) => idFoto(g, i) === extra.foto);
+  const linkFoto = (g, i, base) => base + '?foto=' + encodeURIComponent(idFoto(g, i));
+  const linkPerfil = origem + new URL(esteLink).pathname;
   const fone = C.phone(p.whatsapp);
   const zap = fone ? 'https://wa.me/' + fone + '?text=' + encodeURIComponent('Olá, ' + p.name + '! Vi sua página no Seu Chef em Casa e gostaria de conversar sobre um encontro.') : '';
   const linha = [p.specialty, p.cities].map(s => String(s || '').trim()).filter(Boolean).join(' · ');
@@ -124,11 +128,11 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + '<title>' + e(titulo) + '</title><meta name="description" content="' + e(desc) + '"><meta name="theme-color" content="#455238">'
     + '<meta property="og:type" content="profile"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Seu Chef em Casa">'
     + '<meta property="og:title" content="' + e(titulo) + '"><meta property="og:description" content="' + e(desc) + '">'
-    + '<meta property="og:image" content="' + e(capa || PADRAO.imagem) + '"><meta property="og:url" content="' + e(esteLink) + '">'
+    + '<meta property="og:image" content="' + e(fotoSelecionada?.url || capa || PADRAO.imagem) + '"><meta property="og:url" content="' + e(fotoSelecionada ? linkFoto(fotoSelecionada, galeria.indexOf(fotoSelecionada), esteLink) : esteLink) + '">'
     + '<meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="' + e(esteLink) + '">'
     + (exemplo || extra.noindex ? '<meta name="robots" content="noindex">' : '')
     + (extra.jsonld ? '<script type="application/ld+json">' + JSON.stringify(extra.jsonld).replace(/</g, '\\u003c') + '</script>' : '')
-    + '<style>' + ESTILO + '</style><script defer src="/assets/perfil-publico.js"></script></head><body>'
+    + '<style>' + ESTILO + '</style><script defer src="/assets/perfil-publico.js?v=2"></script></head><body>'
     + '<header class="topo"><div class="l"><a class="marca" href="/">Seu Chef em Casa</a><a class="buscar" href="/#/buscar">Conhecer chefs</a></div></header>'
     + '<main class="l">' + perfilPublico
     + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '')
@@ -138,14 +142,18 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + (galeria.length ? '<div class="fotos">' + galeria.map((g, i) => {
       const alt = g.legenda || 'Trabalho de ' + p.name + ', foto ' + (i + 1);
       const interagir = g.id == null ? perfil : perfil + '/foto/' + encodeURIComponent(g.id);
-      return '<a href="' + e(g.url) + '" data-publicacao data-legenda="' + e(g.legenda)
-        + '" data-interagir="' + e(interagir) + '"><img src="'
+      return '<a href="' + e(g.url) + '" data-publicacao data-link="' + e(linkFoto(g, i, linkPerfil)) + '" data-legenda="' + e(g.legenda) + '"'
+        + (g === fotoSelecionada ? ' data-foto-inicial' : '')
+        + ' data-interagir="' + e(interagir) + '"><img src="'
         + e(g.url) + '" alt="' + e(alt) + '" width="300" height="300"' + (i >= 3 ? ' loading="lazy"' : '') + ' decoding="async"></a>';
     }).join('') + '</div>' : '<p class="nota">O chef está preparando seu portfólio.</p>') + '</section>'
     + (galeria.length ? '<dialog id="foto-publica" aria-labelledby="foto-titulo"><div class="foto-topo"><h2 id="foto-titulo">Da minha cozinha</h2><button class="b" data-fechar autofocus>Fechar</button></div>'
       + '<img alt=""><p id="foto-legenda"></p><div class="foto-nav"><button class="b" data-anterior>Anterior</button>'
       + '<output aria-live="polite"></output><button class="b" data-proxima>Próxima</button></div>'
-      + (!exemplo ? '<div class="acoes"><a class="b" data-interagir href="' + e(perfil) + '">Curtir ou comentar</a></div>' : '') + '</dialog>' : '')
+      + '<div class="acoes"><a class="b b1" data-whatsapp target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp</a>'
+      + '<button class="b" data-copiar>Copiar link da foto</button>'
+      + (!exemplo ? '<a class="b" data-interagir href="' + e(perfil) + '">Curtir ou comentar</a>' : '') + '</div>'
+      + '<p data-compartilhamento role="status" hidden></p><input type="url" data-link-manual aria-label="Link da foto" readonly hidden></dialog>' : '')
     + (mostra.length ? '<section id="cardapio"><h2>Meu cardápio</h2><div class="pratos">' + mostra.map(prato).join('') + '</div>'
       + (pratos.length > mostra.length ? '<details class="mais"><summary>Ver mais pratos</summary><div class="pratos">'
         + pratos.slice(mostra.length, 60).map(prato).join('') + '</div></details>' : '')

@@ -9,6 +9,10 @@
   const anterior = dialog.querySelector('[data-anterior]');
   const proxima = dialog.querySelector('[data-proxima]');
   const interagir = dialog.querySelector('[data-interagir]');
+  const whatsapp = dialog.querySelector('[data-whatsapp]');
+  const copiar = dialog.querySelector('[data-copiar]');
+  const status = dialog.querySelector('[data-compartilhamento]');
+  const manual = dialog.querySelector('[data-link-manual]');
   let indice = 0;
   let origem;
 
@@ -21,6 +25,9 @@
     legenda.hidden = !legenda.textContent;
     numero.textContent = (indice + 1) + ' de ' + publicacoes.length;
     if (interagir) interagir.href = link.dataset.interagir;
+    whatsapp.href = 'https://wa.me/?text=' + encodeURIComponent('Veja esta publicação no Seu Chef em Casa: ' + link.dataset.link);
+    manual.value = link.dataset.link;
+    manual.hidden = status.hidden = true;
   }
 
   publicacoes.forEach((link, i) => link.addEventListener('click', event => {
@@ -41,4 +48,24 @@
     }
   });
   dialog.addEventListener('close', () => origem?.focus());
+  copiar.addEventListener('click', async () => {
+    const url = manual.value;
+    let copiado = false;
+    try {
+      await navigator.clipboard.writeText(url);
+      copiado = true;
+    } catch {}
+    if (manual.value !== url || !dialog.open) return;
+    status.hidden = false;
+    status.textContent = copiado ? 'Link copiado.' : 'Selecione e copie o link da foto.';
+    manual.hidden = copiado;
+    if (!copiado) manual.select();
+  });
+
+  const inicial = publicacoes.findIndex(link => link.hasAttribute('data-foto-inicial'));
+  if (inicial >= 0) {
+    origem = publicacoes[inicial];
+    mostrar(inicial);
+    dialog.showModal();
+  }
 })();

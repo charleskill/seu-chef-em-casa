@@ -7,7 +7,7 @@ export async function onRequest({ request, env, params }) {
   const url = new URL(request.url), slug = String(params.slug || '').toLowerCase();
   const c = await chefPorSlug(env, slug);
   if (!c) return indisponivel(url.origin);
-  if (c.slug !== String(params.slug || '')) return new Response(null, { status: 301, headers: { location: url.origin + '/chef/' + c.slug, 'cache-control': 'public, max-age=300' } });
+  if (c.slug !== String(params.slug || '')) return new Response(null, { status: 301, headers: { location: url.origin + '/chef/' + c.slug + url.search, 'cache-control': 'public, max-age=300' } });
   const p = c.p, canonico = SITE + '/chef/' + c.slug;
   const foto = fotoOk(p.avatar, SITE) || fotoOk(((p.gallery || [])[0] || {}).url, SITE);
   const cidades = String(p.cities || '').split(/[,;/\n]/).map(s => s.trim()).filter(Boolean);
@@ -23,7 +23,7 @@ export async function onRequest({ request, env, params }) {
       { '@type': 'ListItem', position: 2, name: p.name, item: canonico }] }
   ] };
   const social = await contadores(env.DB, c.id).catch(() => null);
-  return vitrine(p, { origem: url.origin, id: c.id, esteLink: canonico, extra: { social, jsonld, cidades: cidadesDoChef(p), noindex: !producao(request.url) } });
+  return vitrine(p, { origem: url.origin, id: c.id, esteLink: canonico, extra: { foto: url.searchParams.get('foto'), social, jsonld, cidades: cidadesDoChef(p), noindex: !producao(request.url) } });
 }
 
 async function contadores(db, id) {

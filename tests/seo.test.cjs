@@ -61,6 +61,19 @@ test('perfil compartilhado renderiza a primeira publicação, cardápio e contad
   db.exec('DROP TABLE seguidores');
  }
 });
+test('link da segunda publicação abre a foto certa e preserva o canonical do perfil',async()=>{
+ const url=PROD+'/c/exemplo',params={id:'exemplo'};
+ const primeira=await (await abre(c,url,params)).text();
+ const imagem=primeira.match(/<a href="([^"]+)" data-publicacao data-link="[^"]+\?foto=foto-2"/)[1];
+ const segunda=await (await abre(c,url+'?foto=foto-2',params)).text();
+ assert.ok(segunda.includes('property="og:image" content="'+imagem+'"'));
+ assert.ok(segunda.includes('rel="canonical" href="'+url+'"'));
+ assert.match(segunda,/\?foto=foto-2" data-legenda="" data-foto-inicial/);
+ assert.match(segunda,/Enviar pelo WhatsApp/);
+ assert.match(segunda,/Copiar link da foto/);
+ const ausente=await (await abre(c,url+'?foto=removida',params)).text();
+ assert.doesNotMatch(ausente,/data-foto-inicial/);
+});
 test('cidade e serviço: com chef real indexa; sem chef, convite com noindex; desconhecido dá 404',async()=>{
  const f=await(await abre(cid,PROD+'/personal-chef/florianopolis',{cidade:['florianopolis']})).text();assert.doesNotMatch(f,/noindex/);assert.match(f,/href="\/chef\/maria-teste-aaaaaa"/);assert.match(f,/"FAQPage"/);assert.doesNotMatch(f,/Escondido|Fictícia|Pausado|Incompleto/);
  const j=await(await abre(cid,PROD+'/personal-chef/joinville',{cidade:['joinville']})).text();assert.match(j,/noindex/);assert.match(j,/brigada de Joinville/);
