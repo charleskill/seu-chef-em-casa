@@ -445,3 +445,31 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Painéis têm saída visível. O perfil tem confirmação própria, o aviso de recursos futuros saiu e a tela de conexão só mostra mensagem se falhar.
 - Verificação local: `npm run check`, `npm test` (83 testes), `npm run build` e `git diff --check`. Fluxos completos em navegador ainda não foram verificados.
 - Prévia: https://correcoes-jornada.seu-chef-em-casa.pages.dev. A prévia roda em demonstração, pois o banco não está configurado no branch. Produção aguarda aprovação do Carlos.
+
+## Entrega em revisão — 26/11/2026: perfil público compartilhável
+
+- A página `/chef/<slug>` abre com apresentação, contagens de publicações, seguidores e seguindo, grade de três colunas, cardápio e pedido de orçamento. A galeria abre fotos com legenda e navegação. Curtir e comentar abrem a publicação no app.
+- O HTML inclui canonical, Open Graph e JSON-LD. Mantidos os links de cidades, redirecionamentos e o noindex nas prévias e no exemplo. Os contadores usam relações existentes e exibem totais.
+- Verificação local: `npm run check`, checagem sintática do visualizador, 84 testes, build e `git diff --check`. O teste de SEO cobre a presença da publicação no HTML, o escape de legendas e os contadores com e sem tabela social.
+- Cada publicação pode ser enviada pelo WhatsApp ou ter o link copiado. O link abre a foto escolhida e usa essa imagem no Open Graph. O endereço canônico continua sendo o perfil do chef.
+- O perfil e o painel do chef oferecem “Portfólio em PDF”, com apresentação, até nove fotos na ordem do perfil, cardápio por categoria e contato. A página de impressão usa o recurso de salvar como PDF do navegador.
+- A versão de impressão tem abertura com foto em destaque, seção de apresentação, galeria e cardápio em página própria no A4. Os controles de impressão ficam fora do documento salvo.
+- O visualizador público agora exibe curtidas e comentários na própria foto. Visitantes leem os comentários e entram na conta para publicar ou curtir. O exemplo permite testar as interações com dados temporários na aba.
+- O editor do cardápio aceita foto sugerida, foto do portfólio, envio do celular e busca no acervo. As cinco imagens iniciais têm autoria, fonte e licença no catálogo e nos metadados JPEG. O perfil público e o PDF identificam as fotos do acervo como ilustrativas.
+
+## Revisão de textos do site
+
+- Revisão em português brasileiro com Humanizer. A apresentação usa exemplos concretos de refeições e encontros. Botões e avisos descrevem o que a pessoa pode fazer em cada tela.
+- Cobertura: início, busca, perfis, cardápio, serviços, marmitas, menus especiais, pedidos, conta, painel do chef, administração, páginas de cidade, PDF, metadados e trechos de ajuda e privacidade.
+- As descrições de compras, limpeza e nota fiscal orientam o cliente a conferir o que cada chef oferece. Nas telas de pedido, o envio da mensagem é concluído no WhatsApp.
+
+## Revisão para o piloto
+
+- Enter na busca do acervo mantém o editor aberto. O botão Salvar fica desabilitado enquanto a foto escolhida é preparada.
+- O perfil público tem atalho de teclado para o conteúdo. Na janela de publicação, a rolagem de comentários fica contida. A galeria do portfólio passa a duas colunas em telas estreitas.
+- Os dados estruturados ligam a página de perfil à pessoa e registram as cidades atendidas no serviço. A verificação analisa o JSON-LD renderizado e mantém os testes de canonical, noindex e sitemap.
+- O roteiro [Piloto com chefs e professores](PILOTO-CHEFS.md) registra tarefas, critérios de conclusão, uma apresentação para parceiros e perguntas sobre o fluxo Corporativo.
+- Ensaio de impressão do perfil da Helena no Edge. A versão inicial gerava três páginas A4 e 12.792.746 bytes. Com o cardápio em duas colunas e fotos ilustrativas menores, o exemplo ficou em duas páginas e 759.161 bytes. As páginas renderizadas foram inspecionadas, incluindo fotos, valores e créditos.
+- No editor de perfil, cada chef escolhe quais ícones mostrar: Instagram, LinkedIn, telefone, WhatsApp, localização, e-mail de contato, TikTok e Facebook. O mapa usa as cidades atendidas. O PDF inclui os contatos ativados.
+
+- 26/11/2026 (Claude): fotos livres do Wikimedia Commons em todos os pratos do perfil de exemplo (burrata, carpaccio, tagliatelle, ravióli, ossobuco), com crédito e licença; também entram na busca de fotos do chef.

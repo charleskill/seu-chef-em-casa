@@ -116,19 +116,19 @@ const OPCOES=[
 ];
 const EXPERIENCIAS=[
  ['Brunch em casa','Uma manhã sem pressa, com receitas doces e salgadas.','x_brunch','cup'],
- ['Café da manhã especial','Comece o dia com uma mesa preparada com carinho.','x_cafe','cup'],
+ ['Café da manhã especial','Combine com o chef o que servir no café da manhã.','x_cafe','cup'],
  ['Noite de Massas','Massas e molhos preparados para o seu encontro.','x_massas','menu'],
  ['Festival de Risotos','Receitas cremosas e combinações para compartilhar.','x_risotos','bowl'],
  ['Noite Japonesa','Sushis e sabores japoneses preparados na sua casa.','x_japonesa','bowl'],
  ['Cozinha Italiana','Clássicos italianos em um menu cheio de afeto.','x_italiana','menu'],
- ['Cozinha Francesa','Técnica e delicadeza em um jantar especial.','x_francesa','cloche'],
+ ['Cozinha Francesa','Um jantar com pratos da cozinha francesa.','x_francesa','cloche'],
  ['Cozinha Mediterrânea','Azeite, vegetais e sabores frescos à mesa.','x_mediterranea','leaf'],
- ['Noite Mexicana','Tacos, guacamole e sabores para uma noite animada.','x_mexicana','bowl'],
+ ['Noite Mexicana','Tacos, guacamole e outros pratos mexicanos.','x_mexicana','bowl'],
  ['Noite Árabe','Pastas, especiarias e receitas para dividir.','x_arabe','bowl'],
  ['Cozinha Indiana','Aromas de especiarias em um menu cheio de personalidade.','x_indiana','bowl'],
  ['Cozinha Nordestina','Receitas e ingredientes que celebram o Nordeste.','x_nordestina','cloche'],
  ['Feijoada em casa','Um clássico brasileiro para reunir a turma.','x_feijoada','bowl'],
- ['Menu Vegetariano','Vegetais como protagonistas de uma refeição especial.','x_vegetariano','leaf'],
+ ['Menu Vegetariano','Monte um cardápio vegetariano com o chef.','x_vegetariano','leaf'],
  ['Menu Vegano','Uma experiência criativa com ingredientes de origem vegetal.','x_vegano','leaf'],
  ['Menu Degustação','Uma sequência de pequenas criações do chef.','x_degustacao','cloche'],
  ['Jantar harmonizado','Pratos e bebidas combinados com o chef.','x_harmonizado','wine'],
@@ -136,7 +136,7 @@ const EXPERIENCIAS=[
  ['Confeitaria em casa','Bolos e sobremesas preparados para a sua ocasião.','x_confeitaria','cake'],
  ['Chá da tarde','Chás, quitutes e uma pausa gostosa para receber.','x_cha','cup'],
  ['Paella em casa','Arroz, frutos do mar e uma receita para compartilhar.','x_paella','bowl'],
- ['Ceviches e sabores peruanos','Frescor, cítricos e combinações da cozinha peruana.','x_peruana','bowl'],
+ ['Ceviches e sabores peruanos','Ceviches cítricos e outros pratos da cozinha peruana.','x_peruana','bowl'],
  ['Cozinha Tailandesa','Curries e ervas aromáticas em um menu vibrante.','x_tailandesa','bowl'],
  ['Cozinha Coreana','Sabores fermentados e receitas para uma mesa generosa.','x_coreana','bowl'],
  ['Noite do Nhoque','Nhoques delicados com os molhos da sua preferência.','x_nhoque','menu'],
@@ -144,13 +144,13 @@ const EXPERIENCIAS=[
  ['Queijos e tábuas artesanais','Queijos, frutas e acompanhamentos para receber bem.','x_queijos','wine'],
  ['Sopas e caldos','Receitas aconchegantes para noites mais frescas.','x_sopas','bowl'],
  ['Pães artesanais','Uma experiência com massas, fermentação e pão fresco.','x_paes','cup'],
- ['Saladas gourmet','Folhas, grãos e molhos em combinações cheias de sabor.','x_saladas','leaf'],
+ ['Saladas gourmet','Saladas de folhas e grãos com molhos para acompanhar.','x_saladas','leaf'],
  ['Peixes grelhados','Peixes e acompanhamentos com preparo delicado.','x_peixes','cloche'],
  ['Carnes nobres','Cortes selecionados, ponto e acompanhamentos a combinar.','x_carnes','cloche'],
- ['Costela de preparo lento','Carne macia e sabores que pedem tempo e cuidado.','x_costela','cloche'],
+ ['Costela de preparo lento','Costela cozida devagar até ficar macia.','x_costela','cloche'],
  ['Moqueca à mesa','Peixe, temperos e o aroma de uma boa moqueca.','x_moqueca','bowl'],
  ['Café colonial','Pães, bolos e quitutes para uma mesa farta.','x_colonial','cup'],
- ['Piquenique especial','Um cardápio pensado para aproveitar ao ar livre.','x_piquenique','cup'],
+ ['Piquenique especial','Combine um cardápio para comer ao ar livre.','x_piquenique','cup'],
  ['Finger food para receber','Pequenas criações para encontros e recepções.','x_fingerfood','menu'],
  ['Cozinha Grega','Frescor, azeite e receitas inspiradas na Grécia.','x_grega','leaf'],
  ['Noite do Lámen','Caldo aromático, macarrão e acompanhamentos à sua escolha.','x_lamen','bowl'],
@@ -163,6 +163,59 @@ const cleanOpcoes=o=>{if(!o||typeof o!=='object')return null;const r={};OPCOES.f
 const cleanAgenda=a=>{if(!a||!Array.isArray(a.off))return null;const off=[...new Set(a.off.filter(d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)))].sort().slice(-400);return off.length?{off}:null};
 const isFree=(c,date)=>!date||!(c&&c.agenda&&Array.isArray(c.agenda.off)&&c.agenda.off.includes(date));
 const mapsUrl=q=>{q=String(q||'').trim();return q?'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q):''};
+const CONTATOS = [
+  ['instagram', 'Instagram', 'url'], ['linkedin', 'LinkedIn', 'url'],
+  ['phone', 'Telefone', 'tel'], ['whatsapp', 'WhatsApp', 'tel'],
+  ['location', 'Localização', ''], ['contactEmail', 'E-mail', 'email'],
+  ['tiktok', 'TikTok', 'url'], ['facebook', 'Facebook', 'url']
+];
+const REDES = {
+  instagram: ['instagram.com', 'www.instagram.com'],
+  linkedin: ['linkedin.com', 'www.linkedin.com', 'br.linkedin.com'],
+  tiktok: ['tiktok.com', 'www.tiktok.com', 'vm.tiktok.com'],
+  facebook: ['facebook.com', 'www.facebook.com', 'm.facebook.com']
+};
+function cleanContato(chave, valor) {
+  const texto = String(valor || '').trim();
+  if (Object.hasOwn(REDES, chave)) {
+    try {
+      const url = new URL(texto);
+      return url.protocol === 'https:' && !url.username && !url.password && !url.port &&
+        REDES[chave].includes(url.hostname) && url.pathname !== '/' ? url.href : '';
+    } catch { return ''; }
+  }
+  if (chave === 'contactEmail') return /^[\w.!#$%&'*+\-\/=?^_`{|}~]+@[a-z\d-]+(?:\.[a-z\d-]+)+$/i.test(texto) ? email(texto) : '';
+  return phone(texto) ? texto : '';
+}
+function contatosAtivos(perfil) {
+  const selecao = perfil.contatos;
+  return Array.isArray(selecao) ? CONTATOS.map(([chave]) => chave).filter(chave => selecao.includes(chave)) : ['instagram', 'whatsapp', 'location'];
+}
+function linksContato(perfil) {
+  const ativos = contatosAtivos(perfil);
+  return CONTATOS.filter(([chave]) => ativos.includes(chave)).flatMap(([chave, nome]) => {
+    const valor = cleanContato(chave, perfil[chave]);
+    let href = valor;
+    if (chave === 'location') href = mapsUrl(perfil.cities);
+    if (chave === 'phone' && valor) href = 'tel:+' + phone(valor);
+    if (chave === 'whatsapp' && valor) href = 'https://wa.me/' + phone(valor);
+    if (chave === 'contactEmail' && valor) href = 'mailto:' + encodeURIComponent(valor).replace('%40', '@');
+    return href ? [{ chave, nome, href }] : [];
+  });
+}
+const ICONES_CONTATO = {
+  instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',
+  linkedin: '<path d="M5 9v10m0-14v.1M10 19V9m0 4a4.5 4.5 0 019 0v6"/>',
+  phone: '<path d="M7 3H4a1 1 0 00-1 1 17 17 0 0017 17 1 1 0 001-1v-3l-5-2-2 2a13 13 0 01-7-7l2-2z"/>',
+  whatsapp: '<path d="M21 12a9 9 0 01-13.5 7.8L3 21l1.2-4.5A9 9 0 1121 12Z"/><path d="M9 8a1.5 1.5 0 00-1 2c.8 2.4 2.7 4.2 5 5a2 2 0 002.5-1l-2.5-1.1-.8.8a5.6 5.6 0 01-2.5-2.5l.8-.8Z"/>',
+  location: '<path d="M19 10c0 5-7 10-7 10s-7-5-7-10a7 7 0 1114 0Z"/><circle cx="12" cy="10" r="2.3"/>',
+  contactEmail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+  tiktok: '<path d="M14 3v12a4 4 0 11-4-4m4-8a6 6 0 006 6"/>',
+  facebook: '<path d="M14 21v-9h4l.6-4H14V6a1.5 1.5 0 011.5-1.5H19V2h-3.5A5.5 5.5 0 0010 7.5V8H7v4h3v9"/>'
+};
+function iconeContato(chave) {
+  return '<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICONES_CONTATO[chave] + '</svg>';
+}
 function normalizeData(data,seed){
   const source=Array.isArray(data?.chefs)?data.chefs:seed;
   const chefs=source.filter(c=>c&&typeof c.id==='string'&&typeof c.name==='string').map(c=>({...c,
@@ -208,6 +261,6 @@ async function verifyPassword(password,account,cryptoApi){
 const slug=v=>norm(v).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60).replace(/-+$/,'');
 const slugChef=(nome,id)=>{const h=(String(id||'').match(/^chef-([a-f\d]{6})/)||[])[1]||'';return h?(slug(nome)||'chef')+'-'+h:''};
 const idDoSlug=s=>(String(s||'').match(/-([a-f\d]{6})$/)||[])[1]||'';
-const api={slug,slugChef,idDoSlug,faltaPerfil,emailTemporario,norm,email,isAdminEmail,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
+const api={slug,slugChef,idDoSlug,faltaPerfil,emailTemporario,norm,email,isAdminEmail,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits,CONTATOS,cleanContato,contatosAtivos,linksContato,iconeContato};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);

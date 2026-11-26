@@ -12,7 +12,7 @@ const DB={prepare(sql){let a=[];return{bind(...x){a=x;return this},async first()
 const foto='/api/foto/'+'e'.repeat(32);
 const perfil=(name,extra={})=>({name,whatsapp:'(48) 99110-6355',cities:'Florianópolis, São José',specialty:'Cozinha italiana',bio:'Cozinho na sua casa.',avatar:foto,gallery:[],dishes:[{id:'d',name:'Risoto <b>',price:80,category:'Massas'}],opcoes:{x_pizza:true},...extra});
 const add=(id,email,p,pub=1,oculto=0)=>db.prepare('INSERT INTO chefs (id,email,credencial,perfil,publicado,oculto,criado_em,atualizado_em) VALUES (?,?,?,?,?,?,?,?)').run(id,email,'{}',JSON.stringify(p),pub,oculto,'2026-11-20T10:00:00Z','2026-11-24T10:00:00Z');
-add('chef-aaaaaa0000000001','real@x.com',perfil('Maria Teste'));
+add('chef-aaaaaa0000000001','real@x.com',perfil('Maria Teste',{gallery:[{id:'primeiro',url:foto,caption:'Jantar <privado>'}]}));
 add('chef-bbbbbb0000000002','escondido@x.com',perfil('Chef Escondido'),1,1);
 add('chef-cccccc0000000003','pausado@x.com',perfil('Chef Pausado'),0);
 add('chef-dddddd0000000004','inc@x.com',perfil('Chef Incompleto',{dishes:[]}));
@@ -26,6 +26,14 @@ test('perfil /chef/<slug> sai completo do servidor, com canonical e JSON-LD; nom
  const r=await abre(chef,PROD+'/chef/maria-teste-aaaaaa',{slug:'maria-teste-aaaaaa'});assert.equal(r.status,200);const h=await r.text();
  assert.match(h,/<title>Maria Teste · Personal chef<\/title>/);assert.match(h,/<link rel="canonical" href="https:\/\/seuchefemcasa\.com\.br\/chef\/maria-teste-aaaaaa">/);
  assert.match(h,/"@type":"Person"/);assert.match(h,/"priceCurrency":"BRL"/);assert.doesNotMatch(h,/noindex/);assert.doesNotMatch(h,/Risoto <b>/);assert.match(h,/\\u003cb>/);
+ const graph=JSON.parse(h.match(/<script type="application\/ld\+json">(.*?)<\/script>/)[1])['@graph'];
+ const page=graph.find(node=>node['@type']==='ProfilePage');
+ const pessoa=graph.find(node=>node['@type']==='Person');
+ const servico=graph.find(node=>node['@type']==='Service');
+ assert.equal(page.mainEntity['@id'],pessoa['@id']);
+ assert.equal(servico.provider['@id'],pessoa['@id']);
+ assert.deepEqual(servico.areaServed.map(cidade=>cidade.name),['Florianópolis','São José']);
+ assert.match(h,/href="#perfil-conteudo">Pular para o conteúdo/);
  assert.match(h,/href="https:\/\/seuchefemcasa\.com\.br\/personal-chef\/florianopolis"|href="\/personal-chef\/florianopolis"|personal-chef\/florianopolis/);
  const v=await abre(chef,PROD+'/chef/nome-velho-aaaaaa',{slug:'nome-velho-aaaaaa'});assert.equal(v.status,301);assert.equal(v.headers.get('location'),PROD+'/chef/maria-teste-aaaaaa');
  const prev=await(await abre(chef,'https://x.seu-chef-em-casa.pages.dev/chef/maria-teste-aaaaaa',{slug:'maria-teste-aaaaaa'})).text();assert.match(prev,/noindex/);
@@ -34,7 +42,74 @@ test('perfil /chef/<slug> sai completo do servidor, com canonical e JSON-LD; nom
 test('/c/<id> leva (301) ao endereço novo; /c/exemplo continua, com noindex',async()=>{
  const r=await abre(c,PROD+'/c/chef-aaaaaa0000000001',{id:'chef-aaaaaa0000000001'});assert.equal(r.status,301);assert.equal(r.headers.get('location'),PROD+'/chef/maria-teste-aaaaaa');
  assert.equal((await abre(c,PROD+'/c/chef-bbbbbb0000000002',{id:'chef-bbbbbb0000000002'})).status,404);
- const ex=await abre(c,PROD+'/c/exemplo',{id:'exemplo'});assert.equal(ex.status,200);assert.match(await ex.text(),/noindex/);
+ const ex=await abre(c,PROD+'/c/exemplo',{id:'exemplo'});assert.equal(ex.status,200);
+ const html=await ex.text();assert.match(html,/noindex/);
+ assert.doesNotMatch(html,/google\.com\/"/);assert.match(html,/wa\.me\/5548991106355/);assert.match(html,/mailto:exemplo@seuchefemcasa\.com\.br/);assert.match(html,/linkedin\.com\//);
+});
+test('perfil exibe apenas ícones habilitados e mantém e-mail de contato separado da conta',async()=>{
+ const {vitrine}=await import('../functions/_lib/vitrine.js');
+ const p=perfil('Chef Contato',{contatos:['instagram','linkedin','phone','location','contactEmail','tiktok','facebook'],
+  instagram:'https://instagram.com/chef',linkedin:'https://www.linkedin.com/in/chef',phone:'(48) 99110-6355',
+  contactEmail:'chefe+eventos@example.com',email:'acesso@example.com',tiktok:'https://www.tiktok.com/@chef',facebook:'https://www.facebook.com/chef'});
+ const html=await vitrine(p,{origem:PROD,id:'chef-aaaaaa0000000001',esteLink:PROD+'/chef/chef-contato-aaaaaa'}).text();
+ for(const nome of ['Instagram','LinkedIn','Telefone','Localização','E-mail','TikTok','Facebook']) assert.ok(html.includes('aria-label="'+nome+'"'),nome);
+ assert.doesNotMatch(html,/aria-label="WhatsApp"|wa\.me|acesso@example\.com/);
+ assert.match(html,/mailto:chefe%2Beventos@example\.com/);
+});
+test('perfil compartilhado renderiza a primeira publicação, cardápio e contadores públicos',async()=>{
+ const url=PROD+'/chef/maria-teste-aaaaaa',params={slug:'maria-teste-aaaaaa'};
+ const novo=await (await abre(chef,url,params)).text();
+ assert.match(novo,/<dt>Publicações<\/dt><dd>1<\/dd>/);
+ assert.match(novo,/<dt>Seguidores<\/dt><dd>0<\/dd>/);
+ assert.match(novo,/<dt>Seguindo<\/dt><dd>0<\/dd>/);
+ assert.match(novo,/data-legenda="Jantar &lt;privado&gt;"/);
+ assert.match(novo,/data-foto-id="primeiro"/);
+ assert.match(novo,/data-comentarios/);
+ assert.match(novo,/data-comentar/);
+ assert.match(novo,/data-curtir aria-pressed="false"/);
+ assert.match(novo,/<meta property="og:image"/);
+ assert.ok(novo.indexOf('id="publicacoes"') < novo.indexOf('id="cardapio"'));
+
+ db.exec('CREATE TABLE seguidores (chef_id TEXT, conta_id TEXT)');
+ try {
+  const segue=db.prepare('INSERT INTO seguidores VALUES (?, ?)');
+  segue.run('chef-aaaaaa0000000001','chef-bbbbbb0000000002');
+  segue.run('chef-aaaaaa0000000001','chef-ffffff0000000006');
+  segue.run('chef-bbbbbb0000000002','chef-aaaaaa0000000001');
+  const html=await (await abre(chef,url,params)).text();
+  assert.match(html,/<dt>Seguidores<\/dt><dd>2<\/dd>/);
+  assert.match(html,/<dt>Seguindo<\/dt><dd>1<\/dd>/);
+  assert.doesNotMatch(html,/chef-bbbbbb0000000002|chef-ffffff0000000006/);
+ } finally {
+  db.exec('DROP TABLE seguidores');
+ }
+});
+test('link da segunda publicação abre a foto certa e preserva o canonical do perfil',async()=>{
+ const url=PROD+'/c/exemplo',params={id:'exemplo'};
+ const primeira=await (await abre(c,url,params)).text();
+ const imagem=primeira.match(/<a href="([^"]+)" data-publicacao data-link="[^"]+\?foto=foto-2"/)[1];
+ const segunda=await (await abre(c,url+'?foto=foto-2',params)).text();
+ assert.ok(segunda.includes('property="og:image" content="'+imagem+'"'));
+ assert.ok(segunda.includes('rel="canonical" href="'+url+'"'));
+ assert.match(segunda,/\?foto=foto-2" data-legenda="" data-foto-inicial/);
+ assert.match(segunda,/Enviar pelo WhatsApp/);
+ assert.match(segunda,/Copiar link da foto/);
+ const ausente=await (await abre(c,url+'?foto=removida',params)).text();
+ assert.doesNotMatch(ausente,/data-foto-inicial/);
+});
+test('portfólio completo reúne fotos, cardápio e contato em uma página para salvar como PDF',async()=>{
+ const url=PROD+'/chef/maria-teste-aaaaaa',params={slug:'maria-teste-aaaaaa'};
+ const html=await (await abre(chef,url+'?portfolio=pdf',params)).text();
+ assert.match(html,/data-imprimir/);
+ assert.match(html,/<meta name="robots" content="noindex">/);
+ assert.ok(html.includes('rel="canonical" href="'+url+'"'));
+ assert.match(html,/class="portfolio-capa com-foto"/);
+ assert.match(html,/Minha cozinha/);
+ assert.match(html,/<figcaption>Jantar &lt;privado&gt;<\/figcaption>/);
+ assert.match(html,/<h2>Cardápio<\/h2>/);
+ assert.match(html,/<h3 class="portfolio-categoria">Massas<\/h3>/);
+ assert.match(html,/https:\/\/wa\.me\/5548991106355/);
+ assert.doesNotMatch(html,/id="foto-publica"/);
 });
 test('cidade e serviço: com chef real indexa; sem chef, convite com noindex; desconhecido dá 404',async()=>{
  const f=await(await abre(cid,PROD+'/personal-chef/florianopolis',{cidade:['florianopolis']})).text();assert.doesNotMatch(f,/noindex/);assert.match(f,/href="\/chef\/maria-teste-aaaaaa"/);assert.match(f,/"FAQPage"/);assert.doesNotMatch(f,/Escondido|Fictícia|Pausado|Incompleto/);
