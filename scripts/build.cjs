@@ -16,6 +16,8 @@ if(fs.existsSync(path.join(root,'robots.txt')))fs.copyFileSync(path.join(root,'r
 // sitemap.xml agora é gerado pelo servidor (functions/sitemap.xml.js). 404.html desliga o 'tudo vira index.html' da Cloudflare: endereço inexistente responde 404 de verdade.
 fs.rmSync(path.join(out,'sitemap.xml'),{force:true});
 fs.copyFileSync(path.join(root,'404.html'),path.join(out,'404.html'));
+// App instalável: manifesto, service worker e página sem internet ficam na raiz do site.
+for(const f of ['manifest.webmanifest','sw.js','offline.html'])fs.copyFileSync(path.join(root,f),path.join(out,f));
 // Portable review copy, with the same sources, for opening without a server.
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 html=html.replace(/\?v=[a-f0-9]+"/g,'"');
