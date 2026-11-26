@@ -186,3 +186,5 @@ Ideia do Carlos: oferecer o Seu Restaurante Online (pago) aos chefs do Seu Chef 
 
 ## 25/11/2026 · Endereços para o Google
 Perfil do chef em /chef/<nome>-<6 primeiros hex do id>, sem mudar o banco; se o nome mudar, o endereço antigo redireciona (301). /c/<id> também redireciona. Cidade e serviço só entram no sitemap e no Google com ao menos um chef real; perfis de apresentação (@apresentacao.invalid) e prévias *.pages.dev ficam sempre com noindex. Canonical sempre em https://seuchefemcasa.com.br.
+
+- 26/11/2026 · Orçamento rápido sem banco de dados: o orçamento vai dentro do link (base64), validado no servidor; nome, foto e WhatsApp do chef vêm do cadastro publicado. O WhatsApp do cliente não entra no link. Limite: alguém pode montar um link falso com o nome do chef; se virar problema, guardar o orçamento no servidor (exige mexer na API e no banco).

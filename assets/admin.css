@@ -58,3 +58,23 @@ body.admin-workspace{padding:0;background:#f5f6f3;color:#243229;-webkit-font-smo
 
 .eq-account-actions{position:relative}.eq-account-actions>summary{display:flex;align-items:center;justify-content:center;min-height:40px;padding:9px 13px;border:1px solid #e0e5d8;border-radius:10px;font:550 11px system-ui;list-style:none;cursor:pointer;background:#fffefa}.eq-account-actions>summary::-webkit-details-marker{display:none}.eq-account-actions>summary::after{content:'⌄';margin-left:14px;color:#819076}.admin-workspace .eq-account-actions>.acts{position:absolute;right:0;top:calc(100% + 7px);width:240px;z-index:12;background:#fffefa;border:1px solid #e0e5d8;border-radius:13px;box-shadow:0 12px 30px #1c252014;padding:8px;margin:0;display:flex;flex-direction:column;gap:4px}.admin-workspace .eq-account-actions>.acts>.b{justify-content:flex-start;border:0;border-radius:7px;width:100%;background:transparent}.admin-workspace .eq-account-actions>.acts>.b:hover{background:#f2f4eb}.admin-workspace .eq-account-actions>.acts>.eq-perigo{color:#993c30}
 .admin-coments{display:grid;gap:10px}.admin-coment{padding:12px 14px;border-radius:12px;border:1px solid rgba(0,0,0,.1)}.admin-coment p{margin:0 0 6px}.admin-coment.denunciado{border-color:#b3261e;background:rgba(179,38,30,.05)}.admin-den{color:#b3261e;font-weight:700}
+
+/* Painel > Orçamentos */
+.oc fieldset{border:0;margin:0 0 22px;padding:0;min-width:0}.oc legend{padding:0;margin:0 0 10px;font-family:var(--title);font-size:21px;color:var(--ink)}
+.oc-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.oc-topo .b{min-height:40px;padding:0 14px;font-size:13px}
+.oc-2,.oc-3{display:grid;gap:0 12px;grid-template-columns:repeat(2,minmax(0,1fr))}.oc-3{grid-template-columns:1.3fr 1fr .8fr}
+.oc-chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.oc-chip{min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:99px;background:var(--paper);color:var(--ol);font:inherit;font-size:13px;cursor:pointer;transition:transform .12s ease,background-color .12s ease}
+.oc-chip:active{transform:scale(.96)}.oc-chip-forte{border-color:var(--ol);font-weight:600}@media(hover:hover){.oc-chip:hover{background:#eef1e8}}
+.oc-cab,.oc-item{display:grid;grid-template-columns:minmax(0,1fr) 64px 96px 36px;gap:6px;align-items:center}
+.oc-cab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin:12px 0 6px}
+.oc-item{margin-bottom:6px}.oc-item input{width:100%;min-height:44px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:var(--paper);font:inherit;font-size:16px;color:var(--ink)}
+.oc-item input[name=q],.oc-item input[name=v]{text-align:right;font-variant-numeric:tabular-nums}
+.oc-x{width:36px;height:44px;border:0;background:none;color:var(--mut);font-size:22px;cursor:pointer;border-radius:10px}.oc-x:hover{color:var(--cu)}
+.oc-total{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:12px;padding:14px 16px;border-radius:14px;background:var(--ol);color:#fbf8f1}
+.oc-total span{font-size:12px;letter-spacing:.12em;text-transform:uppercase}.oc-total strong{margin-left:auto;font-family:var(--title);font-weight:400;font-size:26px;font-variant-numeric:tabular-nums}.oc-total small{flex-basis:100%;text-align:right;opacity:.8;font-variant-numeric:tabular-nums}
+.oc-acts{position:sticky;bottom:calc(var(--nav,0px) + 8px);z-index:2;padding:10px;margin:0 -10px;border-radius:16px;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px)}
+.oc-acts .b1{flex:1 1 200px}
+.oc-salvos ul{list-style:none;margin:0;padding:0}.oc-salvos li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;padding:14px 0;border-top:1px solid var(--line)}
+.oc-salvos li b{display:block}.oc-salvos li span{font-size:13px;color:var(--mut);font-variant-numeric:tabular-nums}.oc-li-acts{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.oc-li-acts .b{min-height:38px;padding:0 12px;font-size:13px}
+@media(max-width:560px){.oc-2{grid-template-columns:1fr}.oc-3{grid-template-columns:1fr 1fr}.oc-3 .f:first-child{grid-column:1/-1}.oc-cab{display:none}.oc-item{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) 32px;padding:8px 0 10px;border-bottom:1px solid var(--line)}.oc-item input[name=d]{grid-column:1/-1}}

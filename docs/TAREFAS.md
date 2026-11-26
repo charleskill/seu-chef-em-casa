@@ -473,3 +473,5 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - No editor de perfil, cada chef escolhe quais ícones mostrar: Instagram, LinkedIn, telefone, WhatsApp, localização, e-mail de contato, TikTok e Facebook. O mapa usa as cidades atendidas. O PDF inclui os contatos ativados.
 
 - 26/11/2026 (Claude): fotos livres do Wikimedia Commons em todos os pratos do perfil de exemplo (burrata, carpaccio, tagliatelle, ravióli, ossobuco), com crédito e licença; também entram na busca de fotos do chef.
+
+- 26/11/2026 · Orçamento rápido (branch orcamento-rapido): Painel > Orçamentos. O chef monta o orçamento no celular (cliente, evento, itens com total automático, botões de pratos do cardápio e extras, condições, validade) e envia pelo WhatsApp. O cliente abre /o/<id>?q=... com a página do orçamento, Baixar PDF e Aceitar (volta ao WhatsApp do chef). Orçamentos ficam guardados no aparelho do chef. Testes: 93 (5 novos). Aguarda OK do Carlos para publicar.
