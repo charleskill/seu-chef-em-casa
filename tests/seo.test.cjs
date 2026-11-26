@@ -74,6 +74,18 @@ test('link da segunda publicação abre a foto certa e preserva o canonical do p
  const ausente=await (await abre(c,url+'?foto=removida',params)).text();
  assert.doesNotMatch(ausente,/data-foto-inicial/);
 });
+test('portfólio completo reúne fotos, cardápio e contato em uma página para salvar como PDF',async()=>{
+ const url=PROD+'/chef/maria-teste-aaaaaa',params={slug:'maria-teste-aaaaaa'};
+ const html=await (await abre(chef,url+'?portfolio=pdf',params)).text();
+ assert.match(html,/data-imprimir/);
+ assert.match(html,/<meta name="robots" content="noindex">/);
+ assert.ok(html.includes('rel="canonical" href="'+url+'"'));
+ assert.match(html,/Trabalhos selecionados/);
+ assert.match(html,/<figcaption>Jantar &lt;privado&gt;<\/figcaption>/);
+ assert.match(html,/<h2>Cardápio<\/h2><h3>Massas<\/h3>/);
+ assert.match(html,/https:\/\/wa\.me\/5548991106355/);
+ assert.doesNotMatch(html,/id="foto-publica"/);
+});
 test('cidade e serviço: com chef real indexa; sem chef, convite com noindex; desconhecido dá 404',async()=>{
  const f=await(await abre(cid,PROD+'/personal-chef/florianopolis',{cidade:['florianopolis']})).text();assert.doesNotMatch(f,/noindex/);assert.match(f,/href="\/chef\/maria-teste-aaaaaa"/);assert.match(f,/"FAQPage"/);assert.doesNotMatch(f,/Escondido|Fictícia|Pausado|Incompleto/);
  const j=await(await abre(cid,PROD+'/personal-chef/joinville',{cidade:['joinville']})).text();assert.match(j,/noindex/);assert.match(j,/brigada de Joinville/);

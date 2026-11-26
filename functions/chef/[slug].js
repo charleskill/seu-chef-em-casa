@@ -23,7 +23,7 @@ export async function onRequest({ request, env, params }) {
       { '@type': 'ListItem', position: 2, name: p.name, item: canonico }] }
   ] };
   const social = await contadores(env.DB, c.id).catch(() => null);
-  return vitrine(p, { origem: url.origin, id: c.id, esteLink: canonico, extra: { foto: url.searchParams.get('foto'), social, jsonld, cidades: cidadesDoChef(p), noindex: !producao(request.url) } });
+  return vitrine(p, { origem: url.origin, id: c.id, esteLink: canonico, extra: { portfolio: url.searchParams.get('portfolio') === 'pdf', foto: url.searchParams.get('foto'), social, jsonld, cidades: cidadesDoChef(p), noindex: !producao(request.url) } });
 }
 
 async function contadores(db, id) {

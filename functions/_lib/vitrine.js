@@ -41,6 +41,15 @@ const ESTILO = [
   '@media(min-width:670px){.perfil{padding-top:30px}.fotos{gap:8px}.pratos{grid-template-columns:1fr 1fr}}'
 ].join('');
 
+const ESTILO_PORTFOLIO = [
+  '@page{size:A4;margin:13mm}',
+  '.portfolio{width:min(100% - 32px,760px);margin:18px auto;color:#303629}.portfolio header{display:flex;align-items:center;gap:18px;padding-bottom:14px;border-bottom:2px solid #754653}.portfolio h1{font-size:clamp(1.8rem,6vw,2.7rem)}',
+  '.portfolio p{margin:4px 0 8px;overflow-wrap:anywhere}.portfolio h2{margin-bottom:8px}.portfolio h3{margin-top:10px;color:#455238;break-after:avoid}.portfolio section+section{margin-top:19px;padding-top:12px}',
+  '.portfolio .fotos figure{margin:0;break-inside:avoid;min-width:0}.portfolio .fotos img{aspect-ratio:1;height:auto;border-radius:4px}.portfolio figcaption{font-size:.8rem;overflow-wrap:anywhere}.portfolio .prato{break-inside:avoid;padding:7px 0}.portfolio .prato > small{display:none}',
+  '.portfolio .contato{break-inside:avoid}.portfolio button{cursor:pointer}.portfolio a{overflow-wrap:anywhere}',
+  '@media print{body{background:white;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.portfolio{width:auto;margin:0}.portfolio header{break-inside:avoid}.portfolio h2{break-after:avoid}.portfolio .retrato{width:24mm}.portfolio .fotos{gap:2mm}.portfolio .fotos img{height:43mm}.portfolio .pratos{display:block}.portfolio .sem-impressao{display:none}}'
+].join('');
+
 // /c/exemplo: vitrine de um chef fictício, para mostrar aos chefs como a página fica (e para testar sem banco).
 // Tudo inventado; fotos ilustrativas do Unsplash; telefone de teste do projeto.
 const U = id => 'https://images.unsplash.com/photo-' + id + '?w=1400&q=80&auto=format&fit=crop';
@@ -101,6 +110,33 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const mostra = pratos.slice(0, 8);
   const prato = d => '<article class="prato">' + (d.category ? '<small>' + e(d.category) + '</small>' : '') + '<h3>' + e(d.name) + '</h3>'
     + (d.desc ? '<p>' + e(d.desc) + '</p>' : '') + (Number(d.price) > 0 ? '<span>Referência: ' + e(dinheiro(d.price)) + ' por pessoa</span>' : '') + '</article>';
+  if (extra.portfolio) {
+    const categorias = new Map();
+    for (const d of pratos) {
+      const categoria = d.category || 'Outros pratos';
+      if (!categorias.has(categoria)) categorias.set(categoria, []);
+      categorias.get(categoria).push(d);
+    }
+    const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+      + '<title>Portfólio de ' + e(p.name) + ' · Seu Chef em Casa</title><meta name="robots" content="noindex">'
+      + '<link rel="canonical" href="' + e(esteLink) + '"><style>' + ESTILO + ESTILO_PORTFOLIO + '</style><script defer src="/assets/perfil-publico.js?v=3"></script></head><body>'
+      + '<main class="portfolio"><div class="sem-impressao"><div class="acoes"><a class="b" href="' + e(linkPerfil) + '">Voltar ao perfil</a>'
+      + '<button class="b b1" data-imprimir>Salvar como PDF</button></div><p>Escolha Salvar como PDF na janela de impressão. Depois, anexe o arquivo no WhatsApp.</p></div>'
+      + '<header>' + (avatar ? '<img class="retrato" src="' + e(avatar) + '" alt="">' : '') + '<div><p class="marca">Seu Chef em Casa</p>'
+      + '<h1>' + e(p.name) + '</h1><p class="especialidade">' + e(p.specialty || 'Personal chef') + '</p>'
+      + (p.cities ? '<p>' + e(p.cities) + '</p>' : '') + '</div></header>'
+      + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '') + paragrafos(p.bio)
+      + (galeria.length ? '<section><h2>Trabalhos selecionados</h2><div class="fotos">'
+        + galeria.slice(0, 9).map(g => '<figure><img src="' + e(g.url) + '" alt="' + e(g.legenda || 'Trabalho de ' + p.name)
+          + '" width="300" height="300">' + (g.legenda ? '<figcaption>' + e(g.legenda) + '</figcaption>' : '') + '</figure>').join('')
+        + '</div></section>' : '')
+      + (pratos.length ? '<section><h2>Cardápio</h2>' + [...categorias].map(([nome, itens]) => '<h3>' + e(nome) + '</h3><div class="pratos">'
+        + itens.map(prato).join('') + '</div>').join('') + '<p class="nota">Preços de referência. Confirme o valor no orçamento.</p></section>' : '')
+      + '<section class="contato"><h2>Contato</h2><p><a href="' + e(linkPerfil) + '">Ver perfil completo</a></p>'
+      + (zap && !exemplo ? '<p><a href="' + e(zap) + '">WhatsApp · ' + e(p.whatsapp) + '</a></p>' : '')
+      + '</section></main></body></html>';
+    return new Response(html, { headers: CABECALHOS });
+  }
   const op = C.opcoes(p);
   const marcadas = C.OPCOES.filter(x => op[x[0]]);
   const trabalho = marcadas.filter(x => !x[0].startsWith('x_')).map(x => x[1]);
@@ -122,6 +158,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + (resumo !== bio ? '<details class="bio"><summary>Ler apresentação completa</summary>' + paragrafos(bio) + '</details>' : '')
     + '</div><div class="acoes"><a class="b b1" href="' + e(pedido) + '">Pedir orçamento</a>'
     + (pratos.length ? '<a class="b" href="#cardapio">Ver cardápio</a>' : '')
+    + '<a class="b" href="' + e(linkPerfil + '?portfolio=pdf') + '">Portfólio em PDF</a>'
     + (!exemplo ? '<a class="b" href="' + e(perfil) + '">Acompanhar chef</a>' : '') + '</div></div>';
 
   const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'

@@ -1,4 +1,5 @@
 (() => {
+  document.querySelector('[data-imprimir]')?.addEventListener('click', () => window.print());
   const dialog = document.querySelector('#foto-publica');
   if (!dialog || typeof dialog.showModal !== 'function') return;
 
