@@ -471,3 +471,5 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - O roteiro [Piloto com chefs e professores](PILOTO-CHEFS.md) registra tarefas, critérios de conclusão, uma apresentação para parceiros e perguntas sobre o fluxo Corporativo.
 - Ensaio de impressão do perfil da Helena no Edge. A versão inicial gerava três páginas A4 e 12.792.746 bytes. Com o cardápio em duas colunas e fotos ilustrativas menores, o exemplo ficou em duas páginas e 759.161 bytes. As páginas renderizadas foram inspecionadas, incluindo fotos, valores e créditos.
 - No editor de perfil, cada chef escolhe quais ícones mostrar: Instagram, LinkedIn, telefone, WhatsApp, localização, e-mail de contato, TikTok e Facebook. O mapa usa as cidades atendidas. O PDF inclui os contatos ativados.
+
+- 26/11/2026 (Claude): fotos livres do Wikimedia Commons em todos os pratos do perfil de exemplo (burrata, carpaccio, tagliatelle, ravióli, ossobuco), com crédito e licença; também entram na busca de fotos do chef.

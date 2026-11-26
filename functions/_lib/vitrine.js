@@ -93,12 +93,12 @@ export const EXEMPLO = {
     { url: U('1519708227418-c8fd9a32b7a2'), caption: '' }
   ],
   dishes: [
-    { category: 'Entradas', name: 'Burrata com tomates assados', desc: 'Burrata cremosa, tomates confitados, manjericão e azeite extravirgem.', price: 38 },
-    { category: 'Entradas', name: 'Carpaccio de carne', desc: 'Lâminas finas com rúcula, parmesão e molho de alcaparras.', price: 42 },
-    { category: 'Massas', name: 'Tagliatelle ao ragu de costela', desc: 'Massa fresca feita na hora e costela cozida por seis horas.', price: 78 },
-    { category: 'Massas', name: 'Ravióli de abóbora', desc: 'Na manteiga de sálvia, com amêndoas tostadas.', price: 72 },
+    { category: 'Entradas', name: 'Burrata com tomates assados', desc: 'Burrata cremosa, tomates confitados, manjericão e azeite extravirgem.', price: 38, photoPreset: 'burrata' },
+    { category: 'Entradas', name: 'Carpaccio de carne', desc: 'Lâminas finas com rúcula, parmesão e molho de alcaparras.', price: 42, photoPreset: 'carpaccio' },
+    { category: 'Massas', name: 'Tagliatelle ao ragu de costela', desc: 'Massa fresca feita na hora e costela cozida por seis horas.', price: 78, photoPreset: 'tagliatelle-ragu' },
+    { category: 'Massas', name: 'Ravióli de abóbora', desc: 'Na manteiga de sálvia, com amêndoas tostadas.', price: 72, photoPreset: 'ravioli-abobora' },
     { category: 'Pratos Principais', name: 'Risoto de funghi', desc: 'Arroz arbóreo, cogumelos frescos e secos, finalizado com parmesão.', price: 84, photoPreset: 'risoto-funghi' },
-    { category: 'Pratos Principais', name: 'Ossobuco à milanesa', desc: 'Cozido lentamente em vinho branco, servido com risoto de açafrão.', price: 96 },
+    { category: 'Pratos Principais', name: 'Ossobuco à milanesa', desc: 'Cozido lentamente em vinho branco, servido com risoto de açafrão.', price: 96, photoPreset: 'ossobuco' },
     { category: 'Sobremesas', name: 'Tiramisù', desc: 'A receita clássica, montada no dia.', price: 28, photoPreset: 'tiramisu' },
     { category: 'Sobremesas', name: 'Panna cotta com frutas vermelhas', desc: 'Leve, com calda feita em casa.', price: 26, photoPreset: 'panna-cotta' }
   ],

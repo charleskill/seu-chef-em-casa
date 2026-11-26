@@ -45,6 +45,51 @@
     "license": "https://creativecommons.org/licenses/by/2.0/",
     "version": "CC BY 2.0",
     "url": "/assets/fotos-pratos/panna-cotta-2.jpg"
+  },
+  "burrata": {
+    "name": "Burrata com tomates",
+    "tags": "burrata tomate entrada italiana queijo",
+    "author": "Gerda Arendt",
+    "source": "https://commons.wikimedia.org/wiki/File:Tomato_salad_with_burrata,_Limburg.jpg",
+    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "version": "CC0",
+    "url": "/assets/fotos-pratos/burrata.jpg"
+  },
+  "carpaccio": {
+    "name": "Carpaccio de carne",
+    "tags": "carpaccio carne entrada italiana",
+    "author": "Nurban",
+    "source": "https://commons.wikimedia.org/wiki/File:Carpaccio_Cipriani.jpg",
+    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "version": "CC0",
+    "url": "/assets/fotos-pratos/carpaccio.jpg"
+  },
+  "tagliatelle-ragu": {
+    "name": "Tagliatelle ao ragu",
+    "tags": "tagliatelle ragu massa fresca molho carne italiana",
+    "author": "Alex Sirac",
+    "source": "https://commons.wikimedia.org/wiki/File:Tagliatelle_al_rag%C3%B9_Trattoria_Tony.jpg",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "version": "CC BY 4.0",
+    "url": "/assets/fotos-pratos/tagliatelle-ragu.jpg"
+  },
+  "ravioli-abobora": {
+    "name": "Ravióli na manteiga de sálvia",
+    "tags": "ravioli abobora massa recheada manteiga salvia italiana",
+    "author": "Emna Mizouni",
+    "source": "https://commons.wikimedia.org/wiki/File:Ravioli_in_sage_butter.jpg",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "version": "CC BY-SA 4.0",
+    "url": "/assets/fotos-pratos/ravioli-abobora.jpg"
+  },
+  "ossobuco": {
+    "name": "Ossobuco com risoto de açafrão",
+    "tags": "ossobuco milanesa vitela risoto acafrao prato principal italiano",
+    "author": "Micaela & Massimo",
+    "source": "https://commons.wikimedia.org/wiki/File:Risotto_alla_milanese_con_ossobuco_di_vitello_piemontese_(4520611482).jpg",
+    "license": "https://creativecommons.org/licenses/by/2.0/",
+    "version": "CC BY 2.0",
+    "url": "/assets/fotos-pratos/ossobuco.jpg"
   }
 };
   if(typeof module!=='undefined'&&module.exports)module.exports=photos;else root.ChefDishPhotos=photos;
