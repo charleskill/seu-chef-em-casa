@@ -13,9 +13,11 @@ export async function onRequest({ request, env, params }) {
   const cidades = String(p.cities || '').split(/[,;/\n]/).map(s => s.trim()).filter(Boolean);
   const pratos = (Array.isArray(p.dishes) ? p.dishes : []).filter(d => d && d.name).slice(0, 60);
   const jsonld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'ProfilePage', '@id': canonico + '#perfil', url: canonico, mainEntity: { '@id': canonico + '#chef' } },
     { '@type': 'Person', '@id': canonico + '#chef', name: p.name, jobTitle: 'Personal chef', url: canonico,
-      ...(foto ? { image: foto } : {}), ...(p.bio ? { description: String(p.bio).slice(0, 400) } : {}), ...(p.specialty ? { knowsAbout: p.specialty } : {}),
-      ...(cidades.length ? { areaServed: cidades.map(n => ({ '@type': 'City', name: n })) } : {}) },
+      ...(foto ? { image: foto } : {}), ...(p.bio ? { description: String(p.bio).slice(0, 400) } : {}), ...(p.specialty ? { knowsAbout: p.specialty } : {}) },
+    ...(cidades.length ? [{ '@type': 'Service', name: 'Serviço de personal chef', provider: { '@id': canonico + '#chef' },
+      areaServed: cidades.map(name => ({ '@type': 'City', name })) }] : []),
     ...(pratos.length ? [{ '@type': 'Menu', name: 'Cardápio de ' + p.name, url: canonico, hasMenuItem: pratos.map(d => ({ '@type': 'MenuItem', name: d.name,
       ...(d.desc ? { description: d.desc } : {}), ...(Number(d.price) > 0 ? { offers: { '@type': 'Offer', price: String(Number(d.price)), priceCurrency: 'BRL' } } : {}) })) }] : []),
     { '@type': 'BreadcrumbList', itemListElement: [

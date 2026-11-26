@@ -462,3 +462,10 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Revisão em português brasileiro com Humanizer. A apresentação usa exemplos concretos de refeições e encontros. Botões e avisos descrevem o que a pessoa pode fazer em cada tela.
 - Cobertura: início, busca, perfis, cardápio, serviços, marmitas, menus especiais, pedidos, conta, painel do chef, administração, páginas de cidade, PDF, metadados e trechos de ajuda e privacidade.
 - As descrições de compras, limpeza e nota fiscal orientam o cliente a conferir o que cada chef oferece. Nas telas de pedido, o envio da mensagem é concluído no WhatsApp.
+
+## Revisão para o piloto
+
+- Enter na busca do acervo mantém o editor aberto. O botão Salvar fica desabilitado enquanto a foto escolhida é preparada.
+- O perfil público tem atalho de teclado para o conteúdo. Na janela de publicação, a rolagem de comentários fica contida. A galeria do portfólio passa a duas colunas em telas estreitas.
+- Os dados estruturados ligam a página de perfil à pessoa e registram as cidades atendidas no serviço. A verificação analisa o JSON-LD renderizado e mantém os testes de canonical, noindex e sitemap.
+- O roteiro [Piloto com chefs e professores](PILOTO-CHEFS.md) registra tarefas, critérios de conclusão, uma apresentação para parceiros e perguntas sobre o fluxo Corporativo.

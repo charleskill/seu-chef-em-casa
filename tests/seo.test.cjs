@@ -26,6 +26,14 @@ test('perfil /chef/<slug> sai completo do servidor, com canonical e JSON-LD; nom
  const r=await abre(chef,PROD+'/chef/maria-teste-aaaaaa',{slug:'maria-teste-aaaaaa'});assert.equal(r.status,200);const h=await r.text();
  assert.match(h,/<title>Maria Teste · Personal chef<\/title>/);assert.match(h,/<link rel="canonical" href="https:\/\/seuchefemcasa\.com\.br\/chef\/maria-teste-aaaaaa">/);
  assert.match(h,/"@type":"Person"/);assert.match(h,/"priceCurrency":"BRL"/);assert.doesNotMatch(h,/noindex/);assert.doesNotMatch(h,/Risoto <b>/);assert.match(h,/\\u003cb>/);
+ const graph=JSON.parse(h.match(/<script type="application\/ld\+json">(.*?)<\/script>/)[1])['@graph'];
+ const page=graph.find(node=>node['@type']==='ProfilePage');
+ const pessoa=graph.find(node=>node['@type']==='Person');
+ const servico=graph.find(node=>node['@type']==='Service');
+ assert.equal(page.mainEntity['@id'],pessoa['@id']);
+ assert.equal(servico.provider['@id'],pessoa['@id']);
+ assert.deepEqual(servico.areaServed.map(cidade=>cidade.name),['Florianópolis','São José']);
+ assert.match(h,/href="#perfil-conteudo">Pular para o conteúdo/);
  assert.match(h,/href="https:\/\/seuchefemcasa\.com\.br\/personal-chef\/florianopolis"|href="\/personal-chef\/florianopolis"|personal-chef\/florianopolis/);
  const v=await abre(chef,PROD+'/chef/nome-velho-aaaaaa',{slug:'nome-velho-aaaaaa'});assert.equal(v.status,301);assert.equal(v.headers.get('location'),PROD+'/chef/maria-teste-aaaaaa');
  const prev=await(await abre(chef,'https://x.seu-chef-em-casa.pages.dev/chef/maria-teste-aaaaaa',{slug:'maria-teste-aaaaaa'})).text();assert.match(prev,/noindex/);

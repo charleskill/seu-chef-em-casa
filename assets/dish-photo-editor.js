@@ -20,10 +20,12 @@
     const aviso = caixa.querySelector('[role=status]');
     const nome = form.querySelector('#d_name');
     const upload = caixa.querySelector('input[type=file]');
+    const salvar = form.querySelector('button[type=submit]');
     let versao = 0;
 
     function selecionar(escolha, atualizarPainel = true) {
       versao++;
+      salvar.disabled = false;
       dados.set(form, escolha);
       const foto = imagem(escolha, demoSrc);
       preview.hidden = !foto.url;
@@ -75,6 +77,9 @@
       }
       painel.replaceChildren(busca, resultados);
       busca.addEventListener('input', buscar);
+      busca.addEventListener('keydown', event => {
+        if (event.key === 'Enter') event.preventDefault();
+      });
       buscar();
       busca.focus();
     }
@@ -97,12 +102,14 @@
       upload.value = '';
       if (!arquivo) return;
       const atual = ++versao;
+      salvar.disabled = false;
       if (!['image/jpeg', 'image/png', 'image/webp'].includes(arquivo.type) || arquivo.size > 10 * 1024 * 1024) {
         aviso.textContent = 'Escolha um JPG, PNG ou WebP de até 10 MB.';
         return;
       }
       const url = URL.createObjectURL(arquivo);
       try {
+        salvar.disabled = true;
         aviso.textContent = 'Preparando a foto…';
         const img = new Image();
         img.src = url;
@@ -121,6 +128,7 @@
         if (atual === versao) aviso.textContent = 'Não foi possível abrir essa imagem.';
       } finally {
         URL.revokeObjectURL(url);
+        if (atual === versao) salvar.disabled = false;
       }
     };
     selecionar(prato.photoPreset ? { photoPreset: prato.photoPreset } : prato.photo ? { photo: prato.photo } : {});

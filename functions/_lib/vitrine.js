@@ -46,6 +46,7 @@ const ESTILO = [
   '#foto-publica{--foto-marfim:#faf5ea;--foto-papel:#fffaf1;--foto-linho:#ede4d5;--foto-oliva:#3c4a32;--foto-vinho:#713c4b;--foto-linha:#ded3c1;background:var(--foto-marfim);color:#303629}#foto-publica::backdrop{background:#242a20bf}',
   '#foto-publica .foto-topo,#foto-publica .conversa,#foto-publica .foto-compartilhar,#foto-publica .conversa li+li{border-color:var(--foto-linha)}#foto-publica .foto-midia{background:var(--foto-linho)}#foto-publica .foto-nav{background:#f4eddf}#foto-publica .conversa,#foto-publica textarea{background:var(--foto-papel)}#foto-publica textarea{border-color:#8a8273}',
   '#foto-publica .b:not(.b1),#foto-publica .foto-nav output,#foto-publica .nota{color:var(--foto-oliva)}#foto-publica [data-curtir]{background:#ececde}#foto-publica [data-curtir][aria-pressed=true]{background:#f2e1e7;border-color:var(--foto-vinho);color:var(--foto-vinho)}#foto-publica .b1{background:var(--foto-vinho);border-color:var(--foto-vinho)}#foto-publica .b1:hover{background:#5d303d}#foto-publica :focus-visible{outline-color:var(--foto-vinho)}',
+  '.pular{position:absolute;top:8px;left:8px;z-index:2;padding:8px 12px;background:#fffdf8;color:#455238;transform:translateY(-150%)}.pular:focus{transform:none}#foto-publica,.conversa ol{overscroll-behavior:contain}',
   '@media(min-width:670px){.perfil{padding-top:30px}.fotos{gap:8px}.pratos{grid-template-columns:1fr 1fr}}'
   ,'.prato-foto{float:left;width:94px;margin:0 12px 5px 0}.prato-foto img{width:94px;height:82px;object-fit:cover;border-radius:6px}.prato-foto figcaption{font-size:.68rem;color:#455238}.prato{display:flow-root}'
 ].join('');
@@ -59,7 +60,7 @@ const ESTILO_PORTFOLIO = [
   '.portfolio .fotos{gap:8px}.portfolio .fotos figure{margin:0;break-inside:avoid;min-width:0}.portfolio .fotos img{aspect-ratio:4/3;height:auto;border-radius:6px}.portfolio figcaption{font-size:.73rem;margin-top:3px;overflow-wrap:anywhere}',
   '.portfolio-categoria{margin:18px 0 0;padding:0 0 4px;border-bottom:1px solid #ded3c1;color:#754653;break-after:avoid}.portfolio .prato{break-inside:avoid;padding:9px 0}.portfolio .prato h3{font-size:1.13rem}.portfolio .prato p{font-size:.88rem}.portfolio .prato > small{display:none}.portfolio .prato span{font-size:.83rem}',
   '.portfolio .contato{break-inside:avoid;background:#455238;color:#fffaf1;border-radius:10px;padding:20px}.portfolio .contato h2{color:inherit}.portfolio .contato p{margin:7px 0 0}',
-  '@media(max-width:520px){.portfolio-ferramentas{display:block}.portfolio-ferramentas p{margin-top:10px}.portfolio .fotos{gap:5px}}',
+  '@media(max-width:520px){.portfolio-ferramentas{display:block}.portfolio-ferramentas p{margin-top:10px}.portfolio .fotos{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}',
   '@media(min-width:620px){.portfolio-capa.com-foto{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.portfolio-capa-foto{height:100%;min-height:290px}}',
   '@media print{body{background:white;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.portfolio{width:auto;margin:0}.portfolio .sem-impressao{display:none}.portfolio-capa{break-inside:avoid}.portfolio-capa.com-foto{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.portfolio-abertura{padding:8mm}.portfolio-abertura h1{font-size:29pt}.portfolio-abertura .marca{margin-bottom:4mm}.portfolio-capa-foto{height:56mm;min-height:0}.portfolio .portfolio-secao{margin-top:6mm}.portfolio .portfolio-secao h2{font-size:19pt;margin-bottom:3mm;break-after:avoid}.portfolio .fotos{gap:2mm}.portfolio .fotos img{height:28mm}.portfolio .pratos{display:block}.portfolio-cardapio{break-before:page}.portfolio .prato-foto img{height:17mm;width:21mm}.portfolio .prato-foto{width:23mm}.portfolio-categoria{margin-top:4mm}}'
 ].join('');
@@ -197,8 +198,8 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + (exemplo || extra.noindex ? '<meta name="robots" content="noindex">' : '')
     + (extra.jsonld ? '<script type="application/ld+json">' + JSON.stringify(extra.jsonld).replace(/</g, '\\u003c') + '</script>' : '')
     + '<style>' + ESTILO + '</style><script defer src="/assets/cloud.js"></script><script defer src="/assets/perfil-publico.js?v=5"></script></head><body>'
-    + '<header class="topo"><div class="l"><a class="marca" href="/">Seu Chef em Casa</a><a class="buscar" href="/#/buscar">Conhecer chefs</a></div></header>'
-    + '<main class="l">' + perfilPublico
+    + '<a class="pular" href="#perfil-conteudo">Pular para o conteúdo</a><header class="topo"><div class="l"><a class="marca" href="/">Seu Chef em Casa</a><a class="buscar" href="/#/buscar">Conhecer chefs</a></div></header>'
+    + '<main class="l" id="perfil-conteudo" tabindex="-1">' + perfilPublico
     + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '')
     + '<nav class="secoes" aria-label="Neste perfil"><a href="#publicacoes">Publicações</a>'
     + (pratos.length ? '<a href="#cardapio">Cardápio</a>' : '') + '<a href="#contato">Contato</a></nav>'
