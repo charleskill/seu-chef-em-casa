@@ -1,5 +1,10 @@
 # Decisões do Projeto
 
+## 26/11/2026 · Perfil compartilhado do chef
+
+- O link enviado a clientes abre o perfil visual do chef com apresentação, publicações em três colunas, contadores sociais, cardápio e pedido de orçamento. A identidade usa marfim, oliva e vinho.
+- A página pública mantém o conteúdo no HTML inicial, o endereço canônico e os metadados para busca e compartilhamento. As interações com conta aproveitam o fluxo social do app.
+
 Registro de escolhas arquiteturais, limites e regras de negócio para manter consistência e rastreabilidade.
 
 ## 23/11/2026 · Identidade em todas as telas e menus especiais

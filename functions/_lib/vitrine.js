@@ -1,8 +1,7 @@
 // Vitrine do chef, montada no servidor. Usada em /chef/<slug> (endereço para o Google) e em /c/exemplo.
 // Antes ficava em functions/c/[id].js; /c/<id> agora redireciona (301) para /chef/<slug>.
-// Uma página de apresentação com cara de site próprio do chef (capa, sobre, cardápio, fotos, como trabalha),
-// feita para ele compartilhar com clientes. Os botões levam ao pedido de orçamento no app e ao WhatsApp.
-// É montada no servidor (sem JavaScript), então abre rápido e mostra a prévia com foto no WhatsApp, Instagram e Facebook.
+// Perfil compartilhável com apresentação, publicações e cardápio no HTML inicial.
+// A prévia do WhatsApp vem dos metadados. O visualizador de fotos aprimora os links da galeria.
 // Só aparece para perfil publicado, não escondido pela equipe e pronto (foto, prato e cidade), como na busca.
 import Core from '../../assets/app-core.js';
 
@@ -22,73 +21,24 @@ const paragrafos = t => String(t || '').split(/\n\s*\n|\r?\n/).map(s => s.trim()
 export const CABECALHOS = {
   'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300',
   'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'referrer-policy': 'strict-origin-when-cross-origin',
-  'content-security-policy': "default-src 'none'; img-src 'self' data: https://images.unsplash.com; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  'content-security-policy': "default-src 'none'; script-src 'self'; img-src 'self' data: https://images.unsplash.com; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 };
 
 export const SERIFA = 'Palatino,"Palatino Linotype",Georgia,serif';
 const ESTILO = [
-  '*{box-sizing:border-box}html{scroll-behavior:smooth}',
-  'body{margin:0;background:#f6f3eb;color:#303629;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}',
-  'img{display:block;max-width:100%}a{color:inherit}',
-  '.l{width:100%;max-width:1040px;margin:0 auto;padding:0 22px}',
-  'h1,h2,h3{font-family:' + SERIFA + ';font-weight:400;margin:0;text-wrap:balance}',
-  '.olho{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:#754653;margin:0 0 12px}',
-  // Botões
-  '.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:13px 26px;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1px solid transparent;transition:background .2s,color .2s,border-color .2s}',
-  '.b1{background:#754653;color:#fff}.b1:hover{background:#613744}',
-  '.b2{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}.b2:hover{background:#fff;color:#303629}',
-  '.b3{background:transparent;color:#455238;border-color:#455238}.b3:hover{background:#455238;color:#fff}',
-  '.b:focus-visible{outline:3px solid #e2c48f;outline-offset:3px}',
-  '.acoes{display:flex;flex-wrap:wrap;gap:12px}',
-  // Capa
-  '.capa{position:relative;min-height:88vh;display:flex;flex-direction:column;color:#fff;background:#455238;overflow:hidden}',
-  '.capa>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}',
-  '.capa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,20,17,.62) 0%,rgba(15,20,17,.18) 30%,rgba(15,20,17,.55) 62%,rgba(15,20,17,.92) 100%)}',
-  '.topo{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:22px;padding-bottom:22px}',
-  '.topo b{font-family:' + SERIFA + ';font-weight:400;font-size:1.05rem;letter-spacing:.04em}',
-  '.topo a{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,.6)}',
-  '.heroi{position:relative;z-index:1;margin-top:auto;padding-top:60px;padding-bottom:54px}',
-  '.heroi .olho{color:#e2c48f}',
-  '.heroi h1{font-size:clamp(2.6rem,9vw,4.6rem);line-height:1.04;letter-spacing:-.01em;margin-bottom:14px}',
-  '.heroi .linha{font-size:1.08rem;color:rgba(255,255,255,.88);margin:0 0 30px;max-width:34em}',
-  // Seções
-  'section{padding:72px 0}section+section{border-top:1px solid rgba(28,37,32,.14)}',
-  'h2{font-size:clamp(1.8rem,5vw,2.5rem);line-height:1.15;margin-bottom:26px}',
-  '.sobre{display:grid;gap:34px;align-items:start}',
-  '.sobre .retrato{width:132px;height:132px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 10px 30px rgba(38,52,44,.18)}',
-  '.sobre p{margin:0 0 1em;max-width:38em}.sobre p:first-of-type{font-family:' + SERIFA + ';font-size:1.3rem;line-height:1.5}',
-  // Cardápio
-  '.pratos{display:grid;gap:0 56px}',
-  '.prato{padding:20px 0;border-bottom:1px solid rgba(28,37,32,.16)}',
-  '.prato small{display:block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#7b857c;margin-bottom:4px}',
-  '.prato h3{font-size:1.28rem;line-height:1.3}',
-  '.prato p{margin:6px 0 0;color:#56635a;font-size:.96rem}',
-  '.prato span{display:block;margin-top:8px;font-size:.88rem;color:#754653;font-weight:600}',
-  '.mais{margin-top:18px}.mais summary{cursor:pointer;font-weight:600;color:#455238;padding:12px 0;min-height:44px}',
-  '.nota{margin:22px 0 0;font-size:.88rem;color:#6a756c;max-width:44em}',
-  // Fotos
-  '.fotos{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}',
-  '.fotos figure{margin:0;position:relative;aspect-ratio:1;overflow:hidden;border-radius:6px;background:#e4dfd2}',
-  '.fotos img{width:100%;height:100%;object-fit:cover}',
-  '.fotos figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;font-size:.82rem;line-height:1.35;color:#fff;background:linear-gradient(180deg,rgba(15,20,17,0),rgba(15,20,17,.78))}',
-  // Como trabalho
-  '.lista{list-style:none;margin:0;padding:0;display:grid;gap:12px 40px}',
-  '.lista li{position:relative;padding-left:28px}.lista li::before{content:"";position:absolute;left:2px;top:.52em;width:12px;height:7px;border-left:2px solid #754653;border-bottom:2px solid #754653;transform:rotate(-45deg)}',
-  '.exp{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.exp span{border:1px solid rgba(28,37,32,.4);border-radius:999px;padding:8px 18px;font-size:.92rem}',
-  // Passos
-  '.passos{counter-reset:p;list-style:none;margin:0;padding:0;display:grid;gap:30px}',
-  '.passos li{counter-increment:p}.passos li::before{content:"0" counter(p);display:block;font-family:' + SERIFA + ';font-size:1.5rem;color:#754653;margin-bottom:6px}',
-  '.passos b{display:block;font-family:' + SERIFA + ';font-weight:400;font-size:1.2rem;margin-bottom:4px}.passos span{color:#56635a;font-size:.96rem}',
-  // Chamada final e rodapé
-  '.final{background:#455238;color:#f3eee4;text-align:center;padding:84px 0;border:0}',
-  '.final h2{margin-bottom:12px}.final p{margin:0 auto 30px;color:#c9c3b6;max-width:30em}.final .acoes{justify-content:center}.final .olho{color:#e2c48f}',
-  'footer{background:#354229;color:#9aa39b;font-size:.84rem;padding:28px 0 96px;text-align:center}footer p{margin:0 0 6px}footer a{color:#c9c3b6}',
-  // Barra fixa no celular
-  '.barra{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(246,243,236,.96);border-top:1px solid rgba(28,37,32,.18)}',
-  '.barra .b{flex:1;min-height:48px;padding:10px 12px;font-size:.92rem}',
-  '@media (min-width:760px){body{font-size:18px}.sobre{grid-template-columns:132px 1fr;gap:48px}.pratos{grid-template-columns:1fr 1fr}.fotos{grid-template-columns:repeat(3,1fr);gap:14px}.lista{grid-template-columns:1fr 1fr}.passos{grid-template-columns:repeat(3,1fr);gap:44px}section{padding:96px 0}.barra{display:none}footer{padding-bottom:34px}.heroi{padding-bottom:76px}}',
-  '@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.b{transition:none}}',
-  '@media print{.barra,.topo a{display:none}.capa{min-height:0}}'
+  '*{box-sizing:border-box}body{margin:0;background:#f6f3eb;color:#303629;font:16px/1.5 system-ui,sans-serif}a{color:inherit}img{display:block;max-width:100%}',
+  '.l{width:min(100% - 32px,800px);margin-inline:auto}h1,h2,h3,.marca{font-family:' + SERIFA + ';font-weight:400;margin:0}h1{font-size:clamp(1.8rem,6vw,3.1rem);line-height:1.12;overflow-wrap:anywhere}h2{font-size:1.8rem}',
+  '.topo{border-bottom:1px solid #dfd9cc}.topo .l{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:54px}.marca{color:#455238;text-decoration:none;font-size:1.15rem}.buscar{font-size:.83rem;color:#455238}',
+  '.perfil{padding:22px 0 16px}.identidade{display:flex;align-items:center;gap:clamp(12px,4vw,40px)}.retrato{flex:none;width:clamp(60px,18vw,112px);aspect-ratio:1;border-radius:50%;object-fit:cover;border:2px solid #754653;background:#e8e3d6;color:#455238}.iniciais{display:grid;place-items:center;font:1.5rem Georgia,serif}',
+  '.contadores{margin:0;display:grid;flex:1;grid-template-columns:repeat(3,minmax(0,1fr));text-align:center;gap:4px}.contadores div{display:flex;flex-direction:column-reverse}.contadores dt{font-size:clamp(.69rem,2.8vw,.9rem);color:#455238}.contadores dd{margin:0;font-size:1.25rem;font-weight:650;font-variant-numeric:tabular-nums}',
+  '.apresentacao{margin-top:14px}.especialidade{color:#754653;font-weight:600}.apresentacao p{margin:4px 0;overflow-wrap:anywhere}.bio{margin-top:8px;max-width:60ch}.bio summary{min-height:44px;cursor:pointer;color:#455238;align-content:center}.cidade{color:#455238}',
+  '.acoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.b{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 15px;border:1px solid #455238;border-radius:999px;font-weight:600;font-size:.88rem;text-decoration:none;color:#455238}.b1{background:#754653;border-color:#754653;color:#fff}.b:hover{box-shadow:0 0 0 1px currentColor inset}',
+  ':focus-visible{outline:3px solid #754653;outline-offset:2px}.secoes{display:flex;gap:20px;border-block:1px solid #dfd9cc;margin-bottom:5px}.secoes a{display:inline-flex;align-items:center;min-height:44px;font-size:.88rem;color:#455238;font-weight:600}.secoes a:first-child{color:#754653}',
+  '.fotos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.fotos a{aspect-ratio:1;overflow:hidden;border-radius:4px;background:#e8e3d6}.fotos a:focus-visible{outline-offset:-4px}.fotos img{width:100%;height:100%;object-fit:cover}',
+  'section+section{margin-top:28px;padding-top:20px;border-top:1px solid #dfd9cc}.pratos{display:grid;gap:0 24px}.prato{padding:12px 0;border-bottom:1px solid #dfd9cc;overflow-wrap:anywhere}.prato h3{font-size:1.22rem}.prato p,.nota{color:#455238;margin:4px 0}.prato span{color:#754653;font-weight:600}.mais summary{cursor:pointer;min-height:44px;align-content:center}',
+  '.lista{padding-left:22px}.exp{display:flex;flex-wrap:wrap;gap:8px}.exp span{border:1px solid #dfd9cc;padding:6px 12px;border-radius:999px}.final{padding-bottom:28px}footer{background:#455238;color:#f6f3eb;padding:18px 0;font-size:.88rem}',
+  'dialog{box-sizing:border-box;width:min(100% - 24px,660px);max-height:calc(100dvh - 24px);border:0;border-radius:12px;padding:14px;color:#303629;background:#f6f3eb}dialog::backdrop{background:#252a21cc}.foto-topo,.foto-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}.foto-topo h2{font-size:1.3rem}dialog img{width:100%;max-height:56dvh;object-fit:contain;background:#e8e3d6}dialog button{min-height:44px;cursor:pointer;background:transparent}dialog button:disabled{opacity:.5;cursor:default}dialog p{white-space:pre-wrap;overflow-wrap:anywhere}',
+  '@media(min-width:670px){.perfil{padding-top:30px}.fotos{gap:8px}.pratos{grid-template-columns:1fr 1fr}}'
 ].join('');
 
 // /c/exemplo: vitrine de um chef fictício, para mostrar aos chefs como a página fica (e para testar sem banco).
@@ -133,15 +83,14 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const exemplo = p === EXEMPLO;
   const perfil = exemplo ? origem + '/#/buscar' : origem + '/#/chef/' + encodeURIComponent(id);
   const pedido = exemplo ? origem + '/#/buscar' : origem + '/#/pedido/' + encodeURIComponent(id);
-  const galeria = (Array.isArray(p.gallery) ? p.gallery : []).map(g => ({ url: fotoOk(g && g.url, origem), legenda: String((g && g.caption) || '').trim() })).filter(g => g.url);
+  const galeria = (Array.isArray(p.gallery) ? p.gallery : []).map(g => ({ id: g?.id, url: fotoOk(g && g.url, origem), legenda: String((g && g.caption) || '').trim() })).filter(g => g.url);
   const avatar = fotoOk(p.avatar, origem);
   const capa = (galeria[0] && galeria[0].url) || avatar;
   const fone = C.phone(p.whatsapp);
   const zap = fone ? 'https://wa.me/' + fone + '?text=' + encodeURIComponent('Olá, ' + p.name + '! Vi sua página no Seu Chef em Casa e gostaria de conversar sobre um encontro.') : '';
-  const primeiroNome = String(p.name).trim().split(/\s+/)[0];
   const linha = [p.specialty, p.cities].map(s => String(s || '').trim()).filter(Boolean).join(' · ');
   const titulo = p.name + ' · Personal chef';
-  const desc = (linha ? linha + '. ' : '') + 'Veja o cardápio e peça seu orçamento.';
+  const desc = (linha ? linha + '. ' : '') + 'Veja fotos dos trabalhos, explore o cardápio e peça um orçamento.';
 
   const pratos = (Array.isArray(p.dishes) ? p.dishes : []).filter(d => d && d.name)
     .map((d, i) => ({ d, i, o: ORDEM.indexOf(d.category) < 0 ? 99 : ORDEM.indexOf(d.category) })).sort((a, b) => a.o - b.o || a.i - b.i).map(x => x.d);
@@ -153,10 +102,23 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const trabalho = marcadas.filter(x => !x[0].startsWith('x_')).map(x => x[1]);
   const experiencias = marcadas.filter(x => x[0].startsWith('x_')).map(x => x[1].replace(/^Faço /, ''));
   if (p.marmita) experiencias.push('Marmitas da semana');
-  const fotos = galeria.slice(1, 7);
-
-  const botoes = (claro) => '<div class="acoes"><a class="b b1" href="' + e(pedido) + '">Montar meu orçamento</a>'
-    + (zap ? '<a class="b ' + (claro ? 'b2' : 'b3') + '" href="' + e(zap) + '" target="_blank" rel="noopener">Conversar no WhatsApp</a>' : '') + '</div>';
+  const social = extra.social || {};
+  const bio = String(p.bio || '').trim();
+  const resumo = bio.length > 180 ? bio.slice(0, 177).replace(/\s+\S*$/, '') + '…' : bio;
+  const iniciais = String(p.name).trim().split(/\s+/).slice(0, 2).map(n => n[0]).join('');
+  const perfilPublico = '<div class="perfil"><div class="identidade">'
+    + (avatar ? '<img class="retrato" src="' + e(avatar) + '" alt="" width="112" height="112">' : '<span class="retrato iniciais" aria-hidden="true">' + e(iniciais) + '</span>')
+    + '<dl class="contadores"><div><dt>Publicações</dt><dd>' + galeria.length + '</dd></div>'
+    + '<div><dt>Seguidores</dt><dd>' + e(social.seguidores ?? '—') + '</dd></div>'
+    + '<div><dt>Seguindo</dt><dd>' + e(social.seguindo ?? '—') + '</dd></div></dl></div>'
+    + '<div class="apresentacao"><h1>' + e(p.name) + '</h1>'
+    + '<p class="especialidade">' + e(p.specialty || 'Personal chef') + '</p>'
+    + (p.cities ? '<p class="cidade">' + e(p.cities) + '</p>' : '')
+    + (bio ? '<p>' + e(resumo) + '</p>' : '')
+    + (resumo !== bio ? '<details class="bio"><summary>Ler apresentação completa</summary>' + paragrafos(bio) + '</details>' : '')
+    + '</div><div class="acoes"><a class="b b1" href="' + e(pedido) + '">Pedir orçamento</a>'
+    + (pratos.length ? '<a class="b" href="#cardapio">Ver cardápio</a>' : '')
+    + (!exemplo ? '<a class="b" href="' + e(perfil) + '">Acompanhar chef</a>' : '') + '</div></div>';
 
   const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     + '<title>' + e(titulo) + '</title><meta name="description" content="' + e(desc) + '"><meta name="theme-color" content="#455238">'
@@ -166,50 +128,38 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + '<meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="' + e(esteLink) + '">'
     + (exemplo || extra.noindex ? '<meta name="robots" content="noindex">' : '')
     + (extra.jsonld ? '<script type="application/ld+json">' + JSON.stringify(extra.jsonld).replace(/</g, '\\u003c') + '</script>' : '')
-    + '<style>' + ESTILO + '</style></head><body>'
-
-    // Capa
-    + '<header class="capa">' + (capa ? '<img src="' + e(capa) + '" alt="">' : '')
-    + '<div class="l topo"><b>' + e(p.name) + '</b><a href="#contato">Pedir orçamento</a></div>'
-    + '<div class="l heroi"><p class="olho">Personal chef' + (p.specialty ? ' · ' + e(p.specialty) : '') + '</p><h1>' + e(p.name) + '</h1>'
-    + '<p class="linha">' + (p.cities ? 'Na sua casa, em ' + e(p.cities) + '.' : 'Na sua casa, do seu jeito.') + '</p>' + botoes(true) + '</div></header><main>'
-
-    // Sobre
-    + (p.bio || avatar ? '<section><div class="l sobre">' + (avatar ? '<img class="retrato" src="' + e(avatar) + '" alt="Foto de ' + e(p.name) + '" width="132" height="132">' : '<span></span>')
-      + '<div><p class="olho">Sobre</p><h2>Prazer, ' + e(primeiroNome) + '.</h2>' + (paragrafos(p.bio) || '<p>Cozinho na sua casa, com cardápio pensado para o seu encontro.</p>') + '</div></div></section>' : '')
-
-    // Cardápio
-    + (mostra.length ? '<section><div class="l"><p class="olho">Do cardápio</p><h2>Alguns pratos que eu preparo</h2><div class="pratos">'
-      + mostra.map(prato).join('')
-      + '</div>' + (pratos.length > mostra.length ? '<details class="mais"><summary>Ver os outros ' + (pratos.length - mostra.length) + ' pratos</summary><div class="pratos">'
+    + '<style>' + ESTILO + '</style><script defer src="/assets/perfil-publico.js"></script></head><body>'
+    + '<header class="topo"><div class="l"><a class="marca" href="/">Seu Chef em Casa</a><a class="buscar" href="/#/buscar">Conhecer chefs</a></div></header>'
+    + '<main class="l">' + perfilPublico
+    + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '')
+    + '<nav class="secoes" aria-label="Neste perfil"><a href="#publicacoes">Publicações</a>'
+    + (pratos.length ? '<a href="#cardapio">Cardápio</a>' : '') + '<a href="#contato">Contato</a></nav>'
+    + '<section id="publicacoes" aria-label="Publicações">'
+    + (galeria.length ? '<div class="fotos">' + galeria.map((g, i) => {
+      const alt = g.legenda || 'Trabalho de ' + p.name + ', foto ' + (i + 1);
+      const interagir = g.id == null ? perfil : perfil + '/foto/' + encodeURIComponent(g.id);
+      return '<a href="' + e(g.url) + '" data-publicacao data-legenda="' + e(g.legenda)
+        + '" data-interagir="' + e(interagir) + '"><img src="'
+        + e(g.url) + '" alt="' + e(alt) + '" width="300" height="300"' + (i >= 3 ? ' loading="lazy"' : '') + ' decoding="async"></a>';
+    }).join('') + '</div>' : '<p class="nota">O chef está preparando seu portfólio.</p>') + '</section>'
+    + (galeria.length ? '<dialog id="foto-publica" aria-labelledby="foto-titulo"><div class="foto-topo"><h2 id="foto-titulo">Da minha cozinha</h2><button class="b" data-fechar autofocus>Fechar</button></div>'
+      + '<img alt=""><p id="foto-legenda"></p><div class="foto-nav"><button class="b" data-anterior>Anterior</button>'
+      + '<output aria-live="polite"></output><button class="b" data-proxima>Próxima</button></div>'
+      + (!exemplo ? '<div class="acoes"><a class="b" data-interagir href="' + e(perfil) + '">Curtir ou comentar</a></div>' : '') + '</dialog>' : '')
+    + (mostra.length ? '<section id="cardapio"><h2>Meu cardápio</h2><div class="pratos">' + mostra.map(prato).join('') + '</div>'
+      + (pratos.length > mostra.length ? '<details class="mais"><summary>Ver mais pratos</summary><div class="pratos">'
         + pratos.slice(mostra.length, 60).map(prato).join('') + '</div></details>' : '')
-      + '<p class="nota">'
-      + 'Os valores são uma referência; o preço final depende do número de pessoas e do que combinarmos. <a href="' + e(perfil) + '">Ver o cardápio completo</a></p></div></section>' : '')
-
-    // Fotos
-    + (fotos.length ? '<section><div class="l"><p class="olho">Da minha cozinha</p><h2>Um pouco do que já servi</h2><div class="fotos">'
-      + fotos.map(g => '<figure><img src="' + e(g.url) + '" alt="' + e(g.legenda || 'Prato preparado por ' + p.name) + '" loading="lazy">' + (g.legenda ? '<figcaption>' + e(g.legenda.slice(0, 90)) + '</figcaption>' : '') + '</figure>').join('')
-      + '</div></div></section>' : '')
-
-    // Como trabalho
-    + (trabalho.length || experiencias.length ? '<section><div class="l"><p class="olho">Como eu trabalho</p><h2>Cuido de tudo para você aproveitar</h2>'
+      + '<p class="nota">Os valores são uma referência por pessoa. Confirme o preço no orçamento.</p></section>' : '')
+    + (trabalho.length || experiencias.length ? '<section><h2>Como eu atendo</h2>'
       + (trabalho.length ? '<ul class="lista">' + trabalho.map(t => '<li>' + e(t) + '</li>').join('') + '</ul>' : '')
-      + (experiencias.length ? '<div class="exp">' + experiencias.map(t => '<span>' + e(t) + '</span>').join('') + '</div>' : '') + '</div></section>' : '')
-
-    // Passos
-    + '<section><div class="l"><p class="olho">Como funciona</p><h2>Do primeiro contato ao último prato</h2><ol class="passos">'
-    + '<li><b>Escolha os pratos</b><span>Veja o cardápio e marque o que combina com o seu encontro.</span></li>'
-    + '<li><b>Conte como será</b><span>Data, número de pessoas e o que mais for importante para você.</span></li>'
-    + '<li><b>Combinamos os detalhes</b><span>O pedido segue pelo WhatsApp e acertamos valores e disponibilidade.</span></li></ol></div></section>'
-
-    // Chamada final
-    + '<section class="final" id="contato"><div class="l"><p class="olho">Vamos conversar</p><h2>Seu próximo encontro começa aqui.</h2>'
-    + '<p>Me conte a ocasião e eu preparo uma proposta para a sua mesa.</p>' + botoes(true) + '</div></section></main>'
-
-    + '<footer><div class="l"><p>' + e(p.name) + ' atende pelo <a href="' + e(origem + '/') + '">Seu Chef em Casa</a>.</p>'
+      + (experiencias.length ? '<div class="exp">' + experiencias.map(t => '<span>' + e(t) + '</span>').join('') + '</div>' : '') + '</section>' : '')
+    + '<section class="final" id="contato"><h2>Vamos conversar sobre seu encontro?</h2><div class="acoes">'
+    + '<a class="b b1" href="' + e(pedido) + '">Pedir orçamento</a>'
+    + (zap && !exemplo ? '<a class="b" href="' + e(zap) + '" target="_blank" rel="noopener">Conversar no WhatsApp</a>' : '')
+    + '</div></section></main>'
+    + '<footer><div class="l"><p>' + e(p.name) + ' no <a href="/">Seu Chef em Casa</a>.</p>'
     + ((extra.cidades || []).length ? '<p>Mais chefs em ' + extra.cidades.map(([s, n]) => '<a href="' + e(origem + '/personal-chef/' + s) + '">' + e(n) + '</a>').join(', ') + '.</p>' : '')
-    + '<p>A plataforma é uma vitrine: contratação, pagamento e serviço são combinados direto com o chef. <a href="' + e(origem + '/#/termos') + '">Termos de uso</a></p></div></footer>'
-    + '<nav class="barra" aria-label="Contato"><a class="b b1" href="' + e(pedido) + '">Montar orçamento</a>' + (zap ? '<a class="b b3" href="' + e(zap) + '" target="_blank" rel="noopener">WhatsApp</a>' : '') + '</nav>'
+    + '<p>Contratação, pagamento e serviço são combinados direto com o chef. <a href="/#/termos">Termos de uso</a></p></div></footer>'
     + '</body></html>';
   return new Response(html, { headers: CABECALHOS });
 }

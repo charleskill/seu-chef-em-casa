@@ -22,5 +22,13 @@ export async function onRequest({ request, env, params }) {
       { '@type': 'ListItem', position: 1, name: 'Seu Chef em Casa', item: SITE + '/' },
       { '@type': 'ListItem', position: 2, name: p.name, item: canonico }] }
   ] };
-  return vitrine(p, { origem: url.origin, id: c.id, esteLink: canonico, extra: { jsonld, cidades: cidadesDoChef(p), noindex: !producao(request.url) } });
+  const social = await contadores(env.DB, c.id).catch(() => null);
+  return vitrine(p, { origem: url.origin, id: c.id, esteLink: canonico, extra: { social, jsonld, cidades: cidadesDoChef(p), noindex: !producao(request.url) } });
+}
+
+async function contadores(db, id) {
+  // A tabela social é criada sob demanda em instalações novas.
+  const tabela = await db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'seguidores'").first();
+  if (!tabela) return { seguidores: 0, seguindo: 0 };
+  return db.prepare('SELECT (SELECT COUNT(*) FROM seguidores WHERE chef_id = ?) AS seguidores, (SELECT COUNT(*) FROM seguidores WHERE conta_id = ?) AS seguindo').bind(id, id).first();
 }

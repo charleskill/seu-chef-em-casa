@@ -445,3 +445,9 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Painéis têm saída visível. O perfil tem confirmação própria, o aviso de recursos futuros saiu e a tela de conexão só mostra mensagem se falhar.
 - Verificação local: `npm run check`, `npm test` (83 testes), `npm run build` e `git diff --check`. Fluxos completos em navegador ainda não foram verificados.
 - Prévia: https://correcoes-jornada.seu-chef-em-casa.pages.dev. A prévia roda em demonstração, pois o banco não está configurado no branch. Produção aguarda aprovação do Carlos.
+
+## Entrega em revisão — 26/11/2026: perfil público compartilhável
+
+- A página `/chef/<slug>` abre com apresentação, contagens de publicações, seguidores e seguindo, grade de três colunas, cardápio e pedido de orçamento. A galeria abre fotos com legenda e navegação. Curtir e comentar abrem a publicação no app.
+- O HTML inclui canonical, Open Graph e JSON-LD. Mantidos os links de cidades, redirecionamentos e o noindex nas prévias e no exemplo. Os contadores usam relações existentes e exibem totais.
+- Verificação local: `npm run check`, checagem sintática do visualizador, 84 testes, build e `git diff --check`. O teste de SEO cobre a presença da publicação no HTML, o escape de legendas e os contadores com e sem tabela social.

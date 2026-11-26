@@ -12,7 +12,7 @@ const DB={prepare(sql){let a=[];return{bind(...x){a=x;return this},async first()
 const foto='/api/foto/'+'e'.repeat(32);
 const perfil=(name,extra={})=>({name,whatsapp:'(48) 99110-6355',cities:'Florianópolis, São José',specialty:'Cozinha italiana',bio:'Cozinho na sua casa.',avatar:foto,gallery:[],dishes:[{id:'d',name:'Risoto <b>',price:80,category:'Massas'}],opcoes:{x_pizza:true},...extra});
 const add=(id,email,p,pub=1,oculto=0)=>db.prepare('INSERT INTO chefs (id,email,credencial,perfil,publicado,oculto,criado_em,atualizado_em) VALUES (?,?,?,?,?,?,?,?)').run(id,email,'{}',JSON.stringify(p),pub,oculto,'2026-11-20T10:00:00Z','2026-11-24T10:00:00Z');
-add('chef-aaaaaa0000000001','real@x.com',perfil('Maria Teste'));
+add('chef-aaaaaa0000000001','real@x.com',perfil('Maria Teste',{gallery:[{id:'primeiro',url:foto,caption:'Jantar <privado>'}]}));
 add('chef-bbbbbb0000000002','escondido@x.com',perfil('Chef Escondido'),1,1);
 add('chef-cccccc0000000003','pausado@x.com',perfil('Chef Pausado'),0);
 add('chef-dddddd0000000004','inc@x.com',perfil('Chef Incompleto',{dishes:[]}));
@@ -35,6 +35,31 @@ test('/c/<id> leva (301) ao endereço novo; /c/exemplo continua, com noindex',as
  const r=await abre(c,PROD+'/c/chef-aaaaaa0000000001',{id:'chef-aaaaaa0000000001'});assert.equal(r.status,301);assert.equal(r.headers.get('location'),PROD+'/chef/maria-teste-aaaaaa');
  assert.equal((await abre(c,PROD+'/c/chef-bbbbbb0000000002',{id:'chef-bbbbbb0000000002'})).status,404);
  const ex=await abre(c,PROD+'/c/exemplo',{id:'exemplo'});assert.equal(ex.status,200);assert.match(await ex.text(),/noindex/);
+});
+test('perfil compartilhado renderiza a primeira publicação, cardápio e contadores públicos',async()=>{
+ const url=PROD+'/chef/maria-teste-aaaaaa',params={slug:'maria-teste-aaaaaa'};
+ const novo=await (await abre(chef,url,params)).text();
+ assert.match(novo,/<dt>Publicações<\/dt><dd>1<\/dd>/);
+ assert.match(novo,/<dt>Seguidores<\/dt><dd>0<\/dd>/);
+ assert.match(novo,/<dt>Seguindo<\/dt><dd>0<\/dd>/);
+ assert.match(novo,/data-legenda="Jantar &lt;privado&gt;"/);
+ assert.match(novo,/data-interagir="[^"]+\/foto\/primeiro"/);
+ assert.match(novo,/<meta property="og:image"/);
+ assert.ok(novo.indexOf('id="publicacoes"') < novo.indexOf('id="cardapio"'));
+
+ db.exec('CREATE TABLE seguidores (chef_id TEXT, conta_id TEXT)');
+ try {
+  const segue=db.prepare('INSERT INTO seguidores VALUES (?, ?)');
+  segue.run('chef-aaaaaa0000000001','chef-bbbbbb0000000002');
+  segue.run('chef-aaaaaa0000000001','chef-ffffff0000000006');
+  segue.run('chef-bbbbbb0000000002','chef-aaaaaa0000000001');
+  const html=await (await abre(chef,url,params)).text();
+  assert.match(html,/<dt>Seguidores<\/dt><dd>2<\/dd>/);
+  assert.match(html,/<dt>Seguindo<\/dt><dd>1<\/dd>/);
+  assert.doesNotMatch(html,/chef-bbbbbb0000000002|chef-ffffff0000000006/);
+ } finally {
+  db.exec('DROP TABLE seguidores');
+ }
 });
 test('cidade e serviço: com chef real indexa; sem chef, convite com noindex; desconhecido dá 404',async()=>{
  const f=await(await abre(cid,PROD+'/personal-chef/florianopolis',{cidade:['florianopolis']})).text();assert.doesNotMatch(f,/noindex/);assert.match(f,/href="\/chef\/maria-teste-aaaaaa"/);assert.match(f,/"FAQPage"/);assert.doesNotMatch(f,/Escondido|Fictícia|Pausado|Incompleto/);
