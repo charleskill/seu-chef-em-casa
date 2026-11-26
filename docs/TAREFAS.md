@@ -454,3 +454,4 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - Cada publicação pode ser enviada pelo WhatsApp ou ter o link copiado. O link abre a foto escolhida e usa essa imagem no Open Graph. O endereço canônico continua sendo o perfil do chef.
 - O perfil e o painel do chef oferecem “Portfólio em PDF”, com apresentação, até nove fotos na ordem do perfil, cardápio por categoria e contato. A página de impressão usa o recurso de salvar como PDF do navegador.
 - O visualizador público agora exibe curtidas e comentários na própria foto. Visitantes leem os comentários e entram na conta para publicar ou curtir. O exemplo permite testar as interações com dados temporários na aba.
+- O editor do cardápio aceita foto sugerida, foto do portfólio, envio do celular e busca no acervo. As cinco imagens iniciais têm autoria, fonte e licença no catálogo e nos metadados JPEG. O perfil público e o PDF identificam as fotos do acervo como ilustrativas.

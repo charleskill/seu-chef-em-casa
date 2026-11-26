@@ -4,6 +4,7 @@
 // A prévia do WhatsApp vem dos metadados. O visualizador de fotos aprimora os links da galeria.
 // Só aparece para perfil publicado, não escondido pela equipe e pronto (foto, prato e cidade), como na busca.
 import Core from '../../assets/app-core.js';
+import DishPhotos from '../../assets/dish-photos.js';
 
 export const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
 export const PADRAO = {
@@ -46,6 +47,7 @@ const ESTILO = [
   '#foto-publica .foto-topo,#foto-publica .conversa,#foto-publica .foto-compartilhar,#foto-publica .conversa li+li{border-color:var(--foto-linha)}#foto-publica .foto-midia{background:var(--foto-linho)}#foto-publica .foto-nav{background:#f4eddf}#foto-publica .conversa,#foto-publica textarea{background:var(--foto-papel)}#foto-publica textarea{border-color:#8a8273}',
   '#foto-publica .b:not(.b1),#foto-publica .foto-nav output,#foto-publica .nota{color:var(--foto-oliva)}#foto-publica [data-curtir]{background:#ececde}#foto-publica [data-curtir][aria-pressed=true]{background:#f2e1e7;border-color:var(--foto-vinho);color:var(--foto-vinho)}#foto-publica .b1{background:var(--foto-vinho);border-color:var(--foto-vinho)}#foto-publica .b1:hover{background:#5d303d}#foto-publica :focus-visible{outline-color:var(--foto-vinho)}',
   '@media(min-width:670px){.perfil{padding-top:30px}.fotos{gap:8px}.pratos{grid-template-columns:1fr 1fr}}'
+  ,'.prato-foto{float:left;width:94px;margin:0 12px 5px 0}.prato-foto img{width:94px;height:82px;object-fit:cover;border-radius:6px}.prato-foto figcaption{font-size:.68rem;color:#455238}.prato{display:flow-root}'
 ].join('');
 
 const ESTILO_PORTFOLIO = [
@@ -78,10 +80,10 @@ export const EXEMPLO = {
     { category: 'Entradas', name: 'Carpaccio de carne', desc: 'Lâminas finas com rúcula, parmesão e molho de alcaparras.', price: 42 },
     { category: 'Massas', name: 'Tagliatelle ao ragu de costela', desc: 'Massa fresca feita na hora e costela cozida por seis horas.', price: 78 },
     { category: 'Massas', name: 'Ravióli de abóbora', desc: 'Na manteiga de sálvia, com amêndoas tostadas.', price: 72 },
-    { category: 'Pratos Principais', name: 'Risoto de funghi', desc: 'Arroz arbóreo, cogumelos frescos e secos, finalizado com parmesão.', price: 84 },
+    { category: 'Pratos Principais', name: 'Risoto de funghi', desc: 'Arroz arbóreo, cogumelos frescos e secos, finalizado com parmesão.', price: 84, photoPreset: 'risoto-funghi' },
     { category: 'Pratos Principais', name: 'Ossobuco à milanesa', desc: 'Cozido lentamente em vinho branco, servido com risoto de açafrão.', price: 96 },
-    { category: 'Sobremesas', name: 'Tiramisù', desc: 'A receita clássica, montada no dia.', price: 28 },
-    { category: 'Sobremesas', name: 'Panna cotta com frutas vermelhas', desc: 'Leve, com calda feita em casa.', price: 26 }
+    { category: 'Sobremesas', name: 'Tiramisù', desc: 'A receita clássica, montada no dia.', price: 28, photoPreset: 'tiramisu' },
+    { category: 'Sobremesas', name: 'Panna cotta com frutas vermelhas', desc: 'Leve, com calda feita em casa.', price: 26, photoPreset: 'panna-cotta' }
   ],
   opcoes: { garcom: true, x_pizza: true, x_lounge: true }
 };
@@ -115,7 +117,14 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const pratos = (Array.isArray(p.dishes) ? p.dishes : []).filter(d => d && d.name)
     .map((d, i) => ({ d, i, o: ORDEM.indexOf(d.category) < 0 ? 99 : ORDEM.indexOf(d.category) })).sort((a, b) => a.o - b.o || a.i - b.i).map(x => x.d);
   const mostra = pratos.slice(0, 8);
-  const prato = d => '<article class="prato">' + (d.category ? '<small>' + e(d.category) + '</small>' : '') + '<h3>' + e(d.name) + '</h3>'
+  const fotoDoPrato = d => {
+    const preset = Object.hasOwn(DishPhotos, d.photoPreset) ? DishPhotos[d.photoPreset] : null;
+    const url = preset ? origem + preset.url : fotoOk(d.photo, origem);
+    if (!url) return '';
+    return '<figure class="prato-foto"><a href="' + e(url) + '"><img src="' + e(url) + '" alt="' + e(d.name) + '"' + (extra.portfolio ? '' : ' loading="lazy"') + '></a>'
+      + (preset ? '<figcaption>Ilustrativa · <a href="' + e(preset.source) + '">' + e(preset.author) + '</a> · <a href="' + e(preset.license) + '">' + e(preset.version) + '</a> · redimensionada</figcaption>' : '') + '</figure>';
+  };
+  const prato = d => '<article class="prato">' + fotoDoPrato(d) + (d.category ? '<small>' + e(d.category) + '</small>' : '') + '<h3>' + e(d.name) + '</h3>'
     + (d.desc ? '<p>' + e(d.desc) + '</p>' : '') + (Number(d.price) > 0 ? '<span>Referência: ' + e(dinheiro(d.price)) + ' por pessoa</span>' : '') + '</article>';
   if (extra.portfolio) {
     const categorias = new Map();

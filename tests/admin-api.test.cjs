@@ -10,6 +10,44 @@ const tokens={admin:'a'.repeat(64),chef:'b'.repeat(64)};
 // A lista antiga pode continuar configurada; ela não deve autorizar outros e-mails.
 const env={DB,ADMIN_EMAILS:'chef@example.com;other@example.com;fer-teste@example.com'};
 const digest=async t=>Buffer.from(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t))).toString('hex');
+test('conta de chef salva fotos de prato do acervo, do portfólio e de um envio independente',async()=>{
+ const email='teste-fotos-pratos@example.com',senha='TesteFotosLocais1234';
+ const call=(rota,method='GET',body,cookie='')=>api.onRequest({
+  request:new Request('https://example.com/api/'+rota,{method,headers:{'content-type':'application/json',cookie},body:body===undefined?undefined:JSON.stringify(body)}),
+  env,params:{rota:rota.split('/')}
+ });
+ const cadastro=await call('cadastro','POST',{tipo:'chef',email,senha,nome:'Chef Teste Fotos',whatsapp:'(48) 99110-6355',cidades:'Itajaí'});
+ assert.equal(cadastro.status,201,await cadastro.clone().text());
+ const login=await call('entrar','POST',{email,senha});
+ assert.equal(login.status,200);
+ const cookie=login.headers.get('set-cookie').split(';')[0];
+ const {chef}=await login.json();
+ const jpeg='data:image/jpeg;base64,'+fs.readFileSync(path.join(__dirname,'../assets/fotos-pratos/risoto-funghi.jpg')).toString('base64');
+ const base={...chef,whatsapp:'(48) 99110-6355',cities:'Itajaí',gallery:[{id:'g1',url:jpeg,caption:'Foto no feed'}],dishes:[]};
+ const perfilInicial=(await (await call('eu','PUT',{perfil:base},cookie)).json()).chef;
+ const feed=perfilInicial.gallery[0].url;
+ const pratos=[
+  {id:'d1',name:'Tiramisù',price:25,photoPreset:'tiramisu'},
+  {id:'d2',name:'Outra sobremesa',price:24,photoPreset:'tiramisu-2'},
+  {id:'d3',name:'Risoto do feed',price:45,photo:feed},
+  {id:'d4',name:'Risoto com novo envio',price:50,photo:jpeg}
+ ];
+ const salvo=await call('eu','PUT',{perfil:{...perfilInicial,dishes:pratos}},cookie);
+ assert.equal(salvo.status,200,await salvo.clone().text());
+ const atual=(await (await call('eu','GET',undefined,cookie)).json()).chef;
+ assert.equal(atual.dishes[0].photoPreset,'tiramisu');
+ assert.equal(atual.dishes[1].photoPreset,'tiramisu-2');
+ assert.equal(atual.dishes[2].photo,feed);
+ assert.notEqual(atual.dishes[3].photo,feed);
+ assert.equal((await call(atual.dishes[3].photo.slice(5))).status,200);
+ const semFeed=await call('eu','PUT',{perfil:{...atual,gallery:[]}},cookie);
+ assert.equal(semFeed.status,200);
+ assert.equal((await call(feed.slice(5))).status,200);
+ const semFoto=await call('eu','PUT',{perfil:{...(await semFeed.json()).chef,dishes:atual.dishes.slice(0,2)}},cookie);
+ assert.equal(semFoto.status,200);
+ assert.equal((await call(feed.slice(5))).status,404);
+ assert.equal((await call('eu','DELETE',undefined,cookie)).status,200);
+});
 let api;
 test.before(async()=>{
  api=await import('../functions/api/[[rota]].js');

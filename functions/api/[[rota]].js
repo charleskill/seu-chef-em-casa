@@ -9,6 +9,7 @@ import Site from '../../assets/site-settings.js';
 import Dashboard from '../../assets/dashboard-core.js';
 import Menus from '../../assets/menus-core.js';
 import ServicePhotos from '../../assets/service-photos.js';
+import DishPhotos from '../../assets/dish-photos.js';
 
 const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
 const SESSAO_DIAS = 30, PBKDF2_ITER = 100000; // 100 mil é o máximo aceito pelos Workers
@@ -116,6 +117,13 @@ async function limparPerfil(env, chefId, p, atual) {
     const price = Number(d.price);
     const x = { id: typeof d.id === 'number' ? d.id : txt(d.id, 40), category: txt(d.category, 60), name: txt(d.name, 150), desc: txt(d.desc, 600), price: Number.isFinite(price) && price >= 0 && price <= 100000 ? Math.round(price * 100) / 100 : 0 };
     if (d.marmita === true) x.marmita = true;
+    if (typeof d.photoPreset === 'string' && Object.hasOwn(DishPhotos, d.photoPreset)) {
+      x.photoPreset = d.photoPreset;
+    } else if (d.photo) {
+      const url = await foto(d.photo);
+      if (!url) throw new Error('Escolha uma foto do seu portfólio ou envie uma nova imagem.');
+      x.photo = url;
+    }
     out.dishes.push(x);
   }
   const m = C.cleanMarmita(p.marmita); if (m) out.marmita = m;
@@ -123,7 +131,7 @@ async function limparPerfil(env, chefId, p, atual) {
   const a = C.cleanAgenda(p.agenda); if (a) out.agenda = a;
   // Grava fotos novas e apaga as que o perfil deixou de usar.
   for (const f of novas) await env.DB.prepare('INSERT INTO fotos (id, chef_id, tipo, dados, criado_em) VALUES (?, ?, ?, ?, ?)').bind(f.id, chefId, 'image/jpeg', f.bin, agora()).run();
-  const usadas = new Set([out.avatar, ...out.gallery.map(g => g.url), ...(atual?.menus||[]).map(m=>m.photo)].filter(Boolean).map(u => u.slice(10)));
+  const usadas = new Set([out.avatar, ...out.gallery.map(g => g.url), ...out.dishes.map(d => d.photo), ...(atual?.menus||[]).map(m=>m.photo)].filter(Boolean).map(u => u.slice(10)));
   for (const id of minhas) if (!usadas.has(id)) await env.DB.prepare('DELETE FROM fotos WHERE id = ? AND chef_id = ?').bind(id, chefId).run();
   return out;
 }
