@@ -126,10 +126,10 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const linkFoto = (g, i, base) => base + '?foto=' + encodeURIComponent(idFoto(g, i));
   const linkPerfil = origem + new URL(esteLink).pathname;
   const fone = C.phone(p.whatsapp);
-  const contatos = C.linksContato(p).filter(({ chave }) => !exemplo || chave === 'location');
-  const zap = fone && contatos.some(({ chave }) => chave === 'whatsapp') ? 'https://wa.me/' + fone + '?text=' + encodeURIComponent('Olá, ' + p.name + '! Vi sua página no Seu Chef em Casa e gostaria de conversar sobre um encontro.') : '';
+  const contatos = exemplo ? C.CONTATOS.map(([chave, nome]) => ({ chave, nome, href: 'https://google.com/' })) : C.linksContato(p);
+  const zap = !exemplo && fone && contatos.some(({ chave }) => chave === 'whatsapp') ? 'https://wa.me/' + fone + '?text=' + encodeURIComponent('Olá, ' + p.name + '! Vi sua página no Seu Chef em Casa e gostaria de conversar sobre um encontro.') : '';
   const iconesContato = contatos.length ? '<nav class="contatos-chef" aria-label="Contatos do chef">'
-    + contatos.map(({ chave, nome, href }) => '<a href="' + e(chave === 'whatsapp' ? zap : href) + '" title="' + e(nome) + '" aria-label="' + e(nome) + '"'
+    + contatos.map(({ chave, nome, href }) => '<a href="' + e(chave === 'whatsapp' && zap ? zap : href) + '" title="' + e(nome) + '" aria-label="' + e(nome) + '"'
       + (href.startsWith('https:') ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + C.iconeContato(chave) + '</a>').join('') + '</nav>' : '';
   const linha = [p.specialty, p.cities].map(s => String(s || '').trim()).filter(Boolean).join(' · ');
   const titulo = p.name + ' · Personal chef';

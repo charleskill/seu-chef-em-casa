@@ -42,7 +42,9 @@ test('perfil /chef/<slug> sai completo do servidor, com canonical e JSON-LD; nom
 test('/c/<id> leva (301) ao endereço novo; /c/exemplo continua, com noindex',async()=>{
  const r=await abre(c,PROD+'/c/chef-aaaaaa0000000001',{id:'chef-aaaaaa0000000001'});assert.equal(r.status,301);assert.equal(r.headers.get('location'),PROD+'/chef/maria-teste-aaaaaa');
  assert.equal((await abre(c,PROD+'/c/chef-bbbbbb0000000002',{id:'chef-bbbbbb0000000002'})).status,404);
- const ex=await abre(c,PROD+'/c/exemplo',{id:'exemplo'});assert.equal(ex.status,200);assert.match(await ex.text(),/noindex/);
+ const ex=await abre(c,PROD+'/c/exemplo',{id:'exemplo'});assert.equal(ex.status,200);
+ const html=await ex.text();assert.match(html,/noindex/);
+ assert.equal((html.match(/href="https:\/\/google\.com\/"/g)||[]).length,8);
 });
 test('perfil exibe apenas ícones habilitados e mantém e-mail de contato separado da conta',async()=>{
  const {vitrine}=await import('../functions/_lib/vitrine.js');
