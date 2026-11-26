@@ -80,7 +80,7 @@
       aviso.textContent = '';
       curtida.disabled = publicar.disabled = false;
     } catch {
-      if (versao === revisao) aviso.textContent = 'Não foi possível carregar as interações. Reabra a foto para tentar novamente.';
+      if (versao === revisao) aviso.textContent = 'Os comentários e as curtidas não carregaram. Feche e abra a foto para tentar novamente.';
     }
   }
 
@@ -97,7 +97,7 @@
     legenda.textContent = link.dataset.legenda;
     legenda.hidden = !legenda.textContent;
     numero.textContent = (indice + 1) + ' de ' + publicacoes.length;
-    whatsapp.href = 'https://wa.me/?text=' + encodeURIComponent('Veja esta publicação no Seu Chef em Casa: ' + link.dataset.link);
+    whatsapp.href = 'https://wa.me/?text=' + encodeURIComponent('Veja esta foto no Seu Chef em Casa: ' + link.dataset.link);
     manual.value = link.dataset.link;
     manual.hidden = status.hidden = true;
     carregarConversa(fotoAtual(), ++revisao);

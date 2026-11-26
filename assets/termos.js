@@ -14,7 +14,7 @@ return '<p class="form-help">Última atualização: 25/11/2026 (rascunho em revi
 'Os perfis marcados como "exemplo" ou "demonstração" são ilustrativos e não representam profissionais reais.'])
 +sec('3. A contratação é direta entre cliente e chef',[
 'Valores, cardápio, data, local, ingredientes, forma de pagamento, nota fiscal, cancelamento, reembolso e quaisquer outras condições são combinados <b>diretamente entre cliente e chef</b>, normalmente pelo WhatsApp. Os valores e as estimativas mostrados no site são <b>referências</b>, não ofertas nem preços finais.',
-'A plataforma apenas facilita o primeiro contato, por exemplo preparando a mensagem do pedido de orçamento.'])
+'A plataforma facilita o primeiro contato e prepara a mensagem do pedido de orçamento.'])
 +sec('4. Responsabilidade',[
 '<b>Nos limites da lei</b>, a plataforma não se responsabiliza pelo que acontece entre cliente e chef nem por qualquer fato decorrente do serviço contratado, incluindo, sem se limitar a: qualidade da comida e do atendimento, segurança alimentar, alergias e intolerâncias, atrasos, faltas e cancelamentos, danos a pessoas ou bens, acidentes, pagamentos, cobranças, nota fiscal, conduta de qualquer pessoa e descumprimento do que foi combinado.',
 'Quem tem alergia, restrição alimentar ou necessidade especial deve informá-la <b>diretamente ao chef</b> e confirmar que ele pode atendê-la. O chef é o único responsável pelo preparo seguro dos alimentos, por suas licenças, registros e obrigações fiscais, sanitárias e trabalhistas, e por cumprir o que prometeu.',
@@ -31,7 +31,7 @@ return '<p class="form-help">Última atualização: 25/11/2026 (rascunho em revi
 +sec('9. Privacidade (LGPD)',[
 '<b>Contas:</b> há contas de chef e de cliente, criadas com e-mail e senha ou com a conta Google. Pelo Google recebemos apenas nome, e-mail e foto do perfil. Para seguir, curtir, comentar ou pedir orçamento é preciso ter conta; navegar é livre.',
 '<b>Dados tratados:</b> nome, telefone, e-mail (opcional), cidade ou endereço, data, número de convidados, preferências e restrições alimentares informados no pedido, além dos dados do perfil do chef (nome, WhatsApp, fotos, cidades, textos).',
-'<b>Para que usamos:</b> montar o pedido de orçamento e permitir que você fale com o chef que escolheu. Ao tocar em "Abrir WhatsApp", o texto do pedido é enviado ao chef por você, e o chef passa a ter esses dados. Restrições e alergias são informações sensíveis: você escolhe se as inclui no pedido.',
+'<b>Para que usamos:</b> montar o pedido de orçamento e permitir que você fale com o chef que escolheu. O botão "Abrir WhatsApp" prepara a conversa. O chef recebe a mensagem com seus dados quando você toca em Enviar no WhatsApp. Restrições e alergias são informações sensíveis: você escolhe se as inclui no pedido.',
 '<b>Onde ficam:</b> os perfis dos chefs e os pedidos de orçamento feitos a chefs cadastrados ficam guardados no servidor da plataforma, hospedado na Cloudflare. O pedido é registrado quando você toca em "Abrir WhatsApp", para que o chef possa consultá-lo no painel dele. O rascunho de um pedido ainda não enviado fica apenas no seu navegador.',
 '<b>Atividade na plataforma:</b> guardamos quem segue quem, curtidas, comentários, denúncias e os avisos exibidos no sino, para mostrar essas informações e moderar o conteúdo. Ao excluir a conta, esses registros são apagados.',
 '<b>Seus direitos:</b> você pode pedir acesso, correção ou exclusão dos seus dados, e o chef pode apagar o próprio perfil a qualquer momento.'+(contato?' Fale conosco em '+contato+'.':'')])

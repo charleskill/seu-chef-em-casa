@@ -456,3 +456,9 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - A versão de impressão tem abertura com foto em destaque, seção de apresentação, galeria e cardápio em página própria no A4. Os controles de impressão ficam fora do documento salvo.
 - O visualizador público agora exibe curtidas e comentários na própria foto. Visitantes leem os comentários e entram na conta para publicar ou curtir. O exemplo permite testar as interações com dados temporários na aba.
 - O editor do cardápio aceita foto sugerida, foto do portfólio, envio do celular e busca no acervo. As cinco imagens iniciais têm autoria, fonte e licença no catálogo e nos metadados JPEG. O perfil público e o PDF identificam as fotos do acervo como ilustrativas.
+
+## Revisão de textos do site
+
+- Revisão em português brasileiro com Humanizer. A apresentação usa exemplos concretos de refeições e encontros. Botões e avisos descrevem o que a pessoa pode fazer em cada tela.
+- Cobertura: início, busca, perfis, cardápio, serviços, marmitas, menus especiais, pedidos, conta, painel do chef, administração, páginas de cidade, PDF, metadados e trechos de ajuda e privacidade.
+- As descrições de compras, limpeza e nota fiscal orientam o cliente a conferir o que cada chef oferece. Nas telas de pedido, o envio da mensagem é concluído no WhatsApp.

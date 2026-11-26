@@ -10,8 +10,8 @@ export async function onRequest({ request, env, params }) {
     return lista({ url: '/personal-chef', titulo: 'Personal chef em Santa Catarina, por cidade · Seu Chef em Casa',
       desc: 'Encontre personal chefs que cozinham na sua casa em Florianópolis, Balneário Camboriú, Joinville, Blumenau e outras cidades de SC.',
       olho: 'Santa Catarina', h1: 'Personal chef na sua cidade', trilha: [['Personal chef em SC', '/personal-chef']],
-      intro: ['Escolha a cidade e veja quem cozinha por aí. Cada chef mostra o cardápio, as fotos dos pratos e como trabalha antes de você pedir o orçamento.'],
-      chefs: [], vazio: ['Escolha a cidade abaixo', 'Ainda estamos montando a brigada de Santa Catarina. Se você é chef, entre e monte seu perfil.'],
+      intro: ['Escolha a cidade para ver quem atende na região, consultar cardápios e pedir um orçamento.'],
+      chefs: [], vazio: ['Escolha a cidade abaixo', 'Se você atende em Santa Catarina, crie seu perfil para aparecer na busca.'],
       blocos: [['Cidades', links(comChef.map(([s, n, k]) => [n + (k ? ' (' + k + ')' : ''), '/personal-chef/' + s]))]],
       perguntas: PERGUNTAS(''), noindex: !prod || !chefs.length }, url.origin);
   }
@@ -23,7 +23,7 @@ export async function onRequest({ request, env, params }) {
     desc: 'Personal chefs que atendem em ' + nome + ': veja cardápios, fotos dos pratos e peça seu orçamento para jantar, almoço ou evento em casa.',
     olho: 'Personal chef · ' + nome + ', SC', h1: 'Personal chef em ' + nome,
     trilha: [['Personal chef em SC', '/personal-chef'], [nome, '/personal-chef/' + slug]],
-    intro: ['O chef vem até a sua casa, cozinha na sua cozinha e serve na sua mesa. Aqui você vê o cardápio de cada um antes de pedir o orçamento.',
+    intro: ['Veja quem atende na sua cidade e confira os cardápios antes de pedir um orçamento.',
       daqui.length ? (daqui.length === 1 ? 'Um chef atende ' : daqui.length + ' chefs atendem ') + 'em ' + nome + ' pelo Seu Chef em Casa.' : ''].filter(Boolean),
     tituloChefs: 'Chefs que atendem em ' + nome, chefs: daqui,
     vazio: ['A brigada de ' + nome + ' está sendo montada', 'Ainda não há chef de ' + nome + ' com perfil completo por aqui. Se você cozinha na cidade, entre e monte seu perfil; ele aparece nesta página assim que estiver pronto.'],

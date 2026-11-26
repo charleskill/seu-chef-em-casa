@@ -56,7 +56,7 @@ const PROPRIOS = {
   x_lanche: ['Noite do Lanche', 'Hambúrgueres e lanches montados na hora, na sua cozinha.'],
   x_pizza: ['Noite da Pizza', 'Massa aberta na hora e pizzas saindo uma atrás da outra para a turma.'],
   x_lounge: ['Lounge de petiscos e drinks', 'Petiscos e drinks para receber os convidados em pé, sem mesa posta.'],
-  x_tematico: ['Cardápio temático', 'Um menu montado em torno de um tema: uma viagem, uma data, um filme.'],
+  x_tematico: ['Cardápio temático', 'Escolha um tema, como um filme ou uma viagem, e combine os pratos com o chef.'],
   x_boteco: ['Noite do Boteco', 'Bolinhos, porções e tira-gostos de bar servidos em casa.'],
   x_churrasco: ['Churrasco em casa', 'O chef cuida da brasa e dos cortes enquanto você recebe.'],
   x_mar: ['Sequência de frutos do mar', 'Camarão, peixe e frutos do mar servidos em etapas.'],
@@ -104,8 +104,8 @@ const CABECALHOS = {
 const ld = o => '<script type="application/ld+json">' + JSON.stringify(o).replace(/</g, '\\u003c') + '</script>';
 
 export const PERGUNTAS = lugar => [
-  ['Como contrato um personal chef' + (lugar ? ' em ' + lugar : '') + '?', 'Escolha um chef, veja o cardápio e monte o pedido de orçamento com a data, o número de pessoas e os pratos. O pedido vai para o WhatsApp do chef e vocês acertam os detalhes direto.'],
-  ['Quanto custa um personal chef' + (lugar ? ' em ' + lugar : '') + '?', 'Cada chef define o próprio preço. Os pratos do cardápio trazem um valor de referência por pessoa; o valor final depende do número de convidados, dos ingredientes e do que você combinar com o chef.'],
+  ['Como contrato um personal chef' + (lugar ? ' em ' + lugar : '') + '?', 'Escolha um chef e monte o pedido com a data, o número de pessoas e os pratos. Envie a mensagem pelo WhatsApp para combinar os detalhes com ele.'],
+  ['Quanto custa um personal chef' + (lugar ? ' em ' + lugar : '') + '?', 'Cada chef define seus preços. Os valores do cardápio são referências por pessoa. O total depende do número de convidados, dos ingredientes e dos serviços que vocês combinarem.'],
   ['O chef faz as compras e limpa a cozinha?', 'Depende do chef. O perfil de cada um mostra se ele faz as compras dos ingredientes, leva os próprios utensílios e entrega a cozinha limpa no fim.'],
   ['Pago pelo site?', 'Não. O Seu Chef em Casa é uma vitrine: contratação, pagamento e serviço são combinados direto com o chef.']
 ];
@@ -145,6 +145,6 @@ export function lista(o, origem) {
 export const links = itens => '<nav class="links">' + itens.map(([n, u]) => '<a href="' + e(u) + '">' + e(n) + '</a>').join('') + '</nav>';
 
 export function naoAchou() {
-  return lista({ url: '/', titulo: 'Página não encontrada · Seu Chef em Casa', desc: 'Esta página não existe.', olho: 'Erro 404', h1: 'Esta página saiu do cardápio.',
-    intro: ['O endereço pode ter mudado. Os chefs continuam na busca.'], chefs: [], vazio: ['Vamos voltar para a cozinha?', 'Veja os chefs disponíveis ou entre como chef.'], noindex: true, status: 404 }, '');
+  return lista({ url: '/', titulo: 'Página não encontrada · Seu Chef em Casa', desc: 'Esta página não existe.', olho: 'Erro 404', h1: 'Não encontramos esta página.',
+    intro: ['Use a busca para encontrar um chef.'], chefs: [], vazio: ['Encontre um chef', 'Busque um chef ou entre para criar seu perfil.'], noindex: true, status: 404 }, '');
 }

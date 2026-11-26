@@ -9,7 +9,7 @@ import DishPhotos from '../../assets/dish-photos.js';
 export const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
 export const PADRAO = {
   titulo: 'Seu Chef em Casa · Boa comida, boas histórias',
-  desc: 'Conheça personal chefs, explore cardápios e prepare seu pedido de orçamento.',
+  desc: 'Encontre personal chefs, veja seus cardápios e peça um orçamento.',
   imagem: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=1200&h=630&fit=crop&q=80'
 };
 export const e = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -117,7 +117,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
   const zap = fone ? 'https://wa.me/' + fone + '?text=' + encodeURIComponent('Olá, ' + p.name + '! Vi sua página no Seu Chef em Casa e gostaria de conversar sobre um encontro.') : '';
   const linha = [p.specialty, p.cities].map(s => String(s || '').trim()).filter(Boolean).join(' · ');
   const titulo = p.name + ' · Personal chef';
-  const desc = (linha ? linha + '. ' : '') + 'Veja fotos dos trabalhos, explore o cardápio e peça um orçamento.';
+  const desc = (linha ? linha + '. ' : '') + 'Veja os trabalhos e o cardápio do chef. Peça um orçamento para seu encontro.';
 
   const pratos = (Array.isArray(p.dishes) ? p.dishes : []).filter(d => d && d.name)
     .map((d, i) => ({ d, i, o: ORDEM.indexOf(d.category) < 0 ? 99 : ORDEM.indexOf(d.category) })).sort((a, b) => a.o - b.o || a.i - b.i).map(x => x.d);
@@ -142,9 +142,9 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
       + '<title>Portfólio de ' + e(p.name) + ' · Seu Chef em Casa</title><meta name="robots" content="noindex">'
       + '<link rel="canonical" href="' + e(esteLink) + '"><style>' + ESTILO + ESTILO_PORTFOLIO + '</style><script defer src="/assets/perfil-publico.js?v=3"></script></head><body>'
       + '<main class="portfolio"><div class="sem-impressao portfolio-ferramentas"><div class="acoes"><a class="b" href="' + e(linkPerfil) + '">Voltar ao perfil</a>'
-      + '<button class="b b1" data-imprimir>Salvar como PDF</button></div><p>Na impressão, escolha Salvar como PDF.</p></div>'
+      + '<button class="b b1" data-imprimir>Salvar como PDF</button></div><p>Na janela de impressão, escolha Salvar como PDF.</p></div>'
       + '<header class="portfolio-capa' + (galeria.length ? ' com-foto' : '') + '"><div class="portfolio-abertura">'
-      + '<p class="marca">Seu Chef em Casa · Apresentação</p>'
+      + '<p class="marca">Seu Chef em Casa</p>'
       + (avatar ? '<img class="retrato" src="' + e(avatar) + '" alt="">' : '')
       + '<h1>' + e(p.name) + '</h1><p class="especialidade">' + e(p.specialty || 'Personal chef') + '</p>'
       + (p.cities ? '<p class="cidade">' + e(p.cities) + '</p>' : '') + '</div>'
@@ -156,10 +156,10 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
         + galeria.slice(1, 9).map(g => '<figure><img src="' + e(g.url) + '" alt="' + e(g.legenda || 'Trabalho de ' + p.name)
           + '" width="300" height="300">' + (g.legenda ? '<figcaption>' + e(g.legenda) + '</figcaption>' : '') + '</figure>').join('')
         + '</div></section>' : '')
-      + (pratos.length ? '<section class="portfolio-secao portfolio-cardapio"><h2>Cardápio</h2><p class="nota">Valores de referência por pessoa. O orçamento final é preparado para o seu encontro.</p>'
+      + (pratos.length ? '<section class="portfolio-secao portfolio-cardapio"><h2>Cardápio</h2><p class="nota">Os preços são por pessoa. Combine o valor final com o chef.</p>'
         + [...categorias].map(([nome, itens]) => '<h3 class="portfolio-categoria">' + e(nome) + '</h3><div class="pratos">'
         + itens.map(prato).join('') + '</div>').join('') + '</section>' : '')
-      + '<section class="portfolio-secao contato"><h2>Vamos conversar sobre seu evento?</h2><p><a href="' + e(linkPerfil) + '">Ver perfil completo</a></p>'
+      + '<section class="portfolio-secao contato"><h2>Contato e orçamento</h2><p><a href="' + e(linkPerfil) + '">Ver perfil completo</a></p>'
       + (zap && !exemplo ? '<p><a href="' + e(zap) + '">WhatsApp · ' + e(p.whatsapp) + '</a></p>' : '')
       + '</section></main></body></html>';
     return new Response(html, { headers: CABECALHOS });
@@ -182,7 +182,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + '<p class="especialidade">' + e(p.specialty || 'Personal chef') + '</p>'
     + (p.cities ? '<p class="cidade">' + e(p.cities) + '</p>' : '')
     + (bio ? '<p>' + e(resumo) + '</p>' : '')
-    + (resumo !== bio ? '<details class="bio"><summary>Ler apresentação completa</summary>' + paragrafos(bio) + '</details>' : '')
+    + (resumo !== bio ? '<details class="bio"><summary>Ler mais sobre o chef</summary>' + paragrafos(bio) + '</details>' : '')
     + '</div><div class="acoes"><a class="b b1" href="' + e(pedido) + '">Pedir orçamento</a>'
     + (pratos.length ? '<a class="b" href="#cardapio">Ver cardápio</a>' : '')
     + '<a class="b" href="' + e(linkPerfil + '?portfolio=pdf') + '">Portfólio em PDF</a>'
@@ -196,7 +196,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + '<meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="' + e(esteLink) + '">'
     + (exemplo || extra.noindex ? '<meta name="robots" content="noindex">' : '')
     + (extra.jsonld ? '<script type="application/ld+json">' + JSON.stringify(extra.jsonld).replace(/</g, '\\u003c') + '</script>' : '')
-    + '<style>' + ESTILO + '</style><script defer src="/assets/cloud.js"></script><script defer src="/assets/perfil-publico.js?v=4"></script></head><body>'
+    + '<style>' + ESTILO + '</style><script defer src="/assets/cloud.js"></script><script defer src="/assets/perfil-publico.js?v=5"></script></head><body>'
     + '<header class="topo"><div class="l"><a class="marca" href="/">Seu Chef em Casa</a><a class="buscar" href="/#/buscar">Conhecer chefs</a></div></header>'
     + '<main class="l">' + perfilPublico
     + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '')
@@ -210,8 +210,8 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
         + ' data-foto-id="' + e(idFoto(g, i)) + '"'
         + '><img src="'
         + e(g.url) + '" alt="' + e(alt) + '" width="300" height="300"' + (i >= 3 ? ' loading="lazy"' : '') + ' decoding="async"></a>';
-    }).join('') + '</div>' : '<p class="nota">O chef está preparando seu portfólio.</p>') + '</section>'
-    + (galeria.length ? '<dialog id="foto-publica" aria-labelledby="foto-titulo" data-chef="' + e(id) + '"><div class="foto-topo"><h2 id="foto-titulo">Da minha cozinha</h2><button class="b" data-fechar autofocus>Fechar</button></div>'
+    }).join('') + '</div>' : '<p class="nota">Este chef ainda não publicou fotos.</p>') + '</section>'
+    + (galeria.length ? '<dialog id="foto-publica" aria-labelledby="foto-titulo" data-chef="' + e(id) + '"><div class="foto-topo"><h2 id="foto-titulo">Foto do portfólio</h2><button class="b" data-fechar autofocus>Fechar</button></div>'
       + '<div class="foto-corpo"><div class="foto-midia"><img alt=""><div class="foto-nav"><button class="b" data-anterior>Anterior</button>'
       + '<output aria-live="polite"></output><button class="b" data-proxima>Próxima</button></div></div>'
       + '<section class="conversa" aria-label="Curtidas e comentários"><p id="foto-legenda"></p>'
@@ -223,15 +223,15 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
       + '<div class="acoes foto-compartilhar"><a class="b" data-whatsapp target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp</a>'
       + '<button class="b" data-copiar>Copiar link da foto</button></div>'
       + '<p data-compartilhamento role="status" hidden></p><input type="url" data-link-manual aria-label="Link da foto" readonly hidden>'
-      + (exemplo ? '<p class="nota">Interações de demonstração nesta aba.</p>' : '') + '</section></div></dialog>' : '')
+      + (exemplo ? '<p class="nota">As curtidas e os comentários de teste ficam nesta aba.</p>' : '') + '</section></div></dialog>' : '')
     + (mostra.length ? '<section id="cardapio"><h2>Meu cardápio</h2><div class="pratos">' + mostra.map(prato).join('') + '</div>'
       + (pratos.length > mostra.length ? '<details class="mais"><summary>Ver mais pratos</summary><div class="pratos">'
         + pratos.slice(mostra.length, 60).map(prato).join('') + '</div></details>' : '')
-      + '<p class="nota">Os valores são uma referência por pessoa. Confirme o preço no orçamento.</p></section>' : '')
+      + '<p class="nota">Os preços são valores de referência por pessoa. Confirme o total com o chef.</p></section>' : '')
     + (trabalho.length || experiencias.length ? '<section><h2>Como eu atendo</h2>'
       + (trabalho.length ? '<ul class="lista">' + trabalho.map(t => '<li>' + e(t) + '</li>').join('') + '</ul>' : '')
       + (experiencias.length ? '<div class="exp">' + experiencias.map(t => '<span>' + e(t) + '</span>').join('') + '</div>' : '') + '</section>' : '')
-    + '<section class="final" id="contato"><h2>Vamos conversar sobre seu encontro?</h2><div class="acoes">'
+    + '<section class="final" id="contato"><h2>Fale com o chef</h2><div class="acoes">'
     + '<a class="b b1" href="' + e(pedido) + '">Pedir orçamento</a>'
     + (zap && !exemplo ? '<a class="b" href="' + e(zap) + '" target="_blank" rel="noopener">Conversar no WhatsApp</a>' : '')
     + '</div></section></main>'

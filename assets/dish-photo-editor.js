@@ -83,7 +83,7 @@
       const nomePrato = normal(nome.value);
       const sugestao = entradas.find(([, foto]) => normal(foto.name) === nomePrato);
       painel.replaceChildren(mostrar(sugestao ? [card({ photoPreset: sugestao[0] }, sugestao[1].name)] : [],
-        'Ainda não temos sugestão para este prato. Você pode buscar no acervo.'));
+        'Este prato ainda não tem foto sugerida. Tente buscar no acervo.'));
     };
     caixa.querySelector('[data-foto-portfolio]').onclick = () => {
       painel.replaceChildren(mostrar(galeria.filter(foto => urlLocal(demoSrc(foto.url))).map((foto, i) =>
