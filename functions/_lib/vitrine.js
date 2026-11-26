@@ -48,7 +48,7 @@ const ESTILO = [
   '#foto-publica .b:not(.b1),#foto-publica .foto-nav output,#foto-publica .nota{color:var(--foto-oliva)}#foto-publica [data-curtir]{background:#ececde}#foto-publica [data-curtir][aria-pressed=true]{background:#f2e1e7;border-color:var(--foto-vinho);color:var(--foto-vinho)}#foto-publica .b1{background:var(--foto-vinho);border-color:var(--foto-vinho)}#foto-publica .b1:hover{background:#5d303d}#foto-publica :focus-visible{outline-color:var(--foto-vinho)}',
   '.pular{position:absolute;top:8px;left:8px;z-index:2;padding:8px 12px;background:#fffdf8;color:#455238;transform:translateY(-150%)}.pular:focus{transform:none}#foto-publica,.conversa ol{overscroll-behavior:contain}',
   '@media(min-width:670px){.perfil{padding-top:30px}.fotos{gap:8px}.pratos{grid-template-columns:1fr 1fr}}'
-  ,'.prato-foto{float:left;width:94px;margin:0 12px 5px 0}.prato-foto img{width:94px;height:82px;object-fit:cover;border-radius:6px}.prato-foto figcaption{font-size:.68rem;color:#455238}.prato{display:flow-root}'
+  ,'.prato-foto{float:left;width:94px;margin:0 12px 5px 0}.prato-foto img{width:94px;height:82px;object-fit:cover;border-radius:6px}.prato-foto figcaption{font-size:.68rem;color:#455238}.credito-prato{display:none}.foto-prato-ampliada figure{margin:0}.foto-prato-ampliada header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.foto-prato-ampliada header h2{font-size:1.35rem}.foto-prato-ampliada figcaption{margin-top:8px;color:#455238;font-size:.85rem}.prato{display:flow-root}'
 ].join('');
 
 const ESTILO_PORTFOLIO = [
@@ -62,7 +62,7 @@ const ESTILO_PORTFOLIO = [
   '.portfolio .contato{break-inside:avoid;background:#455238;color:#fffaf1;border-radius:10px;padding:20px}.portfolio .contato h2{color:inherit}.portfolio .contato p{margin:7px 0 0}',
   '@media(max-width:520px){.portfolio-ferramentas{display:block}.portfolio-ferramentas p{margin-top:10px}.portfolio .fotos{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}',
   '@media(min-width:620px){.portfolio-capa.com-foto{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.portfolio-capa-foto{height:100%;min-height:290px}}',
-  '@media print{body{background:white;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.portfolio{width:auto;margin:0}.portfolio .sem-impressao{display:none}.portfolio-capa{break-inside:avoid}.portfolio-capa.com-foto{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.portfolio-abertura{padding:8mm}.portfolio-abertura h1{font-size:29pt}.portfolio-abertura .marca{margin-bottom:4mm}.portfolio-capa-foto{height:56mm;min-height:0}.portfolio .portfolio-secao{margin-top:6mm}.portfolio .portfolio-secao h2{font-size:19pt;margin-bottom:3mm;break-after:avoid}.portfolio .fotos{gap:2mm}.portfolio .fotos img{height:28mm}.portfolio .pratos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:7mm}.portfolio-cardapio{break-before:page}.portfolio .prato-foto{width:28mm;margin-right:3mm}.portfolio .prato-foto img{height:19mm;width:28mm}.portfolio .prato-foto figcaption{font-size:7pt}.portfolio-categoria{margin-top:4mm}}'
+  '@media print{body{background:white;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.portfolio{width:auto;margin:0}.portfolio .sem-impressao{display:none}.portfolio-capa{break-inside:avoid}.portfolio-capa.com-foto{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.portfolio-abertura{padding:8mm}.portfolio-abertura h1{font-size:29pt}.portfolio-abertura .marca{margin-bottom:4mm}.portfolio-capa-foto{height:56mm;min-height:0}.portfolio .portfolio-secao{margin-top:6mm}.portfolio .portfolio-secao h2{font-size:19pt;margin-bottom:3mm;break-after:avoid}.portfolio .fotos{gap:2mm}.portfolio .fotos img{height:28mm}.portfolio .pratos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:7mm}.portfolio-cardapio{break-before:page}.portfolio .prato-foto{width:28mm;margin-right:3mm}.portfolio .prato-foto img{height:19mm;width:28mm}.portfolio .prato-foto figcaption{display:block;font-size:7pt}.portfolio-categoria{margin-top:4mm}}'
 ].join('');
 
 function fotoParaImpressao(src, largura) {
@@ -137,8 +137,8 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     const preset = Object.hasOwn(DishPhotos, d.photoPreset) ? DishPhotos[d.photoPreset] : null;
     const url = preset ? origem + preset.url : fotoOk(d.photo, origem);
     if (!url) return '';
-    return '<figure class="prato-foto"><a href="' + e(url) + '"><img src="' + e(url) + '" alt="' + e(d.name) + '"' + (extra.portfolio ? '' : ' loading="lazy"') + '></a>'
-      + (preset ? '<figcaption>Ilustrativa · <a href="' + e(preset.source) + '">' + e(preset.author) + '</a> · <a href="' + e(preset.license) + '">' + e(preset.version) + '</a> · redimensionada</figcaption>' : '') + '</figure>';
+    return '<figure class="prato-foto"><a data-ampliar-prato href="' + e(url) + '"><img src="' + e(url) + '" alt="' + e(d.name) + '"' + (extra.portfolio ? '' : ' loading="lazy"') + '></a>'
+      + (preset ? '<figcaption class="credito-prato">Ilustrativa · <a href="' + e(preset.source) + '">' + e(preset.author) + '</a> · <a href="' + e(preset.license) + '">' + e(preset.version) + '</a> · redimensionada</figcaption>' : '') + '</figure>';
   };
   const prato = d => '<article class="prato">' + fotoDoPrato(d) + (d.category ? '<small>' + e(d.category) + '</small>' : '') + '<h3>' + e(d.name) + '</h3>'
     + (d.desc ? '<p>' + e(d.desc) + '</p>' : '') + (Number(d.price) > 0 ? '<span>Referência: ' + e(dinheiro(d.price)) + ' por pessoa</span>' : '') + '</article>';
@@ -151,7 +151,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     }
     const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
       + '<title>Portfólio de ' + e(p.name) + ' · Seu Chef em Casa</title><meta name="robots" content="noindex">'
-      + '<link rel="canonical" href="' + e(esteLink) + '"><style>' + ESTILO + ESTILO_PORTFOLIO + '</style><script defer src="/assets/perfil-publico.js?v=3"></script></head><body>'
+      + '<link rel="canonical" href="' + e(esteLink) + '"><style>' + ESTILO + ESTILO_PORTFOLIO + '</style><script defer src="/assets/perfil-publico.js?v=6"></script></head><body>'
       + '<main class="portfolio"><div class="sem-impressao portfolio-ferramentas"><div class="acoes"><a class="b" href="' + e(linkPerfil) + '">Voltar ao perfil</a>'
       + '<button class="b b1" data-imprimir>Salvar como PDF</button></div><p>Na janela de impressão, escolha Salvar como PDF.</p></div>'
       + '<header class="portfolio-capa' + (galeria.length ? ' com-foto' : '') + '"><div class="portfolio-abertura">'
@@ -207,7 +207,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + '<meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="' + e(esteLink) + '">'
     + (exemplo || extra.noindex ? '<meta name="robots" content="noindex">' : '')
     + (extra.jsonld ? '<script type="application/ld+json">' + JSON.stringify(extra.jsonld).replace(/</g, '\\u003c') + '</script>' : '')
-    + '<style>' + ESTILO + '</style><script defer src="/assets/cloud.js"></script><script defer src="/assets/perfil-publico.js?v=5"></script></head><body>'
+    + '<style>' + ESTILO + '</style><script defer src="/assets/cloud.js"></script><script defer src="/assets/perfil-publico.js?v=6"></script></head><body>'
     + '<a class="pular" href="#perfil-conteudo">Pular para o conteúdo</a><header class="topo"><div class="l"><a class="marca" href="/">Seu Chef em Casa</a><a class="buscar" href="/#/buscar">Conhecer chefs</a></div></header>'
     + '<main class="l" id="perfil-conteudo" tabindex="-1">' + perfilPublico
     + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '')

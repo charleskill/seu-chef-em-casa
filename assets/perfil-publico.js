@@ -1,4 +1,44 @@
 (() => {
+  document.addEventListener('click', event => {
+    const link = event.target.closest('[data-ampliar-prato]');
+    if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const janela = document.createElement('dialog');
+    if (typeof janela.showModal !== 'function') return;
+    event.preventDefault();
+    janela.className = 'foto-prato-ampliada';
+    janela.setAttribute('aria-labelledby', 'foto-prato-titulo');
+    const miniatura = link.querySelector('img');
+    const titulo = document.createElement('h2');
+    titulo.id = 'foto-prato-titulo';
+    titulo.textContent = miniatura.alt;
+    const fechar = document.createElement('button');
+    fechar.type = 'button';
+    fechar.className = 'b';
+    fechar.autofocus = true;
+    fechar.textContent = 'Fechar';
+    const topo = document.createElement('header');
+    topo.append(titulo, fechar);
+    const foto = document.createElement('img');
+    foto.src = link.href;
+    foto.alt = miniatura.alt;
+    const figura = document.createElement('figure');
+    figura.append(foto);
+    const credito = link.parentElement.querySelector('figcaption');
+    if (credito) {
+      const legenda = credito.cloneNode(true);
+      legenda.className = '';
+      figura.append(legenda);
+    }
+    janela.append(topo, figura);
+    document.body.append(janela);
+    fechar.addEventListener('click', () => janela.close());
+    janela.addEventListener('close', () => {
+      janela.remove();
+      link.focus();
+    });
+    janela.showModal();
+  });
+
   document.querySelector('[data-imprimir]')?.addEventListener('click', () => window.print());
   const dialog = document.querySelector('#foto-publica');
   if (!dialog || typeof dialog.showModal !== 'function') return;
