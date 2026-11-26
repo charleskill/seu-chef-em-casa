@@ -21,7 +21,7 @@ const paragrafos = t => String(t || '').split(/\n\s*\n|\r?\n/).map(s => s.trim()
 export const CABECALHOS = {
   'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300',
   'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'referrer-policy': 'strict-origin-when-cross-origin',
-  'content-security-policy': "default-src 'none'; script-src 'self'; img-src 'self' data: https://images.unsplash.com; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  'content-security-policy': "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self' data: https://images.unsplash.com; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 };
 
 export const SERIFA = 'Palatino,"Palatino Linotype",Georgia,serif';
@@ -38,6 +38,7 @@ const ESTILO = [
   'section+section{margin-top:28px;padding-top:20px;border-top:1px solid #dfd9cc}.pratos{display:grid;gap:0 24px}.prato{padding:12px 0;border-bottom:1px solid #dfd9cc;overflow-wrap:anywhere}.prato h3{font-size:1.22rem}.prato p,.nota{color:#455238;margin:4px 0}.prato span{color:#754653;font-weight:600}.mais summary{cursor:pointer;min-height:44px;align-content:center}',
   '.lista{padding-left:22px}.exp{display:flex;flex-wrap:wrap;gap:8px}.exp span{border:1px solid #dfd9cc;padding:6px 12px;border-radius:999px}.final{padding-bottom:28px}footer{background:#455238;color:#f6f3eb;padding:18px 0;font-size:.88rem}',
   'dialog{box-sizing:border-box;width:min(100% - 24px,660px);max-height:calc(100dvh - 24px);border:0;border-radius:12px;padding:14px;color:#303629;background:#f6f3eb}dialog::backdrop{background:#252a21cc}.foto-topo,.foto-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}.foto-topo h2{font-size:1.3rem}dialog img{width:100%;max-height:56dvh;object-fit:contain;background:#e8e3d6}dialog button{min-height:44px;cursor:pointer;background:transparent}dialog button:disabled{opacity:.5;cursor:default}dialog p{white-space:pre-wrap;overflow-wrap:anywhere}',
+  '.conversa{border-top:1px solid #dfd9cc;margin-top:12px;padding-top:12px}.conversa h3{font-size:1.3rem;margin-top:10px}.conversa [aria-pressed=true]{color:#754653;border-color:#754653}.conversa ol{list-style:none;padding:0;margin:4px 0 12px;max-height:12rem;overflow:auto}.conversa li{padding:6px 0;overflow-wrap:anywhere}.conversa li+li{border-top:1px solid #dfd9cc}.conversa li p{margin:0}.conversa form{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.conversa textarea{flex:1 1 200px;min-width:0;min-height:44px;padding:8px;border:1px solid #827e70;border-radius:8px;background:#fffdf8;color:inherit;font:inherit;resize:vertical}.conversa button.b1{background:#754653}.conversa [role=status]{font-size:.87rem;margin:6px 0}',
   '@media(min-width:670px){.perfil{padding-top:30px}.fotos{gap:8px}.pratos{grid-template-columns:1fr 1fr}}'
 ].join('');
 
@@ -169,7 +170,7 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + '<meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="' + e(esteLink) + '">'
     + (exemplo || extra.noindex ? '<meta name="robots" content="noindex">' : '')
     + (extra.jsonld ? '<script type="application/ld+json">' + JSON.stringify(extra.jsonld).replace(/</g, '\\u003c') + '</script>' : '')
-    + '<style>' + ESTILO + '</style><script defer src="/assets/perfil-publico.js?v=2"></script></head><body>'
+    + '<style>' + ESTILO + '</style><script defer src="/assets/cloud.js"></script><script defer src="/assets/perfil-publico.js?v=4"></script></head><body>'
     + '<header class="topo"><div class="l"><a class="marca" href="/">Seu Chef em Casa</a><a class="buscar" href="/#/buscar">Conhecer chefs</a></div></header>'
     + '<main class="l">' + perfilPublico
     + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '')
@@ -178,18 +179,24 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     + '<section id="publicacoes" aria-label="Publicações">'
     + (galeria.length ? '<div class="fotos">' + galeria.map((g, i) => {
       const alt = g.legenda || 'Trabalho de ' + p.name + ', foto ' + (i + 1);
-      const interagir = g.id == null ? perfil : perfil + '/foto/' + encodeURIComponent(g.id);
       return '<a href="' + e(g.url) + '" data-publicacao data-link="' + e(linkFoto(g, i, linkPerfil)) + '" data-legenda="' + e(g.legenda) + '"'
         + (g === fotoSelecionada ? ' data-foto-inicial' : '')
-        + ' data-interagir="' + e(interagir) + '"><img src="'
+        + ' data-foto-id="' + e(idFoto(g, i)) + '"'
+        + '><img src="'
         + e(g.url) + '" alt="' + e(alt) + '" width="300" height="300"' + (i >= 3 ? ' loading="lazy"' : '') + ' decoding="async"></a>';
     }).join('') + '</div>' : '<p class="nota">O chef está preparando seu portfólio.</p>') + '</section>'
-    + (galeria.length ? '<dialog id="foto-publica" aria-labelledby="foto-titulo"><div class="foto-topo"><h2 id="foto-titulo">Da minha cozinha</h2><button class="b" data-fechar autofocus>Fechar</button></div>'
+    + (galeria.length ? '<dialog id="foto-publica" aria-labelledby="foto-titulo" data-chef="' + e(id) + '"><div class="foto-topo"><h2 id="foto-titulo">Da minha cozinha</h2><button class="b" data-fechar autofocus>Fechar</button></div>'
       + '<img alt=""><p id="foto-legenda"></p><div class="foto-nav"><button class="b" data-anterior>Anterior</button>'
       + '<output aria-live="polite"></output><button class="b" data-proxima>Próxima</button></div>'
       + '<div class="acoes"><a class="b b1" data-whatsapp target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp</a>'
       + '<button class="b" data-copiar>Copiar link da foto</button>'
-      + (!exemplo ? '<a class="b" data-interagir href="' + e(perfil) + '">Curtir ou comentar</a>' : '') + '</div>'
+      + '</div><section class="conversa" aria-label="Curtidas e comentários">'
+      + '<button class="b" type="button" data-curtir aria-pressed="false">♡ Curtir</button>'
+      + '<h3>Comentários</h3><ol data-comentarios aria-label="Comentários da publicação"></ol>'
+      + '<p data-social-status role="status"></p><a href="/#/entrar" data-entrar hidden>Entrar para participar</a>'
+      + '<form data-comentar><textarea aria-label="Seu comentário" placeholder="Escreva um comentário…" maxlength="500" rows="1" required></textarea>'
+      + '<button class="b b1" type="submit">Publicar</button></form>'
+      + (exemplo ? '<p class="nota">Interações de demonstração nesta aba.</p>' : '') + '</section>'
       + '<p data-compartilhamento role="status" hidden></p><input type="url" data-link-manual aria-label="Link da foto" readonly hidden></dialog>' : '')
     + (mostra.length ? '<section id="cardapio"><h2>Meu cardápio</h2><div class="pratos">' + mostra.map(prato).join('') + '</div>'
       + (pratos.length > mostra.length ? '<details class="mais"><summary>Ver mais pratos</summary><div class="pratos">'

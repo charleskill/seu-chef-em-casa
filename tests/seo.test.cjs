@@ -43,7 +43,10 @@ test('perfil compartilhado renderiza a primeira publicação, cardápio e contad
  assert.match(novo,/<dt>Seguidores<\/dt><dd>0<\/dd>/);
  assert.match(novo,/<dt>Seguindo<\/dt><dd>0<\/dd>/);
  assert.match(novo,/data-legenda="Jantar &lt;privado&gt;"/);
- assert.match(novo,/data-interagir="[^"]+\/foto\/primeiro"/);
+ assert.match(novo,/data-foto-id="primeiro"/);
+ assert.match(novo,/data-comentarios/);
+ assert.match(novo,/data-comentar/);
+ assert.match(novo,/data-curtir aria-pressed="false"/);
  assert.match(novo,/<meta property="og:image"/);
  assert.ok(novo.indexOf('id="publicacoes"') < novo.indexOf('id="cardapio"'));
 
