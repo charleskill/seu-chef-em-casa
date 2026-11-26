@@ -62,8 +62,18 @@ const ESTILO_PORTFOLIO = [
   '.portfolio .contato{break-inside:avoid;background:#455238;color:#fffaf1;border-radius:10px;padding:20px}.portfolio .contato h2{color:inherit}.portfolio .contato p{margin:7px 0 0}',
   '@media(max-width:520px){.portfolio-ferramentas{display:block}.portfolio-ferramentas p{margin-top:10px}.portfolio .fotos{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}',
   '@media(min-width:620px){.portfolio-capa.com-foto{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.portfolio-capa-foto{height:100%;min-height:290px}}',
-  '@media print{body{background:white;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.portfolio{width:auto;margin:0}.portfolio .sem-impressao{display:none}.portfolio-capa{break-inside:avoid}.portfolio-capa.com-foto{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.portfolio-abertura{padding:8mm}.portfolio-abertura h1{font-size:29pt}.portfolio-abertura .marca{margin-bottom:4mm}.portfolio-capa-foto{height:56mm;min-height:0}.portfolio .portfolio-secao{margin-top:6mm}.portfolio .portfolio-secao h2{font-size:19pt;margin-bottom:3mm;break-after:avoid}.portfolio .fotos{gap:2mm}.portfolio .fotos img{height:28mm}.portfolio .pratos{display:block}.portfolio-cardapio{break-before:page}.portfolio .prato-foto img{height:17mm;width:21mm}.portfolio .prato-foto{width:23mm}.portfolio-categoria{margin-top:4mm}}'
+  '@media print{body{background:white;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.portfolio{width:auto;margin:0}.portfolio .sem-impressao{display:none}.portfolio-capa{break-inside:avoid}.portfolio-capa.com-foto{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.portfolio-abertura{padding:8mm}.portfolio-abertura h1{font-size:29pt}.portfolio-abertura .marca{margin-bottom:4mm}.portfolio-capa-foto{height:56mm;min-height:0}.portfolio .portfolio-secao{margin-top:6mm}.portfolio .portfolio-secao h2{font-size:19pt;margin-bottom:3mm;break-after:avoid}.portfolio .fotos{gap:2mm}.portfolio .fotos img{height:28mm}.portfolio .pratos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:7mm}.portfolio-cardapio{break-before:page}.portfolio .prato-foto{width:28mm;margin-right:3mm}.portfolio .prato-foto img{height:19mm;width:28mm}.portfolio .prato-foto figcaption{font-size:7pt}.portfolio-categoria{margin-top:4mm}}'
 ].join('');
+
+function fotoParaImpressao(src, largura) {
+  const url = new URL(src);
+  if (url.hostname !== 'images.unsplash.com') return src;
+  url.searchParams.delete('auto');
+  url.searchParams.set('w', String(largura));
+  url.searchParams.set('fm', 'jpg');
+  url.searchParams.set('q', '75');
+  return url.href;
+}
 
 // /c/exemplo: vitrine de um chef fictício, para mostrar aos chefs como a página fica (e para testar sem banco).
 // Tudo inventado; fotos ilustrativas do Unsplash; telefone de teste do projeto.
@@ -149,12 +159,12 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
       + (avatar ? '<img class="retrato" src="' + e(avatar) + '" alt="">' : '')
       + '<h1>' + e(p.name) + '</h1><p class="especialidade">' + e(p.specialty || 'Personal chef') + '</p>'
       + (p.cities ? '<p class="cidade">' + e(p.cities) + '</p>' : '') + '</div>'
-      + (galeria.length ? '<figure class="portfolio-destaque"><img class="portfolio-capa-foto" src="' + e(galeria[0].url) + '" alt="' + e(galeria[0].legenda || 'Trabalho em destaque de ' + p.name) + '">'
+      + (galeria.length ? '<figure class="portfolio-destaque"><img class="portfolio-capa-foto" src="' + e(fotoParaImpressao(galeria[0].url, 900)) + '" alt="' + e(galeria[0].legenda || 'Trabalho em destaque de ' + p.name) + '">'
         + (galeria[0].legenda ? '<figcaption>' + e(galeria[0].legenda) + '</figcaption>' : '') + '</figure>' : '')
       + '</header>' + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '')
       + (p.bio ? '<section class="portfolio-secao portfolio-apresentacao"><h2>Minha cozinha</h2>' + paragrafos(p.bio) + '</section>' : '')
       + (galeria.length > 1 ? '<section class="portfolio-secao"><h2>Trabalhos selecionados</h2><div class="fotos">'
-        + galeria.slice(1, 9).map(g => '<figure><img src="' + e(g.url) + '" alt="' + e(g.legenda || 'Trabalho de ' + p.name)
+        + galeria.slice(1, 9).map(g => '<figure><img src="' + e(fotoParaImpressao(g.url, 600)) + '" alt="' + e(g.legenda || 'Trabalho de ' + p.name)
           + '" width="300" height="300">' + (g.legenda ? '<figcaption>' + e(g.legenda) + '</figcaption>' : '') + '</figure>').join('')
         + '</div></section>' : '')
       + (pratos.length ? '<section class="portfolio-secao portfolio-cardapio"><h2>Cardápio</h2><p class="nota">Os preços são por pessoa. Combine o valor final com o chef.</p>'

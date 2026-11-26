@@ -469,3 +469,4 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - O perfil público tem atalho de teclado para o conteúdo. Na janela de publicação, a rolagem de comentários fica contida. A galeria do portfólio passa a duas colunas em telas estreitas.
 - Os dados estruturados ligam a página de perfil à pessoa e registram as cidades atendidas no serviço. A verificação analisa o JSON-LD renderizado e mantém os testes de canonical, noindex e sitemap.
 - O roteiro [Piloto com chefs e professores](PILOTO-CHEFS.md) registra tarefas, critérios de conclusão, uma apresentação para parceiros e perguntas sobre o fluxo Corporativo.
+- Ensaio de impressão do perfil da Helena no Edge. A versão inicial gerava três páginas A4 e 12.792.746 bytes. Com o cardápio em duas colunas e fotos ilustrativas menores, o exemplo ficou em duas páginas e 759.161 bytes. As páginas renderizadas foram inspecionadas, incluindo fotos, valores e créditos.
