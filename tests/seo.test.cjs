@@ -83,9 +83,11 @@ test('portfólio completo reúne fotos, cardápio e contato em uma página para 
  assert.match(html,/data-imprimir/);
  assert.match(html,/<meta name="robots" content="noindex">/);
  assert.ok(html.includes('rel="canonical" href="'+url+'"'));
- assert.match(html,/Trabalhos selecionados/);
+ assert.match(html,/class="portfolio-capa com-foto"/);
+ assert.match(html,/Minha cozinha/);
  assert.match(html,/<figcaption>Jantar &lt;privado&gt;<\/figcaption>/);
- assert.match(html,/<h2>Cardápio<\/h2><h3>Massas<\/h3>/);
+ assert.match(html,/<h2>Cardápio<\/h2>/);
+ assert.match(html,/<h3 class="portfolio-categoria">Massas<\/h3>/);
  assert.match(html,/https:\/\/wa\.me\/5548991106355/);
  assert.doesNotMatch(html,/id="foto-publica"/);
 });

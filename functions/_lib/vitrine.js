@@ -51,12 +51,17 @@ const ESTILO = [
 ].join('');
 
 const ESTILO_PORTFOLIO = [
-  '@page{size:A4;margin:13mm}',
-  '.portfolio{width:min(100% - 32px,760px);margin:18px auto;color:#303629}.portfolio header{display:flex;align-items:center;gap:18px;padding-bottom:14px;border-bottom:2px solid #754653}.portfolio h1{font-size:clamp(1.8rem,6vw,2.7rem)}',
-  '.portfolio p{margin:4px 0 8px;overflow-wrap:anywhere}.portfolio h2{margin-bottom:8px}.portfolio h3{margin-top:10px;color:#455238;break-after:avoid}.portfolio section+section{margin-top:19px;padding-top:12px}',
-  '.portfolio .fotos figure{margin:0;break-inside:avoid;min-width:0}.portfolio .fotos img{aspect-ratio:1;height:auto;border-radius:4px}.portfolio figcaption{font-size:.8rem;overflow-wrap:anywhere}.portfolio .prato{break-inside:avoid;padding:7px 0}.portfolio .prato > small{display:none}',
-  '.portfolio .contato{break-inside:avoid}.portfolio button{cursor:pointer}.portfolio a{overflow-wrap:anywhere}',
-  '@media print{body{background:white;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.portfolio{width:auto;margin:0}.portfolio header{break-inside:avoid}.portfolio h2{break-after:avoid}.portfolio .retrato{width:24mm}.portfolio .fotos{gap:2mm}.portfolio .fotos img{height:43mm}.portfolio .pratos{display:block}.portfolio .sem-impressao{display:none}}'
+  '@page{size:A4;margin:14mm}',
+  '.portfolio{width:min(100% - 32px,850px);margin:24px auto 46px;color:#303629}.portfolio p{overflow-wrap:anywhere}.portfolio a{overflow-wrap:anywhere}',
+  '.portfolio-ferramentas{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 0 18px;margin-bottom:16px;border-bottom:1px solid #ded3c1}.portfolio-ferramentas .acoes{margin:0;gap:8px}.portfolio-ferramentas p{margin:0;color:#455238;font-size:.82rem}.portfolio-ferramentas button{cursor:pointer}',
+  '.portfolio-capa{display:grid;grid-template-columns:minmax(0,1fr);background:#eee6d7;border-radius:14px;overflow:hidden}.portfolio-abertura{padding:clamp(24px,5vw,48px);align-self:center}.portfolio-abertura .marca{margin:0 0 16px;color:#455238;font-size:.96rem}.portfolio-abertura h1{font-size:clamp(2.35rem,7vw,4rem);line-height:.98;margin-bottom:14px}.portfolio-abertura p{margin:4px 0}.portfolio-abertura .cidade{font-size:.9rem}.portfolio-abertura .retrato{width:52px;margin-bottom:12px}.portfolio-destaque{margin:0;position:relative;min-width:0}.portfolio-destaque figcaption{position:absolute;bottom:0;right:0;left:0;margin:0;padding:5px 9px;background:#303629e8;color:white}.portfolio-capa-foto{width:100%;height:clamp(185px,36vw,335px);object-fit:cover}',
+  '.portfolio .portfolio-secao{margin:30px 0 0;padding:0;border:0}.portfolio .portfolio-secao h2{margin:0 0 14px;line-height:1.1;color:#455238}.portfolio-apresentacao{border-left:3px solid #9d6877!important;padding-left:16px!important}.portfolio-apresentacao p{max-width:58ch;margin:0 0 8px;line-height:1.55}.portfolio .nota{color:#455238;font-size:.8rem}',
+  '.portfolio .fotos{gap:8px}.portfolio .fotos figure{margin:0;break-inside:avoid;min-width:0}.portfolio .fotos img{aspect-ratio:4/3;height:auto;border-radius:6px}.portfolio figcaption{font-size:.73rem;margin-top:3px;overflow-wrap:anywhere}',
+  '.portfolio-categoria{margin:18px 0 0;padding:0 0 4px;border-bottom:1px solid #ded3c1;color:#754653;break-after:avoid}.portfolio .prato{break-inside:avoid;padding:9px 0}.portfolio .prato h3{font-size:1.13rem}.portfolio .prato p{font-size:.88rem}.portfolio .prato > small{display:none}.portfolio .prato span{font-size:.83rem}',
+  '.portfolio .contato{break-inside:avoid;background:#455238;color:#fffaf1;border-radius:10px;padding:20px}.portfolio .contato h2{color:inherit}.portfolio .contato p{margin:7px 0 0}',
+  '@media(max-width:520px){.portfolio-ferramentas{display:block}.portfolio-ferramentas p{margin-top:10px}.portfolio .fotos{gap:5px}}',
+  '@media(min-width:620px){.portfolio-capa.com-foto{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.portfolio-capa-foto{height:100%;min-height:290px}}',
+  '@media print{body{background:white;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.portfolio{width:auto;margin:0}.portfolio .sem-impressao{display:none}.portfolio-capa{break-inside:avoid}.portfolio-capa.com-foto{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.portfolio-abertura{padding:8mm}.portfolio-abertura h1{font-size:29pt}.portfolio-abertura .marca{margin-bottom:4mm}.portfolio-capa-foto{height:56mm;min-height:0}.portfolio .portfolio-secao{margin-top:6mm}.portfolio .portfolio-secao h2{font-size:19pt;margin-bottom:3mm;break-after:avoid}.portfolio .fotos{gap:2mm}.portfolio .fotos img{height:28mm}.portfolio .pratos{display:block}.portfolio-cardapio{break-before:page}.portfolio .prato-foto img{height:17mm;width:21mm}.portfolio .prato-foto{width:23mm}.portfolio-categoria{margin-top:4mm}}'
 ].join('');
 
 // /c/exemplo: vitrine de um chef fictício, para mostrar aos chefs como a página fica (e para testar sem banco).
@@ -136,19 +141,25 @@ export function vitrine(p, { origem, id, esteLink, extra = {} }) {
     const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
       + '<title>Portfólio de ' + e(p.name) + ' · Seu Chef em Casa</title><meta name="robots" content="noindex">'
       + '<link rel="canonical" href="' + e(esteLink) + '"><style>' + ESTILO + ESTILO_PORTFOLIO + '</style><script defer src="/assets/perfil-publico.js?v=3"></script></head><body>'
-      + '<main class="portfolio"><div class="sem-impressao"><div class="acoes"><a class="b" href="' + e(linkPerfil) + '">Voltar ao perfil</a>'
-      + '<button class="b b1" data-imprimir>Salvar como PDF</button></div><p>Escolha Salvar como PDF na janela de impressão. Depois, anexe o arquivo no WhatsApp.</p></div>'
-      + '<header>' + (avatar ? '<img class="retrato" src="' + e(avatar) + '" alt="">' : '') + '<div><p class="marca">Seu Chef em Casa</p>'
+      + '<main class="portfolio"><div class="sem-impressao portfolio-ferramentas"><div class="acoes"><a class="b" href="' + e(linkPerfil) + '">Voltar ao perfil</a>'
+      + '<button class="b b1" data-imprimir>Salvar como PDF</button></div><p>Na impressão, escolha Salvar como PDF.</p></div>'
+      + '<header class="portfolio-capa' + (galeria.length ? ' com-foto' : '') + '"><div class="portfolio-abertura">'
+      + '<p class="marca">Seu Chef em Casa · Apresentação</p>'
+      + (avatar ? '<img class="retrato" src="' + e(avatar) + '" alt="">' : '')
       + '<h1>' + e(p.name) + '</h1><p class="especialidade">' + e(p.specialty || 'Personal chef') + '</p>'
-      + (p.cities ? '<p>' + e(p.cities) + '</p>' : '') + '</div></header>'
-      + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '') + paragrafos(p.bio)
-      + (galeria.length ? '<section><h2>Trabalhos selecionados</h2><div class="fotos">'
-        + galeria.slice(0, 9).map(g => '<figure><img src="' + e(g.url) + '" alt="' + e(g.legenda || 'Trabalho de ' + p.name)
+      + (p.cities ? '<p class="cidade">' + e(p.cities) + '</p>' : '') + '</div>'
+      + (galeria.length ? '<figure class="portfolio-destaque"><img class="portfolio-capa-foto" src="' + e(galeria[0].url) + '" alt="' + e(galeria[0].legenda || 'Trabalho em destaque de ' + p.name) + '">'
+        + (galeria[0].legenda ? '<figcaption>' + e(galeria[0].legenda) + '</figcaption>' : '') + '</figure>' : '')
+      + '</header>' + (exemplo ? '<p class="nota">Perfil fictício, com fotos ilustrativas.</p>' : '')
+      + (p.bio ? '<section class="portfolio-secao portfolio-apresentacao"><h2>Minha cozinha</h2>' + paragrafos(p.bio) + '</section>' : '')
+      + (galeria.length > 1 ? '<section class="portfolio-secao"><h2>Trabalhos selecionados</h2><div class="fotos">'
+        + galeria.slice(1, 9).map(g => '<figure><img src="' + e(g.url) + '" alt="' + e(g.legenda || 'Trabalho de ' + p.name)
           + '" width="300" height="300">' + (g.legenda ? '<figcaption>' + e(g.legenda) + '</figcaption>' : '') + '</figure>').join('')
         + '</div></section>' : '')
-      + (pratos.length ? '<section><h2>Cardápio</h2>' + [...categorias].map(([nome, itens]) => '<h3>' + e(nome) + '</h3><div class="pratos">'
-        + itens.map(prato).join('') + '</div>').join('') + '<p class="nota">Preços de referência. Confirme o valor no orçamento.</p></section>' : '')
-      + '<section class="contato"><h2>Contato</h2><p><a href="' + e(linkPerfil) + '">Ver perfil completo</a></p>'
+      + (pratos.length ? '<section class="portfolio-secao portfolio-cardapio"><h2>Cardápio</h2><p class="nota">Valores de referência por pessoa. O orçamento final é preparado para o seu encontro.</p>'
+        + [...categorias].map(([nome, itens]) => '<h3 class="portfolio-categoria">' + e(nome) + '</h3><div class="pratos">'
+        + itens.map(prato).join('') + '</div>').join('') + '</section>' : '')
+      + '<section class="portfolio-secao contato"><h2>Vamos conversar sobre seu evento?</h2><p><a href="' + e(linkPerfil) + '">Ver perfil completo</a></p>'
       + (zap && !exemplo ? '<p><a href="' + e(zap) + '">WhatsApp · ' + e(p.whatsapp) + '</a></p>' : '')
       + '</section></main></body></html>';
     return new Response(html, { headers: CABECALHOS });
