@@ -473,3 +473,5 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - No editor de perfil, cada chef escolhe quais ícones mostrar: Instagram, LinkedIn, telefone, WhatsApp, localização, e-mail de contato, TikTok e Facebook. O mapa usa as cidades atendidas. O PDF inclui os contatos ativados.
 
 - 26/11/2026 (Claude): fotos livres do Wikimedia Commons em todos os pratos do perfil de exemplo (burrata, carpaccio, tagliatelle, ravióli, ossobuco), com crédito e licença; também entram na busca de fotos do chef.
+
+- 26/11/2026 · App instalável (branch app-instalavel): manifesto, ícones (assets/app), service worker que mostra /offline sem internet (não guarda dados em cache) e botão Instalar app no Painel (Android/Chrome/Edge; no iPhone mostra como adicionar à tela de início). Edge confirmou: sem erros de instalação. Próximo: Play Store (US$ 25) empacotando este app.

@@ -186,3 +186,5 @@ Ideia do Carlos: oferecer o Seu Restaurante Online (pago) aos chefs do Seu Chef 
 
 ## 25/11/2026 · Endereços para o Google
 Perfil do chef em /chef/<nome>-<6 primeiros hex do id>, sem mudar o banco; se o nome mudar, o endereço antigo redireciona (301). /c/<id> também redireciona. Cidade e serviço só entram no sitemap e no Google com ao menos um chef real; perfis de apresentação (@apresentacao.invalid) e prévias *.pages.dev ficam sempre com noindex. Canonical sempre em https://seuchefemcasa.com.br.
+
+- 26/11/2026 · App: primeiro PWA (grátis, sem loja), depois Play Store com o mesmo app, iPhone só quando houver notificações. O service worker não guarda páginas nem API em cache, para pedidos e orçamentos estarem sempre atualizados.
