@@ -134,3 +134,32 @@ h1 { letter-spacing: -0.035em; }
 .home-services-more:hover{background:#f6ecee;border-color:var(--cu)}
 .home-services-more span[aria-hidden]{transition:transform .15s}
 .home-services-more:hover span[aria-hidden]{transform:translateX(3px)}
+
+/* Painel do chef */
+.chef-panel .seg [aria-selected="true"] {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+.chef-panel :focus-visible {
+  outline: 3px solid var(--cu);
+  outline-offset: 2px;
+}
+.chef-panel :is(input, select, textarea):not([type="checkbox"], [type="radio"], [type="file"]) {
+  border-color: #7a7e70;
+}
+.chef-panel :is(input, textarea)::placeholder {
+  color: var(--mut);
+  opacity: 1;
+}
+@media (max-width: 650px) {
+  .chef-panel :is(button, .b, .chk, select, summary, input:not([type="checkbox"], [type="radio"], [type="file"])) {
+    min-height: 44px;
+  }
+  .chef-panel button { min-width: 44px; }
+  .chef-panel summary { align-content: center; }
+  .chef-panel .cal {
+    overflow-x: auto;
+    grid-template-columns: repeat(7, minmax(44px, 1fr));
+    padding: 5px;
+  }
+}
