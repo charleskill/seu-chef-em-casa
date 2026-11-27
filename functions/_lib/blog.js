@@ -1,5 +1,9 @@
 // Textos do blog (passo 7 do docs/SEO-PLANO.md). Sem números, preços ou depoimentos inventados.
 // Cada artigo: slug, titulo (página), h1, desc (meta), data (AAAA-MM-DD), servicos (slugs de SERVICOS para listar chefs reais), lead, secoes [[título, [parágrafos]]].
+// Publicação agendada: o texto só aparece no site, no blog e no sitemap a partir da data (horário de Brasília).
+// Para agendar, basta pôr uma data futura em "data". Rascunho visível só com /blog/<slug>?previa=1 (noindex).
+export const hojeBR = () => new Date(Date.now() - 3 * 3600000).toISOString().slice(0, 10);
+export const publicados = (hoje = hojeBR()) => ARTIGOS.filter(a => a.data <= hoje).sort((a, b) => b.data.localeCompare(a.data));
 export const ARTIGOS = [
   {
     slug: 'ceia-de-natal-com-personal-chef',

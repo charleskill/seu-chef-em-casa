@@ -68,3 +68,4 @@
 @media(max-width:560px){.mu-acoes .b{margin-left:0;width:100%}.mu-contato{flex-direction:column;align-items:stretch}.mu-chefs li{flex-wrap:wrap}.mu-chefs div{flex:1 1 calc(100% - 54px)}.mu-chefs .b{flex:1}}
 @media(prefers-reduced-motion:reduce){.mu-home,.mu-chip span{transition:none}}
 .mu-parado{border-color:#d9a0ad;box-shadow:inset 3px 0 0 var(--cu)}
+.blog-agenda{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}.blog-agenda li{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
