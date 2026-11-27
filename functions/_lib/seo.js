@@ -139,7 +139,7 @@ export function lista(o, origem) {
     + '</div></section>'
     + (o.perguntas ? '<section><div class="l"><h2>Perguntas frequentes</h2>' + o.perguntas.map(([q, a]) => '<details><summary>' + e(q) + '</summary><p>' + e(a) + '</p></details>').join('') + '</div></section>' : '')
     + (o.blocos || []).map(([t, h]) => '<section><div class="l"><h2>' + e(t) + '</h2>' + h + '</div></section>').join('')
-    + '</main><footer><div class="l"><p><a href="/">Seu Chef em Casa</a> · personal chefs na sua casa · <a href="/blog">Blog</a></p>'
+    + '</main><footer><div class="l"><p><a href="/">Seu Chef em Casa</a> · personal chefs na sua casa · <a href="/blog">Blog</a> · <a href="/orcamento-personal-chef">Pedir orçamento</a> · <a href="/para-chefs">Para chefs</a></p>'
     + '<p>A plataforma é uma vitrine: contratação, pagamento e serviço são combinados direto com o chef. <a href="/#/termos">Termos de uso</a></p></div></footer></body></html>';
   return new Response(html, { status: o.status || 200, headers: CABECALHOS });
 }

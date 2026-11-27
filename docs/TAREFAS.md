@@ -480,3 +480,4 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 - 27/11/2026: cadastro do chef aceita cidades do Brasil inteiro (tirado o limite de SC em "Cidades onde atende").
 - 27/11/2026: retorno da Fer (iPhone): cidades do Brasil por lista do IBGE (assets/cidades-br.json, scripts/gerar-cidades.cjs), campo de data da busca sem invadir "Quantas pessoas", títulos dos serviços alinhados, Menus especiais em vinho, botão dourado no Corporativo, "Sou chef" em dourado claro.
 - 27/11/2026: blog (/blog) com 3 textos (Ceia de Natal, Jantar a dois, Marmitas da semana), no sitemap e no rodapé; frase "Personal chefs na sua casa"; regras entre IAs trazidas da pasta repo.
+- 27/11/2026: mural de pedidos (modelo GetNinjas, grátis para o chef) no branch mural-pedidos: #/pedir, aba Mural no painel do chef, acompanhamento no painel do cliente, até 4 chefs por pedido, aviso por sino e e-mail, denúncia.

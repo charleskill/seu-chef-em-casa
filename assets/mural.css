@@ -1,0 +1,71 @@
+/* Mural de pedidos: mesma paleta do site (oliva, marfim, vinho e dourado). */
+.mu-pedir h1{font-family:var(--mesa-titulo,inherit);font-weight:400;font-size:clamp(1.7rem,4.5vw,2.4rem);line-height:1.15;margin:6px 0 18px;text-wrap:balance}
+.mu-pedir .eyebrow,.mu-sec .eyebrow{color:var(--cu);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin:0}
+.mu-passos{list-style:none;counter-reset:p;display:grid;gap:10px;margin:0 0 22px;padding:0}
+.mu-passos li{counter-increment:p;display:grid;grid-template-columns:30px 1fr;column-gap:12px;align-items:start}
+.mu-passos li::before{content:counter(p);grid-row:span 2;width:30px;height:30px;border-radius:50%;background:var(--ol);color:#fffdf8;display:grid;place-items:center;font-size:13px;font-weight:700}
+.mu-passos b{font-size:15px;color:var(--ink)}.mu-passos span{font-size:13px;color:var(--mut);line-height:1.5}
+#mu-form fieldset{border:0;padding:0;margin:0 0 14px;min-width:0}
+#mu-form legend{font-weight:600;font-size:14px;margin-bottom:8px;color:var(--ink)}
+#mu-form small{font-weight:400;color:var(--mut)}
+#mu-form textarea{width:100%;min-height:110px;resize:vertical;font:inherit;line-height:1.5}
+#mu-form select{width:100%;min-height:44px}
+.mu-chips{display:flex;flex-wrap:wrap;gap:8px}
+.mu-chip,#mu-form .mu-chips .mu-chip{position:relative;cursor:pointer;margin:0;padding:0;display:inline-block;font-weight:400}
+.mu-chip input{position:absolute;opacity:0;pointer-events:none}
+.mu-chip span{display:inline-flex;align-items:center;min-height:40px;padding:0 15px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font-size:14px;transition:background .15s,border-color .15s,color .15s,transform .1s}
+.mu-chip:hover span{border-color:var(--ol)}
+.mu-chip input:checked+span{background:var(--ol);border-color:var(--ol);color:#fffdf8}
+.mu-chip input:focus-visible+span{outline:2px solid var(--cu);outline-offset:2px}
+.mu-chip:active span{transform:scale(.97)}
+.mu-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mu-2>.f{min-width:0}
+.mu-check{display:flex!important;align-items:center;gap:8px;font-weight:400!important;font-size:13px;margin-top:8px;color:var(--mut)}
+.mu-check input{width:18px;height:18px;min-height:0;accent-color:var(--ol)}
+@media(max-width:560px){.mu-2{grid-template-columns:1fr;gap:0}}
+.mu-ok h1{margin-bottom:12px}.mu-ok p{line-height:1.6;margin:0 0 18px}.mu-ok .b+.b{margin-top:10px}
+
+/* Chamada na página inicial */
+.mu-home{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:18px 0 8px;padding:20px 22px;border-radius:18px;background:var(--paper);border:1px solid #e3d7b8;box-shadow:0 8px 24px -18px rgba(48,54,41,.5);text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
+.mu-home:hover{border-color:var(--gold);transform:translateY(-1px)}
+.mu-home>span{display:grid;gap:3px}
+.mu-home small{color:var(--cu);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.mu-home b{font-family:var(--mesa-titulo,inherit);font-weight:400;font-size:21px}
+.mu-home>span>span{font-size:14px;color:var(--mut);line-height:1.5}
+.mu-home i{font-style:normal;flex-shrink:0;background:var(--ol);color:#fffdf8;border-radius:999px;padding:11px 18px;font-size:14px;font-weight:600}
+@media(max-width:560px){.mu-home{flex-direction:column;align-items:stretch}.mu-home i{text-align:center}}
+
+/* Cartões (cliente e chef) */
+.mu-sec{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}
+.mu-sec h2{margin:4px 0 4px;font-family:var(--mesa-titulo,inherit);font-weight:400}
+.mu-sec .b{flex-shrink:0}
+.mu-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;margin:0 0 12px}
+.mu-meu{border-color:#cdbf95;box-shadow:inset 3px 0 0 var(--gold)}
+.mu-topo{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.mu-topo h3{margin:2px 0 0;font-size:19px;font-family:var(--mesa-titulo,inherit);font-weight:400}
+.mu-quando{margin:0;font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+.mu-status,.mu-novo{flex-shrink:0;font-size:12px;font-weight:600;border-radius:999px;padding:5px 10px;background:#ebece1;color:var(--ol);white-space:nowrap}
+.mu-status.s-completo{background:#f3e6c4;color:#5c4d22}.mu-status.s-fechado,.mu-status.s-vencido{background:#eee;color:#6b6b6b}
+.mu-novo{background:transparent;color:var(--mut);font-weight:500;padding:5px 0}
+.mu-cliente-nome{margin:14px 0 4px;font-size:13px;color:var(--mut)}
+.mu-card blockquote{margin:0 0 10px;padding:12px 14px;background:var(--bg);border-radius:12px;font-size:14px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.mu-tags{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0 0 14px;padding:0}
+.mu-tags li{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink)}
+.mu-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mu-acoes .b{margin-left:auto}
+.mu-vagas{display:inline-flex;gap:4px}.mu-vagas i{width:10px;height:10px;border-radius:50%;background:#e2e3d6}.mu-vagas i.on{background:var(--cu)}
+.mu-vtxt{font-size:13px;color:var(--mut)}
+.mu-contato{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:12px;background:#f6efdc}
+.mu-contato small{display:block;font-size:11px;color:#5c4d22;text-transform:uppercase;letter-spacing:.06em}
+.mu-denunciar{margin-top:10px;background:none;border:0;padding:4px 0;font-size:12px;color:var(--mut);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.mu-espera{color:var(--mut);font-size:14px;line-height:1.6;margin:10px 0}
+.mu-chefs{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+.mu-chefs li{display:flex;align-items:center;gap:10px}
+.mu-chefs img{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#ebece1;outline:1px solid rgba(0,0,0,.06);outline-offset:-1px}
+.mu-chefs div{flex:1;min-width:0;display:grid}.mu-chefs b{font-size:15px}.mu-chefs small{font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mu-chefs .b{min-height:36px;padding:0 12px;font-size:13px}
+.mu-fechar{margin-top:12px;width:100%}
+.mu-cliente{margin-top:16px}
+@media(max-width:560px){.mu-acoes .b{margin-left:0;width:100%}.mu-contato{flex-direction:column;align-items:stretch}.mu-chefs li{flex-wrap:wrap}.mu-chefs div{flex:1 1 calc(100% - 54px)}.mu-chefs .b{flex:1}}
+@media(prefers-reduced-motion:reduce){.mu-home,.mu-chip span{transition:none}}
+.mu-parado{border-color:#d9a0ad;box-shadow:inset 3px 0 0 var(--cu)}
+.blog-agenda{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}.blog-agenda li{display:flex;flex-wrap:wrap;gap:8px;align-items:center}

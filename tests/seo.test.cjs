@@ -124,7 +124,7 @@ test('sitemap lista só chefs visíveis, completos e reais, e cidades/serviços 
  assert.match(x,/<loc>https:\/\/seuchefemcasa\.com\.br\/chef\/maria-teste-aaaaaa<\/loc><lastmod>2026-11-24<\/lastmod>/);
  assert.match(x,/personal-chef\/florianopolis</);assert.match(x,/personal-chef\/sao-jose</);assert.match(x,/servicos\/noite-da-pizza</);
  assert.doesNotMatch(x,/bbbbbb|cccccc|dddddd|eeeeee|ffffff|joinville|fondue/);
- const vazio=await(await mapa.onRequest({env:{}})).text();assert.equal((vazio.match(/<loc>/g)||[]).length,2+(await import('../functions/_lib/blog.js')).ARTIGOS.length);assert.ok(vazio.includes('/blog/ceia-de-natal-com-personal-chef<'));
+ const vazio=await(await mapa.onRequest({env:{}})).text();assert.equal((vazio.match(/<loc>/g)||[]).length,4+(await import('../functions/_lib/blog.js')).publicados().length);assert.ok(vazio.includes('/blog/ceia-de-natal-com-personal-chef<'));
 });
 test('blog: textos indexáveis em produção, com chefs reais e 404 para texto inexistente',async()=>{
  const blog=await import('../functions/blog/[[artigo]].js');
@@ -132,4 +132,15 @@ test('blog: textos indexáveis em produção, com chefs reais e 404 para texto i
  const h=await r.text();assert.match(h,/<h1>Ceia de Natal com personal chef em casa<\/h1>/);assert.doesNotMatch(h,/noindex/);assert.match(h,/Reserve cedo/);
  const i=await(await abre(blog,PROD+'/blog',{})).text();assert.match(i,/href="\/blog\/jantar-a-dois-em-casa"/);
  assert.equal((await abre(blog,PROD+'/blog/nao-existe',{artigo:['nao-existe']})).status,404);
+});
+test('blog agendado: texto com data futura fica fora do blog e do sitemap, abre só em prévia sem indexar',async()=>{
+ const B=await import('../functions/_lib/blog.js'),blog=await import('../functions/blog/[[artigo]].js');
+ B.ARTIGOS.push({slug:'teste-futuro',titulo:'T',h1:'Texto do futuro',desc:'d',data:'2999-01-01',servicos:[],lead:'l',secoes:[['S',['p']]]});
+ try{
+  assert.equal((await abre(blog,PROD+'/blog/teste-futuro',{artigo:['teste-futuro']})).status,404);
+  const p=await(await abre(blog,PROD+'/blog/teste-futuro?previa=1',{artigo:['teste-futuro']})).text();assert.match(p,/noindex/);
+  assert.doesNotMatch(await(await abre(blog,PROD+'/blog',{})).text(),/teste-futuro/);
+  const ag=await(await abre(blog,PROD+'/blog?formato=agenda',{})).json();assert.equal(ag.artigos.find(a=>a.slug==='teste-futuro').publicado,false);
+  assert.doesNotMatch(await(await mapa.onRequest({env:{}})).text(),/teste-futuro/);
+ }finally{B.ARTIGOS.pop()}
 });
