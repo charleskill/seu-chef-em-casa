@@ -55,6 +55,21 @@ export async function rotaMural(rota, metodo, req, env, d) {
   const meuPerfil = perfilDe(eu), origem = new URL(req.url).origin, hoje = M.hoje();
   const depois = p => { if (typeof d.waitUntil === 'function') d.waitUntil(p); else return p; };
 
+  // Equipe: acompanha todos os pedidos (os sem resposta primeiro) e remove os suspeitos.
+  if (rota === '/mural/admin' || rota.startsWith('/mural/admin/')) {
+    if (!d.ehAdmin(env, eu)) return erro('Acesso só para a equipe.', 403);
+    if (rota === '/mural/admin' && metodo === 'GET') {
+      const { results } = await env.DB.prepare("SELECT p.id, p.dados, p.status, p.criado_em, p.expira_em, (SELECT COUNT(*) FROM mural_liberacoes l WHERE l.pedido_id = p.id) liberados, (SELECT COUNT(*) FROM mural_denuncias x WHERE x.pedido_id = p.id) denuncias FROM mural_pedidos p ORDER BY p.criado_em DESC LIMIT 150").all();
+      return json({ pedidos: results.map(r => ({ id: r.id, ...JSON.parse(r.dados), status: r.expira_em < hoje && r.status === 'aberto' ? 'vencido' : r.status, criado_em: r.criado_em, liberados: r.liberados, denuncias: r.denuncias })) });
+    }
+    const x = rota.match(/^\/mural\/admin\/([a-f\d]{24})\/remover$/);
+    if (x && metodo === 'POST') {
+      const r = await env.DB.prepare("UPDATE mural_pedidos SET status = 'oculto' WHERE id = ?").bind(x[1]).run();
+      return r.meta.changes ? json({ ok: true }) : erro('Pedido não encontrado.', 404);
+    }
+    return erro('Rota do mural não encontrada.', 404);
+  }
+
   // Cliente publica um pedido.
   if (rota === '/mural' && metodo === 'POST') {
     if (!await d.limitar(env, req, 'mural', 6, 3600)) return erro('Muitos pedidos seguidos. Tente mais tarde.', 429);

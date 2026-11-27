@@ -59,3 +59,6 @@ test('mural: excluir a conta apaga pedidos e liberações dela',async()=>{
  assert.equal((await req('cliente2','eu','DELETE')).status,200);
  assert.equal(db.prepare("SELECT COUNT(*) n FROM mural_pedidos WHERE conta_id='id-cliente2'").get().n,0);
 });
+test('mural: painel da equipe é só para a equipe',async()=>{
+ assert.equal((await req('chef1','mural/admin')).status,403);assert.equal((await req('cliente','mural/admin/'+'a'.repeat(24)+'/remover','POST',{})).status,403);
+});

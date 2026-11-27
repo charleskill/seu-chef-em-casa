@@ -265,7 +265,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
   await garantirEsquema(env);
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
-    const mural = await rotaMural(rota, metodo, req, env, { json, erro, corpo, notificar, enviarEmail, layoutEmail, pEmail, escH, limitar, aleatorio, agora, chefDaSessao, waitUntil, C });
+    const mural = await rotaMural(rota, metodo, req, env, { json, erro, corpo, notificar, enviarEmail, layoutEmail, pEmail, escH, limitar, aleatorio, agora, chefDaSessao, waitUntil, ehAdmin, C });
     if (mural) return mural;
     if (rota === '/admin/dashboard' && metodo === 'GET') {
       const c = await chefDaSessao(env, req);
