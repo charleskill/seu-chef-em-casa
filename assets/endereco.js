@@ -38,7 +38,29 @@
     return { titulo: linha1, detalhe: fim, valor: [linha1.replace(' · ', ', '), fim].filter(Boolean).join(', ') };
   }
 
+  // Cidades: lista própria com todos os municípios do IBGE (assets/cidades-br.json). Rápida e não depende de acento.
+  const CAPITAIS = new Set(['Rio Branco|AC','Maceió|AL','Macapá|AP','Manaus|AM','Salvador|BA','Fortaleza|CE','Brasília|DF','Vitória|ES','Goiânia|GO','São Luís|MA','Cuiabá|MT','Campo Grande|MS','Belo Horizonte|MG','Belém|PA','João Pessoa|PB','Curitiba|PR','Recife|PE','Teresina|PI','Rio de Janeiro|RJ','Natal|RN','Porto Alegre|RS','Porto Velho|RO','Boa Vista|RR','Florianópolis|SC','São Paulo|SP','Aracaju|SE','Palmas|TO']);
+  const NOME_UF = Object.fromEntries(Object.entries(UF).map(([n, s]) => [s, n]));
+  const simples = t => String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/s+/g, ' ').trim();
+  let municipios = null;
+  function cidadesBR() {
+    if (!municipios) municipios = fetch('/assets/cidades-br.json').then(r => { if (!r.ok) throw new Error('sem cidades'); return r.json(); })
+      .then(l => l.map(v => { const [nome, sigla] = v.split('|'); return { nome, sigla, chave: simples(nome), peso: CAPITAIS.has(v) ? 0 : sigla === 'SC' ? 1 : 2 }; }))
+      .catch(e => { municipios = null; throw e; });
+    return municipios;
+  }
+  async function buscarCidades(texto, modo) {
+    const q = simples(texto); if (!q) return [];
+    const nota = c => c.chave === q ? 0 : c.chave.startsWith(q) ? 1 : (' ' + c.chave).includes(' ' + q) ? 2 : c.chave.includes(q) ? 3 : 9;
+    return (await cidadesBR())
+      .filter(c => modo !== 'cidade-sc' || c.sigla === 'SC')
+      .map(c => ({ c, n: nota(c) })).filter(x => x.n < 9)
+      .sort((a, b) => a.n - b.n || a.c.peso - b.c.peso || a.c.nome.localeCompare(b.c.nome, 'pt-BR'))
+      .slice(0, 6).map(({ c }) => ({ titulo: c.nome + ' - ' + c.sigla, detalhe: (NOME_UF[c.sigla] || c.sigla) + ', Brasil', valor: c.nome }));
+  }
+
   async function buscar(texto, modo, sinal) {
+    if (modo !== 'endereco') return buscarCidades(texto, modo);
     const u = new URL('https://photon.komoot.io/api/');
     u.searchParams.set('q', texto); u.searchParams.set('limit', '10');
     // Prioriza a Grande Florianópolis e limita ao Brasil.
@@ -79,7 +101,7 @@
     if (!atual) return;
     const { el, itens, sel } = atual, box = caixa(el);
     if (!itens.length) { fechar(); return; }
-    box.innerHTML = itens.map((it, i) => '<button type="button" role="option" id="end-op-' + i + '" data-i="' + i + '" aria-selected="' + (i === sel) + '" class="' + (i === sel ? 'on' : '') + '"><b></b><small></small></button>').join('') + '<p class="end-cred">Sugestões: Photon · © OpenStreetMap</p>';
+    box.innerHTML = itens.map((it, i) => '<button type="button" role="option" id="end-op-' + i + '" data-i="' + i + '" aria-selected="' + (i === sel) + '" class="' + (i === sel ? 'on' : '') + '"><b></b><small></small></button>').join('') + (el.dataset.endereco === 'endereco' ? '<p class="end-cred">Sugestões: Photon · © OpenStreetMap</p>' : '');
     box.querySelectorAll('[data-i]').forEach((b, i) => { b.querySelector('b').textContent = itens[i].titulo; b.querySelector('small').textContent = itens[i].detalhe; });
     box.hidden = false; el.setAttribute('aria-expanded', 'true');
     if (sel >= 0) el.setAttribute('aria-activedescendant', 'end-op-' + sel); else el.removeAttribute('aria-activedescendant');
@@ -159,7 +181,7 @@
     const n = ++seq;
     fechar();
     const t = trecho(el).texto.trim();
-    if (t.length < 3) { fechar(); return; }
+    if (t.trim().length < (el.dataset.endereco === 'endereco' ? 3 : 2)) { fechar(); return; }
     timer = setTimeout(async () => {
       ctl = new AbortController();
       try {

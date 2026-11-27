@@ -106,3 +106,25 @@ h1 { letter-spacing: -0.035em; }
   :root.fx-force .fx-word { animation: fx-word-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both !important; animation-delay: calc(0.15s + var(--i) * 0.09s) !important; }
   :root.fx-force .fx-shine__light { animation: fx-shine 4.2s ease-in-out 1.6s infinite !important; }
 }
+
+/* 27/11/2026 · Retorno da Fer no iPhone: campos da busca, títulos dos serviços e destaques da página inicial. */
+/* iPhone: o campo de data tem largura própria e invadia "Quantas pessoas". */
+.home-search .hs{min-width:0}
+.home-search input{min-width:0;width:100%;max-width:100%;box-sizing:border-box}
+.home-search input[type=date]{-webkit-appearance:none;appearance:none;display:block;min-height:44px;line-height:1.2;text-align:left;background-color:#fff}
+.home-search input[type=date]::-webkit-date-and-time-value{text-align:left}
+/* Títulos dos serviços com a mesma altura no celular (os textos de baixo ficam alinhados). */
+@media(max-width:480px){.home-page .home-service-title{font-size:18px;line-height:1.25;min-height:2.5em;gap:6px}}
+/* Menus especiais em vinho. */
+.special-banner{background:linear-gradient(135deg,var(--cu) 0%,var(--cu2) 100%);border-color:var(--cu2);color:#fffdf8;box-shadow:0 10px 28px -14px rgba(97,55,68,.55)}
+.special-banner:hover{background:linear-gradient(135deg,#7e4d5a 0%,var(--cu) 100%)}
+.special-banner small{color:#ecd9a8;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+.special-banner strong{color:#fffdf8}
+.special-banner>span>span{color:#f1e3e6}
+.special-banner b{color:var(--cu2);background:#fffdf8;border-radius:999px;padding:10px 18px;align-self:flex-start}
+/* Corporativo: botão dourado para separar da área verde. */
+.home-corp .b1{background:#d2ba8e;color:#1c2520;border-color:#d2ba8e}
+.home-corp .b1:hover{background:#e0cba3}
+/* "Sou chef" em dourado claro. */
+.chef-cta,.home-page .chef-cta{background:linear-gradient(135deg,#f3e6c4 0%,#e6d3a2 100%);border:1px solid #d9c38f}
+.chef-cta p,.home-page .chef-cta p{color:#4a4433}
