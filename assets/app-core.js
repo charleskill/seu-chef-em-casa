@@ -103,16 +103,16 @@ const OPCOES=[
   ['r_vegetariano','Cozinho pratos vegetarianos','Mostra a opção no pedido do cliente.',true],
   ['r_vegano','Cozinho pratos veganos','Mostra a opção no pedido do cliente.',true],
   ['r_mar','Cuido de alergia a frutos do mar','Mostra a opção no pedido do cliente.',true],
-  ['x_lanche','Faço Noite do Lanche','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_pizza','Faço Noite da Pizza','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_lounge','Faço Lounge (petiscos e drinks)','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_tematico','Faço cardápio temático','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_boteco','Faço Noite do Boteco','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_churrasco','Faço churrasco em casa','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_mar','Faço sequência de frutos do mar','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_tainha','Faço Noite da Tainha','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_fondue','Faço Noite do Fondue','Você aparece nesta experiência, na aba Serviços.',false],
-  ['x_aula','Dou aula de cozinha em casa','Você aparece nesta experiência, na aba Serviços.',false]
+  ['x_lanche','Faço Noite do Lanche','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_pizza','Faço Noite da Pizza','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_lounge','Faço Lounge (petiscos e drinks)','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_tematico','Faço cardápio temático','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_boteco','Faço Noite do Boteco','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_churrasco','Faço churrasco em casa','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_mar','Faço sequência de frutos do mar','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_tainha','Faço Noite da Tainha','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_fondue','Faço Noite do Fondue','Você aparece nesta experiência, na aba Experiências.',false],
+  ['x_aula','Dou aula de cozinha em casa','Você aparece nesta experiência, na aba Experiências.',false]
 ];
 const EXPERIENCIAS=[
  ['Brunch em casa','Uma manhã sem pressa, com receitas doces e salgadas.','x_brunch','cup'],
@@ -156,7 +156,7 @@ const EXPERIENCIAS=[
  ['Noite do Lámen','Caldo aromático, macarrão e acompanhamentos à sua escolha.','x_lamen','bowl'],
  ['Pokes e bowls','Tigelas coloridas, ingredientes frescos e combinações leves.','x_poke','bowl']
 ];
-EXPERIENCIAS.forEach(([nome,,key])=>OPCOES.push([key,'Ofereço '+nome,'Você aparece nesta experiência, na aba Serviços.',false]));
+EXPERIENCIAS.forEach(([nome,,key])=>OPCOES.push([key,'Ofereço '+nome,'Você aparece nesta experiência, na aba Experiências.',false]));
 const RESTR={'Sem glúten':'r_gluten','Sem lactose':'r_lactose','Vegetariano':'r_vegetariano','Vegano':'r_vegano','Alergia a frutos do mar':'r_mar'};
 const opcoes=c=>{const o=c&&c.opcoes&&typeof c.opcoes==='object'?c.opcoes:{};const r={};OPCOES.forEach(([k,,,d])=>{r[k]=typeof o[k]==='boolean'?o[k]:d});return r};
 const cleanOpcoes=o=>{if(!o||typeof o!=='object')return null;const r={};OPCOES.forEach(([k])=>{if(typeof o[k]==='boolean')r[k]=o[k]});return Object.keys(r).length?r:null};

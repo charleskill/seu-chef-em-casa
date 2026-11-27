@@ -1,7 +1,9 @@
 ## Continuação em revisão · 23/11/2026
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
-## Bastão
+## Bastão/11/2026, Claude. Branch: claude/servicos-e-experiencias._
+- Aba Serviços separada em duas: **Serviços** (ocasiões e marmitas) e **Experiências** (opções x_ do perfil), em #/servicos e #/experiencias. Páginas do servidor das experiências mudaram para /experiencias/<slug>, com 301 a partir de /servicos/<slug>; sitemap, blog e cidades atualizados. Check, 95 testes e build passaram. Falta: Carlos aprovar o PR e, depois de publicado, pedir reindexação no Search Console.
+
 - **27/11/2026, Codex:** Ajustei a acessibilidade das abas do painel do chef. Check, 94 testes e build passaram. Próximo passo da fila: revisar a página 404 e as páginas do servidor.
 _27/11/2026 (noite), Claude. Branch: main._
 - **Na main:** SEO passos 1 a 5 e blog (passo 7: /blog com 3 textos em functions/_lib/blog.js, no sitemap); retorno da Fer no iPhone (cidades do IBGE, busca, destaques vinho/dourado); frase "Personal chefs na sua casa"; regras entre IAs no AGENTS.md + CLAUDE.md e GEMINI.md.

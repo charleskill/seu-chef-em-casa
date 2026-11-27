@@ -18,8 +18,8 @@ add('chef-cccccc0000000003','pausado@x.com',perfil('Chef Pausado'),0);
 add('chef-dddddd0000000004','inc@x.com',perfil('Chef Incompleto',{dishes:[]}));
 add('chef-eeeeee0000000005','helena@apresentacao.invalid',perfil('Chef Fictícia'));
 add('chef-ffffff0000000006','cli@x.com',perfil('Cliente',{tipo:'cliente'}));
-let chef,c,cid,serv,mapa;
-test.before(async()=>{chef=await import('../functions/chef/[slug].js');c=await import('../functions/c/[id].js');cid=await import('../functions/personal-chef/[[cidade]].js');serv=await import('../functions/servicos/[[servico]].js');mapa=await import('../functions/sitemap.xml.js')});
+let chef,c,cid,serv,exp,mapa;
+test.before(async()=>{chef=await import('../functions/chef/[slug].js');c=await import('../functions/c/[id].js');cid=await import('../functions/personal-chef/[[cidade]].js');serv=await import('../functions/servicos/[[servico]].js');exp=await import('../functions/experiencias/[[experiencia]].js');mapa=await import('../functions/sitemap.xml.js')});
 const PROD='https://seuchefemcasa.com.br';
 const abre=(mod,url,params)=>mod.onRequest({request:new Request(url),env:{DB},params});
 test('perfil /chef/<slug> sai completo do servidor, com canonical e JSON-LD; nome antigo redireciona',async()=>{
@@ -115,14 +115,14 @@ test('cidade e serviço: com chef real indexa; sem chef, convite com noindex; de
  const f=await(await abre(cid,PROD+'/personal-chef/florianopolis',{cidade:['florianopolis']})).text();assert.doesNotMatch(f,/noindex/);assert.match(f,/href="\/chef\/maria-teste-aaaaaa"/);assert.match(f,/"FAQPage"/);assert.doesNotMatch(f,/Escondido|Fictícia|Pausado|Incompleto/);
  const j=await(await abre(cid,PROD+'/personal-chef/joinville',{cidade:['joinville']})).text();assert.match(j,/noindex/);assert.match(j,/brigada de Joinville/);
  assert.equal((await abre(cid,PROD+'/personal-chef/atlantida',{cidade:['atlantida']})).status,404);
- const p=await(await abre(serv,PROD+'/servicos/noite-da-pizza',{servico:['noite-da-pizza']})).text();assert.doesNotMatch(p,/noindex/);assert.match(p,/maria-teste-aaaaaa/);
- assert.match(await(await abre(serv,PROD+'/servicos/noite-do-fondue',{servico:['noite-do-fondue']})).text(),/noindex/);
+ const p=await(await abre(exp,PROD+'/experiencias/noite-da-pizza',{experiencia:['noite-da-pizza']})).text();assert.doesNotMatch(p,/noindex/);assert.match(p,/maria-teste-aaaaaa/);
+ assert.match(await(await abre(exp,PROD+'/experiencias/noite-do-fondue',{experiencia:['noite-do-fondue']})).text(),/noindex/);
  assert.equal(new Set((await import('../functions/_lib/seo.js')).SERVICOS.map(s=>s.slug)).size,(await import('../functions/_lib/seo.js')).SERVICOS.length);
 });
 test('sitemap lista só chefs visíveis, completos e reais, e cidades/serviços com chef',async()=>{
  const x=await(await mapa.onRequest({env:{DB}})).text();
  assert.match(x,/<loc>https:\/\/seuchefemcasa\.com\.br\/chef\/maria-teste-aaaaaa<\/loc><lastmod>2026-11-24<\/lastmod>/);
- assert.match(x,/personal-chef\/florianopolis</);assert.match(x,/personal-chef\/sao-jose</);assert.match(x,/servicos\/noite-da-pizza</);
+ assert.match(x,/personal-chef\/florianopolis</);assert.match(x,/personal-chef\/sao-jose</);assert.match(x,/experiencias\/noite-da-pizza</);assert.doesNotMatch(x,/servicos\/noite-da-pizza</);
  assert.doesNotMatch(x,/bbbbbb|cccccc|dddddd|eeeeee|ffffff|joinville|fondue/);
  const vazio=await(await mapa.onRequest({env:{}})).text();assert.equal((vazio.match(/<loc>/g)||[]).length,2+(await import('../functions/_lib/blog.js')).ARTIGOS.length);assert.ok(vazio.includes('/blog/ceia-de-natal-com-personal-chef<'));
 });
@@ -132,4 +132,13 @@ test('blog: textos indexáveis em produção, com chefs reais e 404 para texto i
  const h=await r.text();assert.match(h,/<h1>Ceia de Natal com personal chef em casa<\/h1>/);assert.doesNotMatch(h,/noindex/);assert.match(h,/Reserve cedo/);
  const i=await(await abre(blog,PROD+'/blog',{})).text();assert.match(i,/href="\/blog\/jantar-a-dois-em-casa"/);
  assert.equal((await abre(blog,PROD+'/blog/nao-existe',{artigo:['nao-existe']})).status,404);
+});
+
+test('serviços e experiências ficam separados; endereços antigos de experiência redirecionam (301)',async()=>{
+ const r=await abre(serv,PROD+'/servicos/noite-da-pizza',{servico:['noite-da-pizza']});
+ assert.equal(r.status,301);assert.equal(r.headers.get('location'),PROD+'/experiencias/noite-da-pizza');
+ const s=await(await abre(serv,PROD+'/servicos',{})).text();assert.match(s,/href="\/servicos\/marmitas-da-semana"/);assert.match(s,/href="\/experiencias"/);assert.doesNotMatch(s,/href="\/servicos\/noite-da-pizza"/);
+ const e=await(await abre(exp,PROD+'/experiencias',{})).text();assert.match(e,/href="\/experiencias\/noite-da-pizza"/);assert.doesNotMatch(e,/href="\/experiencias\/marmitas-da-semana"/);
+ assert.equal((await abre(exp,PROD+'/experiencias/marmitas-da-semana',{experiencia:['marmitas-da-semana']})).status,404);
+ assert.equal((await abre(serv,PROD+'/servicos/marmitas-da-semana',{servico:['marmitas-da-semana']})).status,200);
 });
