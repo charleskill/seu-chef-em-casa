@@ -113,6 +113,7 @@ export const PERGUNTAS = lugar => [
 
 // Monta uma página de lista. o: { corpo (HTML já escapado, opcional, entra logo depois da abertura), url (endereço canônico), titulo, desc, olho, h1, intro: [], chefs, vazio, perguntas, trilha: [[nome, url]], blocos: [[titulo, html]], noindex }
 export function lista(o, origem) {
+  const acoes = o.acoes || [['Buscar chefs', '/#/buscar'], ['Como pedir um orçamento', '/orcamento-personal-chef'], ['Sou chef? Criar perfil', '/#/entrar']];
   const cartoes = o.chefs.map(c => {
     const foto = fotoOk(c.p.avatar, origem) || fotoOk(((c.p.gallery || [])[0] || {}).url, origem);
     return '<li class="chef"><a href="/chef/' + e(c.slug) + '">' + (foto ? '<img src="' + e(foto) + '" alt="" width="72" height="72" loading="lazy">' : '<span class="sem"></span>')
@@ -135,7 +136,7 @@ export function lista(o, origem) {
     + '<div class="abre"><p class="olho">' + e(o.olho) + '</p><h1>' + e(o.h1) + '</h1>' + o.intro.map(t => '<p>' + e(t) + '</p>').join('') + '</div></div>'
     + (o.corpo ? '<article class="texto"><div class="l">' + o.corpo + '</div></article>' : '')
     + '<section><div class="l">' + (o.chefs.length ? '<h2>' + e(o.tituloChefs) + '</h2><ul class="chefs">' + cartoes + '</ul>'
-      : '<div class="vazio"><h2>' + e(o.vazio[0]) + '</h2><p>' + e(o.vazio[1]) + '</p><div class="acoes"><a class="b b1" href="/#/entrar">Sou chef e quero aparecer aqui</a><a class="b b2" href="/#/buscar">Ver todos os chefs</a></div></div>')
+      : '<div class="vazio"><h2>' + e(o.vazio[0]) + '</h2><p>' + e(o.vazio[1]) + '</p><div class="acoes">' + acoes.map(([nome, url], i) => '<a class="b ' + (i ? 'b2' : 'b1') + '" href="' + e(url) + '">' + e(nome) + '</a>').join('') + '</div></div>')
     + '</div></section>'
     + (o.perguntas ? '<section><div class="l"><h2>Perguntas frequentes</h2>' + o.perguntas.map(([q, a]) => '<details><summary>' + e(q) + '</summary><p>' + e(a) + '</p></details>').join('') + '</div></section>' : '')
     + (o.blocos || []).map(([t, h]) => '<section><div class="l"><h2>' + e(t) + '</h2>' + h + '</div></section>').join('')
@@ -147,6 +148,7 @@ export function lista(o, origem) {
 export const links = itens => '<nav class="links">' + itens.map(([n, u]) => '<a href="' + e(u) + '">' + e(n) + '</a>').join('') + '</nav>';
 
 export function naoAchou() {
-  return lista({ url: '/', titulo: 'Página não encontrada · Seu Chef em Casa', desc: 'Esta página não existe.', olho: 'Erro 404', h1: 'Não encontramos esta página.',
-    intro: ['Use a busca para encontrar um chef.'], chefs: [], vazio: ['Encontre um chef', 'Busque um chef ou entre para criar seu perfil.'], noindex: true, status: 404 }, '');
+  return lista({ url: '/', titulo: 'Página não encontrada · Seu Chef em Casa', desc: 'Esta página não existe. Busque chefs ou veja como pedir um orçamento.', olho: 'Erro 404', h1: 'Não encontramos esta página.',
+    intro: ['O endereço pode ter mudado. Busque um chef ou veja como pedir um orçamento.'], chefs: [], vazio: ['Continue por aqui', 'Encontre um chef ou saiba como pedir um orçamento.'],
+    acoes: [['Buscar chefs', '/#/buscar'], ['Como pedir um orçamento', '/orcamento-personal-chef']], noindex: true, status: 404 }, '');
 }

@@ -2,6 +2,7 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
+- **27/11/2026, Copilot:** Atualizei as páginas 404, dei destinos para busca e orçamento às páginas vazias e criei `/orcamento-personal-chef` com chefs visíveis e entrada no sitemap. `npm run check`, 95 testes e build passaram. PR #23 aberto; próximo passo: revisar a prévia.
 _27/11/2026 (noite), Claude. Branch: main._
 - **Na main:** SEO passos 1 a 5 e blog (passo 7: /blog com 3 textos em functions/_lib/blog.js, no sitemap); retorno da Fer no iPhone (cidades do IBGE, busca, destaques vinho/dourado); frase "Personal chefs na sua casa"; regras entre IAs no AGENTS.md + CLAUDE.md e GEMINI.md.
 - **Search Console:** verificado em 27/11 (DNS pela Cloudflare), sitemap enviado e indexação da Ceia de Natal pedida. Conferir em 1-2 dias se o sitemap virou "Sucesso".
