@@ -28,10 +28,10 @@ const ehChef = (C, p) => p.tipo !== 'cliente' && !C.faltaPerfil(p).length;
 function emailChef(d, origem, perfil, p) {
   const link = origem + '/#/painel/mural', e = d.escH;
   const linhas = M.resumo(p).map(l => e(l)).join('<br>');
-  return { assunto: 'Pedido novo em ' + p.cidade + ': ' + M.titulo(p).toLowerCase(),
+  return { assunto: 'Pedido novo em ' + M.cidadeTxt(p) + ': ' + M.titulo(p).toLowerCase(),
     texto: 'Olá! Um cliente publicou um pedido no mural do Seu Chef em Casa.\n\n' + M.resumo(p).join('\n') + '\n\n' + p.detalhes + '\n\nAté ' + M.MAX_CHEFS + ' chefs podem liberar o contato. Veja no painel: ' + link + '\n',
     html: d.layoutEmail(origem, { titulo: 'Pedido novo na sua cidade',
-      corpo: d.pEmail('Um cliente publicou um pedido no mural e você atende em <b>' + e(p.cidade) + '</b>.')
+      corpo: d.pEmail('Um cliente publicou um pedido no mural e você atende em <b>' + e(M.cidadeTxt(p)) + '</b>.')
         + '<div style="background:#f7f5f0;border-left:3px solid #b4aa83;border-radius:10px;padding:16px 18px;margin:6px 0 10px;font-size:14px;line-height:1.6;color:#283b30"><b>' + linhas + '</b><br><br>' + e(p.detalhes) + '</div>'
         + d.pEmail('Só ' + M.MAX_CHEFS + ' chefs podem liberar o contato deste cliente. Quem chega primeiro tem mais chance.'),
       botao: 'Ver no mural', link, nota: 'Liberar o contato é grátis neste começo do Seu Chef em Casa.' }) };
@@ -81,9 +81,9 @@ export async function rotaMural(rota, metodo, req, env, d) {
       .bind(id, eu.id, p.cidadeSlug, JSON.stringify(p), 'aberto', criado, M.expira(p, criado)).run();
     // Avisa os chefs completos e visíveis que atendem a cidade.
     const { results } = await env.DB.prepare('SELECT id, email, perfil FROM chefs WHERE publicado = 1 AND oculto = 0 AND id != ?').bind(eu.id).all();
-    const alvos = results.filter(r => { const pf = perfilDe(r); return ehChef(C, pf) && M.atende(pf, p.cidade); });
+    const alvos = results.filter(r => { const pf = perfilDe(r); return ehChef(C, pf) && M.atende(pf, p.cidade, p.uf); });
     const avisos = alvos.map(r => Promise.all([
-      notificar(env, r.id, 'mural', 'Pedido novo em ' + p.cidade + ': ' + M.titulo(p).toLowerCase() + '.', '#/painel/mural'),
+      notificar(env, r.id, 'mural', 'Pedido novo em ' + M.cidadeTxt(p) + ': ' + M.titulo(p).toLowerCase() + '.', '#/painel/mural'),
       enviarEmail(env, r.email, emailChef(d, origem, perfilDe(r), p))
     ]).catch(() => false));
     await depois(Promise.all(avisos));
@@ -115,12 +115,17 @@ export async function rotaMural(rota, metodo, req, env, d) {
   if (rota === '/mural' && metodo === 'GET') {
     const cidades = M.cidadesDe(meuPerfil);
     if (!cidades.length) return json({ pedidos: [], falta, cidades: [] });
-    const { results } = await env.DB.prepare("SELECT p.id, p.dados, p.status, p.criado_em, p.expira_em, (SELECT COUNT(*) FROM mural_liberacoes l WHERE l.pedido_id = p.id) liberados, (SELECT ordem FROM mural_liberacoes l WHERE l.pedido_id = p.id AND l.chef_id = ?) minha FROM mural_pedidos p WHERE p.cidade_slug IN (" + cidades.map(() => '?').join(',') + ") AND p.status IN ('aberto','completo') AND p.expira_em >= ? AND p.conta_id != ? AND NOT EXISTS (SELECT 1 FROM mural_denuncias x WHERE x.pedido_id = p.id AND x.chef_id = ?) ORDER BY p.criado_em DESC LIMIT 60")
+    const { results } = await env.DB.prepare("SELECT p.id, p.dados, p.status, p.criado_em, p.expira_em, (SELECT COUNT(*) FROM mural_liberacoes l WHERE l.pedido_id = p.id) liberados, (SELECT ordem FROM mural_liberacoes l WHERE l.pedido_id = p.id AND l.chef_id = ?) minha FROM mural_pedidos p WHERE p.cidade_slug IN (" + cidades.map(() => '?').join(',') + ") AND p.status IN ('aberto','completo') AND p.expira_em >= ? AND p.conta_id != ? AND NOT EXISTS (SELECT 1 FROM mural_denuncias x WHERE x.pedido_id = p.id AND x.chef_id = ?) ORDER BY p.criado_em DESC")
       .bind(eu.id, ...cidades, hoje, eu.id, eu.id).all();
-    return json({ falta, cidades, pedidos: results.filter(r => r.status === 'aberto' || r.minha).map(r => {
+    const pedidos = [];
+    for (const r of results) {
+      if (r.status !== 'aberto' && !r.minha) continue;
       const p = JSON.parse(r.dados);
-      return { id: r.id, ...(r.minha ? p : M.semContato(p)), liberados: r.liberados, vagas: Math.max(0, M.MAX_CHEFS - r.liberados), minha: r.minha || 0, criado_em: r.criado_em };
-    }) });
+      if (!M.atende(meuPerfil, p.cidade, p.uf)) continue;
+      pedidos.push({ id: r.id, ...(r.minha ? p : M.semContato(p)), liberados: r.liberados, vagas: Math.max(0, M.MAX_CHEFS - r.liberados), minha: r.minha || 0, criado_em: r.criado_em });
+      if (pedidos.length === 60) break;
+    }
+    return json({ falta, cidades, pedidos });
   }
 
   const m = rota.match(/^\/mural\/([a-f\d]{24})\/(liberar|denunciar)$/);
@@ -129,6 +134,7 @@ export async function rotaMural(rota, metodo, req, env, d) {
     const row = await env.DB.prepare('SELECT id, conta_id, dados, status, expira_em FROM mural_pedidos WHERE id = ?').bind(id).first();
     if (!row || row.conta_id === eu.id) return erro('Pedido não encontrado.', 404);
     const p = JSON.parse(row.dados);
+    if (!M.atende(meuPerfil, p.cidade, p.uf)) return erro('Este pedido é de uma cidade que você não atende.', 403);
     if (acao === 'denunciar') {
       await env.DB.prepare('INSERT OR IGNORE INTO mural_denuncias (pedido_id, chef_id, criado_em) VALUES (?, ?, ?)').bind(id, eu.id, agora()).run();
       const n = await env.DB.prepare('SELECT COUNT(*) n FROM mural_denuncias WHERE pedido_id = ?').bind(id).first();
@@ -136,7 +142,6 @@ export async function rotaMural(rota, metodo, req, env, d) {
       return json({ ok: true });
     }
     if (falta.length) return erro('Complete seu perfil (foto, um prato e cidade) para liberar contatos.', 403);
-    if (!M.atende(meuPerfil, p.cidade)) return erro('Este pedido é de uma cidade que você não atende.', 403);
     const ja = await env.DB.prepare('SELECT ordem FROM mural_liberacoes WHERE pedido_id = ? AND chef_id = ?').bind(id, eu.id).first();
     if (!ja) {
       if (row.status === 'completo') return erro('Outros ' + M.MAX_CHEFS + ' chefs já pegaram este pedido.', 409);
