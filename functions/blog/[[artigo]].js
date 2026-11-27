@@ -27,7 +27,7 @@ export async function onRequest({ request, env, params }) {
     vazio: ['Encontre um chef', 'Veja quem atende na sua cidade e o que cada chef prepara.'],
     perguntas: PERGUNTAS('').slice(1),
     blocos: [
-      ['Serviços ligados a este texto', links(servicos.map(s => [s.nome, '/servicos/' + s.slug]))],
+      ['Serviços e experiências ligados a este texto', links(servicos.map(s => [s.nome, s.url]))],
       ['Leia também', links(ARTIGOS.filter(x => x !== a).map(x => [x.h1, '/blog/' + x.slug]))]
     ],
     noindex: !prod }, url.origin);

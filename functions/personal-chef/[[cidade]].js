@@ -29,7 +29,7 @@ export async function onRequest({ request, env, params }) {
     vazio: ['A brigada de ' + nome + ' está sendo montada', 'Ainda não há chef de ' + nome + ' com perfil completo por aqui. Se você cozinha na cidade, entre e monte seu perfil; ele aparece nesta página assim que estiver pronto.'],
     perguntas: PERGUNTAS(nome),
     blocos: [
-      ...(servicos.length ? [['O que os chefs de ' + nome + ' fazem', links(servicos.map(s => [s.nome, '/servicos/' + s.slug]))]] : []),
+      ...(servicos.length ? [['O que os chefs de ' + nome + ' fazem', links(servicos.map(s => [s.nome, s.url]))]] : []),
       ['Outras cidades', links(CIDADES.filter(([s]) => s !== slug).map(([s, n]) => [n, '/personal-chef/' + s]))]
     ],
     noindex: !prod || !daqui.length }, url.origin);

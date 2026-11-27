@@ -68,7 +68,9 @@ export const SERVICOS = [
   ...Object.entries(PROPRIOS).map(([k, [nome, desc]]) => ({ k, nome, desc })),
   ...C.EXPERIENCIAS.map(([nome, desc, k]) => ({ k, nome, desc })),
   { k: 'marmita', nome: 'Marmitas da semana', desc: 'Refeições da semana preparadas pelo chef e porcionadas para a sua geladeira.' }
-].map(s => ({ ...s, slug: C.slug(s.nome) }));
+].map(s => { const slug = C.slug(s.nome); return { ...s, slug, url: (s.k === 'marmita' ? '/servicos/' : '/experiencias/') + slug }; });
+// Experiências (o que o chef marca no perfil) moram em /experiencias; serviços (marmitas) em /servicos.
+export const ehExperiencia = s => s.k !== 'marmita';
 export const fazServico = (p, s) => s.k === 'marmita' ? !!p.marmita : !!C.opcoes(p)[s.k];
 
 // ---------- Páginas de lista (cidade e serviço) ----------

@@ -463,3 +463,8 @@ button.sino{background:none;border:0;cursor:pointer;font:inherit}.avisos{display
 .credito-prato{display:none}.foto-prato-ampliada{width:min(680px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:16px;border:0;border-radius:14px;background:#fffdf8;color:#303629}.foto-prato-ampliada::backdrop{background:#252a21cc}.foto-prato-ampliada header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.foto-prato-ampliada h2,.foto-prato-ampliada figure{margin:0}.foto-prato-ampliada img{display:block;width:100%;max-height:64dvh;object-fit:contain}.foto-prato-ampliada figcaption{margin-top:8px;font-size:.85rem;color:#455238}
 
 .contatos-chef{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.contatos-chef a{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid #b9b19f;border-radius:50%;color:#455238}.contatos-chef a:hover{background:#eee6d7;color:#754653}.editor-contatos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px;margin:16px 0;padding:12px;border:1px solid var(--line);border-radius:12px;min-inline-size:0}.editor-contatos>p{grid-column:1/-1;margin:0}.editor-contato>label{display:flex;align-items:center;gap:6px;min-height:44px}.editor-contato .f{margin:0}
+
+/* Abas Serviços | Experiências (links no estilo do .seg) */
+.seg a{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 12px;border-radius:10px;font-weight:600;font-size:13px;text-decoration:none;color:inherit;white-space:nowrap}
+.seg a[aria-current=page]{color:var(--ol);background:var(--paper);box-shadow:0 2px 8px #4552380a}
+.seg a:focus-visible{outline:3px solid #c9a46a;outline-offset:2px}

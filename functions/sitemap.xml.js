@@ -9,9 +9,9 @@ const dia = t => /^\d{4}-\d{2}-\d{2}/.test(String(t || '')) ? String(t).slice(0,
 export async function onRequest({ env }) {
   const chefs = await chefsVisiveis(env);
   const urls = [[SITE + '/', '']];
-  if (chefs.length) urls.push([SITE + '/personal-chef', ''], [SITE + '/servicos', '']);
+  if (chefs.length) urls.push([SITE + '/personal-chef', ''], [SITE + '/servicos', ''], [SITE + '/experiencias', '']);
   for (const [s] of CIDADES) if (chefs.some(c => atende(c.p, s))) urls.push([SITE + '/personal-chef/' + s, '']);
-  for (const s of SERVICOS) if (chefs.some(c => fazServico(c.p, s))) urls.push([SITE + '/servicos/' + s.slug, '']);
+  for (const s of SERVICOS) if (chefs.some(c => fazServico(c.p, s))) urls.push([SITE + s.url, '']);
   urls.push([SITE + '/blog', ''], ...ARTIGOS.map(a => [SITE + '/blog/' + a.slug, a.data]));
   for (const c of chefs) urls.push([SITE + '/chef/' + c.slug, dia(c.atualizado)]);
   const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
