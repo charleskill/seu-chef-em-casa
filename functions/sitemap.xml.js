@@ -12,7 +12,7 @@ export async function onRequest({ env }) {
   if (chefs.length) urls.push([SITE + '/personal-chef', ''], [SITE + '/servicos', '']);
   for (const [s] of CIDADES) if (chefs.some(c => atende(c.p, s))) urls.push([SITE + '/personal-chef/' + s, '']);
   for (const s of SERVICOS) if (chefs.some(c => fazServico(c.p, s))) urls.push([SITE + '/servicos/' + s.slug, '']);
-  urls.push([SITE + '/orcamento-personal-chef', ''], [SITE + '/blog', ''], ...ARTIGOS.map(a => [SITE + '/blog/' + a.slug, a.data]));
+  urls.push([SITE + '/orcamento-personal-chef', ''], [SITE + '/para-chefs', ''], [SITE + '/blog', ''], ...ARTIGOS.map(a => [SITE + '/blog/' + a.slug, a.data]));
   for (const c of chefs) urls.push([SITE + '/chef/' + c.slug, dia(c.atualizado)]);
   const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + urls.map(([u, d]) => '  <url><loc>' + x(u) + '</loc>' + (d ? '<lastmod>' + d + '</lastmod>' : '') + '</url>').join('\n') + '\n</urlset>\n';
