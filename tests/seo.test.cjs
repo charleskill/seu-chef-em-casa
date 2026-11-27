@@ -124,5 +124,12 @@ test('sitemap lista só chefs visíveis, completos e reais, e cidades/serviços 
  assert.match(x,/<loc>https:\/\/seuchefemcasa\.com\.br\/chef\/maria-teste-aaaaaa<\/loc><lastmod>2026-11-24<\/lastmod>/);
  assert.match(x,/personal-chef\/florianopolis</);assert.match(x,/personal-chef\/sao-jose</);assert.match(x,/servicos\/noite-da-pizza</);
  assert.doesNotMatch(x,/bbbbbb|cccccc|dddddd|eeeeee|ffffff|joinville|fondue/);
- const vazio=await(await mapa.onRequest({env:{}})).text();assert.equal((vazio.match(/<loc>/g)||[]).length,1);
+ const vazio=await(await mapa.onRequest({env:{}})).text();assert.equal((vazio.match(/<loc>/g)||[]).length,2+(await import('../functions/_lib/blog.js')).ARTIGOS.length);assert.ok(vazio.includes('/blog/ceia-de-natal-com-personal-chef<'));
+});
+test('blog: textos indexáveis em produção, com chefs reais e 404 para texto inexistente',async()=>{
+ const blog=await import('../functions/blog/[[artigo]].js');
+ const r=await abre(blog,PROD+'/blog/ceia-de-natal-com-personal-chef',{artigo:['ceia-de-natal-com-personal-chef']});assert.equal(r.status,200);
+ const h=await r.text();assert.match(h,/<h1>Ceia de Natal com personal chef em casa<\/h1>/);assert.doesNotMatch(h,/noindex/);assert.match(h,/Reserve cedo/);
+ const i=await(await abre(blog,PROD+'/blog',{})).text();assert.match(i,/href="\/blog\/jantar-a-dois-em-casa"/);
+ assert.equal((await abre(blog,PROD+'/blog/nao-existe',{artigo:['nao-existe']})).status,404);
 });

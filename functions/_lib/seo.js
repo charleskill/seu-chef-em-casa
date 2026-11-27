@@ -93,7 +93,8 @@ const ESTILO = [
   '.links{display:flex;flex-wrap:wrap;gap:8px}.links a{border:1px solid rgba(28,37,32,.3);border-radius:999px;padding:8px 16px;font-size:.92rem;text-decoration:none}.links a:hover{border-color:#455238;background:#fff}',
   'footer{background:#354229;color:#9aa39b;font-size:.84rem;padding:28px 0;text-align:center}footer p{margin:0 0 6px}footer a{color:#c9c3b6}',
   '@media (min-width:760px){.chefs{grid-template-columns:1fr 1fr}}',
-  '@media (prefers-reduced-motion:reduce){.chef a{transition:none}}'
+  '@media (prefers-reduced-motion:reduce){.chef a{transition:none}}',
+  '.texto{padding:0 0 32px}.texto h2{margin:28px 0 10px}.texto p{max-width:40em;margin:0 0 14px;line-height:1.7;color:#303629}.data{font-size:.8rem;color:#626655;margin:0 0 8px}',
 ].join('');
 
 const CABECALHOS = {
@@ -110,7 +111,7 @@ export const PERGUNTAS = lugar => [
   ['Pago pelo site?', 'Não. O Seu Chef em Casa é uma vitrine: contratação, pagamento e serviço são combinados direto com o chef.']
 ];
 
-// Monta uma página de lista. o: { url (endereço canônico), titulo, desc, olho, h1, intro: [], chefs, vazio, perguntas, trilha: [[nome, url]], blocos: [[titulo, html]], noindex }
+// Monta uma página de lista. o: { corpo (HTML já escapado, opcional, entra logo depois da abertura), url (endereço canônico), titulo, desc, olho, h1, intro: [], chefs, vazio, perguntas, trilha: [[nome, url]], blocos: [[titulo, html]], noindex }
 export function lista(o, origem) {
   const cartoes = o.chefs.map(c => {
     const foto = fotoOk(c.p.avatar, origem) || fotoOk(((c.p.gallery || [])[0] || {}).url, origem);
@@ -132,12 +133,13 @@ export function lista(o, origem) {
     + '<header class="topo"><div class="l"><a href="/"><b>Seu Chef em Casa</b></a><nav><a href="/#/buscar">Buscar chefs</a></nav></div></header>'
     + '<main><div class="l"><p class="trilha">' + trilha.map(([n, u], i) => i === trilha.length - 1 ? e(n) : '<a href="' + e(u) + '">' + e(n) + '</a>').join(' / ') + '</p>'
     + '<div class="abre"><p class="olho">' + e(o.olho) + '</p><h1>' + e(o.h1) + '</h1>' + o.intro.map(t => '<p>' + e(t) + '</p>').join('') + '</div></div>'
+    + (o.corpo ? '<article class="texto"><div class="l">' + o.corpo + '</div></article>' : '')
     + '<section><div class="l">' + (o.chefs.length ? '<h2>' + e(o.tituloChefs) + '</h2><ul class="chefs">' + cartoes + '</ul>'
       : '<div class="vazio"><h2>' + e(o.vazio[0]) + '</h2><p>' + e(o.vazio[1]) + '</p><div class="acoes"><a class="b b1" href="/#/entrar">Sou chef e quero aparecer aqui</a><a class="b b2" href="/#/buscar">Ver todos os chefs</a></div></div>')
     + '</div></section>'
     + (o.perguntas ? '<section><div class="l"><h2>Perguntas frequentes</h2>' + o.perguntas.map(([q, a]) => '<details><summary>' + e(q) + '</summary><p>' + e(a) + '</p></details>').join('') + '</div></section>' : '')
     + (o.blocos || []).map(([t, h]) => '<section><div class="l"><h2>' + e(t) + '</h2>' + h + '</div></section>').join('')
-    + '</main><footer><div class="l"><p><a href="/">Seu Chef em Casa</a> · personal chefs em Santa Catarina</p>'
+    + '</main><footer><div class="l"><p><a href="/">Seu Chef em Casa</a> · personal chefs na sua casa · <a href="/blog">Blog</a></p>'
     + '<p>A plataforma é uma vitrine: contratação, pagamento e serviço são combinados direto com o chef. <a href="/#/termos">Termos de uso</a></p></div></footer></body></html>';
   return new Response(html, { status: o.status || 200, headers: CABECALHOS });
 }

@@ -2,9 +2,9 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
-_27/11/2026, Claude. Branch: main (até 102ecba, tudo juntado)._
-- **Na main:** SEO passos 1 a 5 (seo-indexavel); perfil público do Codex (PR 20: portfólio, curtidas/comentários, PDF comercial, fotos no cardápio, 8 contatos, textos revisados); orçamento rápido pelo WhatsApp; app instalável (manifesto, ícones, offline).
-- **Falta:** Search Console com o Carlos (verificação DNS na Cloudflare, enviar sitemap). Textos de blog (passo 7) depois. A pasta `repo` tem arquivos não salvos (AGENTS, CONTEXTO, CLAUDE, GEMINI, previa/).
+_27/11/2026 (noite), Claude. Branch: main._
+- **Na main:** SEO passos 1 a 5 e blog (passo 7: /blog com 3 textos em functions/_lib/blog.js, no sitemap); retorno da Fer no iPhone (cidades do IBGE, busca, destaques vinho/dourado); frase "Personal chefs na sua casa"; regras entre IAs no AGENTS.md + CLAUDE.md e GEMINI.md.
+- **Falta:** Search Console com o Carlos (DNS na Cloudflare, enviar sitemap). Sitemap só terá chefs quando houver perfil real completo e visível. Texto "Quanto custa" só com preços reais. Fer conferir o campo de data no iPhone. Termos: revisão do Diogo. Pasta `repo`: previa/ (98 MB) sem uso, apagar só com OK.
 - **Comandos:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
 
 ## Estado em 15/11/2026 (noite), depois do Codex

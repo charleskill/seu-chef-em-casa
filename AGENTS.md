@@ -18,3 +18,10 @@ Antes do pull request rode `npm run check`, `npm test` e `npm run build` (Node 1
 Não mexa em functions/api, migrations, _headers nem em segredos sem pedido explícito de Carlos.
 Não reformate assets/app.js: edite só o trecho necessário.
 Ponha no pull request o endereço da prévia: https://<nome-do-branch>.seu-chef-em-casa.pages.dev
+
+## Trabalho entre IAs (Claude, ChatGPT/Codex, Gemini/Antigravity)
+- Toda IA, ao começar: ler este arquivo e **só o bloco "Bastão"** no topo do `CONTEXTO.md`. Não ler o histórico inteiro.
+- Toda IA, ao terminar: **atualizar o Bastão** (no máximo 20 linhas) com data, qual IA, o que foi feito, o que ficou pela metade e o próximo passo. Histórico antigo vai para `docs/HISTORICO.md`.
+- Nunca duas IAs nos mesmos arquivos ao mesmo tempo. Cada IA trabalha num branch; o dono aprova o que entra.
+- Economizar tokens: respostas curtas, comandos em lote, sem reler arquivos nem repetir testes.
+- Divisão sugerida: Claude constrói (código, design, organização); ChatGPT/Codex revisa e cria imagens e textos de redes; Gemini pesquisa e lê documentos longos.
