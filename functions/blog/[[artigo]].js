@@ -27,6 +27,7 @@ export async function onRequest({ request, env, params }) {
     vazio: ['Encontre um chef', 'Veja quem atende na sua cidade e o que cada chef prepara.'],
     perguntas: PERGUNTAS('').slice(1),
     blocos: [
+      ['Prefere que os chefs venham até você?', '<p>Conte o evento uma vez no mural e receba contato de até 4 chefs da sua cidade pelo WhatsApp. <a href="/orcamento-personal-chef">Veja como funciona</a>.</p>'],
       ['Serviços ligados a este texto', links(servicos.map(s => [s.nome, '/servicos/' + s.slug]))],
       ['Leia também', links(ARTIGOS.filter(x => x !== a).map(x => [x.h1, '/blog/' + x.slug]))]
     ],

@@ -14,7 +14,7 @@ export async function onRequest({ request }) {
     desc: 'Conte o evento uma vez e receba contato de até 4 personal chefs da sua cidade pelo WhatsApp. Grátis e sem compromisso.',
     olho: 'Mural de pedidos', h1: 'Peça orçamento a vários personal chefs de uma vez', trilha: [['Pedir orçamento', '/orcamento-personal-chef']],
     intro: ['Em vez de procurar chef por chef, conte o evento uma vez. Os chefs da sua cidade que se interessarem te chamam no WhatsApp.'],
-    corpo: PASSOS.map(([t, p], i) => '<h2>' + (i + 1) + '. ' + e(t) + '</h2><p>' + e(p) + '</p>').join('')
+    corpo: '<p><a class="b b1" href="/#/pedir">Pedir orçamentos agora</a></p>' + PASSOS.map(([t, p], i) => '<h2>' + (i + 1) + '. ' + e(t) + '</h2><p>' + e(p) + '</p>').join('')
       + '<p><a class="b b1" href="/#/pedir">Pedir orçamentos agora</a></p>',
     chefs: [], vazio: ['Prefere escolher você mesmo?', 'Veja os chefs, os cardápios e as fotos e peça direto a quem você gostar.'],
     perguntas: PERGUNTAS('').slice(1),

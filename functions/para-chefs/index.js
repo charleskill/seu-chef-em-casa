@@ -21,7 +21,7 @@ export async function onRequest({ request }) {
     desc: 'Cadastro grátis para personal chefs. Receba pedidos de jantares, churrascos e eventos da sua cidade, negocie direto pelo WhatsApp e fique com 100% do valor.',
     olho: 'Para chefs', h1: 'Receba pedidos de clientes da sua cidade', trilha: [['Para chefs', '/para-chefs']],
     intro: ['O Seu Chef em Casa é uma vitrine para personal chefs: clientes encontram seu perfil, veem seus pratos e te chamam no WhatsApp.'],
-    corpo: BLOCOS.map(([t, p]) => '<h2>' + e(t) + '</h2><p>' + e(p) + '</p>').join('') + '<p><a class="b b1" href="/#/entrar">Criar meu perfil de chef</a></p>',
+    corpo: '<p><a class="b b1" href="/#/entrar">Criar meu perfil de chef</a></p>' + BLOCOS.map(([t, p]) => '<h2>' + e(t) + '</h2><p>' + e(p) + '</p>').join('') + '<p><a class="b b1" href="/#/entrar">Criar meu perfil de chef</a></p>',
     chefs: [], vazio: ['Comece em poucos minutos', 'Crie a conta com seu e-mail ou com o Google, coloque uma foto, um prato e as cidades onde atende.'],
     perguntas: PERGUNTAS, noindex: !producao(request.url) }, url.origin);
 }

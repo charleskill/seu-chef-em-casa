@@ -73,5 +73,31 @@ export const ARTIGOS = [
         'Na busca, procure chefs que fazem marmitas, escolha as quantidades e envie o pedido pelo WhatsApp. O valor é combinado direto com o chef.'
       ]]
     ]
+  },
+  {
+    slug: 'churrasco-em-casa-com-personal-chef',
+    titulo: 'Churrasco em casa com personal chef · Seu Chef em Casa',
+    h1: 'Churrasco em casa com um chef na churrasqueira',
+    desc: 'Como organizar um churrasco em casa com personal chef: cortes, acompanhamentos, quantidade por pessoa e o que combinar antes.',
+    data: '2026-11-27',
+    servicos: ['churrasco-em-casa', 'carnes-nobres', 'costela-de-preparo-lento'],
+    lead: 'No churrasco, quem fica na churrasqueira quase não conversa com ninguém. Com um chef cuidando da brasa, o anfitrião volta para a roda.',
+    secoes: [
+      ['Defina o estilo do churrasco', [
+        'Pode ser o churrasco gaúcho, com costela no fogo de chão, um churrasco de cortes nobres servidos em sequência ou algo mais leve, com peixes e legumes na grelha. Conte ao chef o que a turma gosta e o que ninguém pode ficar sem.',
+        'Os acompanhamentos fazem metade da festa: farofa, vinagrete, pão de alho, saladas, arroz. Combine quais o chef prepara e quais ficam por sua conta.'
+      ]],
+      ['Quantidade e compras', [
+        'O chef calcula a carne pelo número de pessoas e pelo perfil dos convidados, contando crianças e quem come menos carne. Pergunte se ele faz as compras ou se você compra pela lista que ele manda.',
+        'Se for comprar por conta própria, peça a lista com os cortes e o peso de cada um. Isso evita sobra demais ou carne faltando no meio da tarde.'
+      ]],
+      ['O que combinar antes', [
+        'Confirme o tipo de churrasqueira, o carvão ou a lenha, os espetos e as grelhas. Pergunte se o chef traz utensílios, se fica até o fim servindo e se deixa a área limpa.',
+        'Avise sobre convidados vegetarianos ou com restrições. Legumes, queijos e cogumelos na brasa também fazem sucesso.'
+      ]],
+      ['Como pedir', [
+        'Procure chefs que fazem churrasco na sua cidade, veja os cortes e as fotos e envie o pedido com a data e o número de pessoas pelo WhatsApp. O valor é combinado direto com o chef.'
+      ]]
+    ]
   }
 ];
