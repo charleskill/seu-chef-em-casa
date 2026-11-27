@@ -10,6 +10,7 @@ import Dashboard from '../../assets/dashboard-core.js';
 import Menus from '../../assets/menus-core.js';
 import ServicePhotos from '../../assets/service-photos.js';
 import DishPhotos from '../../assets/dish-photos.js';
+import { MURAL_ESQUEMA, rotaMural, apagarMural } from '../_lib/mural.js';
 
 const C = Core && Core.normalizeData ? Core : globalThis.ChefCore;
 const SESSAO_DIAS = 30, PBKDF2_ITER = 100000; // 100 mil é o máximo aceito pelos Workers
@@ -253,7 +254,8 @@ async function garantirEsquema(env) {
     'CREATE INDEX IF NOT EXISTS comentarios_conta ON comentarios(conta_id)',
     'CREATE TABLE IF NOT EXISTS denuncias (comentario_id TEXT NOT NULL, conta_id TEXT NOT NULL, criado_em TEXT NOT NULL, PRIMARY KEY (comentario_id, conta_id))',
     'CREATE TABLE IF NOT EXISTS notificacoes (id TEXT PRIMARY KEY, conta_id TEXT NOT NULL, tipo TEXT NOT NULL, texto TEXT NOT NULL, link TEXT NOT NULL DEFAULT \'\', lida INTEGER NOT NULL DEFAULT 0, criado_em TEXT NOT NULL)',
-    'CREATE INDEX IF NOT EXISTS notificacoes_conta ON notificacoes(conta_id, criado_em)'
+    'CREATE INDEX IF NOT EXISTS notificacoes_conta ON notificacoes(conta_id, criado_em)',
+    ...MURAL_ESQUEMA
   ]) await env.DB.prepare(q).run();
   esquemaOk = true;
 }
@@ -263,6 +265,8 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
   await garantirEsquema(env);
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
+    const mural = await rotaMural(rota, metodo, req, env, { json, erro, corpo, notificar, enviarEmail, layoutEmail, pEmail, escH, limitar, aleatorio, agora, chefDaSessao, waitUntil, C });
+    if (mural) return mural;
     if (rota === '/admin/dashboard' && metodo === 'GET') {
       const c = await chefDaSessao(env, req);
       if (!c) return erro('Entre com a conta da equipe.', 401);
@@ -560,7 +564,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
 
     if (rota === '/eu' && metodo === 'DELETE') {
       const c = await chefDaSessao(env, req); if (!c) return erro('Entre de novo para excluir a conta.', 401);
-      await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(c.id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(c.id, c.id))).concat(['notificacoes', 'denuncias'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE conta_id = ?').bind(c.id))).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(c.id)));
+      await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(c.id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(c.id, c.id))).concat(['notificacoes', 'denuncias'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE conta_id = ?').bind(c.id))).concat(apagarMural(env, c.id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(c.id)));
       return json({ ok: true }, 200, { 'set-cookie': cookieSessao('', 0) });
     }
 
@@ -670,7 +674,7 @@ if (rota === '/notificacoes' && metodo === 'GET') {
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'DELETE') {
         if (id === c.id) return erro('Para excluir a sua própria conta, use Painel > Configurações.');
         if (!await env.DB.prepare('SELECT 1 FROM chefs WHERE id = ?').bind(id).first()) return erro('Chef não encontrado.', 404);
-        await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(id, id))).concat(['notificacoes', 'denuncias'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE conta_id = ?').bind(id))).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
+        await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(id, id))).concat(['notificacoes', 'denuncias'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE conta_id = ?').bind(id))).concat(apagarMural(env, id)).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
         return json({ ok: true });
       }
     }

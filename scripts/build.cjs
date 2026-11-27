@@ -25,7 +25,7 @@ html=html.replace('<link rel="stylesheet" href="assets/styles.css">',()=>'<style
 html=html.replace('<link rel="stylesheet" href="assets/improvements.css">',()=>'<style>'+fs.readFileSync(path.join(root,'assets/improvements.css'),'utf8')+'</style>');
 html=html.replace('<link rel="stylesheet" href="assets/admin.css">',()=>'<style>'+fs.readFileSync(path.join(root,'assets/admin.css'),'utf8')+'</style>');
 html=html.replace('<link rel="stylesheet" href="assets/identity.css">',()=>'<style>'+fs.readFileSync(path.join(root,'assets/identity.css'),'utf8')+'</style>');
-for(const name of ['menus.css'])html=html.replace('<link rel="stylesheet" href="assets/'+name+'">',()=>'<style>'+fs.readFileSync(path.join(root,'assets',name),'utf8')+'</style>');
+for(const name of ['menus.css','mural.css'])html=html.replace('<link rel="stylesheet" href="assets/'+name+'">',()=>'<style>'+fs.readFileSync(path.join(root,'assets',name),'utf8')+'</style>');
 html=html.replace('<link rel="stylesheet" href="assets/visual.css">',()=>'<style>'+fs.readFileSync(path.join(root,'assets/visual.css'),'utf8')+'</style>');
 html=html.replaceAll(/<script defer src="(assets\/[^\"]+)"><\/script>/g,()=> '');
 const scripts=['tela.js','demo-data.js','demo-images.js','app-core.js','service-photos.js','cloud.js','order-validation.js','termos.js','site-settings.js','dashboard-core.js','dashboard.js','management.js','menus-core.js','menus.js','dish-photos.js','dish-photo-editor.js','perfil-publico.js','app.js','improvements.js','endereco.js','pratos.js','efeitos.js'].map(f=>'<script>\n'+fs.readFileSync(path.join(root,'assets',f),'utf8').replaceAll('</script','<\\/script')+'\n</script>').join('\n');
