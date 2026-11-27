@@ -8,10 +8,13 @@
 <title>Página não encontrada · Seu Chef em Casa</title>
 <style>
 body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f6f3eb;color:#303629;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:24px;text-align:center}
+main{width:100%;max-width:28rem}
 p.olho{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:#754653;margin:0 0 12px}
-h1{font-family:Palatino,"Palatino Linotype",Georgia,serif;font-weight:400;font-size:2rem;margin:0 0 10px}
+h1{font-family:Palatino,"Palatino Linotype",Georgia,serif;font-weight:400;font-size:clamp(1.75rem,8vw,2rem);line-height:1.2;margin:0 0 10px}
 p{margin:0 0 24px;color:#56635a}
-a{display:inline-flex;align-items:center;min-height:48px;padding:12px 26px;border-radius:999px;background:#754653;color:#fff;text-decoration:none;font-weight:600}
+.acoes{display:grid;gap:12px}
+a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border:1px solid #754653;border-radius:999px;background:#754653;color:#fff;text-decoration:none;font-weight:600}
+a.secundario{background:transparent;color:#455238;border-color:#455238}
 a:focus-visible{outline:3px solid #c9a46a;outline-offset:3px}
 </style>
 </head>
@@ -19,8 +22,11 @@ a:focus-visible{outline:3px solid #c9a46a;outline-offset:3px}
 <main>
 <p class="olho">Erro 404</p>
 <h1>Não encontramos esta página.</h1>
-<p>Use a busca para encontrar um chef.</p>
+<p>O endereço pode ter mudado. Busque um chef ou veja como pedir um orçamento.</p>
+<nav class="acoes" aria-label="Próximos passos">
 <a href="/#/buscar">Buscar chefs</a>
+<a class="secundario" href="/orcamento-personal-chef">Como pedir um orçamento</a>
+</nav>
 </main>
 </body>
 </html>

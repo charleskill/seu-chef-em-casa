@@ -18,8 +18,8 @@ add('chef-cccccc0000000003','pausado@x.com',perfil('Chef Pausado'),0);
 add('chef-dddddd0000000004','inc@x.com',perfil('Chef Incompleto',{dishes:[]}));
 add('chef-eeeeee0000000005','helena@apresentacao.invalid',perfil('Chef Fictícia'));
 add('chef-ffffff0000000006','cli@x.com',perfil('Cliente',{tipo:'cliente'}));
-let chef,c,cid,serv,mapa;
-test.before(async()=>{chef=await import('../functions/chef/[slug].js');c=await import('../functions/c/[id].js');cid=await import('../functions/personal-chef/[[cidade]].js');serv=await import('../functions/servicos/[[servico]].js');mapa=await import('../functions/sitemap.xml.js')});
+let chef,c,cid,serv,mapa,orcamento;
+test.before(async()=>{chef=await import('../functions/chef/[slug].js');c=await import('../functions/c/[id].js');cid=await import('../functions/personal-chef/[[cidade]].js');serv=await import('../functions/servicos/[[servico]].js');mapa=await import('../functions/sitemap.xml.js');orcamento=await import('../functions/orcamento-personal-chef.js')});
 const PROD='https://seuchefemcasa.com.br';
 const abre=(mod,url,params)=>mod.onRequest({request:new Request(url),env:{DB},params});
 test('perfil /chef/<slug> sai completo do servidor, com canonical e JSON-LD; nome antigo redireciona',async()=>{
@@ -117,11 +117,27 @@ test('cidade e serviço: com chef real indexa; sem chef, convite com noindex; de
  assert.equal((await abre(cid,PROD+'/personal-chef/atlantida',{cidade:['atlantida']})).status,404);
  const p=await(await abre(serv,PROD+'/servicos/noite-da-pizza',{servico:['noite-da-pizza']})).text();assert.doesNotMatch(p,/noindex/);assert.match(p,/maria-teste-aaaaaa/);
  assert.match(await(await abre(serv,PROD+'/servicos/noite-do-fondue',{servico:['noite-do-fondue']})).text(),/noindex/);
+ const vazio=await(await abre(cid,PROD+'/personal-chef/joinville',{cidade:['joinville']})).text();assert.match(vazio,/href="\/#\/buscar">Buscar chefs/);assert.match(vazio,/href="\/orcamento-personal-chef">Como pedir um orçamento/);assert.match(vazio,/href="\/#\/entrar">Sou chef\? Criar perfil/);
  assert.equal(new Set((await import('../functions/_lib/seo.js')).SERVICOS.map(s=>s.slug)).size,(await import('../functions/_lib/seo.js')).SERVICOS.length);
+});
+test('404 e página de orçamento oferecem caminhos válidos e funcionam sem chefs',async()=>{
+ const {naoAchou}=await import('../functions/_lib/seo.js'),erro=naoAchou(),erroHtml=await erro.text();
+ assert.equal(erro.status,404);assert.match(erroHtml,/noindex/);
+ assert.match(erroHtml,/href="\/#\/buscar">Buscar chefs/);assert.match(erroHtml,/href="\/orcamento-personal-chef">Como pedir um orçamento/);
+ const estatico=fs.readFileSync(path.join(__dirname,'../404.html'),'utf8');
+ assert.match(estatico,/href="\/#\/buscar"/);assert.match(estatico,/href="\/orcamento-personal-chef"/);assert.match(estatico,/min-height:48px/);
+ const pagina=await abre(orcamento,PROD+'/orcamento-personal-chef',{});
+ assert.equal(pagina.status,200);const h=await pagina.text();
+ assert.match(h,/<link rel="canonical" href="https:\/\/seuchefemcasa\.com\.br\/orcamento-personal-chef">/);
+ assert.match(h,/Escolha um chef para pedir orçamento/);assert.match(h,/href="\/chef\/maria-teste-aaaaaa"/);
+ const semChefs=await(await orcamento.onRequest({request:new Request('https://preview.pages.dev/orcamento-personal-chef'),env:{}})).text();
+ assert.match(semChefs,/noindex/);assert.match(semChefs,/href="\/#\/buscar">Buscar chefs/);
+ assert.doesNotMatch(semChefs,/href="\/orcamento-personal-chef"/);
 });
 test('sitemap lista só chefs visíveis, completos e reais, e cidades/serviços com chef',async()=>{
  const x=await(await mapa.onRequest({env:{DB}})).text();
  assert.match(x,/<loc>https:\/\/seuchefemcasa\.com\.br\/chef\/maria-teste-aaaaaa<\/loc><lastmod>2026-11-24<\/lastmod>/);
+ assert.match(x,/<loc>https:\/\/seuchefemcasa\.com\.br\/orcamento-personal-chef<\/loc>/);
  assert.match(x,/personal-chef\/florianopolis</);assert.match(x,/personal-chef\/sao-jose</);assert.match(x,/servicos\/noite-da-pizza</);
  assert.doesNotMatch(x,/bbbbbb|cccccc|dddddd|eeeeee|ffffff|joinville|fondue/);
  const vazio=await(await mapa.onRequest({env:{}})).text();assert.equal((vazio.match(/<loc>/g)||[]).length,2+(await import('../functions/_lib/blog.js')).ARTIGOS.length);assert.ok(vazio.includes('/blog/ceia-de-natal-com-personal-chef<'));
