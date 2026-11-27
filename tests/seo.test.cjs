@@ -130,6 +130,10 @@ test('404 e página de orçamento oferecem caminhos válidos e funcionam sem che
  assert.equal(pagina.status,200);const h=await pagina.text();
  assert.match(h,/<link rel="canonical" href="https:\/\/seuchefemcasa\.com\.br\/orcamento-personal-chef">/);
  assert.match(h,/Escolha um chef para pedir orçamento/);assert.match(h,/href="\/chef\/maria-teste-aaaaaa"/);
+ assert.match(h,/<h2>Como pedir seu orçamento<\/h2><ol><li>Escolha um chef/);
+ assert.match(h,/envie a data, o número de pessoas e o cardápio desejado/);
+ assert.match(h,/Receba o orçamento em PDF, confira as informações/);
+ assert.ok(h.indexOf('Como pedir seu orçamento') < h.indexOf('Escolha um chef para pedir orçamento'));
  const semChefs=await(await orcamento.onRequest({request:new Request('https://preview.pages.dev/orcamento-personal-chef'),env:{}})).text();
  assert.match(semChefs,/noindex/);assert.match(semChefs,/href="\/#\/buscar">Buscar chefs/);
  assert.doesNotMatch(semChefs,/href="\/orcamento-personal-chef"/);
