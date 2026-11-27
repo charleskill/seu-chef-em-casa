@@ -183,7 +183,7 @@ function auth(){const adminEntry=location.hash==='#/entrar/admin',up=!adminEntry
     +(G?'<button type="button" class="b b-google full" data-a="google" data-v="cadastro">'+gIcon+' Criar conta com Google</button><p class="form-help c">Com a conta Google, você completa seu cadastro depois. Ao continuar, você aceita os <a href="#/termos">termos de uso e privacidade</a>.</p><p class="divisor"><span>ou com e-mail e senha</span></p>':'')
     +field('a_name','Seu nome','','text','autocomplete="name" maxlength="100"')
     +field('a_whatsapp','WhatsApp com DDD','','tel','autocomplete="tel"')
-    +(S.tipo==='cliente'?'':field('a_cities','Cidades onde atende','','text','data-endereco="cidades" data-cidade-sc placeholder="Ex.: Florianópolis, Palhoça"'))
+    +(S.tipo==='cliente'?'':field('a_cities','Cidades onde atende','','text','data-endereco="cidades" placeholder="Ex.: Florianópolis, Palhoça"'))
     +(S.tipo!=='cliente'&&cloudOn()&&CL.temConvite?field('a_convite','Código de convite','','text','autocomplete="off" maxlength="80" placeholder="Enviado pela equipe"'):'')
     +field('a_email','E-mail','','email','autocomplete="username"')
     +senha
@@ -194,7 +194,7 @@ function auth(){const adminEntry=location.hash==='#/entrar/admin',up=!adminEntry
 function cidadeCadastroPendente(){
   const campo=$('#a_cities_novo');
   if(!campo?.value.trim())return false;
-  $('#auth-error').textContent='Escolha uma cidade de Santa Catarina nas sugestões ou apague o texto para continuar.';
+  $('#auth-error').textContent='Escolha uma cidade nas sugestões ou apague o texto para continuar.';
   campo.focus();
   return true;
 }

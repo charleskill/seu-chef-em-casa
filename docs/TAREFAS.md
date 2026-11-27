@@ -476,3 +476,5 @@ Responsável: Codex, a pedido de Carlos. Origem: main 4adda6d. Branch: codex/org
 
 - 26/11/2026 · Orçamento rápido (branch orcamento-rapido): Painel > Orçamentos. O chef monta o orçamento no celular (cliente, evento, itens com total automático, botões de pratos do cardápio e extras, condições, validade) e envia pelo WhatsApp. O cliente abre /o/<id>?q=... com a página do orçamento, Baixar PDF e Aceitar (volta ao WhatsApp do chef). Orçamentos ficam guardados no aparelho do chef. Testes: 93 (5 novos). Aguarda OK do Carlos para publicar.
 - 26/11/2026 · App instalável (branch app-instalavel): manifesto, ícones (assets/app), service worker que mostra /offline sem internet (não guarda dados em cache) e botão Instalar app no Painel (Android/Chrome/Edge; no iPhone mostra como adicionar à tela de início). Edge confirmou: sem erros de instalação. Próximo: Play Store (US$ 25) empacotando este app.
+
+- 27/11/2026: cadastro do chef aceita cidades do Brasil inteiro (tirado o limite de SC em "Cidades onde atende").
