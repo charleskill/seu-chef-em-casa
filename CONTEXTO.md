@@ -4,7 +4,8 @@ Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o dese
 ## Bastão
 _27/11/2026 (noite), Claude. Branch: main._
 - **Na main:** SEO passos 1 a 5 e blog (passo 7: /blog com 3 textos em functions/_lib/blog.js, no sitemap); retorno da Fer no iPhone (cidades do IBGE, busca, destaques vinho/dourado); frase "Personal chefs na sua casa"; regras entre IAs no AGENTS.md + CLAUDE.md e GEMINI.md.
-- **Falta:** Search Console com o Carlos (DNS na Cloudflare, enviar sitemap). Sitemap só terá chefs quando houver perfil real completo e visível. Texto "Quanto custa" só com preços reais. Fer conferir o campo de data no iPhone. Termos: revisão do Diogo. Pasta `repo`: previa/ (98 MB) sem uso, apagar só com OK.
+- **Search Console:** verificado em 27/11 (DNS pela Cloudflare), sitemap enviado e indexação da Ceia de Natal pedida. Conferir em 1-2 dias se o sitemap virou "Sucesso".
+- **Falta:** Sitemap só terá chefs quando houver perfil real completo e visível. Texto "Quanto custa" só com preços reais. Fer conferir o campo de data no iPhone. Termos: revisão do Diogo. Pasta `repo`: previa/ (98 MB) sem uso, apagar só com OK.
 - **Comandos:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
 
 ## Estado em 15/11/2026 (noite), depois do Codex
