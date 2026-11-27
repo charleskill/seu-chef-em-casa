@@ -10,7 +10,7 @@
  const wa=(fone,txt)=>'https://wa.me/'+String(fone||'').replace(/\D/g,'')+(txt?'?text='+encodeURIComponent(txt):'');
  const opcoes=(lista,sel,vazio)=>(vazio?'<option value="">'+e(vazio)+'</option>':'')+lista.map(([v,t])=>'<option value="'+e(v)+'"'+(v===sel?' selected':'')+'>'+e(t)+'</option>').join('');
  function carregar(qual,rota){if(st.carregando[qual])return;st.carregando[qual]=true;
-  api('GET',rota).then(j=>{st[qual]=j}).catch(err=>{st[qual]={erro:err.message}}).finally(()=>{st.carregando[qual]=false;ctx&&ctx.render()})}
+  api('GET',rota).then(j=>{st[qual]=j}).catch(err=>{st[qual]={erro:err.message}}).finally(()=>{st[qual+'Em']=Date.now();st.carregando[qual]=false;ctx&&ctx.render()})}
  const vagas=(n,total=M.MAX_CHEFS)=>'<span class="mu-vagas" aria-label="'+n+' de '+total+' chefs já pegaram">'+Array.from({length:total},(_,i)=>'<i class="'+(i<n?'on':'')+'"></i>').join('')+'</span>';
  const detalhes=p=>'<ul class="mu-tags">'+[M.LOCAIS[p.local],M.COMPRAS[p.compras],p.faixa,p.restricoes&&'Restrições: '+p.restricoes].filter(Boolean).map(t=>'<li>'+e(t)+'</li>').join('')+'</ul>';
  const cabeca=p=>'<div><p class="mu-quando">'+e(M.dataTxt(p))+(p.horario?' · '+e(p.horario):'')+' · '+e(p.cidade)+(p.bairro?', '+e(p.bairro):'')+'</p><h3>'+e(M.titulo(p))+'</h3></div>';
@@ -36,7 +36,9 @@
  }
 
  // ---------- Cliente: bloco no painel ----------
+ const velho=q=>st[q]&&!st.carregando[q]&&Date.now()-(st[q+'Em']||0)>60000;
  function cliente(){
+  if(velho('cliente'))st.cliente=null;
   if(!st.cliente)carregar('cliente','mural/meus');
   const lista=(st.cliente&&st.cliente.pedidos)||[];
   const status={aberto:'Esperando chefs',completo:'4 chefs interessados',fechado:'Encerrado',vencido:'Data passou',oculto:'Em análise'};
@@ -50,6 +52,7 @@
 
  // ---------- Chef: aba Mural ----------
  function panel(c){
+  if(velho('chef'))st.chef=null;
   if(!st.chef)carregar('chef','mural');
   const d=st.chef||{},lista=d.pedidos||[];
   const aviso=d.falta&&d.falta.length?'<div class="note" role="status"><b>Complete seu perfil para liberar contatos.</b> Falta: '+e(d.falta.join(', '))+'.</div>':'';
