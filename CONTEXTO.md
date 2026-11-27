@@ -2,9 +2,9 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
-_25/11/2026 (noite), Claude. Branch: seo-indexavel (PR aberto, sem merge); main até 4997b2c + plano-seo._
-- **Feito no branch:** passos 1 a 5 do docs/SEO-PLANO.md (perfis /chef/slug no servidor, cidades e serviços com noindex sem chef, sitemap dinâmico, robots, 404, capa mais rápida). Ver docs/TAREFAS.md.
-- **Falta:** Carlos ver a prévia e dar o SIM para o merge; depois Search Console (verificação DNS na Cloudflare, enviar sitemap) com o Carlos. Textos de blog (passo 7) só depois.
+_27/11/2026, Claude. Branch: main (até 102ecba, tudo juntado)._
+- **Na main:** SEO passos 1 a 5 (seo-indexavel); perfil público do Codex (PR 20: portfólio, curtidas/comentários, PDF comercial, fotos no cardápio, 8 contatos, textos revisados); orçamento rápido pelo WhatsApp; app instalável (manifesto, ícones, offline).
+- **Falta:** Search Console com o Carlos (verificação DNS na Cloudflare, enviar sitemap). Textos de blog (passo 7) depois. A pasta `repo` tem arquivos não salvos (AGENTS, CONTEXTO, CLAUDE, GEMINI, previa/).
 - **Comandos:** git pull; npm run check; npm test; npm run build. Publicar só com OK do Carlos.
 
 ## Estado em 15/11/2026 (noite), depois do Codex
