@@ -1,5 +1,6 @@
 # Orientações para colaboradores e assistentes
 Leia docs/PROJETO.md, docs/TAREFAS.md e docs/DECISOES.md antes de trabalhar.
+Antes de decidir produto, textos, vídeos ou pitch, leia docs/pesquisa/dores-dos-chefs.md: são as dores reais que os chefs contaram ao Carlos.
 Carlos é o responsável pelo produto. Não invente requisitos ou decisões dele.
 Consulte a versão atual da branch main; informe quando estiver trabalhando com uma cópia desatualizada.
 Preserve o trabalho existente. Faça mudanças focadas e use branches para alterações funcionais.
