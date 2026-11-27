@@ -18,6 +18,12 @@ const db=new DatabaseSync(':memory:');for(const f of ['0001_piloto.sql','0002_go
 const DB={prepare(sql){let a=[];return {bind(...x){a=x;return this},async first(){return db.prepare(sql).get(...a)||null},async all(){return{results:db.prepare(sql).all(...a)}},async run(){return{meta:{changes:Number(db.prepare(sql).run(...a).changes)}}}}},async batch(l){for(const s of l)await s.run()}};
 const contas={cliente:{tipo:'cliente',name:'Maria Silva',whatsapp:''},cliente2:{tipo:'cliente',name:'João',whatsapp:''},joinville:{cities:'Joinville'},incompleto:{cities:'Florianópolis',dishes:[]}};
 for(const n of [1,2,3,4,5])contas['chef'+n]={cities:'Florianópolis, São José'};
+Object.assign(contas, {
+ fregues:{tipo:'cliente',name:'Cliente'},
+ correto:{cities:'São Domingos - GO'},
+ errado:{cities:'São Domingos - SC'},
+ legado:{cities:'São Domingos'}
+});
 let api;const tk=n=>n.padEnd(64,'0').replace(/[^a-f\d]/g,'a').slice(0,64);
 test.before(async()=>{api=await import('../functions/api/[[rota]].js');
  for(const [n,extra] of Object.entries(contas)){const p={name:'Chef '+n,whatsapp:'48991106355',avatar:'/x.jpg',gallery:[],dishes:[{id:'d',name:'Risoto',price:50}],...extra};
@@ -61,4 +67,24 @@ test('mural: excluir a conta apaga pedidos e liberações dela',async()=>{
 });
 test('mural: painel da equipe é só para a equipe',async()=>{
  assert.equal((await req('chef1','mural/admin')).status,403);assert.equal((await req('cliente','mural/admin/'+'a'.repeat(24)+'/remover','POST',{})).status,403);
+});
+
+test('mural: distingue cidades homônimas pela UF e aceita perfil legado',async()=>{
+ const pedido={...base,cidade:'São Domingos',uf:'go'};
+ const invalido=await req('fregues','mural','POST',{...pedido,uf:'XX'});
+ assert.equal(invalido.status,400);
+ const r=await req('fregues','mural','POST',pedido);
+ assert.equal(r.status,201);
+ const {id,chefsAvisados}=await r.json();
+ assert.equal(chefsAvisados,2);
+ const meus=await(await req('fregues','mural/meus')).json();
+ assert.equal(meus.pedidos[0].uf,'GO');
+ assert.equal((await(await req('errado','mural')).json()).pedidos.length,0);
+ assert.equal((await req('errado','mural/'+id+'/liberar','POST',{})).status,403);
+ assert.equal((await req('errado','mural/'+id+'/denunciar','POST',{})).status,403);
+ for(const chef of ['correto','legado']){
+  const mural=await(await req(chef,'mural')).json();
+  assert.equal(mural.pedidos[0].id,id);
+  assert.equal((await req(chef,'mural/'+id+'/liberar','POST',{})).status,200);
+ }
 });

@@ -56,7 +56,7 @@
       .filter(c => modo !== 'cidade-sc' || c.sigla === 'SC')
       .map(c => ({ c, n: nota(c) })).filter(x => x.n < 9)
       .sort((a, b) => a.n - b.n || a.c.peso - b.c.peso || a.c.nome.localeCompare(b.c.nome, 'pt-BR'))
-      .slice(0, 6).map(({ c }) => ({ titulo: c.nome + ' - ' + c.sigla, detalhe: (NOME_UF[c.sigla] || c.sigla) + ', Brasil', valor: c.nome }));
+      .slice(0, 6).map(({ c }) => ({ titulo: c.nome + ' - ' + c.sigla, detalhe: (NOME_UF[c.sigla] || c.sigla) + ', Brasil', valor: c.nome, uf: c.sigla }));
   }
 
   async function buscar(texto, modo, sinal) {
@@ -112,11 +112,14 @@
     const i = Math.max(v.lastIndexOf(','), v.lastIndexOf('&'));
     return { antes: i >= 0 ? v.slice(0, i + 1) + ' ' : '', texto: v.slice(i + 1) };
   }
+  const campoUf = el => el.dataset.enderecoUf && el.form?.elements.namedItem(el.dataset.enderecoUf);
   function escolher(i) {
     if (!atual || !atual.itens[i]) return;
     if (atual.el.adicionarCidade) { const c = atual.el, v = atual.itens[i].valor; fechar(); c.adicionarCidade(v); return; }
     const { el } = atual, t = trecho(el);
     el.value = (t.antes + atual.itens[i].valor).slice(0, Number(el.maxLength) > 0 ? Number(el.maxLength) : 300);
+    const uf = campoUf(el);
+    if (uf) uf.value = atual.itens[i].uf || '';
     fechar();
     el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true }));
     el.focus();
@@ -177,6 +180,8 @@
   document.addEventListener('focusin', e => { if (e.target.matches && e.target.matches('input[data-endereco]')) preparar(e.target); });
   document.addEventListener('input', e => {
     const el = e.target; if (!el.matches || !el.matches('input[data-endereco]') || !e.isTrusted) return;
+    const uf = campoUf(el);
+    if (uf) uf.value = '';
     preparar(el); clearTimeout(timer); if (ctl) ctl.abort();
     const n = ++seq;
     fechar();

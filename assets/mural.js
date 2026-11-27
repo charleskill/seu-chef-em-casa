@@ -13,7 +13,7 @@
   api('GET',rota).then(j=>{st[qual]=j}).catch(err=>{st[qual]={erro:err.message}}).finally(()=>{st[qual+'Em']=Date.now();st.carregando[qual]=false;ctx&&ctx.render()})}
  const vagas=(n,total=M.MAX_CHEFS)=>'<span class="mu-vagas" aria-label="'+n+' de '+total+' chefs já pegaram">'+Array.from({length:total},(_,i)=>'<i class="'+(i<n?'on':'')+'"></i>').join('')+'</span>';
  const detalhes=p=>'<ul class="mu-tags">'+[M.LOCAIS[p.local],M.COMPRAS[p.compras],p.faixa,p.restricoes&&'Restrições: '+p.restricoes].filter(Boolean).map(t=>'<li>'+e(t)+'</li>').join('')+'</ul>';
- const cabeca=p=>'<div><p class="mu-quando">'+e(M.dataTxt(p))+(p.horario?' · '+e(p.horario):'')+' · '+e(p.cidade)+(p.bairro?', '+e(p.bairro):'')+'</p><h3>'+e(M.titulo(p))+'</h3></div>';
+ const cabeca=p=>'<div><p class="mu-quando">'+e(M.dataTxt(p))+(p.horario?' · '+e(p.horario):'')+' · '+e(M.cidadeTxt(p))+(p.bairro?', '+e(p.bairro):'')+'</p><h3>'+e(M.titulo(p))+'</h3></div>';
 
  // ---------- Cliente: #/pedir ----------
  function pedir(){
@@ -25,7 +25,7 @@
   const hoje=M.hoje(),tipos=M.TIPOS.map(t=>'<label class="mu-chip"><input type="radio" name="tipo" value="'+e(t)+'"><span>'+e(t)+'</span></label>').join('');
   return '<section class="card mu-pedir">'+topo+passos+'<form id="mu-form" novalidate>'
    +'<fieldset class="f"><legend>Qual é a ocasião?</legend><div class="mu-chips">'+tipos+'</div></fieldset>'
-   +'<div class="mu-2"><div class="f"><label for="mu-cidade">Cidade</label><input id="mu-cidade" name="cidade" data-endereco="cidade" autocomplete="off" placeholder="Ex.: Florianópolis" required></div><div class="f"><label for="mu-bairro">Bairro <small>(opcional)</small></label><input id="mu-bairro" name="bairro" maxlength="80"></div></div>'
+   +'<div class="mu-2"><div class="f"><label for="mu-cidade">Cidade</label><input id="mu-cidade" name="cidade" data-endereco="cidade" data-endereco-uf="uf" autocomplete="off" placeholder="Digite e escolha uma cidade" required><input type="hidden" name="uf"></div><div class="f"><label for="mu-bairro">Bairro <small>(opcional)</small></label><input id="mu-bairro" name="bairro" maxlength="80"></div></div>'
    +'<div class="mu-2"><div class="f"><label for="mu-data">Data</label><input id="mu-data" name="data" type="date" min="'+hoje+'" max="'+M.somaDias(hoje,365)+'"><label class="mu-check"><input type="checkbox" name="semData" id="mu-semdata"> Ainda não sei a data</label></div><div class="f"><label for="mu-horario">Horário</label><select id="mu-horario" name="horario">'+opcoes(M.HORARIOS.map(h=>[h,h]),'','Tanto faz')+'</select></div></div>'
    +'<div class="mu-2"><div class="f"><label for="mu-pessoas">Quantas pessoas?</label><input id="mu-pessoas" name="pessoas" type="number" inputmode="numeric" min="1" max="500" value="'+e((root.ChefApp&&root.ChefApp.guests)||'')+'" required></div><div class="f"><label for="mu-faixa">Valor que você pensa em investir <small>(opcional)</small></label><select id="mu-faixa" name="faixa">'+opcoes(M.FAIXAS.map(f=>[f,f]),'','Escolha')+'</select></div></div>'
    +'<div class="mu-2"><div class="f"><label for="mu-local">Onde</label><select id="mu-local" name="local">'+opcoes(Object.entries(M.LOCAIS),'casa')+'</select></div><div class="f"><label for="mu-compras">Ingredientes</label><select id="mu-compras" name="compras">'+opcoes(Object.entries(M.COMPRAS),'combinar')+'</select></div></div>'
@@ -81,6 +81,7 @@
  addEventListener('submit',async ev=>{
   if(ev.target.id!=='mu-form')return;ev.preventDefault();const f=ev.target,btn=f.querySelector('[type=submit]'),erro=document.getElementById('mu-erro');
   const v=Object.fromEntries(new FormData(f));v.semData=!!f.semData.checked;v.pessoas=Number(v.pessoas);
+  if(!v.uf){erro.textContent='Escolha a cidade e a UF na lista de sugestões.';f.elements.namedItem('cidade').focus();return}
   try{M.limpar(v)}catch(err){erro.textContent=err.message;const alvo=err.campo&&(f.querySelector('[name="'+err.campo+'"]'));if(alvo)alvo.focus();return}
   btn.disabled=true;btn.textContent='Publicando…';
   try{st.enviado=await api('POST','mural',v);st.erro='';st.cliente=null;ctx.render();scrollTo({top:0,behavior:'smooth'})}
