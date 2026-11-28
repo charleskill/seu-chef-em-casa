@@ -63,6 +63,15 @@
     // Link para o chef criar uma senha nova (vale 48 horas) e exclusão de conta pela equipe.
     adminNovaSenha: id => req('POST', '/admin/chefs/' + encodeURIComponent(id), { acao: 'nova-senha' }),
     adminExcluir: id => req('DELETE', '/admin/chefs/' + encodeURIComponent(id)),
+    // Seções do painel completo: resumo, pedidos, clientes, comentários e registro de atividades.
+    adminResumo: () => req('GET', '/admin/resumo'),
+    adminPedidos: () => req('GET', '/admin/pedidos').then(j => j.pedidos || []),
+    adminStatusPedido: (id, status) => req('PATCH', '/admin/pedidos/' + encodeURIComponent(id), { status }),
+    adminExcluirPedido: id => req('DELETE', '/admin/pedidos/' + encodeURIComponent(id)),
+    adminClientes: () => req('GET', '/admin/clientes').then(j => j.clientes || []),
+    adminComentarios: () => req('GET', '/admin/comentarios').then(j => j.comentarios || []),
+    adminApagarComentario: id => req('DELETE', '/admin/comentarios/' + encodeURIComponent(id)),
+    adminAtividades: () => req('GET', '/admin/atividades').then(j => j.atividades || []),
     // O chef abre o link da equipe e cria a senha nova; já sai logado.
     novaSenha: (id, token, senha) => req('POST', '/nova-senha', { id, token, senha }).then(j => j.chef),
     meusPedidos: () => req('GET', '/meus-pedidos').then(j => j.pedidos || [])

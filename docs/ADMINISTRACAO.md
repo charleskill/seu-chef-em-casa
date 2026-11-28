@@ -46,3 +46,11 @@ Clientes não criam conta nesta versão. Em **Configurações e privacidade**, n
 O painel edita os campos e conteúdos descritos acima. Mudanças de estrutura, cores, programação, textos de outras seções, domínio, infraestrutura e autorização de novos administradores continuam pelo processo técnico. Não é um editor livre de qualquer elemento do site.
 
 As prévias de branch da Cloudflare não têm banco vinculado. Por isso não permitem conferir o administrador funcional com os dados reais. A verificação desta entrega foi feita com banco SQLite e contas fictícias locais; veja `TAREFAS.md`.
+
+## Painel completo (28/11/2026)
+
+- **Pedidos:** todos os pedidos, com busca, filtro por situação (Novos, Respondidos, Fechados), troca de situação na própria lista, Ver pedido e Excluir. O número vermelho no menu mostra os pedidos novos.
+- **Clientes:** contas de quem contrata, com contato, forma de entrada, atividade (segue, curtidas, comentários), Link de nova senha e Excluir conta (pede para digitar EXCLUIR).
+- **Comentários:** comentários das fotos dos chefs, com a foto, o autor e Apagar.
+- **Registro de atividades:** cada ação da equipe no painel (salvar site, editar, esconder, link de senha, excluir, mudar pedido, apagar comentário), com data e nome. Começa a contar a partir desta versão.
+- **Exportar planilha:** em Pedidos, Chefs, Clientes, Comentários e Registro. Baixa um arquivo .csv que abre no Excel ou no Google Planilhas, respeitando a busca e o filtro da tela.

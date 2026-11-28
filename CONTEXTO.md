@@ -2,6 +2,8 @@
 Carlos escolheu oliva, marfim e vinho discreto para todo o site e aprovou o desenvolvimento de Menus especiais com artes de divulgação. Implementado no branch codex/identidade-mesa, PR 17. Ver docs/MENUS-ESPECIAIS.md e a atualização no final de docs/REVISAO-IDENTIDADE-MESA.md. A seção abaixo descreve a primeira revisão, anterior à troca da paleta. Sem merge e sem publicação oficial até novo OK de Carlos. Preservar visual-fotos-fontes-efeitos.
 
 ## Bastão
+_28/11/2026, Claude. Branch `painel-admin-completo` (fase 1 do painel completo estilo WordPress: Pedidos, Clientes, Comentários, Registro de atividades, Exportar planilha; ver docs/ADMINISTRACAO.md). 81 testes. Não publicado: falta OK do Carlos, PR e merge. Próximo: fase 2 (administradores pelo painel, serviços editáveis, menus especiais)._
+_25/11/2026, Claude. Publicado até 7b7c6d5: PR 16 juntado (cartão Instagram + fonte, capa e efeitos) e Sentry ligado (painel seu-chef-em-casa.sentry.io, entra com GitHub). Esta pasta está no branch `monitoramento` (igual ao main; o main está preso na pasta repo-limpeza). Próximo: robots.txt/sitemap, "Esqueci minha senha" sem contato, "Limpar busca"._
 _24/11/2026, Claude → Codex. Branch: main (tudo publicado, até 3eb06d1)._
 - **No ar:** Google OAuth em produção; Google em um toque + Complete seu cadastro + sino; e-mail temporário bloqueado; conta de cliente (Sou chef / Quero contratar, perfil.tipo); pedido só com conta; perfil do chef estilo Instagram; seguir, curtir e comentar fotos da galeria (tabelas seguidores, curtidas, comentarios criadas pelo servidor; migrations/0005_social.sql). 75 testes.
 - **Falta:** Carlos testar no celular (Android e iPhone) com conta nova: chef, cliente, seguir/curtir/comentar, pedido. Depois: QR code e material da aula do Senac (05/12), 3 posts do Instagram, ensaio com 2-3 pessoas. Termos ainda são rascunho (Diogo revisa; falta e-mail de contato).
@@ -12,6 +14,16 @@ _24/11/2026, Claude → Codex. Branch: main (tudo publicado, até 3eb06d1)._
 Leia este arquivo no começo de cada conversa nova, junto com `AGENTS.md` e `docs/` (PROJETO, TAREFAS, DECISOES, ATIVAR-CLOUDFLARE).
 Atualizado em 15/11/2026 (noite). Leia primeiro a seção logo abaixo.
 
+
+## Bastão (leia só isto ao começar; atualize ao terminar)
+_Atualizado em 23/11/2026 por Claude, passando para o Antigravity (Codex sem limite até 15h42)._
+- **Estado:** O Codex publicou na `main` (commit 2f33e58) a identidade oliva e os menus especiais. Esta pasta está atrás: branch `visual-fotos-fontes-efeitos` em 0b4edee, com AGENTS.md, CONTEXTO.md, CLAUDE.md, GEMINI.md e `previa/` não salvos. Antes de tudo: `git stash -u`, `git switch main`, `git pull`, `git stash pop` (resolver conflito do CONTEXTO.md mantendo este Bastão).
+- **Tarefa em andamento:** teste 100% da jornada de um chef no site oficial (https://seuchefemcasa.com.br), da chegada até tudo explorado, e relatório final para o Carlos com melhorias, nota de SEO e prioridades.
+- **Já feito:** conta de teste "Chef Auditoria — TESTE" criada no site oficial (termos aceitos com autorização do Carlos), perfil PAUSADO, fora da vitrine. Validação do link de Instagram inválido funcionou. O envio da foto de perfil travou na ferramenta do navegador: conferir se a foto chegou antes de repetir.
+- **Achados até agora:** (1) robots.txt e sitemap.xml devolvem a página inicial em HTML; (2) rotas com # dificultam o Google achar as páginas de serviços; (3) PageSpeed: SEO 92, desempenho 98 no computador e 86 no celular (imagens; maior área visível em 4,2 s); (4) "Esqueci minha senha" manda falar no WhatsApp sem número nem botão; (5) "Limpar busca" não remove o filtro depois de escolher um serviço sem chefs ("ver tudo" funciona).
+- **Falta testar:** foto de perfil, fotos, pratos/cardápio, atendimento, agenda e eventos, menus especiais (Meu painel → Menus especiais) com geração de artes, divulgação, celular, conferir se tudo fica salvo depois de recarregar. Depois, o relatório: o que foi testado no site real e o que foi testado na cópia local (127.0.0.1:4181, banco separado).
+- **Regras:** não enviar mensagens a clientes nem redes; manter a conta de teste pausada; perguntar ao Carlos antes de apagá-la; nada de merge, publicação ou mudança de conta sem o OK dele.
+- **Não mexer:** segredos, `functions/api`, `migrations`.
 ## Estado em 15/11/2026 (noite), depois do Codex
 - O Codex entregou e publicou (PRs 4 a 15): administração em `/admin` (visão geral, chefs e contas, conteúdo do site; guia em `docs/ADMINISTRACAO.md`), Configurações com Excluir minha conta, 55 serviços com fotos locais em `assets/servicos`, prévia dos serviços na página inicial. Testes: 61.
 - **Atenção:** há três perfis fictícios na vitrine pública, sem rótulo, autorizados por Carlos para a apresentação aos sócios (`docs/PERFIS-APRESENTACAO.md`). Depois da apresentação, esconder em Chefs e contas > Gerenciar conta > Esconder, ou rotular como exemplo. Decisão pendente de Carlos e Fer.

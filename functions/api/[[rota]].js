@@ -199,10 +199,22 @@ async function garantirEsquema(env) {
     'CREATE INDEX IF NOT EXISTS curtidas_conta ON curtidas(conta_id)',
     'CREATE TABLE IF NOT EXISTS comentarios (id TEXT PRIMARY KEY, chef_id TEXT NOT NULL, foto_id TEXT NOT NULL, conta_id TEXT NOT NULL, texto TEXT NOT NULL, criado_em TEXT NOT NULL)',
     'CREATE INDEX IF NOT EXISTS comentarios_foto ON comentarios(chef_id, foto_id, criado_em)',
-    'CREATE INDEX IF NOT EXISTS comentarios_conta ON comentarios(conta_id)'
+    'CREATE INDEX IF NOT EXISTS comentarios_conta ON comentarios(conta_id)',
+    'CREATE TABLE IF NOT EXISTS atividades (id TEXT PRIMARY KEY, criado_em TEXT NOT NULL, conta_id TEXT NOT NULL, conta_nome TEXT NOT NULL, acao TEXT NOT NULL, alvo TEXT NOT NULL, detalhe TEXT NOT NULL)',
+    'CREATE INDEX IF NOT EXISTS atividades_data ON atividades(criado_em)'
   ]) await env.DB.prepare(q).run();
   esquemaOk = true;
 }
+
+// Registro de atividades da equipe: quem fez o quê e quando. Nunca guarda senhas, links de senha nem textos de pedidos.
+async function registrar(env, conta, acao, alvo = '', detalhe = '') {
+  const nome = (() => { try { return JSON.parse(conta.perfil || '{}').name || ''; } catch { return ''; } })();
+  await env.DB.prepare('INSERT INTO atividades (id, criado_em, conta_id, conta_nome, acao, alvo, detalhe) VALUES (?, ?, ?, ?, ?, ?, ?)')
+    .bind(aleatorio(12), agora(), conta.id, txt(nome || conta.email, 120), txt(acao, 60), txt(alvo, 160), txt(detalhe, 300)).run();
+}
+const STATUS_PEDIDO = ['novo', 'respondido', 'fechado'];
+const nomeConta = row => { try { return JSON.parse(row || '{}').name || ''; } catch { return ''; } };
+const clienteDoPedido = (texto, dados) => txt(dados.cliente || (String(texto).match(/^Cliente: (.+)$/m) || [])[1] || '', 120);
 
 export async function onRequest({ request: req, env, params, waitUntil }) {
   if (!env.DB) return erro('Banco não configurado.', 503);
@@ -263,6 +275,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
           ? await env.DB.prepare('UPDATE site_config SET dados = ?, atualizado_em = ?, atualizado_por = ? WHERE id = 1 AND atualizado_em = ?').bind(JSON.stringify(config), versao, c.id, expected).run()
           : await env.DB.prepare('INSERT OR IGNORE INTO site_config (id, dados, atualizado_em, atualizado_por) VALUES (1, ?, ?, ?)').bind(JSON.stringify(config), versao, c.id).run();
         if (!result.meta.changes) return erro('Outra pessoa atualizou o site. Recarregue antes de editar.', 409);
+        await registrar(env, c, 'Salvou conteúdo do site');
         return json({ config, versao });
       }
     }
@@ -521,6 +534,75 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
       return json({ ok: true, status });
     }
 
+    // ---------- Painel completo: pedidos, clientes, comentários e registro de atividades ----------
+    if (/^\/admin\/(resumo|pedidos|clientes|comentarios|atividades)(\/|$)/.test(rota)) {
+      const c = await chefDaSessao(env, req);
+      if (!c) return erro('Entre com a conta da equipe.', 401);
+      if (!ehAdmin(env, c)) return erro('Acesso só para a equipe.', 403);
+      const [, secao, id = ''] = rota.split('/').slice(1);
+      if (secao === 'resumo' && metodo === 'GET' && !id) {
+        const semana = new Date(Date.now() - 7 * 864e5).toISOString();
+        const n = async (sql, ...v) => Number((await env.DB.prepare(sql).bind(...v).first()).n);
+        return json({
+          pedidosNovos: await n("SELECT COUNT(*) n FROM pedidos WHERE COALESCE(json_extract(dados, '$.status'), 'novo') = 'novo'"),
+          comentariosSemana: await n('SELECT COUNT(*) n FROM comentarios WHERE criado_em > ?', semana),
+          clientes: await n("SELECT COUNT(*) n FROM chefs WHERE json_extract(perfil, '$.tipo') = 'cliente'"),
+          chefs: await n("SELECT COUNT(*) n FROM chefs WHERE COALESCE(json_extract(perfil, '$.tipo'), 'chef') <> 'cliente'"),
+          atividades: (await env.DB.prepare('SELECT criado_em, conta_nome, acao, alvo FROM atividades ORDER BY criado_em DESC LIMIT 6').all()).results
+        });
+      }
+      if (secao === 'pedidos' && metodo === 'GET' && !id) {
+        const { results } = await env.DB.prepare('SELECT p.id, p.chef_id, p.texto, p.dados, p.criado_em, c.perfil FROM pedidos p LEFT JOIN chefs c ON c.id = p.chef_id ORDER BY p.criado_em DESC LIMIT 1000').all();
+        return json({ pedidos: results.map(r => { let d = {}; try { d = JSON.parse(r.dados || '{}'); } catch {} return {
+          id: r.id, chefId: r.chef_id, chef: nomeConta(r.perfil) || 'Conta removida', cliente: clienteDoPedido(r.texto, d),
+          status: STATUS_PEDIDO.includes(d.status) ? d.status : 'novo', modo: txt(d.mode || 'servico', 30), texto: r.texto, criado_em: r.criado_em }; }) });
+      }
+      if (secao === 'pedidos' && /^[\w-]{1,40}$/.test(id) && ['PATCH', 'DELETE'].includes(metodo)) {
+        const p = await env.DB.prepare('SELECT p.id, c.perfil FROM pedidos p LEFT JOIN chefs c ON c.id = p.chef_id WHERE p.id = ?').bind(id).first();
+        if (!p) return erro('Pedido não encontrado.', 404);
+        if (metodo === 'DELETE') {
+          await env.DB.prepare('DELETE FROM pedidos WHERE id = ?').bind(id).run();
+          await registrar(env, c, 'Excluiu pedido', 'Pedido para ' + (nomeConta(p.perfil) || 'conta removida'));
+          return json({ ok: true });
+        }
+        const status = String((await corpo(req)).status || '');
+        if (!STATUS_PEDIDO.includes(status)) return erro('Informe uma situação válida.');
+        await env.DB.prepare("UPDATE pedidos SET dados = json_set(dados, '$.status', ?) WHERE id = ?").bind(status, id).run();
+        await registrar(env, c, 'Mudou situação do pedido', 'Pedido para ' + (nomeConta(p.perfil) || 'conta removida'), status);
+        return json({ ok: true, status });
+      }
+      if (secao === 'clientes' && metodo === 'GET' && !id) {
+        const { results } = await env.DB.prepare(`SELECT c.id, c.email, c.perfil, c.criado_em, c.atualizado_em, c.google_sub,
+          (SELECT COUNT(*) FROM seguidores s WHERE s.conta_id = c.id) AS seguindo,
+          (SELECT COUNT(*) FROM curtidas l WHERE l.conta_id = c.id) AS curtidas,
+          (SELECT COUNT(*) FROM comentarios m WHERE m.conta_id = c.id) AS comentarios
+          FROM chefs c WHERE json_extract(c.perfil, '$.tipo') = 'cliente' ORDER BY c.criado_em DESC`).all();
+        return json({ clientes: results.map(r => { const p = JSON.parse(r.perfil || '{}'); return {
+          id: r.id, nome: p.name || '', email: r.email, whatsapp: p.whatsapp || '', cidades: p.cities || '', google: !!r.google_sub,
+          seguindo: r.seguindo, curtidas: r.curtidas, comentarios: r.comentarios, criado_em: r.criado_em, atualizado_em: r.atualizado_em }; }) });
+      }
+      if (secao === 'comentarios' && metodo === 'GET' && !id) {
+        const { results } = await env.DB.prepare(`SELECT m.id, m.chef_id, m.foto_id, m.conta_id, m.texto, m.criado_em, a.perfil AS autor, x.perfil AS chef
+          FROM comentarios m LEFT JOIN chefs a ON a.id = m.conta_id LEFT JOIN chefs x ON x.id = m.chef_id ORDER BY m.criado_em DESC LIMIT 500`).all();
+        return json({ comentarios: results.map(r => { let ch = {}; try { ch = JSON.parse(r.chef || '{}'); } catch {}
+          const foto = (ch.gallery || []).find(g => String(g.id) === r.foto_id);
+          return { id: r.id, texto: r.texto, criado_em: r.criado_em, autor: nomeConta(r.autor) || 'Conta removida', autorId: r.conta_id,
+            chef: ch.name || 'Conta removida', chefId: r.chef_id, foto: foto ? foto.url : '', legenda: foto ? txt(foto.caption, 120) : '' }; }) });
+      }
+      if (secao === 'comentarios' && id && metodo === 'DELETE') {
+        const m = await env.DB.prepare('SELECT m.id, m.texto, a.perfil AS autor FROM comentarios m LEFT JOIN chefs a ON a.id = m.conta_id WHERE m.id = ?').bind(txt(id, 40)).first();
+        if (!m) return erro('Comentário não encontrado.', 404);
+        await env.DB.prepare('DELETE FROM comentarios WHERE id = ?').bind(m.id).run();
+        await registrar(env, c, 'Apagou comentário', 'De ' + (nomeConta(m.autor) || 'conta removida'), m.texto.slice(0, 80));
+        return json({ ok: true });
+      }
+      if (secao === 'atividades' && metodo === 'GET' && !id) {
+        const { results } = await env.DB.prepare('SELECT id, criado_em, conta_nome, acao, alvo, detalhe FROM atividades ORDER BY criado_em DESC LIMIT 500').all();
+        return json({ atividades: results });
+      }
+      return erro('Rota não encontrada.', 404);
+    }
+
     // ---------- Painel do administrador (só e-mails em ADMIN_EMAILS) ----------
     if (rota === '/admin/chefs' || rota.startsWith('/admin/chefs/')) {
       const c = await chefDaSessao(env, req);
@@ -548,6 +630,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         // A edição de conteúdo preserva e-mail, credenciais, permissões e pausa.
         const perfil = await limparPerfil(env, id, b.perfil || {}, JSON.parse(alvo.perfil));
         const versao = agora();
+        await registrar(env, c, 'Editou perfil', perfil.name);
         await env.DB.prepare("UPDATE chefs SET perfil = json_set(?,'$.menus',json(COALESCE(json_extract(perfil,'$.menus'),'[]')),'$.menusVersao',COALESCE(json_extract(perfil,'$.menusVersao'),'')), atualizado_em = ? WHERE id = ?").bind(JSON.stringify(perfil), versao, id).run();
         return json({ chef: doDono(await env.DB.prepare('SELECT * FROM chefs WHERE id = ?').bind(id).first(), env), versao });
       }
@@ -555,22 +638,26 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         const b = await corpo(req);
         // Gera um link para o chef criar uma senha nova. A equipe nunca vê nem escolhe a senha.
         if (b.acao === 'nova-senha') {
-          const alvo = await env.DB.prepare('SELECT credencial FROM chefs WHERE id = ?').bind(id).first();
+          const alvo = await env.DB.prepare('SELECT credencial, perfil FROM chefs WHERE id = ?').bind(id).first();
           if (!alvo) return erro('Chef não encontrado.', 404);
           const token = aleatorio(24), cred = JSON.parse(alvo.credencial || '{}');
           cred.redefinir = { hash: await sha256(token), expira: Date.now() + 48 * 3600e3 };
           await env.DB.prepare('UPDATE chefs SET credencial = ? WHERE id = ?').bind(JSON.stringify(cred), id).run();
+          await registrar(env, c, 'Gerou link de nova senha', nomeConta(alvo.perfil));
           return json({ ok: true, horas: 48, link: new URL(req.url).origin + '/#/nova-senha/' + id + '/' + token });
         }
         if (typeof b.oculto !== 'boolean') return erro('Informe se o perfil fica escondido.');
         const r = await env.DB.prepare('UPDATE chefs SET oculto = ?, atualizado_em = ? WHERE id = ?').bind(b.oculto ? 1 : 0, agora(), id).run();
         if (!r.meta.changes) return erro('Chef não encontrado.', 404);
+        await registrar(env, c, b.oculto ? 'Escondeu perfil' : 'Mostrou perfil', nomeConta((await env.DB.prepare('SELECT perfil FROM chefs WHERE id = ?').bind(id).first()).perfil));
         return json({ ok: true, oculto: b.oculto });
       }
       // Exclui a conta de um chef: perfil, fotos, pedidos e sessões. Não tem volta.
       if (/^chef-[a-f\d]{16}$/.test(id) && metodo === 'DELETE') {
         if (id === c.id) return erro('Para excluir a sua própria conta, use Painel > Configurações.');
-        if (!await env.DB.prepare('SELECT 1 FROM chefs WHERE id = ?').bind(id).first()) return erro('Chef não encontrado.', 404);
+        const excluido = await env.DB.prepare('SELECT perfil, email FROM chefs WHERE id = ?').bind(id).first();
+        if (!excluido) return erro('Chef não encontrado.', 404);
+        await registrar(env, c, 'Excluiu conta', nomeConta(excluido.perfil) || excluido.email);
         await env.DB.batch(['pedidos', 'fotos', 'sessoes'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ?').bind(id)).concat(['seguidores', 'curtidas', 'comentarios'].map(t => env.DB.prepare('DELETE FROM ' + t + ' WHERE chef_id = ? OR conta_id = ?').bind(id, id))).concat(env.DB.prepare('DELETE FROM chefs WHERE id = ?').bind(id)));
         return json({ ok: true });
       }

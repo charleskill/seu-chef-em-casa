@@ -174,3 +174,7 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 ## 24/11/2026 · Perfil do Chef Estilo Instagram com Bio Recolhível
 - Previa dos chefs e perfil individual redesenhados com referências ao Instagram (anel de avatar, badges PJ, alinhamento limpo, botões de ação horizontais).
 - Textos de apresentação (bio) extensos são limitados com "ver mais" / "ver menos" para evitar poluição visual e páginas excessivamente compridas.
+
+## 28/11/2026 · Painel da equipe pensado para quem comprar o projeto
+- O painel precisa deixar o dono tocar o negócio sem programador: pedidos, clientes, comentários e registro de quem fez o quê. Fase 1 entregue no branch painel-admin-completo.
+- Fase 2 (pendente): administradores pelo painel (hoje o acesso fica preso a um e-mail no código), serviços e fotos editáveis, ajuste dos menus especiais. O registro de atividades nunca guarda senhas, links de senha nem textos de pedidos.
