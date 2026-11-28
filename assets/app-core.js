@@ -204,6 +204,6 @@ async function verifyPassword(password,account,cryptoApi){
   if(!/^[a-f\d]{64}$/i.test(account.pass)||!c?.subtle)return false;
   return account.pass===hex(await c.subtle.digest('SHA-256',new TextEncoder().encode(account.id+':'+password)));
 }
-const api={faltaPerfil,emailTemporario,norm,email,isAdminEmail,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
+const api={faltaPerfil,emailTemporario,norm,email,isAdminEmail,ADMIN_EMAIL,validEmail,safeUrl,phone,parsePrice,validateProfile,normalizeData,readData,persist,buildOrderText,passwordRecord,verifyPassword,FREQ,MODOS,DIAS,cleanMarmita,validateMarmita,marmitaEstimate,withDemo,stripDemo,OPCOES,EXPERIENCIAS,RESTR,opcoes,cleanOpcoes,mapsUrl,cleanAgenda,isFree,cleanKits};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefCore=api;
 })(typeof window!=='undefined'?window:globalThis);

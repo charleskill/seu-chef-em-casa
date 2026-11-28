@@ -80,3 +80,44 @@ test('registro de atividades: ações antigas do painel também entram, sem guar
  const token=link.link.split('/').pop();assert.ok(!JSON.stringify(j).includes(token),'o link de senha nunca vai para o registro');
  assert.ok(j.atividades[0].criado_em>=j.atividades[j.atividades.length-1].criado_em,'mais recentes primeiro');
 });
+
+test('equipe: só o dono dá e tira acesso; quem entra vira administrador na hora',async()=>{
+ assert.equal((await req('admin/equipe','POST',{email:'chef@example.com'},'chef')).status,403);
+ assert.equal((await req('admin/equipe','POST',{email:'não é e-mail'},'admin')).status,400);
+ assert.equal((await req('admin/equipe','POST',{email:'carlosmendes.ricci@gmail.com'},'admin')).status,400);
+ assert.equal((await req('admin/equipe','POST',{email:' Chef@Example.com '},'admin')).status,201);
+ assert.equal((await req('admin/equipe','POST',{email:'chef@example.com'},'admin')).status,400,'repetido');
+ assert.equal((await req('admin/pedidos','GET',undefined,'chef')).status,200,'acesso liberado');
+ assert.equal((await (await req('eu','GET',undefined,'chef')).json()).chef.admin,true);
+ const eq=await (await req('admin/equipe','GET',undefined,'chef')).json();
+ assert.equal(eq.souDono,false);assert.deepEqual(eq.equipe.map(e=>[e.email,e.dono]),[['carlosmendes.ricci@gmail.com',true],['chef@example.com',false]]);
+ assert.equal((await req('admin/equipe/chef%40example.com','DELETE',undefined,'chef')).status,403,'equipe não tira ninguém');
+ assert.equal((await req('admin/equipe/chef%40example.com','DELETE',undefined,'admin')).status,200);
+ assert.equal((await req('admin/pedidos','GET',undefined,'chef')).status,403,'acesso retirado na hora');
+ assert.equal((await req('admin/equipe/chef%40example.com','DELETE',undefined,'admin')).status,404);
+ const acoes=db.prepare('SELECT acao FROM atividades').all().map(r=>r.acao);assert.ok(acoes.includes('Deu acesso ao painel')&&acoes.includes('Tirou acesso ao painel'));
+});
+
+test('serviços: salva descrição, foto e escondidos; rota pública devolve; rejeita foto de fora e versão antiga',async()=>{
+ assert.equal((await req('admin/servicos','PUT',{servicos:{},versao:''},'chef')).status,403);
+ const ini=await (await req('admin/servicos','GET',undefined,'admin')).json();assert.deepEqual(ini.servicos,{});assert.equal(ini.versao,'');
+ assert.equal((await req('admin/servicos','PUT',{servicos:{'Lounge':{foto:'https://evil.example/x.jpg'}},versao:''},'admin')).status,400);
+ const r=await req('admin/servicos','PUT',{servicos:{'Lounge':{desc:'Petiscos e música.',foto:'assets/servicos/celebracao.webp',extra:1},'Noite da Pizza':{oculto:true},'Vazio':{}},versao:''},'admin');
+ assert.equal(r.status,200);const j=await r.json();
+ assert.deepEqual(j.servicos,{'Lounge':{desc:'Petiscos e música.',foto:'assets/servicos/celebracao.webp'},'Noite da Pizza':{oculto:true}});
+ assert.equal((await req('admin/servicos','PUT',{servicos:{},versao:''},'admin')).status,409,'versão antiga');
+ const pub=await (await req('site')).json();assert.deepEqual(pub.servicos,j.servicos);
+});
+
+test('menus especiais: lista de todos os chefs e a equipe tira do ar',async()=>{
+ const menu={id:'natal-1',title:'Ceia de Natal',occasion:'Natal',description:'',items:'Peru',photo:'/assets/x.webp',mode:'casa',price:300,basis:'menu',starting:false,serves:6,includes:'Louça',deadline:'2099-12-01',until:'2099-12-20',published:true};
+ db.prepare("UPDATE chefs SET perfil=json_set(perfil,'$.menus',json(?),'$.menusVersao','v0') WHERE id=?").run(JSON.stringify([menu,{...menu,id:'pascoa',title:'Páscoa',occasion:'Páscoa',published:false}]),ids.chef);
+ assert.equal((await req('admin/menus','GET',undefined,'chef')).status,403);
+ const j=await (await req('admin/menus','GET',undefined,'admin')).json();
+ assert.deepEqual(j.menus.map(m=>[m.id,m.situacao,m.chef]),[['natal-1','no-ar','Chef Teste'],['pascoa','rascunho','Chef Teste']]);
+ assert.equal((await req('admin/menus','POST',{chefId:ids.chef,menuId:'nao-existe'},'admin')).status,404);
+ assert.equal((await req('admin/menus','POST',{chefId:ids.chef,menuId:'natal-1'},'admin')).status,200);
+ const p=JSON.parse(db.prepare('SELECT perfil FROM chefs WHERE id=?').get(ids.chef).perfil);
+ assert.equal(p.menus[0].published,false);assert.notEqual(p.menusVersao,'v0','editor aberto do chef recebe aviso de conflito');
+ assert.ok(db.prepare("SELECT 1 FROM atividades WHERE acao='Tirou menu do ar'").get());
+});

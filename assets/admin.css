@@ -162,3 +162,29 @@ body .management-side-bottom small{color:#8d937e}
 }
 @media print{.adm-toolbar,.adm-actions,.management-heading-action,.management-top-alert{display:none!important}}
 @media(prefers-reduced-motion:reduce){.adm-glance-item{transition:none}.adm-glance-item:hover{transform:none}}
+
+/* Fase 2: serviços, menus especiais e equipe */
+.adm-help{font-size:13px;color:#626655;max-width:78ch;margin:0 0 14px;line-height:1.6}
+.adm-pill{display:inline-block;font-size:11.5px;font-weight:650;padding:3px 10px;border-radius:999px;background:#eef0e8;color:#4c5244;white-space:nowrap}
+.adm-pill.is-no-ar{background:#e7efe2;color:#2f4a2b}
+.adm-pill.is-encerrado{background:#f1efe8;color:#7b806f}
+.adm-pill.is-rascunho{background:#f6efdc;color:#6b5420}
+.adm-with-thumb{display:flex;align-items:center;gap:10px}
+.adm-with-thumb img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none;outline:1px solid #0000000f;outline-offset:-1px}
+.adm-with-thumb small{display:block}
+.adm-services input,.adm-services select{width:100%;min-width:180px;font-size:13px;padding:8px 10px;min-height:0}
+.adm-services input[data-sv="url"]{margin-top:6px}
+.adm-services tr.is-muted td:not(:last-child){opacity:.55}
+.adm-switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;white-space:nowrap}
+.adm-switch input{width:18px;height:18px;min-width:0;accent-color:#455238}
+.adm-save-state{font-size:13px;color:#7b806f;margin:0 auto 0 0}
+.adm-add{background:#fffdf8;border:1px solid #e3e1d4;border-radius:14px;padding:16px;margin-bottom:14px;max-width:640px}
+.adm-add label{display:block;font-size:13px;font-weight:600;margin-bottom:8px}
+.adm-add>div{display:flex;gap:10px;flex-wrap:wrap}
+.adm-add input{flex:1;min-width:220px}
+.adm-team{list-style:none;padding:0;margin:0;display:grid;gap:8px;max-width:640px}
+.adm-team li{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fffdf8;border:1px solid #e3e1d4;border-radius:12px}
+.adm-team li>div{flex:1;min-width:0}
+.adm-team small{display:block;font-size:12px;color:#7b806f;overflow-wrap:anywhere}
+.adm-team-avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#ede8df;color:#805a3c;font-weight:600;flex:none}
+@media(max-width:650px){.adm-services input,.adm-services select{min-width:0;text-align:left}.adm-team li{flex-wrap:wrap}}

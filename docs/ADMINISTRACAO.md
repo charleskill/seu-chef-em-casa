@@ -54,3 +54,9 @@ As prévias de branch da Cloudflare não têm banco vinculado. Por isso não per
 - **Comentários:** comentários das fotos dos chefs, com a foto, o autor e Apagar.
 - **Registro de atividades:** cada ação da equipe no painel (salvar site, editar, esconder, link de senha, excluir, mudar pedido, apagar comentário), com data e nome. Começa a contar a partir desta versão.
 - **Exportar planilha:** em Pedidos, Chefs, Clientes, Comentários e Registro. Baixa um arquivo .csv que abre no Excel ou no Google Planilhas, respeitando a busca e o filtro da tela.
+
+## Fase 2 (28/11/2026)
+
+- **Equipe** (Sistema): o dono do site digita o e-mail da pessoa e toca em **Dar acesso ao painel**. A pessoa entra com a própria conta; se ainda não tem, cria uma com o mesmo e-mail. **Tirar acesso** vale na hora. Só o dono muda a equipe.
+- **Serviços** (Site): troque a descrição, escolha outra foto (das fotos do site ou um link do images.unsplash.com) e desmarque **Aparece** para esconder um serviço. Toque em **Salvar serviços**. O nome não muda, porque liga o serviço aos chefs.
+- **Menus especiais** (Site): todos os menus criados pelos chefs, com filtro (No ar, Encerrados, Rascunhos). **Tirar do ar** esconde um menu inadequado; só o chef consegue divulgar de novo.

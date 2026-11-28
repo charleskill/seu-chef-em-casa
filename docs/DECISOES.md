@@ -178,3 +178,4 @@ A branch feat/preparacao-piloto já continha validação de orçamento e fundaç
 ## 28/11/2026 · Painel da equipe pensado para quem comprar o projeto
 - O painel precisa deixar o dono tocar o negócio sem programador: pedidos, clientes, comentários e registro de quem fez o quê. Fase 1 entregue no branch painel-admin-completo.
 - Fase 2 (pendente): administradores pelo painel (hoje o acesso fica preso a um e-mail no código), serviços e fotos editáveis, ajuste dos menus especiais. O registro de atividades nunca guarda senhas, links de senha nem textos de pedidos.
+- 28/11/2026 (fase 2): acesso ao painel deixa de depender só do e-mail no código. O dono continua fixo e é o único que muda a equipe. Na equipe, o nome do serviço não é editável porque liga o serviço aos chefs. A equipe só tira menus do ar; divulgar de novo é com o chef.

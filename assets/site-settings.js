@@ -19,6 +19,27 @@ function clean(input){
  }
  return out;
 }
-const api={defaults,fields,clean};
+// Ajustes dos serviços feitos pela equipe: descrição, foto e se aparece no site. O nome não muda, porque liga o serviço aos chefs.
+const FOTO_LOCAL=/^\/?assets\/servicos\/[a-z0-9-]+\.webp$/;
+function cleanServicos(input){
+ if(!input||typeof input!=='object'||Array.isArray(input))return {};
+ const out={},entries=Object.entries(input);
+ if(entries.length>200)throw new Error('Serviços demais.');
+ for(const [nome,v] of entries){
+  const n=String(nome).trim();if(!n||n.length>80||!v||typeof v!=='object')continue;
+  const x={},desc=String(v.desc??'').trim(),foto=String(v.foto??'').trim();
+  if(desc.length>200)throw new Error(n+': descrição longa demais (até 200 caracteres).');
+  if(desc)x.desc=desc;
+  if(foto){
+   if(!FOTO_LOCAL.test(foto)){let u;try{u=new URL(foto)}catch{throw new Error('Confira a foto de '+n+': use um endereço com https://.');}
+    if(u.protocol!=='https:'||u.username||u.password||u.hostname!=='images.unsplash.com')throw new Error('Confira a foto de '+n+': use uma foto do site ou do Unsplash.');}
+   x.foto=foto;
+  }
+  if(v.oculto===true)x.oculto=true;
+  if(Object.keys(x).length)out[n]=x;
+ }
+ return out;
+}
+const api={defaults,fields,clean,cleanServicos};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChefSite=api;
 })(typeof window!=='undefined'?window:globalThis);

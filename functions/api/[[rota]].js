@@ -2,7 +2,7 @@
 // Rotas em /api/*. Cada chef só altera o próprio perfil (a sessão decide quem é).
 // Variáveis: DB (binding D1), CONVITE (opcional: se existir, exige esse código para criar conta de chef; sem ela, cadastro aberto),
 // GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET (login com Google; sem elas o botão não aparece),
-// Administração restrita ao único e-mail autorizado em ChefCore.isAdminEmail; ADMIN_EMAILS legado não amplia acesso.
+// Administração: o dono (e-mail em ChefCore.isAdminEmail) e quem ele colocar na equipe (tabela admins, pelo painel). ADMIN_EMAILS legado não amplia acesso.
 // EMAIL_REMETENTE + CF_ACCOUNT_ID + CF_EMAIL_TOKEN (aviso de pedido por e-mail ao chef, via Cloudflare Email Service; sem elas, não envia).
 import Core from '../../assets/app-core.js';
 import Site from '../../assets/site-settings.js';
@@ -147,7 +147,9 @@ function lerIdToken(t) {
 }
 
 const publico = row => {const p=JSON.parse(row.perfil);delete p.menusVersao;return {...p,menus:Menus.active(p.menus),id:row.id,cloud:true}};
-const ehAdmin = (env, row) => !!row && C.isAdminEmail(row.email);
+// O dono (e-mail fixo em ChefCore) sempre administra; ele pode dar acesso a outras pessoas pela tabela admins.
+const ehDono = row => !!row && C.isAdminEmail(row.email);
+const ehAdmin = (env, row) => !!row && (C.isAdminEmail(row.email) || !!(env.EQUIPE && env.EQUIPE.has(C.email(row.email))));
 const doDono = (row, env = {}) => ({ ...publico(row), menus:JSON.parse(row.perfil).menus||[],menusVersao:JSON.parse(row.perfil).menusVersao||'', email: row.email, pausado: !row.publicado, oculto: !!row.oculto, admin: ehAdmin(env, row) });
 
 // ---------- Aviso de pedido por e-mail (Cloudflare Email Service, API REST) ----------
@@ -201,7 +203,9 @@ async function garantirEsquema(env) {
     'CREATE INDEX IF NOT EXISTS comentarios_foto ON comentarios(chef_id, foto_id, criado_em)',
     'CREATE INDEX IF NOT EXISTS comentarios_conta ON comentarios(conta_id)',
     'CREATE TABLE IF NOT EXISTS atividades (id TEXT PRIMARY KEY, criado_em TEXT NOT NULL, conta_id TEXT NOT NULL, conta_nome TEXT NOT NULL, acao TEXT NOT NULL, alvo TEXT NOT NULL, detalhe TEXT NOT NULL)',
-    'CREATE INDEX IF NOT EXISTS atividades_data ON atividades(criado_em)'
+    'CREATE INDEX IF NOT EXISTS atividades_data ON atividades(criado_em)',
+    'CREATE TABLE IF NOT EXISTS admins (email TEXT PRIMARY KEY, criado_em TEXT NOT NULL, criado_por TEXT NOT NULL)',
+    'CREATE TABLE IF NOT EXISTS servicos_config (id INTEGER PRIMARY KEY CHECK (id = 1), dados TEXT NOT NULL, atualizado_em TEXT NOT NULL, atualizado_por TEXT NOT NULL)'
   ]) await env.DB.prepare(q).run();
   esquemaOk = true;
 }
@@ -219,6 +223,8 @@ const clienteDoPedido = (texto, dados) => txt(dados.cliente || (String(texto).ma
 export async function onRequest({ request: req, env, params, waitUntil }) {
   if (!env.DB) return erro('Banco não configurado.', 503);
   await garantirEsquema(env);
+  // Lista da equipe lida a cada pedido: tirar alguém da equipe vale na hora.
+  env = { ...env, EQUIPE: new Set((await env.DB.prepare('SELECT email FROM admins').all()).results.map(r => r.email)) };
   const rota = '/' + [].concat(params.rota || []).join('/'), metodo = req.method;
   try {
     if (rota === '/admin/dashboard' && metodo === 'GET') {
@@ -259,7 +265,8 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
     }
     if (rota === '/site' && metodo === 'GET') {
       const row = await env.DB.prepare('SELECT dados FROM site_config WHERE id = 1').first();
-      return json({ config: Site.clean(row ? JSON.parse(row.dados) : {}) });
+      const sv = await env.DB.prepare('SELECT dados FROM servicos_config WHERE id = 1').first();
+      return json({ config: Site.clean(row ? JSON.parse(row.dados) : {}), servicos: Site.cleanServicos(sv ? JSON.parse(sv.dados) : {}) });
     }
     if (rota === '/admin/site') {
       const c = await chefDaSessao(env, req);
@@ -535,7 +542,7 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
     }
 
     // ---------- Painel completo: pedidos, clientes, comentários e registro de atividades ----------
-    if (/^\/admin\/(resumo|pedidos|clientes|comentarios|atividades)(\/|$)/.test(rota)) {
+    if (/^\/admin\/(resumo|pedidos|clientes|comentarios|atividades|equipe|servicos|menus)(\/|$)/.test(rota)) {
       const c = await chefDaSessao(env, req);
       if (!c) return erro('Entre com a conta da equipe.', 401);
       if (!ehAdmin(env, c)) return erro('Acesso só para a equipe.', 403);
@@ -595,6 +602,70 @@ export async function onRequest({ request: req, env, params, waitUntil }) {
         await env.DB.prepare('DELETE FROM comentarios WHERE id = ?').bind(m.id).run();
         await registrar(env, c, 'Apagou comentário', 'De ' + (nomeConta(m.autor) || 'conta removida'), m.texto.slice(0, 80));
         return json({ ok: true });
+      }
+      // Equipe: só o dono adiciona ou retira pessoas. Quem entra precisa ter (ou criar) conta com o e-mail informado.
+      if (secao === 'equipe') {
+        if (metodo === 'GET' && !id) {
+          const { results } = await env.DB.prepare('SELECT a.email, a.criado_em, c.perfil FROM admins a LEFT JOIN chefs c ON c.email = a.email ORDER BY a.criado_em').all();
+          const dono = await env.DB.prepare('SELECT perfil FROM chefs WHERE email = ?').bind(C.email(C.ADMIN_EMAIL || '')).first();
+          return json({ souDono: ehDono(c), equipe: [{ email: C.ADMIN_EMAIL || '', nome: nomeConta(dono && dono.perfil), dono: true, temConta: !!dono }, ...results.map(r => ({ email: r.email, nome: nomeConta(r.perfil), dono: false, temConta: !!r.perfil, criado_em: r.criado_em }))] });
+        }
+        if (!ehDono(c)) return erro('Só o dono do site muda a equipe.', 403);
+        if (metodo === 'POST' && !id) {
+          const email = C.email((await corpo(req)).email);
+          if (!C.validEmail(email)) return erro('Informe um e-mail válido.');
+          if (C.isAdminEmail(email)) return erro('Este e-mail já é o dono do site.');
+          if ((await env.DB.prepare('SELECT COUNT(*) n FROM admins').first()).n >= 20) return erro('Limite de 20 pessoas na equipe.');
+          const r = await env.DB.prepare('INSERT OR IGNORE INTO admins (email, criado_em, criado_por) VALUES (?, ?, ?)').bind(email, agora(), c.id).run();
+          if (!r.meta.changes) return erro('Este e-mail já está na equipe.');
+          await registrar(env, c, 'Deu acesso ao painel', email);
+          return json({ ok: true }, 201);
+        }
+        if (metodo === 'DELETE' && id) {
+          const email = C.email(decodeURIComponent(id));
+          const r = await env.DB.prepare('DELETE FROM admins WHERE email = ?').bind(email).run();
+          if (!r.meta.changes) return erro('Este e-mail não está na equipe.', 404);
+          await registrar(env, c, 'Tirou acesso ao painel', email);
+          return json({ ok: true });
+        }
+      }
+      // Serviços: descrição, foto e visibilidade. Versão evita que duas pessoas salvem por cima uma da outra.
+      if (secao === 'servicos' && !id) {
+        const row = await env.DB.prepare('SELECT dados, atualizado_em FROM servicos_config WHERE id = 1').first();
+        if (metodo === 'GET') return json({ servicos: Site.cleanServicos(row ? JSON.parse(row.dados) : {}), versao: row?.atualizado_em || '' });
+        if (metodo === 'PUT') {
+          const b = await corpo(req), servicos = Site.cleanServicos(b.servicos), expected = String(b.versao || '');
+          if ((row?.atualizado_em || '') !== expected) return erro('Outra pessoa salvou os serviços. Recarregue antes de editar.', 409);
+          const versao = agora();
+          const r = row
+            ? await env.DB.prepare('UPDATE servicos_config SET dados = ?, atualizado_em = ?, atualizado_por = ? WHERE id = 1 AND atualizado_em = ?').bind(JSON.stringify(servicos), versao, c.id, expected).run()
+            : await env.DB.prepare('INSERT OR IGNORE INTO servicos_config (id, dados, atualizado_em, atualizado_por) VALUES (1, ?, ?, ?)').bind(JSON.stringify(servicos), versao, c.id).run();
+          if (!r.meta.changes) return erro('Outra pessoa salvou os serviços. Recarregue antes de editar.', 409);
+          await registrar(env, c, 'Salvou serviços', Object.keys(servicos).length + ' com ajustes');
+          return json({ servicos, versao });
+        }
+      }
+      // Menus especiais de todos os chefs. A equipe só tira do ar; quem volta a divulgar é o próprio chef.
+      if (secao === 'menus' && !id) {
+        if (metodo === 'GET') {
+          const { results } = await env.DB.prepare("SELECT id, perfil FROM chefs WHERE json_array_length(COALESCE(json_extract(perfil, '$.menus'), '[]')) > 0").all();
+          const hoje = Menus.today(), lista = [];
+          for (const r of results) { const p = JSON.parse(r.perfil || '{}'); for (const m of p.menus || []) lista.push({
+            chefId: r.id, chef: p.name || '', id: m.id, titulo: m.title, ocasiao: m.occasion, preco: Menus.price(m), foto: m.photo || '', prazo: m.deadline, ate: m.until,
+            situacao: !m.published ? 'rascunho' : (m.until < hoje || m.deadline < hoje) ? 'encerrado' : 'no-ar' }); }
+          lista.sort((a, b) => (a.situacao === 'no-ar' ? 0 : 1) - (b.situacao === 'no-ar' ? 0 : 1) || String(a.prazo).localeCompare(String(b.prazo)));
+          return json({ menus: lista });
+        }
+        if (metodo === 'POST') {
+          const b = await corpo(req), chefId = txt(b.chefId, 40), menuId = txt(b.menuId, 60);
+          const alvo = await env.DB.prepare('SELECT perfil FROM chefs WHERE id = ?').bind(chefId).first();
+          const p = alvo ? JSON.parse(alvo.perfil) : null, m = p && (p.menus || []).find(x => x.id === menuId);
+          if (!m) return erro('Menu não encontrado.', 404);
+          m.published = false;
+          await env.DB.prepare("UPDATE chefs SET perfil = json_set(perfil, '$.menus', json(?), '$.menusVersao', ?), atualizado_em = ? WHERE id = ?").bind(JSON.stringify(p.menus), aleatorio(12), agora(), chefId).run();
+          await registrar(env, c, 'Tirou menu do ar', m.title + ' (' + (p.name || '') + ')');
+          return json({ ok: true });
+        }
       }
       if (secao === 'atividades' && metodo === 'GET' && !id) {
         const { results } = await env.DB.prepare('SELECT id, criado_em, conta_nome, acao, alvo, detalhe FROM atividades ORDER BY criado_em DESC LIMIT 500').all();

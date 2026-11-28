@@ -72,6 +72,13 @@
     adminComentarios: () => req('GET', '/admin/comentarios').then(j => j.comentarios || []),
     adminApagarComentario: id => req('DELETE', '/admin/comentarios/' + encodeURIComponent(id)),
     adminAtividades: () => req('GET', '/admin/atividades').then(j => j.atividades || []),
+    adminEquipe: () => req('GET', '/admin/equipe'),
+    adminAddEquipe: email => req('POST', '/admin/equipe', { email }),
+    adminTirarEquipe: email => req('DELETE', '/admin/equipe/' + encodeURIComponent(email)),
+    adminServicos: () => req('GET', '/admin/servicos'),
+    adminSalvarServicos: (servicos, versao) => req('PUT', '/admin/servicos', { servicos, versao }),
+    adminMenus: () => req('GET', '/admin/menus').then(j => j.menus || []),
+    adminTirarMenu: (chefId, menuId) => req('POST', '/admin/menus', { chefId, menuId }),
     // O chef abre o link da equipe e cria a senha nova; já sai logado.
     novaSenha: (id, token, senha) => req('POST', '/nova-senha', { id, token, senha }).then(j => j.chef),
     meusPedidos: () => req('GET', '/meus-pedidos').then(j => j.pedidos || [])
